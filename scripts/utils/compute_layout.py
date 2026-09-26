@@ -31,7 +31,8 @@ random.seed(42)   # deterministic jitter
 # ─── Platform topology ────────────────────────────────────────────────────────
 # Master sphere radius — platform centroids sit on this sphere in 3D space
 MASTER_R = 2200
-PLATFORM_ORDER = ['twitter', 'reddit', 'instagram', 'discord', 'facebook']
+PLATFORM_ORDER = ['twitter', 'reddit', 'instagram', 'discord', 'facebook',
+                  'whatsapp', 'google', 'chatgpt', 'claude']
 
 # Platform sphere scale (relative to sqrt-count formula)
 PLATFORM_SCALE = {
@@ -40,6 +41,10 @@ PLATFORM_SCALE = {
     'instagram': 0.35,
     'discord':   0.22,
     'facebook':  0.22,
+    'whatsapp':  0.35,
+    'google':    0.35,
+    'chatgpt':   0.22,
+    'claude':    0.22,
 }
 
 # Within each platform, group types map to a radial fraction of the cluster.

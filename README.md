@@ -51,10 +51,14 @@ Sarthink dynamically searches your repository for data, but relies on a standard
 ```text
 sarthink/
 ├── archive/
-│   ├── reddit-export/          # Folder containing your Reddit posts.csv, comments.csv, etc.
-│   ├── discord-export/         # Folder containing your Discord JSON exports
-│   ├── any_meta_export.zip     # Raw Meta GDPR zips (Facebook/Instagram)
-│   └── tweets.js               # Twitter JS files (found recursively)
+│   ├── twitter/                # Unzipped X/Twitter archive (tweets*.js, account.js found recursively)
+│   ├── reddit-export/          # posts.csv, comments.csv, chat_history.csv
+│   ├── Discord_DM_Export/      # DiscordChatExporter JSON files
+│   ├── instagram-*.zip         # Meta GDPR zips in JSON format, left zipped ("instagram"/"facebook" in the name)
+│   ├── whatsapp/               # "WhatsApp Chat with X.txt" files or the exported .zip per chat
+│   ├── chatgpt/                # ChatGPT data export (conversations.json)
+│   ├── claude/                 # Claude data export (conversations.json)
+│   └── google/Takeout/         # Google Takeout: Mail/*.mbox, Google Chat/, YouTube*/comments/, My Activity/ (JSON)
 ```
 
 ## Workflow
@@ -71,7 +75,12 @@ python3 scripts/parsers/twitter_parser.py
 python3 scripts/parsers/reddit_parser.py
 python3 scripts/parsers/discord_parser.py
 python3 scripts/parsers/meta_parser.py
+python3 scripts/parsers/whatsapp_parser.py
+python3 scripts/parsers/chatgpt_parser.py
+python3 scripts/parsers/claude_parser.py
+python3 scripts/parsers/google_parser.py
 ```
+The newer parsers accept `--archive`, `--db` and `--logs` to point at non-default locations. Add your WhatsApp name and Google email addresses to `config/identity_map.json` so your own messages resolve to your persona.
 
 ### C. Semantic Pipeline (Optional)
 Chunk and summarize your data for search:

@@ -17,6 +17,14 @@
     ],
     "instagram": [
       "your_insta_handle"
-    ]
+    ],
+    "whatsapp": [
+      "Your WhatsApp Name"
+    ],
+    "google": [
+      "you@gmail.com"
+    ],
+    "chatgpt": [],
+    "claude": []
   }
 }

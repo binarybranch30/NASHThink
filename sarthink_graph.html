@@ -1619,7 +1619,7 @@
       S.currentSearchIdx = -1;
       const N = S.nodes.length;
       for (let i = 0; i < N; i++) {
-        if (S.nodes[i].label.toLowerCase().includes(q) && (S.nodes[i].group || '').toLowerCase().includes('twitter')) {
+        if (S.nodes[i].label.toLowerCase().includes(q)) {
           S.currentSearchIdx = i;
           break;
         }

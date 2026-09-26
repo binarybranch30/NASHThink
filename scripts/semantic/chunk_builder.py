@@ -286,9 +286,9 @@ def build_chunks(dry_run=False):
                     map_changed = True
                 else:
                     author_final = raw_id or display_name or "Unknown"
-            elif platform == 'instagram' or platform == 'facebook' or platform == 'discord':
-                # Check display name against identity map
-                if display_name.lower() in identity_set or raw_id.lower() in identity_set:
+            elif platform in ('reddit', 'instagram', 'facebook', 'discord', 'whatsapp', 'google', 'chatgpt', 'claude'):
+                # Check display name against identity map ('me' is the owner marker used by the newer parsers)
+                if display_name.lower() in identity_set or raw_id.lower() in identity_set or raw_id == 'me':
                     author_final = master_persona
                     
             formatted = format_message(msg, platform, author_final, is_dm=is_dm)

@@ -68,6 +68,10 @@ PLATFORM_HINTS = {
     "twitter":   "This is a public thread. Capture the core claim and any notable responses.",
     "instagram": "This is a social post with comments. or casual DM conversation. Capture the subject and sentiment. relationship dynamic and informal decisions.",
     "facebook":  "This is a social post or DM. Capture the key interaction and context.",
+    "whatsapp":  "This is a private chat with friends or family. Capture the relationship dynamic, plans and decisions.",
+    "google":    "This is an email thread, Google Chat, YouTube comment, or a day of searches/Gemini prompts. Capture what I was dealing with or looking into.",
+    "chatgpt":   "This is my conversation with an AI assistant. Capture what I was trying to learn or build and what I concluded.",
+    "claude":    "This is my conversation with an AI assistant. Capture what I was trying to learn or build and what I concluded.",
 }
 
 # ── Helpers ───────────────────────────────────────────────────────────────────

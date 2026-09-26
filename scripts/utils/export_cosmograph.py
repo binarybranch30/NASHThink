@@ -37,6 +37,26 @@ GROUP_COLORS = {
     "facebook_comment_thread": "#0a5abf",  # deep Facebook navy (thread hubs)
     "facebook_dm_group":       "#74b3f7",  # light Facebook blue (DM rooms)
 
+    # WhatsApp — green family
+    "whatsapp_user":           "#25D366",  # WhatsApp green (vivid)
+    "whatsapp_dm_group":       "#128C7E",  # teal green (chat rooms)
+
+    # Google — brand yellow/red/blue
+    "google_user":             "#FBBC05",  # Google yellow (vivid)
+    "google_dm_group":         "#4285F4",  # Google blue (Chat DMs)
+    "google_group_chat":       "#1a5fd0",  # deep blue (Chat spaces)
+    "google_email_thread":     "#EA4335",  # Google red (Gmail threads)
+    "google_comment_thread":   "#b3261e",  # dark red (YouTube comments)
+    "google_chat":             "#34A853",  # Google green (Search/Gemini days)
+
+    # ChatGPT — OpenAI teal
+    "chatgpt_user":            "#10A37F",  # teal (vivid)
+    "chatgpt_chat":            "#0b6e56",  # dark teal (conversations)
+
+    # Claude — clay
+    "claude_user":             "#D97757",  # clay (vivid)
+    "claude_chat":             "#9c4f33",  # dark clay (conversations)
+
     # Fallback
     "group":                   "#aaaaaa",  # neutral grey
 }
@@ -45,13 +65,20 @@ def get_thread_group(platform, title):
     """Categorize the kind of conversational thread for Cosmograph Coloring."""
     title_lower = title.lower()
     
-    if title_lower.startswith('dm ') or 'direct message' in title_lower:
+    if platform == 'reddit':
+        if title_lower.startswith(('dm', 'pm:', 'chat:', 'group:')) or 'direct message' in title_lower or ' chat' in title_lower:
+            return "reddit_chat"
+        return "reddit_public_thread"
+    elif title_lower.startswith(('dm ', 'dm:')) or 'direct message' in title_lower:
         return f"{platform}_dm_group"
     elif title_lower.startswith('comment on'):
         return f"{platform}_comment_thread"
-    elif platform == 'reddit' and not title_lower.startswith('thread'):
-        # Reddit DM edge case
-        return f"reddit_chat"
+    elif title_lower.startswith(('ai chat:', 'searches ', 'gemini ')):
+        return f"{platform}_chat"
+    elif title_lower.startswith('email:'):
+        return f"{platform}_email_thread"
+    elif title_lower.startswith('group '):
+        return f"{platform}_group_chat"
     elif platform == 'twitter' and 'twitter_' in title:
         return 'twitter_tweet_thread'
     
@@ -70,6 +97,8 @@ def load_identity_map():
     for platform, aliases in data.get("aliases", {}).items():
         for alias in aliases:
             alias_dict[alias] = master
+            alias_dict[alias.lower()] = master
+    alias_dict[master] = master
     return master, alias_dict
 
 def export_to_cosmograph():
