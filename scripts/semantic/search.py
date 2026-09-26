@@ -1,8 +1,10 @@
 """Semantic memory search over the LanceDB tables written by embedder.py.
 
+The query is embedded with the model recorded in the table's metadata, never a guess.
+
 Usage:
-    python3 scripts/semantic/search.py "when did I talk about photography"
-    python3 scripts/semantic/search.py "photography" --limit 10 --json
+    .venv/bin/python scripts/semantic/search.py "when did I talk about photography"
+    .venv/bin/python scripts/semantic/search.py "photography" --table topics --limit 10 --json
 """
 import argparse
 import contextlib
@@ -17,12 +19,10 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = Path(os.path.dirname(os.path.dirname(SCRIPT_DIR)))
 sys.path.append(SCRIPT_DIR)
 
-# Reuse the embedder's model name and LanceDB location so queries land in the same vector space.
-# embedder.py prints a warning on stdout when deps are missing; keep stdout clean for --json.
-with contextlib.redirect_stdout(sys.stderr):
-    from embedder import EMBEDDING_DEVICE, EMBEDDING_MODEL_NAME, LANCEDB_PATH, load_embedding_model
+from embedding_config import (EMBEDDING_DEVICE, LANCEDB_PATH, get_table_metadata, list_table_names,
+                              load_embedding_model, metadata_path)
 
-DEFAULT_TABLE = "sessions"
+DEFAULT_TABLE = "topics"
 DEFAULT_LIMIT = 5
 
 # Column names that may hold people/entities, in order of preference.
@@ -47,8 +47,7 @@ def open_table(db_path, table_name):
             f"LanceDB database not found at {db_path}\n"
             "Build it first:\n"
             "  python3 scripts/semantic/chunk_builder.py\n"
-            "  python3 scripts/semantic/summarizer.py\n"
-            "  python3 scripts/semantic/embedder.py"
+            "  .venv/bin/python scripts/semantic/embedder.py --input processed_data/semantic/session_chunks.json --topics-only"
         )
     try:
         import lancedb
@@ -56,12 +55,12 @@ def open_table(db_path, table_name):
         raise SearchError("lancedb is not installed. Run: .venv/bin/pip install lancedb pyarrow")
 
     db = lancedb.connect(db_path)
-    names = list(db.table_names())
+    names = list_table_names(db)
     if table_name not in names:
         available = ", ".join(names) if names else "none"
         raise SearchError(
             f"Table '{table_name}' not found in {db_path} (available: {available}).\n"
-            "Run: python3 scripts/semantic/embedder.py"
+            "Run: .venv/bin/python scripts/semantic/embedder.py --input processed_data/semantic/session_chunks.json --topics-only"
         )
     return db.open_table(table_name)
 
@@ -71,8 +70,27 @@ def vector_dimension(table):
     return getattr(field.type, "list_size", None)
 
 
-def load_model():
-    """Loads the embedding model exactly as embedder.py does (same model, device and cache)."""
+def table_model_metadata(table, table_name, db_path):
+    """Returns the metadata entry for `table_name`, refusing tables whose origin is unknown or inconsistent."""
+    meta = get_table_metadata(table_name, db_path)
+    if not meta or not meta.get("model"):
+        raise SearchError(
+            f"No embedding metadata for table '{table_name}' in {metadata_path(db_path)}.\n"
+            "Without it the query could be embedded by the wrong model. Re-create the table with "
+            "scripts/semantic/embedder.py, which records the model it used."
+        )
+
+    dim = vector_dimension(table)
+    if dim is not None and meta.get("vector_dim") != dim:
+        raise SearchError(
+            f"Metadata for table '{table_name}' says {meta.get('vector_dim')}-dim vectors from {meta['model']}, "
+            f"but the table stores {dim}-dim vectors. Refusing to search; re-create the table with embedder.py."
+        )
+    return meta
+
+
+def load_model(model_name):
+    """Loads `model_name` exactly as embedder.py does (CPU, repo-local cache)."""
     try:
         import sentence_transformers  # noqa: F401
     except ImportError:
@@ -80,9 +98,9 @@ def load_model():
 
     try:
         with contextlib.redirect_stdout(sys.stderr):
-            return load_embedding_model()
+            return load_embedding_model(model_name)
     except Exception as e:
-        raise SearchError(f"Could not load embedding model '{EMBEDDING_MODEL_NAME}' on {EMBEDDING_DEVICE}: {e}")
+        raise SearchError(f"Could not load embedding model '{model_name}' on {EMBEDDING_DEVICE}: {e}")
 
 
 def extract_people(row):
@@ -126,8 +144,7 @@ def search(table, model, query, limit=DEFAULT_LIMIT):
     if dim is not None and len(query_vec) != dim:
         raise SearchError(
             f"Embedding dimension mismatch: query has {len(query_vec)} dims but the table stores {dim}.\n"
-            "The table was likely built with a different model (e.g. embedder.py's CPU fallback). "
-            "Re-run embedder.py with the same model available."
+            "Refusing to search with a model that does not match the table."
         )
 
     # Cosine distance ignores vector magnitude (embedder.py stores unnormalized vectors).
@@ -162,8 +179,8 @@ def main(argv=None):
     parser.add_argument("query", help="Natural language query, e.g. \"when did I talk about photography\"")
     parser.add_argument("--limit", type=int, default=DEFAULT_LIMIT, help=f"Number of results (default {DEFAULT_LIMIT})")
     parser.add_argument("--json", action="store_true", help="Print results as JSON")
-    parser.add_argument("--table", default=DEFAULT_TABLE, help="LanceDB table to search, e.g. sessions, topics, topics_pilot (default sessions)")
-    parser.add_argument("--db", default=LANCEDB_PATH, help="Path to the LanceDB directory (default: embedder.py's path)")
+    parser.add_argument("--table", default=DEFAULT_TABLE, help=f"LanceDB table to search, e.g. topics, topics_multilingual_pilot (default {DEFAULT_TABLE})")
+    parser.add_argument("--db", default=LANCEDB_PATH, help="Path to the LanceDB directory")
     args = parser.parse_args(argv)
 
     if args.limit < 1:
@@ -173,7 +190,9 @@ def main(argv=None):
 
     try:
         table = open_table(args.db, args.table)
-        model = load_model()
+        meta = table_model_metadata(table, args.table, args.db)
+        print(f"Searching '{args.table}' with {meta['model']} ({meta['vector_dim']} dims)", file=sys.stderr)
+        model = load_model(meta["model"])
         results = search(table, model, args.query, args.limit)
     except SearchError as e:
         print(f"Error: {e}", file=sys.stderr)

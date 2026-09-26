@@ -1,5 +1,5 @@
 """Unit tests for scripts/semantic/search.py (no model, GPU or LanceDB install required).
-Run: python3 scripts/tests/test_search.py"""
+Run: .venv/bin/python scripts/tests/test_search.py"""
 import io
 import json
 import os
@@ -14,7 +14,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
 sys.path.append(os.path.join(REPO_ROOT, "scripts", "semantic"))
 
-import embedder
+import embedding_config
 import search
 
 
@@ -76,15 +76,47 @@ SESSION_ROW = {
 }
 
 
-class ConfigTests(unittest.TestCase):
-    def test_reuses_embedder_settings(self):
-        self.assertEqual(search.EMBEDDING_MODEL_NAME, embedder.EMBEDDING_MODEL_NAME)
-        self.assertEqual(search.LANCEDB_PATH, embedder.LANCEDB_PATH)
+MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
-    def test_cpu_minilm_everywhere(self):
-        self.assertEqual(embedder.EMBEDDING_MODEL_NAME, "sentence-transformers/all-MiniLM-L6-v2")
-        self.assertEqual(embedder.EMBEDDING_DEVICE, "cpu")
-        self.assertIs(search.load_embedding_model, embedder.load_embedding_model)
+
+def write_meta(db_path, table="topics", model=MODEL, dim=3):
+    embedding_config.save_table_metadata(table, model, dim, "/data/chunks.json", db_path=db_path)
+
+
+class ConfigTests(unittest.TestCase):
+    def test_uses_shared_config(self):
+        self.assertEqual(search.LANCEDB_PATH, embedding_config.LANCEDB_PATH)
+        self.assertIs(search.load_embedding_model, embedding_config.load_embedding_model)
+
+
+class TableMetadataTests(unittest.TestCase):
+    def test_missing_metadata_is_refused(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with self.assertRaises(search.SearchError) as ctx:
+                search.table_model_metadata(FakeTable([]), "topics_pilot", os.path.join(tmp, "db"))
+        self.assertIn("No embedding metadata for table 'topics_pilot'", str(ctx.exception))
+
+    def test_other_tables_metadata_does_not_count(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db = os.path.join(tmp, "db")
+            write_meta(db, table="topics")
+            with self.assertRaises(search.SearchError):
+                search.table_model_metadata(FakeTable([]), "sessions", db)
+
+    def test_dimension_mismatch_is_refused(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db = os.path.join(tmp, "db")
+            write_meta(db, dim=768)
+            with self.assertRaises(search.SearchError) as ctx:
+                search.table_model_metadata(FakeTable([], dim=384), "topics", db)
+        self.assertIn("Refusing to search", str(ctx.exception))
+
+    def test_matching_metadata_is_returned(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db = os.path.join(tmp, "db")
+            write_meta(db, dim=3)
+            meta = search.table_model_metadata(FakeTable([], dim=3), "topics", db)
+        self.assertEqual(meta["model"], MODEL)
 
 
 class ExtractPeopleTests(unittest.TestCase):
@@ -171,7 +203,7 @@ class MissingDataTests(unittest.TestCase):
     def test_missing_model_package(self):
         with mock.patch.dict(sys.modules, {"sentence_transformers": None}):
             with self.assertRaises(search.SearchError):
-                search.load_model()
+                search.load_model(MODEL)
 
 
 class CliTests(unittest.TestCase):
@@ -188,14 +220,39 @@ class CliTests(unittest.TestCase):
         self.assertEqual(out, "")
         self.assertIn("LanceDB database not found", err)
 
-    def test_json_output(self):
-        with mock.patch.object(search, "open_table", return_value=FakeTable([SESSION_ROW])), \
-             mock.patch.object(search, "load_model", return_value=FakeModel()):
-            code, out, _ = self.run_main(["photography", "--json", "--limit", "1"])
+    def test_json_output_uses_model_from_metadata(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db = os.path.join(tmp, "db")
+            write_meta(db, model="some/other-model", dim=3)
+            with mock.patch.object(search, "open_table", return_value=FakeTable([SESSION_ROW])), \
+                 mock.patch.object(search, "load_model", return_value=FakeModel()) as load:
+                code, out, _ = self.run_main(["photography", "--json", "--limit", "1", "--db", db])
         self.assertEqual(code, 0)
+        load.assert_called_once_with("some/other-model")
         data = json.loads(out)
         self.assertEqual(len(data), 1)
         self.assertEqual(data[0]["platform"], "discord")
+
+    def test_missing_metadata_never_loads_a_model(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            with mock.patch.object(search, "open_table", return_value=FakeTable([SESSION_ROW])), \
+                 mock.patch.object(search, "load_model") as load:
+                code, out, err = self.run_main(["q", "--table", "topics_pilot", "--db", os.path.join(tmp, "db")])
+        self.assertEqual(code, 1)
+        self.assertEqual(out, "")
+        self.assertIn("No embedding metadata", err)
+        load.assert_not_called()
+
+    def test_incompatible_metadata_exit_code(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            db = os.path.join(tmp, "db")
+            write_meta(db, dim=768)
+            with mock.patch.object(search, "open_table", return_value=FakeTable([SESSION_ROW], dim=384)), \
+                 mock.patch.object(search, "load_model") as load:
+                code, _, err = self.run_main(["q", "--db", db])
+        self.assertEqual(code, 1)
+        self.assertIn("Refusing to search", err)
+        load.assert_not_called()
 
     def test_invalid_limit(self):
         with self.assertRaises(SystemExit):

@@ -13,21 +13,14 @@ REPO_ROOT = Path(os.path.dirname(os.path.dirname(SCRIPT_DIR)))
 try:
     import lancedb
     import pyarrow as pa
-    from sentence_transformers import SentenceTransformer
     import numpy as np
 except ImportError:
     print("Warning: Please ensure lancedb, pyarrow, and sentence-transformers are installed.")
 
-# Shared with search.py: queries must be embedded by the same model, on the same device.
-EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
-EMBEDDING_DEVICE = "cpu"
-MODEL_CACHE_DIR = str(REPO_ROOT / ".cache" / "models")
-LANCEDB_PATH = str(REPO_ROOT / "processed_data" / "graph" / "sarthink_lancedb")
-
-
-def load_embedding_model():
-    """Loads the embedding model on CPU, caching downloaded weights inside the repo."""
-    return SentenceTransformer(EMBEDDING_MODEL_NAME, device=EMBEDDING_DEVICE, cache_folder=MODEL_CACHE_DIR)
+# Model, device, paths and table metadata are shared with search.py
+sys.path.append(SCRIPT_DIR)
+from embedding_config import (DEFAULT_EMBEDDING_MODEL, EMBEDDING_DEVICE, LANCEDB_PATH,
+                              list_table_names, load_embedding_model, save_table_metadata)
 
 
 def topic_chunk_burst(chunk: Dict, embedding_model) -> List[Dict]:
@@ -81,32 +74,48 @@ def topic_chunk_burst(chunk: Dict, embedding_model) -> List[Dict]:
     return topic_chunks
 
 
-def main():
+def create_table_with_metadata(db, table_name, rows, model_name, source, db_path):
+    db.create_table(table_name, data=rows)
+    save_table_metadata(table_name, model_name, len(rows[0]["vector"]), source, db_path=db_path, rows=len(rows))
+
+
+def main(argv=None):
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', type=str, default=str(REPO_ROOT / "processed_data" / "semantic" / "summarized_chunks.json"), help="Path to summarized JSON output")
     parser.add_argument('--topics-only', action='store_true', help="Skip the sessions table (useful without summaries)")
     parser.add_argument('--topics-table', type=str, default="topics", help="LanceDB table name for topic chunks")
     parser.add_argument('--max-topics', type=int, default=None, help="Stop after this many topic chunks (pilot runs)")
     parser.add_argument('--seed', type=int, default=0, help="Shuffle seed used with --max-topics so a pilot mixes platforms")
-    args = parser.parse_args()
+    parser.add_argument('--model', type=str, default=DEFAULT_EMBEDDING_MODEL, help=f"Embedding model (default {DEFAULT_EMBEDDING_MODEL})")
+    parser.add_argument('--db', type=str, default=LANCEDB_PATH, help="LanceDB directory")
+    parser.add_argument('--overwrite', action='store_true', help="Replace tables that already exist (they are kept otherwise)")
+    args = parser.parse_args(argv)
+
+    source = os.path.abspath(args.input)
+    target_tables = [args.topics_table] if args.topics_only else ["sessions", args.topics_table]
 
     try:
         with open(args.input, "r") as f:
             updated_chunks = json.load(f)
     except FileNotFoundError:
         print(f"{args.input} not found!")
-        return
+        return 1
+
+    db = lancedb.connect(args.db)
+    existing = [t for t in target_tables if t in list_table_names(db)]
+    if existing and not args.overwrite:
+        print(f"Refusing to replace existing table(s): {', '.join(existing)}. "
+              "Choose another --topics-table or pass --overwrite.", file=sys.stderr)
+        return 1
 
     if args.max_topics:
         random.Random(args.seed).shuffle(updated_chunks)
 
-    print(f"Loading embedding model: {EMBEDDING_MODEL_NAME} on {EMBEDDING_DEVICE}...")
-    embedding_model = load_embedding_model()
+    print(f"Loading embedding model: {args.model} on {EMBEDDING_DEVICE}...")
+    embedding_model = load_embedding_model(args.model)
     print("Model loaded successfully.")
 
     print(f"Generating Topic Chunks and embedding vectors for {len(updated_chunks)} sessions...")
-    
-    db = lancedb.connect(LANCEDB_PATH)
     
     session_data_for_db = []
     topic_data_for_db = []
@@ -155,18 +164,19 @@ def main():
 
     print("\nSaving tables to LanceDB...")
     
-    if not args.topics_only:
-        if "sessions" in db.table_names():
+    if not args.topics_only and session_data_for_db:
+        if "sessions" in list_table_names(db):
             db.drop_table("sessions")
-        db.create_table("sessions", data=session_data_for_db)
+        create_table_with_metadata(db, "sessions", session_data_for_db, args.model, source, args.db)
     
-    if args.topics_table in db.table_names():
-        db.drop_table(args.topics_table)
     if topic_data_for_db:
-        db.create_table(args.topics_table, data=topic_data_for_db)
+        if args.topics_table in list_table_names(db):
+            db.drop_table(args.topics_table)
+        create_table_with_metadata(db, args.topics_table, topic_data_for_db, args.model, source, args.db)
 
     print("Vector database successfully populated.")
     print(f"Ingested {len(session_data_for_db)} session chunks and {len(topic_data_for_db)} dynamic topic chunks into '{args.topics_table}'.")
+    return 0
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

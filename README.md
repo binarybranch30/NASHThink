@@ -83,25 +83,42 @@ python3 scripts/parsers/google_parser.py
 The newer parsers accept `--archive`, `--db` and `--logs` to point at non-default locations. Add your WhatsApp name and Google email addresses to `config/identity_map.json` so your own messages resolve to your persona.
 
 ### C. Semantic Pipeline (Optional)
-Chunk and summarize your data for search:
-```bash
-python3 scripts/semantic/chunk_builder.py
-python3 scripts/semantic/summarizer.py
-python3 scripts/semantic/embedder.py
-```
+Semantic search runs **fully locally on CPU**: no GPU, hosted inference or LLM API is needed. The default embedding model is the multilingual [`sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`](https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2) (384-dim, ~480 MB), chosen because it handles Hindi/Hinglish alongside English. Model, device and paths live in `scripts/semantic/embedding_config.py`, shared by `embedder.py` and `search.py`.
 
-Embedding and search run fully locally on CPU with `sentence-transformers/all-MiniLM-L6-v2` (weights cached in `.cache/models/`). On a machine without system pip:
+#### 1. Local CPU setup (one time)
+Create a project-local virtual environment and install CPU-only packages (works without system pip or sudo):
 ```bash
 python3 -m venv --without-pip .venv
 curl -sSfL https://bootstrap.pypa.io/get-pip.py | .venv/bin/python
 .venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu
 .venv/bin/pip install sentence-transformers lancedb pyarrow numpy
 ```
-Without the (cloud) summarizer, embed raw topic chunks only and search them:
+The model is downloaded once into `.cache/models/` on first use; after that it loads from the local cache. Set `HF_HUB_OFFLINE=1` to guarantee no network access. `.venv/`, `.cache/` and `processed_data/` are gitignored.
+
+#### 2. Build chunks
 ```bash
-.venv/bin/python scripts/semantic/embedder.py --input processed_data/semantic/session_chunks.json --topics-only
-.venv/bin/python scripts/semantic/search.py "when did I talk about photography" --table topics
+python3 scripts/semantic/chunk_builder.py   # SQLite -> processed_data/semantic/session_chunks.json
 ```
+`scripts/semantic/summarizer.py` calls a hosted LLM (Cerebras) and is optional; skip it to stay local.
+
+#### 3. Full local topic index
+Embeds raw topic chunks (no summaries needed) into the `topics` table. Expect a few hours on a small CPU server, so run it detached:
+```bash
+nohup env HF_HUB_OFFLINE=1 .venv/bin/python scripts/semantic/embedder.py \
+  --input processed_data/semantic/session_chunks.json --topics-only --topics-table topics \
+  > processed_data/embed_full.log 2>&1 &
+tail -f processed_data/embed_full.log
+```
+- Existing tables are never replaced unless you pass `--overwrite`.
+- `--model NAME` embeds with a different model; `--max-topics N --topics-table NAME` builds a small pilot.
+- Every table embedder.py creates is recorded in `processed_data/graph/sarthink_lancedb.metadata.json` (table, model, vector dimension, creation time, source file, row count).
+
+#### 4. Search a table
+```bash
+HF_HUB_OFFLINE=1 .venv/bin/python scripts/semantic/search.py "college ke baare mein stress"
+HF_HUB_OFFLINE=1 .venv/bin/python scripts/semantic/search.py "when did I talk about photography" --table topics --limit 10 --json
+```
+`search.py` reads the table's metadata and embeds the query with **the model that built that table**, so older tables keep working after the default changes. It refuses to search a table with no metadata, or whose vector dimension doesn't match its metadata.
 
 ### D. Graph Generation
 Compute the 3D layout and export the data for the web UI:
