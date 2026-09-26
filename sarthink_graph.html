@@ -645,6 +645,229 @@
     #tooltip.show {
       opacity: 1;
     }
+
+    /* Semantic memory search */
+    #sem-form {
+      display: flex;
+      gap: 5px;
+    }
+
+    #sem-q {
+      flex: 1;
+      min-width: 0;
+      padding: 5px 9px;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid var(--bdr);
+      border-radius: 6px;
+      color: #fff;
+      font-size: .74rem;
+      font-family: 'Outfit', sans-serif;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    #sem-q:focus {
+      border-color: var(--acc);
+    }
+
+    #sem-q::placeholder {
+      color: var(--dim);
+    }
+
+    #sem-form .btn {
+      padding: 4px 9px;
+      font-size: .68rem;
+    }
+
+    #sem-form .btn:disabled {
+      opacity: .4;
+      cursor: default;
+    }
+
+    #sem-status {
+      margin-top: 7px;
+      font-size: .66rem;
+      line-height: 1.45;
+      color: var(--dim);
+      min-height: 1em;
+      word-break: break-word;
+    }
+
+    #sem-status .dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-right: 5px;
+      vertical-align: middle;
+      background: var(--dim);
+    }
+
+    #sem-status.ok .dot { background: #3ecf8e; }
+    #sem-status.warn { color: #f5c26b; }
+    #sem-status.warn .dot { background: #f5c26b; }
+    #sem-status.err { color: #ff9090; }
+    #sem-status.err .dot { background: #ff6060; }
+    #sem-status.busy .dot { background: var(--acc); animation: sem-pulse 1s ease-in-out infinite; }
+
+    #sem-status code {
+      font-size: .62rem;
+      color: var(--mid);
+      background: rgba(255, 255, 255, .05);
+      padding: 1px 4px;
+      border-radius: 3px;
+      word-break: break-all;
+    }
+
+    @keyframes sem-pulse {
+      50% { opacity: .25; }
+    }
+
+    #sem-panel {
+      position: absolute;
+      top: 56px;
+      right: 14px;
+      width: 340px;
+      max-height: calc(100vh - 100px);
+      display: none;
+      flex-direction: column;
+      background: var(--gb);
+      border: 1px solid var(--bdr);
+      border-radius: 11px;
+      pointer-events: all;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      transition: opacity .5s, transform .5s;
+    }
+
+    #ui.sem-open #sem-panel { display: flex; }
+    #ui.sem-open #toast { right: 368px; }
+
+    #sem-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 13px 9px;
+      border-bottom: 1px solid var(--bdr);
+    }
+
+    #sem-title {
+      flex: 1;
+      min-width: 0;
+      font-size: .74rem;
+      color: #fff;
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #sem-sub {
+      padding: 6px 13px 0;
+      font-size: .62rem;
+      letter-spacing: .06em;
+      color: var(--dim);
+    }
+
+    #sem-head .btn {
+      padding: 3px 9px;
+      font-size: .66rem;
+    }
+
+    #sem-list {
+      overflow-y: auto;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    #sem-list::-webkit-scrollbar { width: 3px; }
+    #sem-list::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, .1); border-radius: 2px; }
+
+    .sr {
+      padding: 9px 10px;
+      border: 1px solid var(--bdr);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .02);
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+
+    .sr:hover { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .16); }
+    .sr.active { border-color: var(--acc); background: rgba(79, 142, 255, .10); }
+    .sr.nonode { cursor: default; }
+
+    .sr-top {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .64rem;
+      color: var(--dim);
+    }
+
+    .sr-rank { color: var(--mid); font-variant-numeric: tabular-nums; }
+    .sr-plat { text-transform: uppercase; letter-spacing: .1em; }
+    .sr-date { margin-left: auto; font-variant-numeric: tabular-nums; }
+
+    .sr-bar {
+      height: 2px;
+      margin: 6px 0 7px;
+      background: rgba(255, 255, 255, .06);
+      border-radius: 1px;
+      overflow: hidden;
+    }
+
+    .sr-bar i { display: block; height: 100%; background: var(--acc); }
+
+    .sr-title {
+      font-size: .76rem;
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .sr-people {
+      font-size: .64rem;
+      color: var(--mid);
+      margin-bottom: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .sr-snip {
+      font-size: .68rem;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, .5);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .sr.expanded .sr-snip { display: block; white-space: pre-wrap; max-height: 260px; overflow-y: auto; }
+
+    .sr-foot {
+      margin-top: 5px;
+      font-size: .6rem;
+      color: rgba(255, 255, 255, .22);
+    }
+
+    .sem-empty {
+      padding: 18px 8px;
+      text-align: center;
+      font-size: .7rem;
+      color: var(--dim);
+    }
+
+    @media (max-width: 720px) {
+      #sem-panel { left: 14px; right: 14px; width: auto; top: auto; bottom: 14px; max-height: 50vh; }
+      #ui.sem-open #toast { right: 14px; }
+    }
   </style>
 </head>
 
@@ -682,6 +905,23 @@
         <input type="range" id="sdepth" min="1" max="3" value="1" oninput="onDepthChange(this.value)">
         <span id="depth-val">1</span>
       </div>
+      <div class="divider"></div>
+      <div class="plbl">MEMORY SEARCH</div>
+      <form id="sem-form" onsubmit="event.preventDefault(); semanticSearch();">
+        <input id="sem-q" type="text" placeholder="What did I talk about…" autocomplete="off" maxlength="500">
+        <button id="sem-go" class="btn" type="submit">Go</button>
+      </form>
+      <div id="sem-status"><span class="dot"></span>Checking search API…</div>
+    </div>
+
+    <!-- Semantic search results -->
+    <div id="sem-panel" class="hideable" aria-live="polite">
+      <div id="sem-head">
+        <div id="sem-title">Results</div>
+        <button class="btn" type="button" onclick="resetSemantic()" title="Clear results and highlights (Esc)">Reset</button>
+      </div>
+      <div id="sem-sub"></div>
+      <div id="sem-list"></div>
     </div>
 
     <!-- Node toast -->
@@ -721,6 +961,8 @@
       isDragging: false, dragStartX: 0, dragStartY: 0,
       currentSearchIdx: -1, currentSearchSet: null,
       searchIsolated: false, savedPositions: null,
+      // Semantic memory search: set = highlighted node indices, focus = the clicked result's nodes
+      sem: { results: [], set: null, focus: new Set(), active: -1, seq: 0, ready: false },
       _toastTimer: null, hoveredIdx: -1,
       // THREE refs
       renderer: null, scene: null, camera3: null, camera2: null, controls: null,
@@ -876,8 +1118,24 @@
     // ─── Color update (fast GPU buffer push) ─────────────────────────────────────
     function refreshColors() {
       const N = S.nodes.length;
+      const sem = S.sem.set;  // semantic hits: always shown (bypass group filter), everything else dimmed
       for (let i = 0; i < N; i++) {
         const n = S.nodes[i];
+        if (sem) {
+          const hit = sem.has(i);
+          if (hit) {
+            S.colArr[i * 3] = S.allNodeColors[i * 3];
+            S.colArr[i * 3 + 1] = S.allNodeColors[i * 3 + 1];
+            S.colArr[i * 3 + 2] = S.allNodeColors[i * 3 + 2];
+            S.sizeArr[i] = Math.max(S.baseSizeArr[i], 3) * (S.sem.focus.has(i) ? 3.2 : 1.8);
+          } else {
+            S.colArr[i * 3] = DIM_RGB[0];
+            S.colArr[i * 3 + 1] = DIM_RGB[1];
+            S.colArr[i * 3 + 2] = DIM_RGB[2];
+            S.sizeArr[i] = S.baseSizeArr[i] * 0.6;
+          }
+          continue;
+        }
         const matchSearch = !S.search || (S.currentSearchSet && S.currentSearchSet.has(i));
         // In search isolation: bypass group filter so cross-platform neighbors are always visible
         const matchGroup = S.searchIsolated || S.highlight === null || S.highlight.has(n.group);
@@ -1594,6 +1852,7 @@
     function onSearch(v) {
       const q = v.trim().toLowerCase();
       S.search = q;
+      if (q && S.sem.set) clearSemanticHighlight();  // keyword search takes over the graph
 
       // If clearing, restore everything
       if (!q) {
@@ -1693,6 +1952,274 @@
       if (S.search) runSearch();
     }
 
+    // ─── Semantic memory search (local API: scripts/api/server.py) ────────────────
+    // Same origin when served by server.py; ?api=http://127.0.0.1:8000 when the page is served elsewhere.
+    const API_BASE = (() => {
+      const p = new URLSearchParams(location.search).get('api');
+      if (p) return p.replace(/\/+$/, '');
+      return location.protocol.startsWith('http') ? '' : 'http://127.0.0.1:8000';
+    })();
+    const SERVER_CMD = 'HF_HUB_OFFLINE=1 .venv/bin/python scripts/api/server.py';
+    const SEM_LIMIT = 10;
+    const SEM_TIMEOUT_MS = 180000;  // first query loads the embedding model on CPU
+    const HEALTH_RETRY_MS = 15000;
+
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const normName = s => String(s || '').toLowerCase().replace(/^@|^u\//, '').replace(/[,"\r\n]/g, '').trim();
+    const fmtDay = iso => (iso ? String(iso).slice(0, 10) : '');
+
+    function semStatus(kind, html) {
+      const el = $('sem-status');
+      el.className = kind || '';
+      el.innerHTML = `<span class="dot"></span>${html}`;
+    }
+
+    function semBusy(on) {
+      $('sem-go').disabled = on;
+      $('sem-go').textContent = on ? '…' : 'Go';
+    }
+
+    async function apiFetch(path, opts = {}) {
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), opts.timeout || 10000);
+      let r;
+      try {
+        r = await fetch(API_BASE + path, { ...opts, signal: ctl.signal });
+      } catch (e) {
+        const err = new Error(e.name === 'AbortError' ? 'The search API timed out.' : 'Search API is not reachable.');
+        err.code = e.name === 'AbortError' ? 'timeout' : 'offline';
+        throw err;
+      } finally {
+        clearTimeout(timer);
+      }
+      let body = null;
+      try { body = await r.json(); } catch (_) { /* non-JSON (e.g. static server 404 page) */ }
+      if (!r.ok || !body) {
+        const e = body && body.error;
+        const err = new Error(e ? e.message : `HTTP ${r.status}`);
+        err.code = e ? e.code : (r.status === 404 || r.status === 501 ? 'offline' : 'http_error');
+        throw err;
+      }
+      return body;
+    }
+
+    function offlineHint() {
+      return `Search API offline. Start it with <code>${esc(SERVER_CMD)}</code> and open <code>http://127.0.0.1:8000/</code>`;
+    }
+
+    async function checkSemanticHealth() {
+      try {
+        const h = await apiFetch('/api/health');
+        const ix = h.index || {};
+        S.sem.ready = !!ix.available;
+        if (ix.available) {
+          const rows = ix.rows ? `${Number(ix.rows).toLocaleString()} chunks · ` : '';
+          semStatus('ok', `Ready · ${esc(rows)}table <code>${esc(ix.table)}</code>`);
+          return;
+        }
+        semStatus('warn', `Index <code>${esc(ix.table)}</code> not available yet — it may still be building. ${esc(ix.reason || '')}`);
+      } catch (e) {
+        S.sem.ready = false;
+        semStatus('err', e.code === 'offline' ? offlineHint() : esc(e.message));
+      }
+      // Keep polling so the UI flips to "Ready" once the embedding job finishes or the server starts.
+      clearTimeout(S.sem.healthTimer);
+      S.sem.healthTimer = setTimeout(checkSemanticHealth, HEALTH_RETRY_MS);
+    }
+
+    // Thread node (T_<channel_id>) plus the participants of that thread that appear in the graph.
+    function resultNodes(r) {
+      const out = { thread: -1, people: [] };
+      const t = r.node_id && S.nodeById[r.node_id];
+      if (!t || t.index === undefined) return out;
+      out.thread = t.index;
+      const want = new Set((r.people || []).map(normName));
+      if (want.size) {
+        (S.adj[t.id] || []).forEach(nid => {
+          const nb = S.nodeById[nid];
+          if (nb && nb.index !== undefined && want.has(normName(nb.label))) out.people.push(nb.index);
+        });
+      }
+      return out;
+    }
+
+    function nodePos(i) {
+      return new THREE.Vector3(S.posArr[i * 3], S.posArr[i * 3 + 1], S.is3D ? S.posArr[i * 3 + 2] : 0);
+    }
+
+    function flyToNodes(idxs, minDist) {
+      if (!idxs.length || !S.camera3) return;
+      const c = new THREE.Vector3();
+      idxs.forEach(i => c.add(nodePos(i)));
+      c.divideScalar(idxs.length);
+      let radius = 0;
+      idxs.forEach(i => { radius = Math.max(radius, nodePos(i).distanceTo(c)); });
+      const camDist = Math.max(minDist, Math.min(9000, radius * 2.4));
+      S.targetCamLook = c.clone();
+      const dir = S.camera3.position.clone().sub(c).normalize();
+      if (dir.lengthSq() < 0.01) dir.set(0, 0, 1);
+      S.targetCamPos = c.clone().add(dir.multiplyScalar(camDist));
+    }
+
+    // Recomputes the highlight from the current results; `fly` moves the camera to frame them.
+    function applySemanticHighlight(fly) {
+      if (!S.geo || !S.sem.results.length) return;
+      S.sem.set = new Set();
+      S.sem.focus = new Set();
+      const threads = [];
+      S.sem.results.forEach((r, k) => {
+        const m = r._nodes = resultNodes(r);
+        if (m.thread < 0) return;
+        threads.push(m.thread);
+        S.sem.set.add(m.thread);
+        m.people.forEach(i => S.sem.set.add(i));
+        if (k === S.sem.active) { S.sem.focus.add(m.thread); m.people.forEach(i => S.sem.focus.add(i)); }
+      });
+      document.querySelectorAll('#sem-list .sr').forEach((el, k) => {
+        el.classList.toggle('nonode', S.sem.results[k]._nodes.thread < 0);
+      });
+      const onGraph = threads.length;
+      $('sem-sub').textContent = onGraph === S.sem.results.length
+        ? `${onGraph} ON GRAPH`
+        : `${onGraph} OF ${S.sem.results.length} ON GRAPH`;
+      if (!S.sem.set.size) S.sem.set = null;  // nothing to highlight: don't black out the graph
+      refreshColors();
+      if (fly) flyToNodes(threads, 900);
+    }
+
+    function clearSemanticHighlight() {
+      S.sem.set = null;
+      S.sem.focus = new Set();
+      S.sem.active = -1;
+      document.querySelectorAll('#sem-list .sr.active').forEach(el => el.classList.remove('active', 'expanded'));
+      if (S.geo) { clearRelations(); refreshColors(); }
+    }
+
+    function renderSemanticResults(data) {
+      const list = $('sem-list');
+      $('sem-title').textContent = `“${data.query}”`;
+      $('sem-sub').textContent = '';
+      if (!data.results.length) {
+        list.innerHTML = `<div class="sem-empty">No matching memories.</div>`;
+        return;
+      }
+      const top = Math.max(...data.results.map(r => r.similarity || 0), 0.0001);
+      list.innerHTML = data.results.map((r, k) => {
+        const when = fmtDay(r.start_time) + (r.end_time && fmtDay(r.end_time) !== fmtDay(r.start_time) ? ` → ${fmtDay(r.end_time)}` : '');
+        const pct = Math.max(4, Math.round(100 * (r.similarity || 0) / top));
+        const people = (r.people || []).slice(0, 6).join(', ') + ((r.people || []).length > 6 ? ` +${r.people.length - 6}` : '');
+        return `<div class="sr" data-k="${k}">
+          <div class="sr-top"><span class="sr-rank">#${r.rank}</span><span class="sr-plat">${esc(r.platform || 'unknown')}</span><span class="sr-date">${esc(when)}</span></div>
+          <div class="sr-bar" title="similarity ${esc(r.similarity)}"><i style="width:${pct}%"></i></div>
+          <div class="sr-title">${esc(r.title || '(untitled)')}</div>
+          ${people ? `<div class="sr-people">${esc(people)}</div>` : ''}
+          <div class="sr-snip">${esc(r.snippet)}</div>
+          <div class="sr-foot">similarity ${esc(r.similarity ?? '—')}</div>
+        </div>`;
+      }).join('');
+      list.querySelectorAll('.sr').forEach(el => el.addEventListener('click', () => focusSemanticResult(+el.dataset.k)));
+      list.scrollTop = 0;
+    }
+
+    function focusSemanticResult(k) {
+      const r = S.sem.results[k];
+      if (!r) return;
+      const els = document.querySelectorAll('#sem-list .sr');
+      const same = S.sem.active === k;
+      els.forEach(el => el.classList.remove('active', 'expanded'));
+      S.sem.active = same ? -1 : k;
+      const el = els[k];
+      if (!same) {
+        el.classList.add('active', 'expanded');
+        el.querySelector('.sr-snip').textContent = r.text || r.snippet;
+      } else {
+        el.querySelector('.sr-snip').textContent = r.snippet;
+      }
+      if (!S.geo) return;
+      applySemanticHighlight(false);
+      clearRelations();
+      const m = r._nodes || resultNodes(r);
+      if (S.sem.active >= 0 && m.thread >= 0) {
+        showRelations(m.thread);
+        flyToNodes([m.thread, ...m.people], 700);
+      }
+    }
+
+    async function semanticSearch() {
+      const q = $('sem-q').value.trim();
+      if (!q) { $('sem-q').focus(); return; }
+
+      // Semantic results replace any keyword search isolation.
+      if (S.search) { $('srch').value = ''; onSearch(''); }
+
+      const seq = ++S.sem.seq;
+      semBusy(true);
+      semStatus('busy', S.sem.loadedOnce ? 'Searching…' : 'Searching… the first query loads the embedding model and can take a while on CPU.');
+      $('ui').classList.add('sem-open');
+      $('sem-title').textContent = `“${q}”`;
+      $('sem-sub').textContent = 'SEARCHING…';
+      $('sem-list').innerHTML = '';
+
+      try {
+        const data = await apiFetch('/api/search', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: q, limit: SEM_LIMIT }),
+          timeout: SEM_TIMEOUT_MS,
+        });
+        if (seq !== S.sem.seq) return;  // a newer search or a reset superseded this one
+        S.sem.loadedOnce = true;
+        S.sem.results = data.results;
+        S.sem.active = -1;
+        if (S.geo) clearRelations();
+        renderSemanticResults(data);
+        semStatus('ok', `${data.count} result${data.count === 1 ? '' : 's'} in ${(data.took_ms / 1000).toFixed(1)}s · <code>${esc(data.table)}</code>`);
+        if (S.geo) applySemanticHighlight(true);
+        else if (data.results.length) $('sem-sub').textContent = 'GRAPH NOT LOADED';
+      } catch (e) {
+        if (seq !== S.sem.seq) return;
+        S.sem.results = [];
+        clearSemanticHighlight();
+        const msg = {
+          index_unavailable: 'The search index isn’t available yet — the embedding job may still be running.',
+          offline: 'Search API offline.',
+          timeout: 'Search timed out.',
+        }[e.code] || 'Search failed.';
+        $('sem-sub').textContent = e.code === 'index_unavailable' ? 'INDEX UNAVAILABLE' : 'ERROR';
+        $('sem-list').innerHTML = `<div class="sem-empty">${esc(msg)}</div>`;
+        if (e.code === 'offline') semStatus('err', offlineHint());
+        else if (e.code === 'index_unavailable') semStatus('warn', esc(e.message.split('\n')[0]));
+        else semStatus('err', esc(e.message));
+        if (e.code === 'offline' || e.code === 'index_unavailable') checkSemanticHealthLater();
+      } finally {
+        if (seq === S.sem.seq) semBusy(false);
+      }
+    }
+
+    function checkSemanticHealthLater() {
+      clearTimeout(S.sem.healthTimer);
+      S.sem.healthTimer = setTimeout(checkSemanticHealth, HEALTH_RETRY_MS);
+    }
+
+    function resetSemantic() {
+      S.sem.seq++;  // drop any in-flight response
+      S.sem.results = [];
+      clearSemanticHighlight();
+      semBusy(false);
+      $('sem-q').value = '';
+      $('sem-list').innerHTML = '';
+      $('ui').classList.remove('sem-open');
+      S.targetCamLook = null;
+      checkSemanticHealth();
+    }
+
+    $('sem-q').addEventListener('keydown', e => { if (e.key === 'Escape') resetSemantic(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && $('ui').classList.contains('sem-open') && document.activeElement !== $('sem-q')) resetSemantic();
+    });
+    Object.assign(window, { semanticSearch, resetSemantic });
+    checkSemanticHealth();
+
     // ─── Stats ────────────────────────────────────────────────────────────────────
     function updateStats(nNodes, nEdges) {
       $('stats').innerHTML = `${nNodes.toLocaleString()} nodes &nbsp;·&nbsp; ${nEdges.toLocaleString()} edges<br>${Object.keys(S.meta).length} groups`;
@@ -1749,6 +2276,8 @@
         startRecord, stopRecord, closeRecModal
       });
 
+      if (S.sem.results.length) applySemanticHighlight(true);  // a search finished before the graph loaded
+
       lbar(100, 'Ready');
       $('loading').classList.add('fade');
       setTimeout(() => { $('loading').style.display = 'none'; }, 800);
@@ -1759,6 +2288,12 @@
     boot().catch(err => {
       $('lmsg').innerHTML = `<span style="color:#ff6060">${err.message.replace(/\n/g, '<br>')}</span>`;
       $('lbar').style.background = '#ff3333';
+      // Memory search doesn't need the graph, so let the user reach it anyway.
+      const go = document.createElement('button');
+      go.className = 'btn';
+      go.textContent = 'Continue without graph (memory search only)';
+      go.onclick = () => { $('loading').style.display = 'none'; $('sem-q').focus(); };
+      $('loading').appendChild(go);
     });
   </script>
 </body>

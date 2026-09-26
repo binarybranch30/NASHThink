@@ -21,6 +21,7 @@ The project is structured into three main layers, with all logic centralized in 
 4.  **Utilities & Analysis** (`scripts/utils/`, `scripts/analysis/`): Shared helper scripts for database management, layout computation, and specific data extraction tasks.
 5.  **Data Storage** (`processed_data/`): Structured into `db/` (SQLite), `logs/` (JSONL), `context/` (Fetched conversation context), `graph/` (CSV/LanceDB), `semantic/` (Processing outputs), and `metadata/` (Identity maps).
 6.  **Visualization** (`sarthink_graph.html`): A high-performance 3D memory graph rendered via Three.js.
+7.  **Local API** (`scripts/api/server.py`): A FastAPI server that serves the graph and answers semantic memory searches against the local LanceDB index.
 
 ## Getting Started
 
@@ -127,9 +128,40 @@ python3 scripts/utils/compute_layout.py
 python3 scripts/utils/export_cosmograph.py
 ```
 
-### E. Visualizing
-Run a local web server to view the graph:
+### E. Visualizing + Memory Search
+`scripts/api/server.py` is a local FastAPI app that serves the 3D graph **and** a semantic search API over the LanceDB index. It binds to `127.0.0.1` only; queries are embedded on your CPU and nothing leaves the machine.
+
+One-time install into the existing venv:
 ```bash
-python3 -m http.server 8000
+.venv/bin/pip install fastapi uvicorn
 ```
-Then visit `http://localhost:8000/sarthink_graph.html`.
+
+Start it (after the embedding index from step C.3 has finished):
+```bash
+HF_HUB_OFFLINE=1 .venv/bin/python scripts/api/server.py
+```
+Then open `http://127.0.0.1:8000/`. Options: `--table topics_multilingual_pilot` searches another table, `--port`, `--db`.
+
+In the graph sidebar, type into **MEMORY SEARCH** and press Enter:
+- Results appear in a panel on the right (platform, date, people, similarity bar, snippet).
+- Matching conversation threads and their participants are highlighted on the graph and the camera flies to them; the rest of the graph is dimmed.
+- Click a result to focus its thread (shows its connections and full chunk text); click again to unfocus.
+- **Reset** (or `Esc`) clears the results and highlights.
+- The first query loads the embedding model, so it takes longer than the rest.
+
+If the index is still being built, the sidebar says so and the API answers `503 index_unavailable`; the server picks the table up automatically once it exists, no restart needed. If the page can't reach the API it shows the command to start it.
+
+API (interactive docs at `/api/docs`):
+```bash
+curl http://127.0.0.1:8000/api/health
+curl -X POST http://127.0.0.1:8000/api/search -H 'Content-Type: application/json' \
+  -d '{"query": "college ke baare mein stress", "limit": 10}'
+```
+`/api/search` returns `{query, table, model, count, took_ms, results: [...]}`; each result has `rank, similarity, distance, start_time, end_time, platform, title, channel_id, node_id, people, summary, snippet, text`. `node_id` (`T_<thread id>`) is the matching graph node. Errors are `{"error": {"code", "message"}}` with codes `invalid_request` (422), `index_unavailable` (503), `model_unavailable` and `search_failed` (500).
+
+The graph alone still works from any static server (`python3 -m http.server 8080`, then `http://localhost:8080/sarthink_graph.html`); memory search then needs the API running and `?api=http://127.0.0.1:8000` appended to the URL.
+
+Tests (fake model and table; no index or model needed):
+```bash
+.venv/bin/python scripts/tests/test_api.py
+```
