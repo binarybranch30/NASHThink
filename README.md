@@ -90,6 +90,19 @@ python3 scripts/semantic/summarizer.py
 python3 scripts/semantic/embedder.py
 ```
 
+Embedding and search run fully locally on CPU with `sentence-transformers/all-MiniLM-L6-v2` (weights cached in `.cache/models/`). On a machine without system pip:
+```bash
+python3 -m venv --without-pip .venv
+curl -sSfL https://bootstrap.pypa.io/get-pip.py | .venv/bin/python
+.venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu
+.venv/bin/pip install sentence-transformers lancedb pyarrow numpy
+```
+Without the (cloud) summarizer, embed raw topic chunks only and search them:
+```bash
+.venv/bin/python scripts/semantic/embedder.py --input processed_data/semantic/session_chunks.json --topics-only
+.venv/bin/python scripts/semantic/search.py "when did I talk about photography" --table topics
+```
+
 ### D. Graph Generation
 Compute the 3D layout and export the data for the web UI:
 ```bash

@@ -3,6 +3,7 @@
 # Data & Personal Exports
 archive/
 archive/*
+incoming/
 processed_data/
 config/identity_map.json
 .env
@@ -27,6 +28,8 @@ config/identity_map.json
 graph-thing.mp4
 
 # Cache & Metadata
+.venv/
+.cache/
 context_cache.json
 users.jsonl
 __pycache__/
