@@ -54,7 +54,20 @@ class FakeModel:
 
 class FakeQuery:
     def __init__(self, rows):
-        self.rows, self.distance, self.n = rows, None, None
+        self.rows, self.distance, self.n, self.filter, self.columns = rows, None, None, None, None
+
+    def where(self, expr, prefilter=None):
+        # Applies only the `col = 'value'` form thread_chunks() builds; other expressions
+        # (search.filter_expression) are recorded for assertions and left to the caller's post-filter.
+        self.filter, self.prefilter = expr, prefilter
+        if " AND " not in expr and " IN " not in expr and ">" not in expr and "<" not in expr:
+            col, value = [p.strip() for p in expr.split("=", 1)]
+            self.rows = [r for r in self.rows if str(r.get(col)) == value.strip("'")]
+        return self
+
+    def select(self, columns):
+        self.columns = columns
+        return self
 
     def distance_type(self, name):
         self.distance = name
@@ -73,9 +86,10 @@ class FakeTable:
         self.rows = rows
         self.queries = []
         list_type = SimpleNamespace(list_size=dim)
-        self.schema = SimpleNamespace(field=lambda name: SimpleNamespace(type=list_type))
+        self.schema = SimpleNamespace(field=lambda name: SimpleNamespace(type=list_type),
+                                      names=["vector", "parent_id", "platform", "title", "start_time", "end_time", "text"])
 
-    def search(self, vector):
+    def search(self, vector=None):
         self.queries.append(FakeQuery(self.rows))
         return self.queries[-1]
 
@@ -242,6 +256,61 @@ class ErrorTests(ApiTestCase):
         self.assertEqual(self.loader.calls, [], "invalid requests must not load the model")
 
 
+def chunk(parent_id, start, text="[2023-05-01 10:00:00] Me: hello\n[2023-05-01 10:01:00] Alice: hi"):
+    return {"parent_id": parent_id, "platform": "discord", "title": "Camera nerds", "start_time": start,
+            "end_time": start, "text": "Platform: DISCORD\nTitle: Camera nerds\n" + text}
+
+
+class ThreadContextTests(ApiTestCase):
+    def test_returns_chunks_of_that_thread_oldest_first_without_loading_model(self):
+        rows = [chunk("42", "2023-05-03T00:00:00+00:00"), chunk("7", "2023-01-01T00:00:00+00:00"),
+                chunk("42", "2023-05-01T00:00:00+00:00")]
+        table = FakeTable(rows)
+        r = self.client(table).get("/api/thread/T_42")
+        self.assertEqual(r.status_code, 200, r.text)
+        body = r.json()
+        self.assertEqual((body["node_id"], body["channel_id"], body["count"]), ("T_42", "42", 2))
+        self.assertEqual([c["start_time"] for c in body["chunks"]], ["2023-05-01T00:00:00+00:00", "2023-05-03T00:00:00+00:00"])
+        self.assertEqual(body["first_time"], "2023-05-01T00:00:00+00:00")
+        self.assertEqual(body["last_time"], "2023-05-03T00:00:00+00:00")
+        first = body["chunks"][0]
+        self.assertEqual(first["people"], ["Me", "Alice"])
+        self.assertTrue(first["snippet"].startswith("[2023-05-01 10:00:00] Me: hello"))
+        self.assertNotIn("Platform:", first["snippet"])
+        self.assertEqual(table.queries[0].filter, "parent_id = '42'")
+        self.assertNotIn("vector", table.queries[0].columns, "context never reads the embeddings")
+        self.assertEqual(self.loader.calls, [], "context must not load the embedding model")
+
+    def test_caps_chunks_and_text(self):
+        rows = [chunk("5", f"2023-05-{d:02d}T00:00:00+00:00", text="x" * 5000) for d in range(1, 21)]
+        body = self.client(FakeTable(rows)).get("/api/thread/T_5").json()
+        self.assertEqual(body["count"], 20)
+        self.assertEqual(len(body["chunks"]), server.CONTEXT_CHUNKS)
+        self.assertLessEqual(len(body["chunks"][0]["text"]), server.CONTEXT_TEXT_CHARS)
+        self.assertEqual(body["last_time"], "2023-05-20T00:00:00+00:00")
+
+    def test_unknown_thread_is_empty_not_an_error(self):
+        body = self.client(FakeTable([chunk("1", "2023-01-01")])).get("/api/thread/T_999").json()
+        self.assertEqual((body["count"], body["chunks"], body["first_time"]), (0, [], None))
+
+    def test_rejects_non_thread_ids(self):
+        c = self.client(FakeTable([chunk("1", "2023-01-01")]))
+        for bad in ("U_1", "T_", "T_abc", "T_1'%20OR%20'1'='1", "42", "T_1.5"):
+            with self.subTest(bad=bad):
+                r = c.get(f"/api/thread/{bad}")
+                self.assertEqual(r.status_code, 422, r.text)
+                self.assertEqual(r.json()["error"]["code"], "invalid_request")
+
+    def test_missing_index_is_503(self):
+        r = self.client().get("/api/thread/T_1")
+        self.assertEqual(r.status_code, 503)
+        self.assertEqual(r.json()["error"]["code"], "index_unavailable")
+
+    def test_thread_chunks_validates_id(self):
+        with self.assertRaises(search.SearchError):
+            search.thread_chunks(FakeTable([]), "1 OR 1=1")
+
+
 class StaticAndCorsTests(ApiTestCase):
     def test_serves_graph_page(self):
         c = self.client()
@@ -257,6 +326,7 @@ class StaticAndCorsTests(ApiTestCase):
         r = c.get("/processed_data/graph/cosmograph_nodes.csv")
         self.assertEqual(r.status_code, 200)
         self.assertIn("T_1", r.text)
+        self.assertEqual(r.headers.get("cache-control"), "no-cache", "a regenerated graph must show up on refresh")
         self.assertEqual(c.get("/processed_data/graph/cosmograph_edges.csv").status_code, 404)  # not exported
         self.assertEqual(c.get("/processed_data/graph/sarthink_lancedb.metadata.json").status_code, 404)
         self.assertEqual(c.get("/processed_data/graph/..%2F..%2Fgraph.html").status_code, 404)
@@ -303,7 +373,7 @@ class GraphPageTests(unittest.TestCase):
 
     def test_graph_html_wires_semantic_search(self):
         html = Path(REPO_ROOT, "sarthink_graph.html").read_text(encoding="utf-8")
-        for needle in ("'/api/search'", "'/api/health'", 'id="sem-q"', 'id="sem-panel"', "resetSemantic()",
+        for needle in ("'/api/search'", "'/api/health'", "/api/thread/", 'id="sem-q"', 'id="sem-panel"', "resetSemantic()",
                        "index_unavailable", "semanticSearch"):
             self.assertIn(needle, html)
 

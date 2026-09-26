@@ -26,7 +26,8 @@ REPO_ROOT = Path(os.path.dirname(os.path.dirname(SCRIPT_DIR)))
 NODES_CSV = str(REPO_ROOT / 'processed_data' / 'graph' / 'cosmograph_nodes.csv')
 EDGES_CSV = str(REPO_ROOT / 'processed_data' / 'graph' / 'cosmograph_edges.csv')
 
-random.seed(42)   # deterministic jitter
+LAYOUT_SEED = 42   # deterministic jitter
+random.seed(LAYOUT_SEED)
 
 # ─── Platform topology ────────────────────────────────────────────────────────
 # Master sphere radius — platform centroids sit on this sphere in 3D space
@@ -68,11 +69,16 @@ def get_platform(group: str) -> str:
     return 'twitter'
 
 def fibonacci_3d(n: int, radius: float) -> list[tuple]:
-    """Distribute n points evenly on a sphere of given radius (3D Fibonacci)."""
+    """Distribute n points evenly on a sphere of given radius (3D Fibonacci).
+
+    Uses the half-step offset (i + 0.5) / n: the classic i / (n - 1) form puts one point on a pole
+    and two points on opposite poles, so two satellites always ended up collinear with their centre
+    (three platforms rendered as one vertical line).
+    """
     golden = math.pi * (3 - math.sqrt(5))
     pts = []
     for i in range(n):
-        y = 1.0 - (i / max(n - 1, 1)) * 2.0
+        y = 1.0 - ((i + 0.5) / n) * 2.0
         r = math.sqrt(max(0.0, 1.0 - y * y))
         t = golden * i
         pts.append((math.cos(t) * r * radius, y * radius, math.sin(t) * r * radius))
@@ -114,15 +120,22 @@ def fibonacci_sphere_positions(count: int, radius: float, cx=0.0, cy=0.0, cz=0.0
 
 # ─── Galaxy layout ────────────────────────────────────────────────────────────
 
-def compute_galaxy_layout(nodes: list[dict]) -> dict[str, tuple]:
+def compute_galaxy_layout(nodes: list[dict], seed: int = LAYOUT_SEED) -> dict[str, tuple]:
     """Hierarchical natural sphere layout.
     
     Platforms orbit the biggest platform. Subgroups orbit the biggest subgroup
     within their platform. Nodes form soft volume spheres without overlapping.
+    Gaps scale with the cluster radii so small graphs don't become a few dots
+    separated by empty space. Same input + seed -> same positions.
     """
+    rng = random.Random(seed)
     CLUSTER_K = 5.5
-    GROUP_GAP = 200
-    PLATFORM_GAP = 1200
+    GROUP_GAP_K = 0.35      # gap between subgroup spheres, relative to their radii
+    PLATFORM_GAP_K = 0.45   # gap between platform spheres, relative to their radii
+    MIN_GAP = 40
+
+    def group_gap(r1, r2):
+        return max(MIN_GAP, GROUP_GAP_K * (r1 + r2))
 
     # Bucket nodes
     platforms = {}
@@ -145,11 +158,13 @@ def compute_galaxy_layout(nodes: list[dict]) -> dict[str, tuple]:
         if len(g_data) == 1:
             p_radius = g_data[0][1]
         else:
-            p_radius = g_data[0][1] + 2 * max(x[1] for x in g_data[1:]) + GROUP_GAP
+            p_radius = g_data[0][1] + 2 * max(x[1] for x in g_data[1:]) + group_gap(g_data[0][1], max(x[1] for x in g_data[1:]))
             
         p_data.append((p_name, p_radius, g_data, sum(len(x[2]) for x in g_data)))
 
     p_data.sort(key=lambda x: x[3], reverse=True)
+    if not p_data:
+        return positions
     
     # Place platforms
     p_positions = {}
@@ -160,7 +175,7 @@ def compute_galaxy_layout(nodes: list[dict]) -> dict[str, tuple]:
         sats = p_data[1:]
         dirs = fibonacci_3d(len(sats), 1.0)
         for i, (p_name, p_r, _, _) in enumerate(sats):
-            dist = p0_r + p_r + PLATFORM_GAP
+            dist = p0_r + p_r + max(MIN_GAP, PLATFORM_GAP_K * (p0_r + p_r))
             p_positions[p_name] = (dirs[i][0]*dist, dirs[i][1]*dist, dirs[i][2]*dist)
             
     # Place groups within platforms
@@ -175,7 +190,7 @@ def compute_galaxy_layout(nodes: list[dict]) -> dict[str, tuple]:
             sats = g_data[1:]
             dirs = fibonacci_3d(len(sats), 1.0)
             for i, (g_name, g_r, g_nodes) in enumerate(sats):
-                dist = g0_r + g_r + GROUP_GAP
+                dist = g0_r + g_r + group_gap(g0_r, g_r)
                 g_positions[g_name] = (px + dirs[i][0]*dist, py + dirs[i][1]*dist, pz + dirs[i][2]*dist)
                 
         # Distribute nodes within each group
@@ -189,14 +204,14 @@ def compute_galaxy_layout(nodes: list[dict]) -> dict[str, tuple]:
                 fraction = i / max(count - 1, 1)
                 r = g_r * (fraction ** 0.55)
                 
-                cos_phi  = random.uniform(-1.0, 1.0)
+                cos_phi  = rng.uniform(-1.0, 1.0)
                 sin_phi  = math.sqrt(max(0.0, 1.0 - cos_phi ** 2))
-                theta    = random.uniform(0.0, 2.0 * math.pi)
+                theta    = rng.uniform(0.0, 2.0 * math.pi)
 
                 jitter = g_r * 0.045
-                x = gx + r * sin_phi * math.cos(theta) + random.gauss(0, jitter)
-                y = gy + r * sin_phi * math.sin(theta) + random.gauss(0, jitter)
-                z = gz + r * cos_phi                   + random.gauss(0, jitter * 0.8)
+                x = gx + r * sin_phi * math.cos(theta) + rng.gauss(0, jitter)
+                y = gy + r * sin_phi * math.sin(theta) + rng.gauss(0, jitter)
+                z = gz + r * cos_phi                   + rng.gauss(0, jitter * 0.8)
 
                 positions[n['id']] = (x, y, z)
                 
@@ -314,6 +329,8 @@ def main():
     print(f"Loading {NODES_CSV} …")
     nodes = read_csv(NODES_CSV)
     print(f"  {len(nodes)} nodes")
+    if not nodes:
+        sys.exit("No nodes to lay out. Run scripts/utils/export_cosmograph.py first.")
 
     print(f"Loading {EDGES_CSV} …")
     edges = read_csv(EDGES_CSV)
@@ -346,7 +363,7 @@ def main():
     write_csv(NODES_CSV, nodes, fieldnames)
 
     print(f"\n✓ Layout complete.  Positions written to:\n  {NODES_CSV}")
-    print("\nNow open  sarthink_graph.html  — zero simulation, 60fps.")
+    print("\nNow start the UI:  HF_HUB_OFFLINE=1 .venv/bin/python scripts/api/server.py  → http://127.0.0.1:8000/")
 
 if __name__ == '__main__':
     main()

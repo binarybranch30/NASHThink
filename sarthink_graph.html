@@ -28,25 +28,46 @@
     }
 
     :root {
-      --gb: rgba(4, 4, 20, 0.82);
-      --gb2: rgba(4, 4, 24, 0.70);
-      --bdr: rgba(255, 255, 255, 0.07);
-      --dim: rgba(255, 255, 255, 0.30);
-      --mid: rgba(255, 255, 255, 0.65);
+      --gb: rgba(6, 6, 22, 0.86);
+      --gb2: rgba(6, 6, 26, 0.94);
+      --bdr: rgba(255, 255, 255, 0.08);
+      --bdr2: rgba(255, 255, 255, 0.16);
+      --dim: rgba(255, 255, 255, 0.42);
+      --mid: rgba(255, 255, 255, 0.70);
+      --hi: #fff;
       --acc: #4f8eff;
+      --ok: #3ecf8e;
+      --warn: #f5c26b;
+      --err: #ff8080;
       --bg: #000010;
+      --side-w: 272px;
+      --right-w: 344px;
+      --gap: 14px;
+      --top-h: 52px;
     }
 
-    body {
+    html, body {
       background: var(--bg);
       color: #dde;
-      font-family: 'Outfit', sans-serif;
+      font-family: 'Outfit', system-ui, sans-serif;
       overflow: hidden;
-      height: 100vh;
-      width: 100vw;
+      height: 100%;
+      width: 100%;
     }
 
-    /* Loading */
+    button, input { font-family: inherit; }
+
+    :focus-visible {
+      outline: 2px solid var(--acc);
+      outline-offset: 2px;
+    }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+
+    /* ── Loading / fatal ─────────────────────────────────────────────────── */
     #loading {
       position: fixed;
       inset: 0;
@@ -57,13 +78,12 @@
       justify-content: center;
       z-index: 9999;
       gap: 18px;
-      transition: opacity 0.8s;
+      padding: 24px;
+      text-align: center;
+      transition: opacity 0.6s;
     }
 
-    #loading.fade {
-      opacity: 0;
-      pointer-events: none;
-    }
+    #loading.fade { opacity: 0; pointer-events: none; }
 
     .lb-brand {
       font-family: 'Orbitron', monospace;
@@ -73,10 +93,7 @@
       color: #fff;
     }
 
-    .lb-brand em {
-      color: var(--acc);
-      font-style: normal;
-    }
+    .lb-brand em, .brand em { color: var(--acc); font-style: normal; }
 
     .lb-track {
       width: 260px;
@@ -88,72 +105,136 @@
     .lb-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #1DA1F2, #FF4500, #E1306C, #5865F2);
+      background: linear-gradient(90deg, #D97757, #FF4500, #E1306C, #5865F2);
       border-radius: 1px;
       transition: width .35s;
     }
 
     .lb-msg {
-      font-size: .72rem;
-      color: var(--dim);
-      letter-spacing: .12em;
+      font-size: .8rem;
+      color: var(--mid);
+      letter-spacing: .04em;
       min-height: 1em;
+      max-width: 620px;
+      line-height: 1.6;
     }
 
-    /* Canvas */
-    canvas {
-      display: block;
+    .lb-msg.err { color: var(--err); }
+
+    .lb-msg code, .code {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .74rem;
+      color: #cfe0ff;
+      background: rgba(255, 255, 255, .06);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin: 2px 0;
+      text-align: left;
+      word-break: break-all;
     }
 
-    /* UI layer */
-    #ui {
+    #lactions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+
+    /* ── Stage ───────────────────────────────────────────────────────────── */
+    #stage {
+      position: fixed;
+      inset: 0;
+      touch-action: none;
+    }
+
+    #stage canvas { display: block; outline: none; }
+    #stage.hovering canvas { cursor: pointer; }
+    #stage.dragging canvas { cursor: grabbing; }
+
+    /* Floating node labels: never intercept the mouse. */
+    #labels {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 100;
+      overflow: hidden;
+      z-index: 50;
     }
 
-    #ui.rec .hideable {
-      opacity: 0 !important;
-      pointer-events: none !important;
-      transform: translateY(-8px) !important;
-    }
-
-    /* Header */
-    #hdr {
+    .nlabel {
       position: absolute;
-      top: 0;
       left: 0;
-      right: 0;
-      padding: 12px 18px;
+      top: 0;
+      transform: translate(-50%, -100%);
+      font-size: .68rem;
+      color: rgba(255, 255, 255, .88);
+      white-space: nowrap;
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: rgba(0, 0, 16, .62);
+      text-shadow: 0 1px 2px #000;
+    }
+
+    .nlabel.sel { color: #fff; font-weight: 600; font-size: .74rem; background: rgba(20, 30, 70, .85); border: 1px solid rgba(79, 142, 255, .6); }
+    .nlabel.dimmed { color: rgba(255, 255, 255, .55); }
+
+    /* Every overlay below is sized to its own visible box, so the canvas keeps the rest of the
+       screen for orbit/pan/zoom. Nothing is a full-screen wrapper with pointer-events. */
+    .panel {
+      background: var(--gb);
+      border: 1px solid var(--bdr);
+      border-radius: 11px;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    /* ── Top bar ─────────────────────────────────────────────────────────── */
+    #topbar {
+      position: fixed;
+      top: 10px;
+      left: var(--gap);
+      right: var(--gap);
+      height: 36px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      background: linear-gradient(to bottom, rgba(0, 0, 18, .85), transparent);
-      pointer-events: none;
-      transition: opacity .5s, transform .5s;
+      gap: 14px;
+      z-index: 100;
+      pointer-events: none;   /* only its children capture input */
     }
+
+    #topbar > * { pointer-events: auto; }
 
     .brand {
       font-family: 'Orbitron', monospace;
-      font-size: .82rem;
+      font-size: .8rem;
       font-weight: 900;
-      letter-spacing: .26em;
-      color: rgba(255, 255, 255, .88);
+      letter-spacing: .24em;
+      color: rgba(255, 255, 255, .9);
+      white-space: nowrap;
+      pointer-events: none !important;
+      text-shadow: 0 1px 6px #000;
     }
 
-    .brand em {
-      color: var(--acc);
-      font-style: normal;
-    }
-
-    #hbtns {
+    #stats {
       display: flex;
-      gap: 7px;
-      pointer-events: all;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: nowrap;
+      min-width: 0;
+      overflow: hidden;
+      padding: 5px 10px;
+      font-size: .72rem;
+      color: var(--mid);
+      font-variant-numeric: tabular-nums;
     }
 
-    /* Buttons */
+    #stats .st { white-space: nowrap; }
+    #stats .st b { color: #fff; font-weight: 600; }
+    #stats .sep { color: rgba(255, 255, 255, .2); }
+    #stats .st.sel { color: #cfe0ff; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+    #stats .st.warn { color: var(--warn); }
+
+    #tbtns { margin-left: auto; display: flex; gap: 7px; }
+
+    /* ── Buttons ─────────────────────────────────────────────────────────── */
     .btn {
       padding: 5px 12px;
       border: 1px solid var(--bdr);
@@ -161,528 +242,199 @@
       color: var(--mid);
       border-radius: 7px;
       cursor: pointer;
-      font-family: 'Outfit', sans-serif;
       font-size: .74rem;
       font-weight: 500;
-      letter-spacing: .04em;
-      transition: all .18s;
+      letter-spacing: .03em;
+      transition: background .15s, border-color .15s, color .15s;
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       white-space: nowrap;
     }
 
-    .btn:hover {
-      background: rgba(255, 255, 255, .09);
-      border-color: rgba(255, 255, 255, .22);
-      color: #fff;
+    .btn:hover { background: rgba(255, 255, 255, .09); border-color: rgba(255, 255, 255, .24); color: #fff; }
+    .btn:disabled { opacity: .4; cursor: default; }
+    .btn.primary { background: rgba(79, 142, 255, .18); border-color: rgba(79, 142, 255, .55); color: #cfe0ff; }
+    .btn.sm { padding: 3px 8px; font-size: .68rem; }
+    .btn kbd, .kbd {
+      font-family: inherit;
+      font-size: .62rem;
+      color: var(--dim);
+      border: 1px solid var(--bdr2);
+      border-radius: 4px;
+      padding: 0 4px;
+      margin-left: 5px;
     }
 
-    .btn.on {
-      background: rgba(79, 142, 255, .18);
-      border-color: var(--acc);
-      color: #90c0ff;
-    }
-
-    .btn.stop {
-      background: rgba(255, 60, 60, .14);
-      border-color: rgba(255, 80, 80, .35);
-      color: #ff9090;
-    }
-
-    /* Sidebar */
+    /* ── Sidebar ─────────────────────────────────────────────────────────── */
     #sidebar {
-      position: absolute;
-      top: 52px;
-      left: 14px;
-      width: 224px;
-      background: var(--gb);
-      border: 1px solid var(--bdr);
-      border-radius: 11px;
-      padding: 13px;
-      pointer-events: all;
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      transition: opacity .5s, transform .5s;
-      max-height: calc(100vh - 90px);
+      position: fixed;
+      top: var(--top-h);
+      left: var(--gap);
+      width: var(--side-w);
+      max-height: calc(100vh - var(--top-h) - var(--gap));
       overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 12px 13px 14px;
+      z-index: 100;
     }
 
-    #sidebar::-webkit-scrollbar {
-      width: 3px;
-    }
+    #sidebar::-webkit-scrollbar, .scroll::-webkit-scrollbar { width: 4px; }
+    #sidebar::-webkit-scrollbar-thumb, .scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, .12); border-radius: 2px; }
 
-    #sidebar::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, .1);
-      border-radius: 2px;
-    }
+    .sec + .sec { border-top: 1px solid var(--bdr); margin-top: 12px; padding-top: 12px; }
 
     .plbl {
-      font-size: .6rem;
-      letter-spacing: .22em;
-      color: var(--dim);
-      font-weight: 600;
-      margin-bottom: 9px;
-    }
-
-    .prow {
-      display: flex;
-      gap: 5px;
-      margin-bottom: 11px;
-      flex-wrap: wrap;
-    }
-
-    .prow .btn {
-      padding: 4px 8px;
-      font-size: .68rem;
-    }
-
-    /* Group items */
-    .gi {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 5px 7px;
-      border-radius: 7px;
-      cursor: pointer;
-      transition: background .15s;
-      user-select: none;
-    }
-
-    .gi:hover {
-      background: rgba(255, 255, 255, .05);
-    }
-
-    .gi.dimmed {
-      opacity: .24;
-    }
-
-    .gi.solo {
-      background: rgba(255, 255, 255, .055);
-    }
-
-    .gidot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      transition: transform .2s;
-    }
-
-    .gi:hover .gidot {
-      transform: scale(1.5);
-    }
-
-    .gi.solo .gidot {
-      box-shadow: 0 0 7px currentColor;
-    }
-
-    .giname {
-      font-size: .76rem;
-      color: var(--mid);
-      flex: 1;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .gicnt {
-      font-size: .64rem;
+      gap: 6px;
+      font-size: .6rem;
+      letter-spacing: .2em;
       color: var(--dim);
-      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
     }
 
-    .divider {
-      height: 1px;
-      background: var(--bdr);
-      margin: 11px 0;
+    .plbl .act { margin-left: auto; letter-spacing: .04em; text-transform: none; }
+
+    .linkbtn {
+      background: none;
+      border: none;
+      color: var(--acc);
+      font-size: .68rem;
+      cursor: pointer;
+      padding: 0 2px;
     }
 
-    /* Search */
-    #srch {
+    .linkbtn:hover { color: #9cc0ff; text-decoration: underline; }
+    .linkbtn:disabled { color: var(--dim); cursor: default; text-decoration: none; }
+
+    .inp {
       width: 100%;
-      padding: 5px 9px;
-      background: rgba(255, 255, 255, .04);
+      padding: 6px 9px;
+      background: rgba(255, 255, 255, .05);
       border: 1px solid var(--bdr);
       border-radius: 6px;
       color: #fff;
-      font-size: .74rem;
-      font-family: 'Outfit', sans-serif;
+      font-size: .76rem;
       outline: none;
       transition: border-color .2s;
     }
 
-    #srch:focus {
-      border-color: var(--acc);
-    }
+    .inp:focus { border-color: var(--acc); }
+    .inp::placeholder { color: var(--dim); }
 
-    #srch::placeholder {
-      color: var(--dim);
-    }
+    /* Find (keyword) */
+    #find-list { margin-top: 6px; display: flex; flex-direction: column; gap: 2px; }
+    #find-list:empty { display: none; }
 
-    /* Depth slider */
-    #depth-wrap {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 7px;
-      font-size: .68rem;
-      color: var(--dim);
-    }
-
-    #depth-wrap span {
-      white-space: nowrap;
-    }
-
-    #depth-val {
-      color: var(--acc);
-      font-weight: 600;
-      min-width: 14px;
-      text-align: center;
-    }
-
-    #sdepth {
-      flex: 1;
-      accent-color: var(--acc);
-    }
-
-    /* Cycle bar */
-    #cycbar {
-      position: absolute;
-      bottom: 18px;
-      left: 50%;
-      transform: translateX(-50%) translateY(10px);
-      background: var(--gb);
-      border: 1px solid var(--bdr);
-      border-radius: 11px;
-      padding: 9px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      pointer-events: all;
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      opacity: 0;
-      transition: opacity .4s, transform .4s;
-    }
-
-    #cycbar.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    .spwrap {
+    .fitem {
       display: flex;
       align-items: center;
       gap: 7px;
-      font-size: .7rem;
-      color: var(--dim);
-    }
-
-    #spdr {
-      width: 70px;
-      accent-color: var(--acc);
-    }
-
-    #splbl {
-      min-width: 24px;
-      text-align: right;
-      color: var(--mid);
-    }
-
-    /* Toast */
-    #toast {
-      position: absolute;
-      top: 56px;
-      right: 14px;
-      width: 204px;
-      background: var(--gb);
-      border: 1px solid var(--bdr);
-      border-radius: 10px;
-      padding: 12px;
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      opacity: 0;
-      transform: translateX(8px);
-      transition: opacity .3s, transform .3s;
-      pointer-events: none;
-    }
-
-    #toast.show {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    #toast-lbl {
-      font-size: .82rem;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 4px;
-      word-break: break-all;
-    }
-
-    #toast-meta {
-      font-size: .68rem;
-      color: var(--dim);
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .tdot {
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      margin-right: 5px;
-      vertical-align: middle;
-    }
-
-    /* Stats */
-    #stats {
-      position: absolute;
-      bottom: 16px;
-      right: 14px;
-      font-size: .62rem;
-      color: rgba(255, 255, 255, .16);
-      letter-spacing: .1em;
-      line-height: 1.9;
-      text-align: right;
-      transition: opacity .5s;
-    }
-
-    /* Record overlay */
-    #recov {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity .6s;
-    }
-
-    #recov.show {
-      opacity: 1;
-    }
-
-    /* Cinematic title overlay */
-    #cin-title {
-      position: absolute;
-      bottom: 72px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      pointer-events: none;
-    }
-
-    #cin-name {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(1.6rem, 4.5vw, 3.2rem);
-      font-weight: 900;
-      letter-spacing: .14em;
-      color: #fff;
-      text-transform: uppercase;
-      transition: color .6s, text-shadow .6s, opacity .5s;
-      text-shadow: 0 0 60px rgba(255, 255, 255, .3);
-      opacity: 0;
-    }
-
-    #cin-sub {
-      font-size: .76rem;
-      color: rgba(255, 255, 255, .45);
-      letter-spacing: .28em;
-      margin-top: 7px;
-      opacity: 0;
-      transition: opacity .5s;
-    }
-
-    #cin-style-badge {
-      position: absolute;
-      top: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Orbitron', monospace;
-      font-size: .55rem;
-      letter-spacing: .28em;
-      color: rgba(255, 255, 255, .25);
-      text-transform: uppercase;
-      opacity: 0;
-      transition: opacity .5s;
-    }
-
-    #timertrack {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: rgba(255, 255, 255, .05);
-    }
-
-    #timerfill {
-      height: 100%;
-      width: 0%;
-      transition: width linear, background .5s;
-    }
-
-    #recstop {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      pointer-events: all;
-      background: rgba(255, 40, 40, .18);
-      border-color: rgba(255, 80, 80, .4);
-      color: #ff9090;
-    }
-
-    /* Record modal */
-    #rec-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 500;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 16, .75);
-      backdrop-filter: blur(12px);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .3s;
-    }
-
-    #rec-modal.show {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    #rec-box {
-      background: rgba(4, 4, 24, .96);
-      border: 1px solid rgba(255, 255, 255, .1);
-      border-radius: 16px;
-      padding: 28px 32px;
-      width: 380px;
-      max-width: 95vw;
-    }
-
-    #rec-box h2 {
-      font-family: 'Orbitron', monospace;
-      font-size: .9rem;
-      font-weight: 900;
-      letter-spacing: .22em;
-      color: #fff;
-      margin-bottom: 18px;
-    }
-
-    .rec-opt {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-
-    .rec-opt label {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      padding: 9px 13px;
-      border: 1px solid rgba(255, 255, 255, .08);
-      border-radius: 9px;
-      cursor: pointer;
-      transition: background .15s, border-color .15s;
-    }
-
-    .rec-opt label:hover {
-      background: rgba(255, 255, 255, .05);
-      border-color: rgba(255, 255, 255, .18);
-    }
-
-    .rec-opt input[type=radio] {
-      accent-color: var(--acc);
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-    }
-
-    .rec-opt .ro-title {
-      font-size: .78rem;
-      color: #fff;
-      font-weight: 600;
-    }
-
-    .rec-opt .ro-desc {
-      font-size: .65rem;
-      color: rgba(255, 255, 255, .38);
-      margin-top: 1px;
-    }
-
-    .rec-row {
-      display: flex;
-      gap: 10px;
-      justify-content: flex-end;
-    }
-
-    .rec-row .btn {
-      padding: 7px 18px;
-      font-size: .78rem;
-    }
-
-
-    /* Tooltip */
-    #tooltip {
-      position: fixed;
-      background: var(--gb2);
-      border: 1px solid var(--bdr);
-      border-radius: 7px;
-      padding: 7px 10px;
-      font-size: .72rem;
-      color: var(--mid);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity .15s;
-      z-index: 200;
-      max-width: 220px;
-      word-break: break-all;
-    }
-
-    #tooltip.show {
-      opacity: 1;
-    }
-
-    /* Semantic memory search */
-    #sem-form {
-      display: flex;
-      gap: 5px;
-    }
-
-    #sem-q {
-      flex: 1;
-      min-width: 0;
-      padding: 5px 9px;
-      background: rgba(255, 255, 255, .04);
-      border: 1px solid var(--bdr);
+      width: 100%;
+      padding: 4px 6px;
       border-radius: 6px;
-      color: #fff;
-      font-size: .74rem;
-      font-family: 'Outfit', sans-serif;
-      outline: none;
-      transition: border-color .2s;
+      background: none;
+      border: 1px solid transparent;
+      color: var(--mid);
+      font-size: .72rem;
+      text-align: left;
+      cursor: pointer;
     }
 
-    #sem-q:focus {
-      border-color: var(--acc);
+    .fitem:hover, .fitem.cur { background: rgba(255, 255, 255, .06); color: #fff; }
+    .fitem.cur { border-color: rgba(79, 142, 255, .5); }
+    .fitem .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .fitem .ct { color: var(--dim); font-size: .62rem; font-variant-numeric: tabular-nums; }
+    .find-note { font-size: .64rem; color: var(--dim); margin-top: 5px; }
+
+    /* Legend / filters */
+    .frow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 5px 7px;
+      border-radius: 7px;
+      background: none;
+      border: 1px solid transparent;
+      color: var(--mid);
+      cursor: pointer;
+      text-align: left;
+      font-size: .76rem;
+      user-select: none;
     }
 
-    #sem-q::placeholder {
+    .frow:hover { background: rgba(255, 255, 255, .05); }
+    .frow[aria-pressed="false"] { opacity: .38; }
+    .frow[aria-pressed="false"] .sw { background: transparent !important; }
+    .frow .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .frow .ct { font-size: .64rem; color: var(--dim); font-variant-numeric: tabular-nums; }
+    .fwrap { display: flex; align-items: center; }
+    .fwrap .frow { flex: 1; min-width: 0; }
+    .only {
+      opacity: 0;
+      font-size: .6rem;
       color: var(--dim);
+      background: none;
+      border: 1px solid var(--bdr);
+      border-radius: 4px;
+      padding: 1px 5px;
+      margin-left: 3px;
+      cursor: pointer;
+    }
+    .fwrap:hover .only, .only:focus-visible { opacity: 1; }
+    .only:hover { color: #fff; border-color: var(--bdr2); }
+
+    .sw {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 2px solid currentColor;
     }
 
-    #sem-form .btn {
-      padding: 4px 9px;
-      font-size: .68rem;
-    }
+    .shape { flex-shrink: 0; }
 
-    #sem-form .btn:disabled {
-      opacity: .4;
-      cursor: default;
+    /* Timeline */
+    #tl-hist { display: block; width: 100%; height: 38px; margin: 2px 0 0; }
+    #tl-hist rect { fill: rgba(79, 142, 255, .75); }
+    #tl-hist rect.out { fill: rgba(255, 255, 255, .12); }
+
+    .dual { position: relative; height: 18px; }
+    .dual input[type=range] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      pointer-events: none;
+      -webkit-appearance: none;
+      appearance: none;
+      background: none;
+      height: 18px;
     }
+    .dual input[type=range]::-webkit-slider-thumb {
+      pointer-events: auto;
+      -webkit-appearance: none;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: #cfe0ff; border: 2px solid var(--acc); cursor: ew-resize;
+    }
+    .dual input[type=range]::-moz-range-thumb {
+      pointer-events: auto;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #cfe0ff; border: 2px solid var(--acc); cursor: ew-resize;
+    }
+    .dual .rail { position: absolute; left: 0; right: 0; top: 8px; height: 2px; background: rgba(255, 255, 255, .1); border-radius: 1px; }
+    .dual .fill { position: absolute; top: 8px; height: 2px; background: var(--acc); }
+
+    #tl-lbl { display: flex; justify-content: space-between; font-size: .66rem; color: var(--mid); margin-top: 3px; font-variant-numeric: tabular-nums; }
+    #tl-presets { display: flex; gap: 5px; margin-top: 7px; }
+    .tl-note { font-size: .66rem; color: var(--dim); line-height: 1.45; }
+
+    /* Memory search */
+    #sem-form { display: flex; gap: 5px; }
+    #sem-form .inp { flex: 1; min-width: 0; }
+    #sem-form .btn { padding: 4px 10px; font-size: .7rem; }
 
     #sem-status {
       margin-top: 7px;
@@ -703,14 +455,13 @@
       background: var(--dim);
     }
 
-    #sem-status.ok .dot { background: #3ecf8e; }
-    #sem-status.warn { color: #f5c26b; }
-    #sem-status.warn .dot { background: #f5c26b; }
-    #sem-status.err { color: #ff9090; }
+    #sem-status.ok .dot { background: var(--ok); }
+    #sem-status.warn { color: var(--warn); }
+    #sem-status.warn .dot { background: var(--warn); }
+    #sem-status.err { color: var(--err); }
     #sem-status.err .dot { background: #ff6060; }
-    #sem-status.busy .dot { background: var(--acc); animation: sem-pulse 1s ease-in-out infinite; }
-
-    #sem-status code {
+    #sem-status.busy .dot { background: var(--acc); animation: pulse 1s ease-in-out infinite; }
+    #sem-status code, .sem-empty code {
       font-size: .62rem;
       color: var(--mid);
       background: rgba(255, 255, 255, .05);
@@ -719,1238 +470,1824 @@
       word-break: break-all;
     }
 
-    @keyframes sem-pulse {
-      50% { opacity: .25; }
-    }
+    @keyframes pulse { 50% { opacity: .25; } }
 
-    #sem-panel {
-      position: absolute;
-      top: 56px;
-      right: 14px;
-      width: 340px;
-      max-height: calc(100vh - 100px);
-      display: none;
-      flex-direction: column;
-      background: var(--gb);
-      border: 1px solid var(--bdr);
-      border-radius: 11px;
-      pointer-events: all;
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      transition: opacity .5s, transform .5s;
-    }
-
-    #ui.sem-open #sem-panel { display: flex; }
-    #ui.sem-open #toast { right: 368px; }
-
-    #sem-head {
+    /* Memory mode tabs + Ask Sarthink */
+    .mtabs {
       display: flex;
-      align-items: center;
+      gap: 2px;
+      padding: 2px;
+      margin-bottom: 8px;
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid var(--bdr);
+      border-radius: 7px;
+    }
+    .mtab {
+      flex: 1;
+      background: none;
+      border: none;
+      border-radius: 5px;
+      padding: 4px 6px;
+      color: var(--dim);
+      font-size: .6rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .mtab:hover { color: #fff; }
+    .mtab[aria-selected="true"] { background: rgba(79, 142, 255, .18); color: #cfe0ff; }
+    #mode-ask[hidden], #mode-search[hidden] { display: none; }
+
+    #ask-form { display: flex; flex-direction: column; gap: 6px; }
+    #ask-q { resize: vertical; min-height: 44px; max-height: 140px; font-family: inherit; line-height: 1.4; }
+    #ask-row { display: flex; align-items: center; gap: 6px; }
+    #ask-scope { flex: 1; min-width: 0; font-size: .6rem; color: var(--dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #ask-go { padding: 4px 12px; font-size: .7rem; }
+    #ask-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+    .ask-chip {
+      font-size: .62rem;
+      line-height: 1.3;
+      padding: 3px 8px;
+      border-radius: 10px;
+      border: 1px solid var(--bdr);
+      background: rgba(255, 255, 255, .03);
+      color: var(--mid);
+      text-align: left;
+      cursor: pointer;
+    }
+    .ask-chip:hover, .ask-chip:focus-visible { border-color: var(--bdr2); color: #fff; }
+    .ask-chip:disabled { opacity: .5; cursor: default; }
+
+    .ask-brief { display: flex; flex-direction: column; gap: 11px; padding: 2px 2px 4px; }
+    .ask-conf { display: inline-flex; align-items: center; gap: 7px; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+    .ask-conf .meter { display: inline-flex; gap: 2px; }
+    .ask-conf .meter i { width: 12px; height: 4px; border-radius: 1px; background: rgba(255, 255, 255, .12); }
+    .ask-conf.high { color: var(--ok); }
+    .ask-conf.medium { color: var(--warn); }
+    .ask-conf.low { color: var(--err); }
+    .ask-conf.high .meter i, .ask-conf.medium .meter i:nth-child(-n+2), .ask-conf.low .meter i:first-child { background: currentColor; }
+    .ask-conf .ev { color: var(--dim); letter-spacing: .06em; text-transform: none; font-size: .62rem; }
+    .ask-answer { font-size: .76rem; line-height: 1.55; color: #fff; word-break: break-word; }
+    .ask-h { font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin-bottom: 5px; }
+    .ask-points { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+    .ask-points li { position: relative; padding-left: 11px; font-size: .68rem; line-height: 1.45; color: rgba(255, 255, 255, .74); word-break: break-word; }
+    .ask-points li::before { content: ''; position: absolute; left: 1px; top: .55em; width: 4px; height: 4px; border-radius: 50%; background: var(--acc); }
+    .ask-timeline { display: flex; flex-direction: column; gap: 1px; margin-left: 4px; border-left: 1px solid rgba(255, 255, 255, .12); }
+    .atl-item {
+      position: relative;
+      display: flex;
+      align-items: baseline;
+      gap: 7px;
+      width: 100%;
+      padding: 3px 6px 3px 11px;
+      background: none;
+      border: none;
+      border-radius: 4px;
+      color: var(--mid);
+      font-size: .66rem;
+      text-align: left;
+      cursor: pointer;
+    }
+    .atl-item::before { content: ''; position: absolute; left: -4px; top: .72em; width: 7px; height: 7px; border-radius: 50%; background: var(--pc, #9aa0b4); }
+    .atl-item:hover, .atl-item:focus-visible, .atl-item.active { background: rgba(255, 255, 255, .06); color: #fff; }
+    .atl-item .d { color: var(--dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .atl-item .l { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ask-notes { font-size: .6rem; line-height: 1.45; color: var(--dim); }
+    .ask-loading { display: flex; align-items: center; gap: 8px; padding: 18px 8px; justify-content: center; font-size: .72rem; color: var(--mid); }
+    .ask-loading i { width: 7px; height: 7px; border-radius: 50%; background: var(--acc); animation: pulse 1s ease-in-out infinite; }
+    .sr.lead { opacity: .72; }
+    .sem-empty .btn { margin-top: 10px; }
+
+    /* ── Right column: details + results ─────────────────────────────────── */
+    #rightcol {
+      position: fixed;
+      top: var(--top-h);
+      right: var(--gap);
+      width: var(--right-w);
+      max-height: calc(100vh - var(--top-h) - var(--gap));
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 100;
+      pointer-events: none;   /* the column itself is layout only; its panels capture input */
+    }
+
+    #rightcol > .panel { pointer-events: auto; display: flex; flex-direction: column; min-height: 0; }
+    #rightcol > .panel[hidden] { display: none; }
+
+    .phead {
+      display: flex;
+      align-items: flex-start;
       gap: 8px;
-      padding: 11px 13px 9px;
+      padding: 11px 12px 9px;
       border-bottom: 1px solid var(--bdr);
     }
 
+    .phead .ttl { flex: 1; min-width: 0; }
+    .xbtn {
+      background: none;
+      border: 1px solid transparent;
+      color: var(--dim);
+      font-size: 1rem;
+      line-height: 1;
+      padding: 2px 6px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .xbtn:hover { color: #fff; border-color: var(--bdr2); }
+
+    .scroll { overflow-y: auto; overscroll-behavior: contain; min-height: 0; }
+
+    /* Details */
+    #details { flex: 0 1 auto; max-height: 62vh; }
+    #details:has(~ #sem-panel:not([hidden])) { max-height: 50vh; }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .6rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .chip .dot { width: 8px; height: 8px; border-radius: 50%; }
+    #d-title { font-size: .92rem; color: #fff; font-weight: 600; line-height: 1.3; margin-top: 4px; word-break: break-word; }
+    #d-body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 12px; }
+
+    .kv {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 10px;
+    }
+
+    .kv div { min-width: 0; }
+    .kv .k { font-size: .58rem; letter-spacing: .14em; color: var(--dim); text-transform: uppercase; }
+    .kv .v { font-size: .8rem; color: #fff; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .dsec .plbl { margin-bottom: 5px; }
+    .note { font-size: .68rem; color: var(--dim); line-height: 1.45; }
+    .note.warn { color: var(--warn); }
+    .note.err { color: var(--err); }
+
+    .why {
+      font-size: .7rem;
+      line-height: 1.5;
+      color: #cfe0ff;
+      background: rgba(79, 142, 255, .09);
+      border: 1px solid rgba(79, 142, 255, .28);
+      border-radius: 7px;
+      padding: 7px 9px;
+    }
+
+    .nlist { display: flex; flex-direction: column; gap: 1px; }
+    .nitem {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      width: 100%;
+      padding: 4px 6px;
+      background: none;
+      border: none;
+      border-radius: 6px;
+      color: var(--mid);
+      font-size: .72rem;
+      text-align: left;
+      cursor: pointer;
+    }
+    .nitem:hover { background: rgba(255, 255, 255, .06); color: #fff; }
+    .nitem .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .nitem .ct { font-size: .62rem; color: var(--dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .nitem.outside { opacity: .55; }
+    .nitem.outside .nm::after { content: ' · filtered'; color: var(--dim); font-size: .6rem; }
+
+    .ctx {
+      border: 1px solid var(--bdr);
+      border-radius: 7px;
+      padding: 7px 9px;
+      background: rgba(255, 255, 255, .02);
+    }
+    .ctx + .ctx { margin-top: 6px; }
+    .ctx-top { font-size: .62rem; color: var(--dim); display: flex; gap: 6px; }
+    .ctx-top .pp { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+    .ctx-snip { font-size: .7rem; line-height: 1.5; color: rgba(255, 255, 255, .66); margin-top: 3px; white-space: pre-wrap; word-break: break-word; }
+    .ctx-snip.clamp { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; white-space: normal; }
+
+    .dactions { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    /* Semantic results */
+    #sem-panel { flex: 1 1 auto; }
     #sem-title {
-      flex: 1;
-      min-width: 0;
-      font-size: .74rem;
+      font-size: .78rem;
       color: #fff;
       font-weight: 500;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-
-    #sem-sub {
-      padding: 6px 13px 0;
-      font-size: .62rem;
-      letter-spacing: .06em;
-      color: var(--dim);
-    }
-
-    #sem-head .btn {
-      padding: 3px 9px;
-      font-size: .66rem;
-    }
-
-    #sem-list {
-      overflow-y: auto;
-      padding: 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    #sem-list::-webkit-scrollbar { width: 3px; }
-    #sem-list::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, .1); border-radius: 2px; }
+    #sem-sub { font-size: .6rem; letter-spacing: .08em; color: var(--dim); margin-top: 2px; }
+    #sem-list { padding: 8px; display: flex; flex-direction: column; gap: 6px; }
 
     .sr {
+      display: block;
+      width: 100%;
+      text-align: left;
       padding: 9px 10px;
       border: 1px solid var(--bdr);
       border-radius: 8px;
       background: rgba(255, 255, 255, .02);
+      color: inherit;
       cursor: pointer;
       transition: background .15s, border-color .15s;
     }
 
-    .sr:hover { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .16); }
+    .sr:hover { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .18); }
     .sr.active { border-color: var(--acc); background: rgba(79, 142, 255, .10); }
     .sr.nonode { cursor: default; }
-
-    .sr-top {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: .64rem;
-      color: var(--dim);
-    }
-
+    .sr-top { display: flex; align-items: center; gap: 6px; font-size: .62rem; color: var(--dim); }
     .sr-rank { color: var(--mid); font-variant-numeric: tabular-nums; }
-    .sr-plat { text-transform: uppercase; letter-spacing: .1em; }
+    .sr-plat { text-transform: uppercase; letter-spacing: .1em; display: inline-flex; align-items: center; gap: 4px; }
+    .sr-plat i { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
     .sr-date { margin-left: auto; font-variant-numeric: tabular-nums; }
-
-    .sr-bar {
-      height: 2px;
-      margin: 6px 0 7px;
-      background: rgba(255, 255, 255, .06);
-      border-radius: 1px;
-      overflow: hidden;
-    }
-
+    .sr-bar { height: 2px; margin: 6px 0 7px; background: rgba(255, 255, 255, .06); border-radius: 1px; overflow: hidden; }
     .sr-bar i { display: block; height: 100%; background: var(--acc); }
-
-    .sr-title {
-      font-size: .76rem;
-      color: #fff;
-      font-weight: 500;
-      margin-bottom: 3px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .sr-people {
-      font-size: .64rem;
-      color: var(--mid);
-      margin-bottom: 4px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
+    .sr-title { font-size: .76rem; color: #fff; font-weight: 500; margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sr-people { font-size: .64rem; color: var(--mid); margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .sr-snip {
       font-size: .68rem;
       line-height: 1.45;
-      color: rgba(255, 255, 255, .5);
+      color: rgba(255, 255, 255, .55);
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
-
     .sr.expanded .sr-snip { display: block; white-space: pre-wrap; max-height: 260px; overflow-y: auto; }
+    .sr-snip mark, .ctx-snip mark { background: rgba(245, 194, 107, .25); color: #fff; border-radius: 2px; padding: 0 1px; }
+    .sr-why { margin-top: 5px; font-size: .62rem; color: rgba(255, 255, 255, .42); line-height: 1.4; }
+    .sr-why .badge {
+      display: inline-block;
+      font-size: .56rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 0 5px;
+      border-radius: 3px;
+      margin-right: 4px;
+      border: 1px solid rgba(62, 207, 142, .5);
+      color: var(--ok);
+    }
+    .sr-why .badge.off { border-color: rgba(255, 255, 255, .2); color: var(--dim); }
 
-    .sr-foot {
-      margin-top: 5px;
-      font-size: .6rem;
-      color: rgba(255, 255, 255, .22);
+    .sem-empty { padding: 18px 8px; text-align: center; font-size: .72rem; color: var(--dim); line-height: 1.5; }
+
+    /* ── Bottom hint, empty state, help, tooltip ─────────────────────────── */
+    #hint {
+      position: fixed;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: .66rem;
+      color: rgba(255, 255, 255, .45);
+      padding: 5px 12px;
+      z-index: 90;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #hint b { color: rgba(255, 255, 255, .72); font-weight: 500; }
+
+    #empty-state {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 16px 20px;
+      text-align: center;
+      font-size: .8rem;
+      color: var(--mid);
+      z-index: 95;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+    #empty-state[hidden] { display: none; }
+
+    #help-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 16, .55);
+      z-index: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    #help-backdrop[hidden] { display: none; }
+
+    #help {
+      width: 520px;
+      max-width: 100%;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+      padding: 20px 22px;
+      background: var(--gb2);
     }
 
-    .sem-empty {
-      padding: 18px 8px;
-      text-align: center;
-      font-size: .7rem;
-      color: var(--dim);
+    #help h2 { font-family: 'Orbitron', monospace; font-size: .8rem; letter-spacing: .2em; color: #fff; margin-bottom: 14px; }
+    #help h3 { font-size: .62rem; letter-spacing: .18em; color: var(--dim); text-transform: uppercase; margin: 14px 0 6px; font-weight: 600; }
+    #help table { width: 100%; border-collapse: collapse; font-size: .76rem; }
+    #help td { padding: 4px 0; color: var(--mid); vertical-align: top; }
+    #help td:first-child { width: 42%; color: #fff; padding-right: 10px; }
+    #help p { font-size: .74rem; color: var(--mid); line-height: 1.55; }
+    #help .kbd { margin-left: 0; color: #fff; }
+    #help .foot { display: flex; justify-content: flex-end; margin-top: 16px; }
+
+    #tooltip {
+      position: fixed;
+      left: 0;
+      top: 0;
+      background: var(--gb2);
+      border: 1px solid var(--bdr2);
+      border-radius: 7px;
+      padding: 7px 10px;
+      font-size: .72rem;
+      color: var(--mid);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .12s;
+      z-index: 300;
+      max-width: 260px;
+    }
+    #tooltip.show { opacity: 1; }
+    #tooltip .tt-l { color: #fff; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #tooltip .tt-m { font-size: .64rem; margin-top: 2px; line-height: 1.5; }
+    #tooltip .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
+
+    /* ── Responsive (laptop first; small screens stack panels) ───────────── */
+    @media (max-width: 1280px) {
+      :root { --side-w: 248px; --right-w: 316px; }
+    }
+
+    @media (max-width: 1100px) {
+      #stats .opt { display: none; }
+      #hint .opt { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      :root { --right-w: 290px; }
+      #sidebar.collapsed .sec:not(:first-child) { display: none; }
+      #side-toggle { display: inline-block !important; }
     }
 
     @media (max-width: 720px) {
-      #sem-panel { left: 14px; right: 14px; width: auto; top: auto; bottom: 14px; max-height: 50vh; }
-      #ui.sem-open #toast { right: 14px; }
+      .brand { display: none; }
+      #rightcol { left: var(--gap); right: var(--gap); width: auto; top: auto; bottom: var(--gap); max-height: 48vh; }
+      #sidebar { width: calc(100vw - 2 * var(--gap)); max-height: 40vh; }
+      #hint { display: none; }
+    }
+
+    @media (max-height: 640px) {
+      #hint { display: none; }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- Loading -->
-  <div id="loading">
+  <!-- Loading / fatal error -->
+  <div id="loading" role="status" aria-live="polite">
     <div class="lb-brand">SARTHINK <em>·</em> MEMORY</div>
     <div class="lb-track">
       <div class="lb-fill" id="lbar"></div>
     </div>
     <div class="lb-msg" id="lmsg">Initializing…</div>
+    <div id="lactions"></div>
   </div>
 
-  <!-- UI -->
-  <div id="ui">
-    <!-- Header -->
-    <div id="hdr" class="hideable">
-      <div class="brand">SARTHINK <em>·</em> MEMORY GRAPH</div>
-    </div>
+  <div id="stage" aria-label="3D memory graph. Use the sidebar to find nodes; press ? for controls." role="application"></div>
+  <div id="labels" aria-hidden="true"></div>
 
-    <!-- Sidebar -->
-    <div id="sidebar" class="hideable">
-      <div class="plbl">GROUPS</div>
-      <div class="prow">
-        <button class="btn" onclick="showAll()">All</button>
-        <button class="btn" onclick="hideAll()">None</button>
+  <!-- Top bar -->
+  <header id="topbar">
+    <div class="brand">SARTHINK <em>·</em> MEMORY GRAPH</div>
+    <div id="stats" class="panel" aria-live="polite"></div>
+    <div id="tbtns">
+      <button id="btn-help" class="btn" type="button" title="Controls & shortcuts (?)" aria-haspopup="dialog">Help<kbd>?</kbd></button>
+      <button id="btn-reset" class="btn" type="button" title="Restore the full graph view (Esc)">Reset<kbd>Esc</kbd></button>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside id="sidebar" class="panel" aria-label="Graph controls">
+    <section class="sec">
+      <label class="plbl" for="find-q">Find node <span class="act"><button id="side-toggle" class="linkbtn" type="button" style="display:none" aria-expanded="true">Collapse</button></span></label>
+      <input id="find-q" class="inp" type="search" placeholder="Name or thread title…  ( / )" autocomplete="off"
+        aria-controls="find-list" aria-describedby="find-note">
+      <div id="find-list" role="listbox" aria-label="Matching nodes"></div>
+      <div id="find-note" class="find-note"></div>
+    </section>
+
+    <section class="sec" aria-labelledby="plat-lbl">
+      <div class="plbl" id="plat-lbl">Platforms <span class="act"><button id="plat-all" class="linkbtn" type="button">Show all</button></span></div>
+      <div id="plat-list"></div>
+    </section>
+
+    <section class="sec" aria-labelledby="kind-lbl">
+      <div class="plbl" id="kind-lbl">Node types</div>
+      <div id="kind-list"></div>
+    </section>
+
+    <section class="sec" aria-labelledby="tl-title">
+      <div class="plbl" id="tl-title">Timeline <span class="act"><button id="tl-clear" class="linkbtn" type="button" disabled>All time</button></span></div>
+      <div id="timeline"></div>
+    </section>
+
+    <section class="sec" aria-label="Memory">
+      <div class="mtabs" role="tablist" aria-label="Memory mode">
+        <button class="mtab" type="button" role="tab" id="tab-search" data-mode="search" aria-selected="true" aria-controls="mode-search">Memory search</button>
+        <button class="mtab" type="button" role="tab" id="tab-ask" data-mode="ask" aria-selected="false" aria-controls="mode-ask" tabindex="-1">Ask Sarthink</button>
       </div>
-      <div id="group-list"></div>
-      <div class="divider"></div>
-      <div class="plbl">SEARCH</div>
-      <input id="srch" type="text" placeholder="Search nodes…" oninput="onSearch(this.value)">
-      <div id="depth-wrap">
-        <span>Depth</span>
-        <input type="range" id="sdepth" min="1" max="3" value="1" oninput="onDepthChange(this.value)">
-        <span id="depth-val">1</span>
+      <div id="mode-search" role="tabpanel" aria-labelledby="tab-search">
+        <form id="sem-form" onsubmit="event.preventDefault(); semanticSearch();">
+          <input id="sem-q" class="inp" type="text" placeholder="What did I talk about…" autocomplete="off" maxlength="500" aria-label="Memory search">
+          <button id="sem-go" class="btn" type="submit">Go</button>
+        </form>
       </div>
-      <div class="divider"></div>
-      <div class="plbl">MEMORY SEARCH</div>
-      <form id="sem-form" onsubmit="event.preventDefault(); semanticSearch();">
-        <input id="sem-q" type="text" placeholder="What did I talk about…" autocomplete="off" maxlength="500">
-        <button id="sem-go" class="btn" type="submit">Go</button>
-      </form>
-      <div id="sem-status"><span class="dot"></span>Checking search API…</div>
-    </div>
-
-    <!-- Semantic search results -->
-    <div id="sem-panel" class="hideable" aria-live="polite">
-      <div id="sem-head">
-        <div id="sem-title">Results</div>
-        <button class="btn" type="button" onclick="resetSemantic()" title="Clear results and highlights (Esc)">Reset</button>
+      <div id="mode-ask" role="tabpanel" aria-labelledby="tab-ask" hidden>
+        <form id="ask-form" onsubmit="event.preventDefault(); askSarthink();">
+          <textarea id="ask-q" class="inp" rows="2" maxlength="500" placeholder="Ask about your memories…  (Enter to ask)" aria-label="Question for Ask Sarthink"></textarea>
+          <div id="ask-row">
+            <span id="ask-scope" title="Set by the platform toggles and the timeline above">Scope: all platforms · all time</span>
+            <button id="ask-go" class="btn primary" type="submit">Ask</button>
+          </div>
+        </form>
+        <div id="ask-chips" aria-label="Sample questions">
+          <button type="button" class="ask-chip">What was I stressed about during college?</button>
+          <button type="button" class="ask-chip">How has my interest in photography changed?</button>
+          <button type="button" class="ask-chip">What did I discuss about Python?</button>
+          <button type="button" class="ask-chip">What was I working on around August 2026?</button>
+        </div>
       </div>
-      <div id="sem-sub"></div>
-      <div id="sem-list"></div>
-    </div>
+      <div id="sem-status" aria-live="polite"><span class="dot"></span>Checking search API…</div>
+    </section>
+  </aside>
 
-    <!-- Node toast -->
-    <div id="toast" class="hideable">
-      <div id="toast-lbl">—</div>
-      <div id="toast-meta"></div>
-    </div>
+  <!-- Right column: selected node details + memory search results -->
+  <div id="rightcol">
+    <section id="details" class="panel" hidden aria-labelledby="d-title">
+      <div class="phead">
+        <div class="ttl">
+          <div id="d-chip" class="chip"></div>
+          <h2 id="d-title">—</h2>
+        </div>
+        <button class="xbtn" type="button" id="d-close" title="Deselect (Esc resets everything)" aria-label="Close details">×</button>
+      </div>
+      <div id="d-body" class="scroll"></div>
+    </section>
 
-    <!-- Stats -->
-    <div id="stats" class="hideable"></div>
-
-    <!-- Hover tooltip -->
-    <div id="tooltip"></div>
+    <section id="sem-panel" class="panel" hidden aria-live="polite" aria-labelledby="sem-title">
+      <div class="phead">
+        <div class="ttl">
+          <div id="sem-title">Results</div>
+          <div id="sem-sub"></div>
+        </div>
+        <button class="btn sm" type="button" onclick="resetSemantic()" title="Clear memory search results and highlights">Clear</button>
+      </div>
+      <div id="sem-list" class="scroll"></div>
+    </section>
   </div>
+
+  <div id="hint" class="panel">
+    <span><b>Drag</b> orbit</span><span><b>Right-drag</b> / <b>Shift-drag</b> pan</span><span><b>Scroll</b> zoom</span>
+    <span class="opt"><b>Click</b> select · <b>Double-click</b> focus</span><span><b>Esc</b> reset</span>
+  </div>
+
+  <div id="empty-state" class="panel" hidden role="status">
+    <div id="empty-msg">No nodes match the current filters.</div>
+    <button class="btn primary" type="button" id="empty-reset">Reset filters</button>
+  </div>
+
+  <div id="help-backdrop" hidden>
+    <div id="help" class="panel" role="dialog" aria-modal="true" aria-labelledby="help-h" tabindex="-1">
+      <h2 id="help-h">CONTROLS</h2>
+      <h3>Mouse</h3>
+      <table>
+        <tr><td>Left-drag</td><td>Orbit around the focus point</td></tr>
+        <tr><td>Right-drag · Shift/Ctrl + drag</td><td>Pan</td></tr>
+        <tr><td>Scroll · pinch</td><td>Zoom toward the cursor</td></tr>
+        <tr><td>Hover a node</td><td>Name, platform, connections</td></tr>
+        <tr><td>Click a node</td><td>Select it: neighbours and links stay bright, the rest dims</td></tr>
+        <tr><td>Double-click a node</td><td>Select and fly the camera to it</td></tr>
+        <tr><td>Click empty space</td><td>Deselect</td></tr>
+      </table>
+      <h3>Keyboard</h3>
+      <table>
+        <tr><td><span class="kbd">/</span></td><td>Find a node by name or title</td></tr>
+        <tr><td><span class="kbd">↑</span> <span class="kbd">↓</span> <span class="kbd">Enter</span></td><td>Pick a find result</td></tr>
+        <tr><td><span class="kbd">F</span></td><td>Fly to the selected node</td></tr>
+        <tr><td><span class="kbd">Esc</span></td><td>Close this dialog, otherwise reset to the full graph</td></tr>
+        <tr><td><span class="kbd">?</span></td><td>Show / hide this help</td></tr>
+      </table>
+      <h3>Reading the graph</h3>
+      <p>Colour is the platform. Filled dots are <b>people</b>; rings are <b>threads</b> (conversations, chats, posts). A line means that person wrote in that thread. Toggle platforms and node types in the sidebar, and narrow the timeline to the months you care about.</p>
+      <p style="margin-top:8px">Memory search runs locally against your index and highlights the matching threads and their participants. Everything stays on this machine.</p>
+      <p style="margin-top:8px"><b>Ask Sarthink</b> answers a question with a short brief built only from quotes of the retrieved memories, with a confidence level, a timeline and the sources. It respects the platform toggles and the timeline range. No language model writes the answer, so it never adds facts the sources don't show.</p>
+      <div class="foot"><button class="btn primary" type="button" id="help-close">Got it</button></div>
+    </div>
+  </div>
+
+  <div id="tooltip" role="tooltip"></div>
+
+  <script>
+    // If the 3D engine (loaded from a CDN) can't be fetched, the module below never runs.
+    // Say so instead of leaving the loading screen spinning forever.
+    window.__sarthinkStarted = false;
+    setTimeout(() => {
+      if (window.__sarthinkStarted) return;
+      const m = document.getElementById('lmsg');
+      m.className = 'lb-msg err';
+      m.textContent = 'Could not load the 3D engine (three.js / PapaParse from unpkg.com). Check the network connection and refresh.';
+    }, 15000);
+  </script>
 
   <script type="module">
     import * as THREE from 'three';
     import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
+    window.__sarthinkStarted = true;
+
     // ─── Constants ────────────────────────────────────────────────────────────────
     const NODES_URL = './processed_data/graph/cosmograph_nodes.csv';
     const EDGES_URL = './processed_data/graph/cosmograph_edges.csv';
     const BG_COLOR = 0x000010;
-    const DIM_RGB = [0.025, 0.025, 0.07];   // dark background-like color for dimmed nodes
+    const PIPELINE_CMDS = ['python3 scripts/utils/export_cosmograph.py', 'python3 scripts/utils/compute_layout.py'];
+
+    // Brand colour per platform (same values as export_cosmograph.PLATFORM_COLORS).
+    const PLATFORM_COLORS = {
+      twitter: '#1DA1F2', reddit: '#FF4500', instagram: '#E1306C', discord: '#5865F2', facebook: '#1877F2',
+      whatsapp: '#25D366', google: '#FBBC05', chatgpt: '#10A37F', claude: '#D97757',
+    };
+    const PLATFORM_NAMES = {
+      twitter: 'Twitter / X', reddit: 'Reddit', instagram: 'Instagram', discord: 'Discord', facebook: 'Facebook',
+      whatsapp: 'WhatsApp', google: 'Google', chatgpt: 'ChatGPT', claude: 'Claude',
+    };
+    const KIND_NAMES = { user: 'People', thread: 'Threads' };
+    const SUBTYPE_NAMES = {
+      user: 'Person', public_thread: 'Public thread', chat: 'Chat', dm_group: 'DM / group chat',
+      comment_thread: 'Comment thread', email_thread: 'Email thread', group_chat: 'Group chat', tweet_thread: 'Tweet thread',
+    };
+
+    const ALPHA_DIM = 0.13;          // unrelated nodes while something is selected / searched
+    const EDGE_ALPHA = 0.16;         // resting edge opacity
+    const EDGE_ALPHA_DIM = 0.035;
+    const EDGE_ALPHA_HIT = 0.5;      // edges between two highlighted (search) nodes
+    const MAX_RESTING_EDGES = 60000; // above this, edges are only drawn for the selection
+    const MAX_LABELS = 24;
+    const LINK_LIST_PAGE = 40;
+    const FIND_LIMIT = 8;
 
     // ─── State ────────────────────────────────────────────────────────────────────
     const S = {
-      nodes: [], meta: {}, nodeById: {},
-      highlight: null,   // null=all visible | Set=only these groups
-      search: '', searchDepth: 1,
-      is3D: true,
-      cycle: false, cycleIdx: 0, cycleGroups: [], cycleMs: 8000, cycleTimer: null,
-      orbit: false, orbitAngle: 0, orbitRAF: null,
-      record: false,
-      targetCamPos: null, targetCamLook: null,
-      dragGroup: null, dragPlatform: null, dragPlane: null, dragIndices: null, dragInitPos: null, dragStartPt: null,
-      isDragging: false, dragStartX: 0, dragStartY: 0,
-      currentSearchIdx: -1, currentSearchSet: null,
-      searchIsolated: false, savedPositions: null,
-      // Semantic memory search: set = highlighted node indices, focus = the clicked result's nodes
-      sem: { results: [], set: null, focus: new Set(), active: -1, seq: 0, ready: false },
-      _toastTimer: null, hoveredIdx: -1,
-      // THREE refs
-      renderer: null, scene: null, camera3: null, camera2: null, controls: null,
-      points: null, geo: null, mat: null,
-      posArr: null, colArr: null, sizeArr: null, baseSizeArr: null,
-      allNodeColors: null,  // Float32Array: original RGB for each node
+      nodes: [], edges: [], byId: new Map(),
+      platforms: [],                  // [{key, name, color, count}]
+      filter: { platforms: new Set(), kinds: new Set(['user', 'thread']), t0: null, t1: null },
+      time: null,                     // {months:[startEpoch...], min, max, i0, i1} or null when the data has no dates
+      layoutNote: '',
+      selected: -1,
+      hover: -1,
+      find: { q: '', matches: [], cur: -1 },
+      sem: { results: [], set: null, focus: new Set(), active: -1, seq: 0, ready: false, loadedOnce: false, healthTimer: null, mode: 'search' },
+      ctx: { seq: 0 },
+      nodeVis: null, edgeVis: null, visibleNodes: 0, visibleEdges: 0,
+      home: null, tween: null, bounds: null,
+      // THREE
+      renderer: null, scene: null, camera: null, controls: null,
+      points: null, pGeo: null, pColor: null, pSize: null, pAlpha: null,
+      edgesObj: null, eGeo: null, eAlpha: null,
+      focusEdges: null, focusPoints: null,
+      uniforms: null, labelEls: [],
     };
+    window.__sarthink = S;   // read-only handle for debugging and the browser e2e test
 
     // ─── Helpers ──────────────────────────────────────────────────────────────────
     const $ = id => document.getElementById(id);
-    const lbar = (p, m) => { $('lbar').style.width = p + '%'; $('lmsg').textContent = m; };
-    const fmtGroup = g => g.replace(/_/g, ' ').toUpperCase();
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const fmtN = n => Number(n || 0).toLocaleString();
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const fmtDate = ts => {
+      if (!Number.isFinite(ts)) return '—';
+      const d = new Date(ts * 1000);
+      return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+    };
+    const fmtMonth = ts => { const d = new Date(ts * 1000); return `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`; };
+    const fmtDay = iso => (iso ? String(iso).slice(0, 10) : '');
+    const truncate = (s, n) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
+    const platformName = p => PLATFORM_NAMES[p] || (p ? p[0].toUpperCase() + p.slice(1) : 'Other');
 
-    function hexToRgbNorm(hex) {
-      const n = parseInt(hex.replace('#', ''), 16);
+    function lbar(p, m) { $('lbar').style.width = p + '%'; $('lmsg').textContent = m; }
+
+    function hexToRgb(hex) {
+      const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim());
+      if (!m) return null;
+      const n = parseInt(m[1], 16);
       return [(n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255];
     }
 
-    async function loadCSV(url) {
-      const r = await fetch(url);
-      if (!r.ok) throw new Error(`Cannot fetch ${url} — run:\n  python3 -m http.server 8080\nthen open http://localhost:8080/sarthink_graph.html`);
-      return new Promise((res, rej) => Papa.parse(r.body || '', {
-        download: true, header: true, skipEmptyLines: true,
-        complete: d => res(d.data), error: rej,
-        // Papa can parse a Response stream
-        worker: false,
-      }));
+    // FNV-1a: stable per-id numbers for deterministic fallback positions.
+    function hash32(str) {
+      let h = 0x811c9dc5;
+      for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 0x01000193); }
+      return h >>> 0;
     }
 
-    async function loadCSVText(url) {
-      const r = await fetch(url);
-      if (!r.ok) throw new Error(`Cannot fetch ${url}`);
-      const txt = await r.text();
-      return new Promise(res => Papa.parse(txt, { header: true, skipEmptyLines: true, complete: d => res(d.data) }));
+    function parseCoord(v) {
+      if (v === undefined || v === null || String(v).trim() === '') return NaN;
+      const f = Number(v);
+      return Number.isFinite(f) ? f : NaN;
     }
 
-    // ─── Scene Setup ──────────────────────────────────────────────────────────────
+    function parseTs(v) {
+      if (v === undefined || v === null || String(v).trim() === '') return NaN;
+      let f = Number(v);
+      if (!Number.isFinite(f) || f <= 0) return NaN;
+      if (f > 1e11) f = Math.floor(f / 1000);   // milliseconds
+      return f;
+    }
+
+    class GraphError extends Error {
+      constructor(kind, message) { super(message); this.kind = kind; }
+    }
+
+    // ─── Data loading ─────────────────────────────────────────────────────────────
+    async function fetchCSV(url, what) {
+      let r;
+      try {
+        r = await fetch(url, { cache: 'no-store' });
+      } catch (e) {
+        throw new GraphError('network', `Could not reach ${url}. Open the graph through the local server (see below) rather than as a file.`);
+      }
+      if (!r.ok) {
+        throw new GraphError('missing', `The graph ${what} file is missing (HTTP ${r.status} for ${url}).`);
+      }
+      const text = await r.text();
+      const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
+      return { rows: parsed.data, fields: parsed.meta.fields || [] };
+    }
+
+    function buildGraph(rawNodes, rawEdges) {
+      const nodes = [];
+      const byId = new Map();
+      for (const r of rawNodes) {
+        const id = String(r.id || '').trim();
+        if (!id || byId.has(id)) continue;
+        const group = String(r.group || '').trim() || 'other';
+        const platform = String(r.platform || '').trim() || group.split('_')[0] || 'other';
+        const kind = (r.kind === 'user' || r.kind === 'thread') ? r.kind
+          : (id.startsWith('U_') || group.endsWith('_user') ? 'user' : 'thread');
+        const subtype = kind === 'user' ? 'user' : (group.startsWith(platform + '_') ? group.slice(platform.length + 1) : group);
+        const msgs = Math.max(0, parseInt(r.messages || r.size, 10) || 0);
+        const hex = hexToRgb(r.color) ? r.color : (PLATFORM_COLORS[platform] || '#9aa0b4');
+        const label = String(r.label || '').trim() || id;
+        const n = {
+          i: nodes.length, id, label, title: String(r.title || '').trim() || label,
+          group, platform, kind, subtype, msgs,
+          size: Math.max(1, parseInt(r.size, 10) || msgs || 1),
+          first: parseTs(r.first_ts), last: parseTs(r.last_ts),
+          hex, rgb: hexToRgb(hex),
+          x: parseCoord(r.layout_x), y: parseCoord(r.layout_y), z: parseCoord(r.layout_z),
+          links: [],   // edge indices
+        };
+        if (!Number.isFinite(n.last)) n.last = n.first;
+        nodes.push(n);
+        byId.set(id, n);
+      }
+
+      const edges = [];
+      const seen = new Set();
+      let dropped = 0;
+      for (const r of rawEdges) {
+        const a = byId.get(String(r.source || '').trim()), b = byId.get(String(r.target || '').trim());
+        if (!a || !b || a === b) { dropped++; continue; }
+        const key = a.i < b.i ? a.i + ':' + b.i : b.i + ':' + a.i;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        const e = { i: edges.length, s: a.i, t: b.i, w: Math.max(1, parseInt(r.weight, 10) || 1), first: parseTs(r.first_ts), last: parseTs(r.last_ts) };
+        if (!Number.isFinite(e.last)) e.last = e.first;
+        edges.push(e);
+        a.links.push(e.i);
+        b.links.push(e.i);
+      }
+      return { nodes, edges, byId, dropped };
+    }
+
+    // Uses the exported layout_x/y/z as-is. Only nodes with missing/non-numeric coordinates get a
+    // deterministic fallback (near their platform), and only a layout that is missing entirely or
+    // collapsed to a single point is replaced wholesale.
+    function resolvePositions(nodes) {
+      const valid = nodes.filter(n => Number.isFinite(n.x) && Number.isFinite(n.y) && Number.isFinite(n.z));
+      let minX = Infinity, minY = Infinity, minZ = Infinity, maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity;
+      for (const n of valid) {
+        minX = Math.min(minX, n.x); maxX = Math.max(maxX, n.x);
+        minY = Math.min(minY, n.y); maxY = Math.max(maxY, n.y);
+        minZ = Math.min(minZ, n.z); maxZ = Math.max(maxZ, n.z);
+      }
+      const extent = valid.length ? Math.max(maxX - minX, maxY - minY, maxZ - minZ) : 0;
+      const collapsed = valid.length > 1 && extent < 1e-6;
+
+      if (!valid.length || collapsed || (valid.length === 1 && nodes.length > 1)) {
+        fallbackLayout(nodes);
+        return { mode: 'fallback', invalid: nodes.length - valid.length, collapsed };
+      }
+      const invalid = nodes.filter(n => !(Number.isFinite(n.x) && Number.isFinite(n.y) && Number.isFinite(n.z)));
+      if (invalid.length) {
+        const cent = new Map();
+        for (const n of valid) {
+          const c = cent.get(n.platform) || { x: 0, y: 0, z: 0, k: 0 };
+          c.x += n.x; c.y += n.y; c.z += n.z; c.k++;
+          cent.set(n.platform, c);
+        }
+        const all = { x: (minX + maxX) / 2, y: (minY + maxY) / 2, z: (minZ + maxZ) / 2, k: 1 };
+        const r = Math.max(extent, 1) * 0.06;
+        for (const n of invalid) {
+          const c = cent.get(n.platform) || all;
+          const [dx, dy, dz] = spherePoint(hash32(n.id));
+          n.x = c.x / c.k + dx * r; n.y = c.y / c.k + dy * r; n.z = c.z / c.k + dz * r;
+        }
+      }
+      return { mode: invalid.length ? 'partial' : 'layout', invalid: invalid.length, collapsed: false };
+    }
+
+    function spherePoint(h) {
+      const u = (h & 0xffff) / 0xffff, v = (h >>> 16) / 0xffff;
+      const cosT = 2 * u - 1, sinT = Math.sqrt(1 - cosT * cosT), phi = 2 * Math.PI * v;
+      const r = Math.cbrt(0.2 + 0.8 * ((h % 997) / 997));
+      return [sinT * Math.cos(phi) * r, sinT * Math.sin(phi) * r, cosT * r];
+    }
+
+    // Deterministic stand-in layout: platforms on a ring, each a Fibonacci ball ordered by activity.
+    function fallbackLayout(nodes) {
+      const groups = new Map();
+      for (const n of nodes) (groups.get(n.platform) || groups.set(n.platform, []).get(n.platform)).push(n);
+      const plats = [...groups.keys()].sort((a, b) => groups.get(b).length - groups.get(a).length || a.localeCompare(b));
+      const radii = plats.map(p => 12 * Math.sqrt(groups.get(p).length) + 20);
+      const ring = plats.length > 1 ? Math.max(...radii) * 2.6 : 0;
+      const golden = Math.PI * (3 - Math.sqrt(5));
+      plats.forEach((p, k) => {
+        const a = (k / plats.length) * Math.PI * 2;
+        const cx = Math.cos(a) * ring, cy = Math.sin(a) * ring, cz = 0;
+        const list = groups.get(p).slice().sort((x, y) => (y.size - x.size) || (x.id < y.id ? -1 : 1));
+        const m = list.length;
+        list.forEach((n, i) => {
+          const t = (i + 0.5) / m;
+          const yy = 1 - 2 * t, rr = Math.sqrt(1 - yy * yy), th = golden * i;
+          const rad = radii[k] * Math.sqrt(t);
+          n.x = cx + Math.cos(th) * rr * rad; n.y = cy + yy * rad; n.z = cz + Math.sin(th) * rr * rad;
+        });
+      });
+    }
+
+    // ─── Scene ────────────────────────────────────────────────────────────────────
     function initThree() {
       const W = window.innerWidth, H = window.innerHeight;
-
-      S.renderer = new THREE.WebGLRenderer({ antialias: false, powerPreference: 'high-performance' });
-      S.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      try {
+        S.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: false });
+      } catch (e) {
+        throw new GraphError('webgl', 'WebGL is not available in this browser, so the 3D graph cannot be drawn. Try another browser or enable hardware acceleration.');
+      }
+      S.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
       S.renderer.setSize(W, H);
       S.renderer.setClearColor(BG_COLOR, 1);
-      document.body.appendChild(S.renderer.domElement);
+      $('stage').appendChild(S.renderer.domElement);
+      S.renderer.domElement.tabIndex = -1;
 
       S.scene = new THREE.Scene();
+      S.camera = new THREE.PerspectiveCamera(50, W / H, 1, 1e7);
 
-      // 3D perspective camera
-      S.camera3 = new THREE.PerspectiveCamera(55, W / H, 1, 200000);
-      S.camera3.position.set(0, 0, 7500);
-
-      // 2D orthographic camera
-      const aspect = W / H;
-      S.camera2 = new THREE.OrthographicCamera(-8000 * aspect, 8000 * aspect, 8000, -8000, 1, 200000);
-      S.camera2.position.set(0, 0, 10000);
-
-      S.controls = new OrbitControls(S.camera3, S.renderer.domElement);
+      S.controls = new OrbitControls(S.camera, S.renderer.domElement);
       S.controls.enableDamping = true;
-      S.controls.dampingFactor = 0.07;
-      S.controls.minDistance = 100;
-      S.controls.maxDistance = 80000;
+      S.controls.dampingFactor = 0.12;
+      S.controls.rotateSpeed = 0.8;
+      S.controls.zoomSpeed = 1.1;
+      S.controls.panSpeed = 1.0;
+      S.controls.screenSpacePanning = true;
+      S.controls.zoomToCursor = true;
+      // Any user input cancels a running camera flight instead of fighting it.
+      S.controls.addEventListener('start', () => { S.tween = null; });
+
+      S.uniforms = {
+        uScale: { value: 1 },
+        uPixelRatio: { value: S.renderer.getPixelRatio() },
+      };
+      updateProjectionScale();
 
       window.addEventListener('resize', onResize);
-      S.renderer.domElement.addEventListener('pointerdown', onPointerDown);
-      S.renderer.domElement.addEventListener('pointermove', onPointerMove);
-      S.renderer.domElement.addEventListener('pointerup', onPointerUp);
+      const el = S.renderer.domElement;
+      el.addEventListener('pointerdown', onPointerDown);
+      el.addEventListener('pointermove', onPointerMove);
+      el.addEventListener('pointerup', onPointerUp);
+      el.addEventListener('pointerleave', () => setHover(-1));
+      el.addEventListener('dblclick', onDoubleClick);
+      el.addEventListener('contextmenu', e => e.preventDefault());
+      el.addEventListener('webglcontextlost', e => {
+        e.preventDefault();
+        showFatalOverlay('The graphics context was lost (GPU reset or too many tabs). Refresh the page to redraw the graph.');
+      });
+    }
+
+    // Shifts the projection centre right so the graph is centred in the space the sidebar leaves
+    // free. Picking and labels use camera.projectionMatrix, so they stay in sync.
+    function sideInset() {
+      const side = $('sidebar').getBoundingClientRect();
+      return window.innerWidth > 720 && side.width ? side.right : 0;
+    }
+
+    function applyViewOffset() {
+      const W = window.innerWidth, H = window.innerHeight, inset = sideInset();
+      if (inset) S.camera.setViewOffset(W, H, -inset / 2, 0, W, H);
+      else S.camera.clearViewOffset();
+      S.camera.updateProjectionMatrix();
+    }
+
+    // Pixels per world unit at distance 1 — shared by the point shader and screen-space picking.
+    function updateProjectionScale() {
+      S.uniforms.uScale.value = window.innerHeight / (2 * Math.tan(THREE.MathUtils.degToRad(S.camera.fov) / 2));
     }
 
     function onResize() {
       const W = window.innerWidth, H = window.innerHeight;
       S.renderer.setSize(W, H);
-      S.camera3.aspect = W / H;
-      S.camera3.updateProjectionMatrix();
-      const a = W / H;
-      S.camera2.left = -8000 * a; S.camera2.right = 8000 * a;
-      S.camera2.updateProjectionMatrix();
+      S.camera.aspect = W / H;
+      applyViewOffset();
+      updateProjectionScale();
     }
 
-    // ─── Point Cloud ──────────────────────────────────────────────────────────────
-    function buildPointCloud(nodes) {
-      const N = nodes.length;
-      S.posArr = new Float32Array(N * 3);
-      S.colArr = new Float32Array(N * 3);
-      S.sizeArr = new Float32Array(N);
-      S.baseSizeArr = new Float32Array(N);
-      S.allNodeColors = new Float32Array(N * 3);  // unchanging original colors
-
-      for (let i = 0; i < N; i++) {
-        const n = nodes[i];
-        // Positions from pre-computed layout
-        S.posArr[i * 3] = parseFloat(n.layout_x) || 0;
-        S.posArr[i * 3 + 1] = parseFloat(n.layout_y) || 0;
-        S.posArr[i * 3 + 2] = parseFloat(n.layout_z) || 0;
-
-        // Colors
-        const [r, g, b] = hexToRgbNorm(n.color || '#888888');
-        S.allNodeColors[i * 3] = r; S.allNodeColors[i * 3 + 1] = g; S.allNodeColors[i * 3 + 2] = b;
-        S.colArr[i * 3] = r; S.colArr[i * 3 + 1] = g; S.colArr[i * 3 + 2] = b;
-
-        // Visual size: log scale of activity weight
-        const sz = Math.max(1, Math.log2((parseInt(n.size) || 1) + 1));
-        S.sizeArr[i] = sz;
-        S.baseSizeArr[i] = sz;
-      }
-
-      S.geo = new THREE.BufferGeometry();
-      S.geo.setAttribute('position', new THREE.BufferAttribute(S.posArr, 3));
-      S.geo.setAttribute('nodeColor', new THREE.BufferAttribute(S.colArr, 3));
-      S.geo.setAttribute('nodeSize', new THREE.BufferAttribute(S.sizeArr, 1));
-      S.geo.computeBoundingSphere();
-
-      // Glow vertex + fragment shaders
-      S.mat = new THREE.ShaderMaterial({
-        uniforms: {},
-        vertexShader: `
-      attribute vec3 nodeColor;
-      attribute float nodeSize;
+    const POINT_VS = `
+      attribute vec3 aColor;
+      attribute float aSize;
+      attribute float aAlpha;
+      attribute float aShape;
+      uniform float uScale;
+      uniform float uPixelRatio;
       varying vec3 vColor;
+      varying float vAlpha;
+      varying float vShape;
       void main() {
-        vColor = nodeColor;
+        vColor = aColor; vAlpha = aAlpha; vShape = aShape;
         vec4 mv = modelViewMatrix * vec4(position, 1.0);
-        float dist = length(mv.xyz);
-        float ps = nodeSize * 22000.0 / dist;
-        gl_PointSize = nodeSize == 0.0 ? 0.0 : clamp(ps, 1.5, 60.0);
         gl_Position = projectionMatrix * mv;
-      }
-    `,
-        fragmentShader: `
+        float px = clamp(aSize * uScale / max(-mv.z, 0.001), 3.0, 56.0);
+        gl_PointSize = aAlpha <= 0.0 ? 0.0 : px * uPixelRatio;
+      }`;
+    // aShape: 0 = person (filled disc), 1 = thread (ring), 2 = selection halo
+    const POINT_FS = `
       varying vec3 vColor;
+      varying float vAlpha;
+      varying float vShape;
       void main() {
-        if (length(vColor) < 0.01) discard;
-
         vec2 uv = gl_PointCoord * 2.0 - 1.0;
-        float r = dot(uv, uv);
+        float r = length(uv);
         if (r > 1.0) discard;
-        float glow = exp(-r * 2.0);
-        float disc = (1.0 - sqrt(r)) * 0.5;
-        float a = clamp(glow + disc, 0.0, 1.0);
-        gl_FragColor = vec4(vColor, a);
-      }
-    `,
-        transparent: true,
-        depthWrite: false,
-        blending: THREE.NormalBlending,   // no additive blowout — solid coloured clouds
-        vertexColors: false,
-      });
+        float aa = fwidth(r) * 1.5 + 0.02;
+        float edge = 1.0 - smoothstep(1.0 - aa, 1.0, r);
+        vec3 col = vColor;
+        float a;
+        if (vShape > 1.5) {
+          a = (smoothstep(0.70 - aa, 0.70, r) * edge) * 0.95;
+          col = vec3(1.0);
+        } else if (vShape > 0.5) {
+          float ring = smoothstep(0.52 - aa, 0.52, r) * edge;
+          a = max(ring, 0.30);
+          col = mix(col * 0.75, col, ring);
+        } else {
+          a = edge;
+          col = mix(col, vec3(1.0), (1.0 - r) * 0.22);
+        }
+        gl_FragColor = vec4(col, a * vAlpha);
+        if (gl_FragColor.a < 0.01) discard;
+      }`;
+    const LINE_VS = `
+      attribute vec3 aColor;
+      attribute float aAlpha;
+      varying vec3 vColor;
+      varying float vAlpha;
+      void main() {
+        vColor = aColor; vAlpha = aAlpha;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }`;
+    const LINE_FS = `
+      varying vec3 vColor;
+      varying float vAlpha;
+      void main() {
+        if (vAlpha <= 0.0) discard;
+        gl_FragColor = vec4(vColor, vAlpha);
+      }`;
 
-      S.points = new THREE.Points(S.geo, S.mat);
-      S.scene.add(S.points);
+    function pointMaterial(onTop) {
+      return new THREE.ShaderMaterial({
+        uniforms: S.uniforms, vertexShader: POINT_VS, fragmentShader: POINT_FS,
+        transparent: true, depthWrite: false, depthTest: !onTop, blending: THREE.NormalBlending,
+      });
     }
 
-    // ─── Color update (fast GPU buffer push) ─────────────────────────────────────
-    function refreshColors() {
-      const N = S.nodes.length;
-      const sem = S.sem.set;  // semantic hits: always shown (bypass group filter), everything else dimmed
+    function lineMaterial(onTop) {
+      return new THREE.ShaderMaterial({
+        vertexShader: LINE_VS, fragmentShader: LINE_FS,
+        transparent: true, depthWrite: false, depthTest: !onTop, blending: THREE.NormalBlending,
+      });
+    }
+
+    // Node size in world units (log of message activity), relative to the scene's size.
+    function worldSize(n) {
+      return S.bounds.unit * (0.9 + 0.5 * Math.log2(1 + n.size));
+    }
+
+    function buildScene() {
+      const N = S.nodes.length, E = S.edges.length;
+
+      // Bounds + scale: centre of the bounding box (a mean would be pulled toward the densest platform).
+      const lo = new THREE.Vector3(Infinity, Infinity, Infinity), hi = new THREE.Vector3(-Infinity, -Infinity, -Infinity);
+      S.nodes.forEach(n => { lo.min(new THREE.Vector3(n.x, n.y, n.z)); hi.max(new THREE.Vector3(n.x, n.y, n.z)); });
+      const c = lo.clone().add(hi).multiplyScalar(0.5);
+      let rad = 0;
+      S.nodes.forEach(n => { rad = Math.max(rad, Math.hypot(n.x - c.x, n.y - c.y, n.z - c.z)); });
+      rad = Math.max(rad, 1);
+      S.bounds = { center: c, radius: rad, unit: rad * 0.0065 };
+      S.camera.near = Math.max(0.01, rad / 5000);
+      S.camera.far = rad * 200;
+      applyViewOffset();
+      S.controls.minDistance = S.bounds.unit * 3;
+      S.controls.maxDistance = rad * 30;
+
+      // Nodes
+      const pos = new Float32Array(N * 3), col = new Float32Array(N * 3);
+      S.pSize = new Float32Array(N); S.pAlpha = new Float32Array(N).fill(1);
+      const shape = new Float32Array(N);
+      S.nodes.forEach((n, i) => {
+        pos[i * 3] = n.x; pos[i * 3 + 1] = n.y; pos[i * 3 + 2] = n.z;
+        col.set(n.rgb, i * 3);
+        n.ws = worldSize(n);
+        S.pSize[i] = n.ws;
+        shape[i] = n.kind === 'thread' ? 1 : 0;
+      });
+      S.pGeo = new THREE.BufferGeometry();
+      S.pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      S.pGeo.setAttribute('aColor', new THREE.BufferAttribute(col, 3));
+      S.pGeo.setAttribute('aSize', new THREE.BufferAttribute(S.pSize, 1));
+      S.pGeo.setAttribute('aAlpha', new THREE.BufferAttribute(S.pAlpha, 1));
+      S.pGeo.setAttribute('aShape', new THREE.BufferAttribute(shape, 1));
+      S.points = new THREE.Points(S.pGeo, pointMaterial(false));
+      S.points.renderOrder = 1;
+      S.points.frustumCulled = false;
+      S.scene.add(S.points);
+
+      // Edges: one segment per edge, coloured by its endpoints.
+      const epos = new Float32Array(E * 6), ecol = new Float32Array(E * 6);
+      S.eAlpha = new Float32Array(E * 2);
+      S.edges.forEach((e, k) => {
+        const a = S.nodes[e.s], b = S.nodes[e.t];
+        epos.set([a.x, a.y, a.z, b.x, b.y, b.z], k * 6);
+        ecol.set(a.rgb, k * 6); ecol.set(b.rgb, k * 6 + 3);
+      });
+      S.eGeo = new THREE.BufferGeometry();
+      S.eGeo.setAttribute('position', new THREE.BufferAttribute(epos, 3));
+      S.eGeo.setAttribute('aColor', new THREE.BufferAttribute(ecol, 3));
+      S.eGeo.setAttribute('aAlpha', new THREE.BufferAttribute(S.eAlpha, 1));
+      S.edgesObj = new THREE.LineSegments(S.eGeo, lineMaterial(false));
+      S.edgesObj.renderOrder = 0;
+      S.edgesObj.frustumCulled = false;
+      S.scene.add(S.edgesObj);
+
+      // Home view: frame the whole layout from a slightly elevated 3/4 angle.
+      const dir = new THREE.Vector3(0.35, 0.28, 1).normalize();
+      const dist = tightenFit(c, dir, fitDistance(rad));
+      S.home = { target: c.clone(), position: c.clone().add(dir.multiplyScalar(dist)) };
+      S.camera.position.copy(S.home.position);
+      S.controls.target.copy(S.home.target);
+      S.controls.update();
+    }
+
+    // The bounding-sphere distance is conservative for flat or elongated layouts. Project the real
+    // nodes and pull the camera in until they span ~85% of the viewport (never cropping any).
+    function tightenFit(c, dir, dist) {
+      const v = new THREE.Vector3();
+      const free = 1 - sideInset() / window.innerWidth, cx = 1 - free;   // NDC centre of the free area
+      for (let it = 0; it < 4; it++) {
+        S.camera.position.copy(c).addScaledVector(dir, dist);
+        S.camera.lookAt(c);
+        S.camera.updateMatrixWorld();
+        let m = 0;
+        for (const n of S.nodes) {
+          v.set(n.x, n.y, n.z).project(S.camera);
+          if (v.z > 1) { m = Infinity; break; }
+          m = Math.max(m, Math.abs(v.x - cx) / (0.85 * free), Math.abs(v.y) / 0.82);
+        }
+        if (!Number.isFinite(m) || m <= 0) break;
+        const next = dist * (m > 1 ? Math.min(m, 2) : Math.max(m, 0.5));
+        const done = Math.abs(next - dist) < dist * 0.01;
+        dist = next;
+        if (done) break;
+      }
+      return dist;
+    }
+
+    // Camera distance that fits a sphere of radius r in both the vertical and horizontal FOV.
+    function fitDistance(r, aspect = S.camera.aspect) {
+      const vfov = THREE.MathUtils.degToRad(S.camera.fov);
+      const hfov = 2 * Math.atan(Math.tan(vfov / 2) * aspect);
+      return (r * 1.02) / Math.sin(Math.min(vfov, hfov) / 2);
+    }
+
+    // ─── Filters & emphasis ───────────────────────────────────────────────────────
+    function timeActive() {
+      return !!(S.time && (S.time.i0 > 0 || S.time.i1 < S.time.months.length - 1));
+    }
+
+    function timeRange() {
+      const t = S.time;
+      return [t.months[t.i0], (t.i1 + 1 < t.months.length ? t.months[t.i1 + 1] : t.end) - 1];
+    }
+
+    function computeVisibility() {
+      const N = S.nodes.length, E = S.edges.length;
+      const nodeOK = new Uint8Array(N), edgeOK = new Uint8Array(E);
+      const f = S.filter, tA = timeActive();
+      const [t0, t1] = tA ? timeRange() : [0, 0];
+      const overlaps = (a, b) => Number.isFinite(a) && Number.isFinite(b) && a <= t1 && b >= t0;
+
       for (let i = 0; i < N; i++) {
         const n = S.nodes[i];
-        if (sem) {
-          const hit = sem.has(i);
-          if (hit) {
-            S.colArr[i * 3] = S.allNodeColors[i * 3];
-            S.colArr[i * 3 + 1] = S.allNodeColors[i * 3 + 1];
-            S.colArr[i * 3 + 2] = S.allNodeColors[i * 3 + 2];
-            S.sizeArr[i] = Math.max(S.baseSizeArr[i], 3) * (S.sem.focus.has(i) ? 3.2 : 1.8);
-          } else {
-            S.colArr[i * 3] = DIM_RGB[0];
-            S.colArr[i * 3 + 1] = DIM_RGB[1];
-            S.colArr[i * 3 + 2] = DIM_RGB[2];
-            S.sizeArr[i] = S.baseSizeArr[i] * 0.6;
+        let ok = f.platforms.has(n.platform) && f.kinds.has(n.kind);
+        // Threads carry their own activity span; people are placed in time by their links (below).
+        if (ok && tA && n.kind === 'thread') ok = overlaps(n.first, n.last);
+        nodeOK[i] = ok ? 1 : 0;
+      }
+      const edgeTime = tA ? new Uint8Array(E) : null;
+      if (tA) {
+        const personHasLink = new Uint8Array(N);
+        for (let k = 0; k < E; k++) {
+          const e = S.edges[k];
+          if (overlaps(e.first, e.last)) {
+            edgeTime[k] = 1;
+            personHasLink[e.s] = 1; personHasLink[e.t] = 1;
           }
-          continue;
         }
-        const matchSearch = !S.search || (S.currentSearchSet && S.currentSearchSet.has(i));
-        // In search isolation: bypass group filter so cross-platform neighbors are always visible
-        const matchGroup = S.searchIsolated || S.highlight === null || S.highlight.has(n.group);
+        for (let i = 0; i < N; i++) if (S.nodes[i].kind === 'user' && !personHasLink[i]) nodeOK[i] = 0;
+      }
+      let vn = 0, ve = 0;
+      for (let i = 0; i < N; i++) vn += nodeOK[i];
+      for (let k = 0; k < E; k++) {
+        const e = S.edges[k];
+        edgeOK[k] = nodeOK[e.s] && nodeOK[e.t] && (!tA || edgeTime[k]) ? 1 : 0;
+        ve += edgeOK[k];
+      }
+      S.nodeVis = nodeOK; S.edgeVis = edgeOK; S.visibleNodes = vn; S.visibleEdges = ve;
+    }
 
-        if (matchSearch && matchGroup) {
-          S.colArr[i * 3] = S.allNodeColors[i * 3];
-          S.colArr[i * 3 + 1] = S.allNodeColors[i * 3 + 1];
-          S.colArr[i * 3 + 2] = S.allNodeColors[i * 3 + 2];
-          S.sizeArr[i] = S.baseSizeArr[i];
-        } else {
-          S.colArr[i * 3] = 0;
-          S.colArr[i * 3 + 1] = 0;
-          S.colArr[i * 3 + 2] = 0;
-          S.sizeArr[i] = 0;
+    function neighbours(i) {
+      const out = [];
+      for (const k of S.nodes[i].links) { const e = S.edges[k]; out.push({ j: e.s === i ? e.t : e.s, e }); }
+      return out;
+    }
+
+    // Pushes the current filter/selection/search state to the GPU buffers.
+    function refreshVisuals() {
+      if (!S.pGeo) return;
+      computeVisibility();
+      const N = S.nodes.length, E = S.edges.length;
+      const sel = S.selected;
+      const focus = new Map();   // node index -> size multiplier, drawn on top of everything
+      const focusEdges = [];
+      if (sel >= 0) {
+        focus.set(sel, 1.6);
+        for (const { j, e } of neighbours(sel)) {
+          if (!focus.has(j)) focus.set(j, 1.15);
+          focusEdges.push(e);
         }
       }
-      S.geo.attributes.nodeColor.needsUpdate = true;
-      S.geo.attributes.nodeSize.needsUpdate = true;
+      const semSet = S.sem.set, findSet = S.find.q && S.find.matches.length ? new Set(S.find.matches) : null;
+      const emphasis = sel >= 0 || !!semSet || !!findSet;
+      const hit = i => (semSet && semSet.has(i)) || (findSet && findSet.has(i));
+
+      for (let i = 0; i < N; i++) {
+        const n = S.nodes[i];
+        let a, s = n.ws;
+        if (focus.has(i)) a = 0;                       // drawn by the focus layer
+        else if (!S.nodeVis[i]) a = 0;
+        else if (!emphasis) a = 1;
+        else if (hit(i)) { a = sel >= 0 ? 0.8 : 1; s = n.ws * (S.sem.focus.has(i) ? 1.9 : 1.35); }
+        else a = ALPHA_DIM;
+        S.pAlpha[i] = a;
+        S.pSize[i] = s;
+      }
+      const resting = E <= MAX_RESTING_EDGES ? EDGE_ALPHA : 0;
+      for (let k = 0; k < E; k++) {
+        const e = S.edges[k];
+        let a;
+        if (sel >= 0 && (e.s === sel || e.t === sel)) a = 0;   // focus layer
+        else if (!S.edgeVis[k]) a = 0;
+        else if (!emphasis) a = resting;
+        else if (hit(e.s) && hit(e.t)) a = EDGE_ALPHA_HIT;
+        else a = resting ? EDGE_ALPHA_DIM : 0;
+        S.eAlpha[k * 2] = a; S.eAlpha[k * 2 + 1] = a;
+      }
+      S.pGeo.attributes.aAlpha.needsUpdate = true;
+      S.pGeo.attributes.aSize.needsUpdate = true;
+      S.eGeo.attributes.aAlpha.needsUpdate = true;
+
+      buildFocusLayer(focus, focusEdges);
+      updateEmptyState();
+      updateStats();
+      updateLegendCounts();
+      updateLabels(true);
     }
 
-    // ─── Hover / Click picking ────────────────────────────────────────────────────
-    const _mouse = new THREE.Vector2();
-    const _ray = new THREE.Raycaster();
-
-    function screenToNDC(ex, ey) {
-      _mouse.set(
-        (ex / window.innerWidth) * 2 - 1,
-        (ey / window.innerHeight) * -2 + 1
-      );
+    // The selected node, its direct neighbours and the links between them, drawn without depth
+    // testing so no dimmed node or cluster can ever cover them.
+    function buildFocusLayer(focus, edges) {
+      for (const k of ['focusEdges', 'focusPoints']) {
+        if (S[k]) { S.scene.remove(S[k]); S[k].geometry.dispose(); S[k].material.dispose(); S[k] = null; }
+      }
+      if (!focus.size) return;
+      const sel = S.selected;
+      if (edges.length) {
+        const pos = new Float32Array(edges.length * 6), col = new Float32Array(edges.length * 6), al = new Float32Array(edges.length * 2);
+        edges.forEach((e, k) => {
+          const a = S.nodes[e.s], b = S.nodes[e.t];
+          pos.set([a.x, a.y, a.z, b.x, b.y, b.z], k * 6);
+          const lift = c => c.map(v => Math.min(1, v * 0.6 + 0.45));
+          col.set(lift(a.rgb), k * 6); col.set(lift(b.rgb), k * 6 + 3);
+          const inFilter = S.edgeVis[e.i] ? 0.95 : 0.4;
+          al[k * 2] = inFilter; al[k * 2 + 1] = inFilter;
+        });
+        const g = new THREE.BufferGeometry();
+        g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+        g.setAttribute('aColor', new THREE.BufferAttribute(col, 3));
+        g.setAttribute('aAlpha', new THREE.BufferAttribute(al, 1));
+        S.focusEdges = new THREE.LineSegments(g, lineMaterial(true));
+        S.focusEdges.renderOrder = 2;
+        S.focusEdges.frustumCulled = false;
+        S.scene.add(S.focusEdges);
+      }
+      const idx = [...focus.keys()];
+      const M = idx.length + (sel >= 0 ? 1 : 0);
+      const pos = new Float32Array(M * 3), col = new Float32Array(M * 3), size = new Float32Array(M), al = new Float32Array(M), sh = new Float32Array(M);
+      // neighbours first, selected node last so it draws on top
+      idx.sort((a, b) => (a === sel) - (b === sel));
+      idx.forEach((i, k) => {
+        const n = S.nodes[i];
+        pos.set([n.x, n.y, n.z], k * 3);
+        col.set(n.rgb, k * 3);
+        size[k] = n.ws * focus.get(i) * (S.sem.focus.has(i) ? 1.3 : 1);
+        al[k] = 1;
+        sh[k] = n.kind === 'thread' ? 1 : 0;
+      });
+      if (sel >= 0) {
+        const n = S.nodes[sel], k = M - 1;
+        pos.set([n.x, n.y, n.z], k * 3);
+        col.set([1, 1, 1], k * 3);
+        size[k] = n.ws * 1.6 * 1.9;
+        al[k] = 1;
+        sh[k] = 2;
+      }
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      g.setAttribute('aColor', new THREE.BufferAttribute(col, 3));
+      g.setAttribute('aSize', new THREE.BufferAttribute(size, 1));
+      g.setAttribute('aAlpha', new THREE.BufferAttribute(al, 1));
+      g.setAttribute('aShape', new THREE.BufferAttribute(sh, 1));
+      S.focusPoints = new THREE.Points(g, pointMaterial(true));
+      S.focusPoints.renderOrder = 3;
+      S.focusPoints.frustumCulled = false;
+      S.scene.add(S.focusPoints);
     }
 
-    function pickNode(ex, ey) {
-      screenToNDC(ex, ey);
-      const cam = S.is3D ? S.camera3 : S.camera2;
-      _ray.setFromCamera(_mouse, cam);
-      // Threshold scales with zoom so hovering stays easy at all distances
-      const dist = S.camera3.position.length();
-      _ray.params.Points = { threshold: Math.max(0.5, dist * 0.004) };
-      const hits = _ray.intersectObject(S.points);
-      return hits.length > 0 ? hits[0].index : -1;
+    // ─── Picking (screen space) ───────────────────────────────────────────────────
+    // Picks the node whose drawn disc is nearest the cursor. Hidden nodes are never picked; the
+    // selection and its neighbours (drawn on top) win ties over dimmed nodes behind them.
+    const _vp = new THREE.Matrix4();
+    function pickNode(cx, cy) {
+      if (!S.nodes.length) return -1;
+      const W = window.innerWidth, H = window.innerHeight;
+      S.camera.updateMatrixWorld();
+      _vp.multiplyMatrices(S.camera.projectionMatrix, S.camera.matrixWorldInverse);
+      const m = _vp.elements, scale = S.uniforms.uScale.value;
+      const focus = S.selected >= 0 ? new Set([S.selected, ...neighbours(S.selected).map(o => o.j)]) : null;
+      let best = -1, bestScore = Infinity;
+      for (let i = 0; i < S.nodes.length; i++) {
+        const onTop = focus && focus.has(i);
+        const alpha = S.pAlpha[i];
+        if (!onTop && alpha <= 0) continue;
+        const n = S.nodes[i];
+        const w = m[3] * n.x + m[7] * n.y + m[11] * n.z + m[15];
+        if (w <= S.camera.near) continue;
+        const sx = ((m[0] * n.x + m[4] * n.y + m[8] * n.z + m[12]) / w + 1) * 0.5 * W;
+        const sy = (1 - (m[1] * n.x + m[5] * n.y + m[9] * n.z + m[13]) / w) * 0.5 * H;
+        const d = Math.hypot(sx - cx, sy - cy);
+        const size = onTop ? n.ws * (i === S.selected ? 1.6 : 1.15) : S.pSize[i];
+        const r = clamp(size * scale / w, 3, 56) / 2;
+        if (d > Math.max(r, 5) + 4) continue;
+        // Normalised distance; dimmed nodes lose ties to bright ones.
+        let score = d / Math.max(r, 5) + (w / S.bounds.radius) * 0.01;
+        if (onTop) score -= 0.5; else if (alpha < 0.5) score += 0.6;
+        if (score < bestScore) { bestScore = score; best = i; }
+      }
+      return best;
     }
+
+    // ─── Pointer interaction ──────────────────────────────────────────────────────
+    const ptr = { down: false, x: 0, y: 0, t: 0, moved: false, raf: 0, lastX: 0, lastY: 0 };
 
     function onPointerDown(e) {
-      if (e.button !== 0) return;
-      S.dragStartX = e.clientX; S.dragStartY = e.clientY;
-      S.isDragging = false;
-
-      // Disable cluster-dragging while in search isolation
-      if (S.searchIsolated) return;
-
-      const idx = pickNode(e.clientX, e.clientY);
-      if (idx >= 0) {
-        const n = S.nodes[idx];
-        S.dragGroup = n.group;
-        S.dragPlatform = n.group.split('_')[0];
-        S.controls.enabled = false;
-
-        S.dragIndices = [];
-        for (let i = 0; i < S.nodes.length; i++) if (S.nodes[i].group === S.dragGroup) S.dragIndices.push(i);
-        S.dragInitPos = new Float32Array(S.dragIndices.length * 3);
-        for (let k = 0; k < S.dragIndices.length; k++) {
-          const i = S.dragIndices[k];
-          S.dragInitPos[k * 3] = S.posArr[i * 3];
-          S.dragInitPos[k * 3 + 1] = S.posArr[i * 3 + 1];
-          S.dragInitPos[k * 3 + 2] = S.posArr[i * 3 + 2];
-        }
-
-        const cam = S.is3D ? S.camera3 : S.camera2;
-        const normal = new THREE.Vector3();
-        cam.getWorldDirection(normal).negate();
-        const hitPt = new THREE.Vector3(S.posArr[idx * 3], S.posArr[idx * 3 + 1], S.posArr[idx * 3 + 2]);
-        S.dragPlane = new THREE.Plane().setFromNormalAndCoplanarPoint(normal, hitPt);
-
-        screenToNDC(e.clientX, e.clientY);
-        _ray.setFromCamera(_mouse, cam);
-        S.dragStartPt = new THREE.Vector3();
-        _ray.ray.intersectPlane(S.dragPlane, S.dragStartPt);
-      }
+      ptr.down = true; ptr.moved = false;
+      ptr.x = e.clientX; ptr.y = e.clientY; ptr.t = performance.now(); ptr.button = e.button;
+      S.renderer.domElement.focus({ preventScroll: true });
     }
 
     function onPointerMove(e) {
-      if (S.dragGroup) {
-        S.isDragging = true;
-        const cam = S.is3D ? S.camera3 : S.camera2;
-        screenToNDC(e.clientX, e.clientY);
-        _ray.setFromCamera(_mouse, cam);
-        const currPt = new THREE.Vector3();
-        if (_ray.ray.intersectPlane(S.dragPlane, currPt)) {
-          const delta = currPt.sub(S.dragStartPt);
-          for (let k = 0; k < S.dragIndices.length; k++) {
-            const i = S.dragIndices[k];
-            S.posArr[i * 3] = S.dragInitPos[k * 3] + delta.x;
-            S.posArr[i * 3 + 1] = S.dragInitPos[k * 3 + 1] + delta.y;
-            S.posArr[i * 3 + 2] = S.dragInitPos[k * 3 + 2] + delta.z;
-          }
-          S.geo.attributes.position.needsUpdate = true;
+      ptr.lastX = e.clientX; ptr.lastY = e.clientY;
+      if (ptr.down) {
+        if (!ptr.moved && Math.hypot(e.clientX - ptr.x, e.clientY - ptr.y) > 4) {
+          ptr.moved = true;
+          $('stage').classList.add('dragging');
+          setHover(-1);
         }
-        document.body.style.cursor = 'grabbing';
-        return;
+        return;   // OrbitControls owns the drag
       }
-
-      const idx = pickNode(e.clientX, e.clientY);
-      document.body.style.cursor = idx >= 0 ? 'grab' : '';
-      const tip = $('tooltip');
-      if (idx >= 0) {
-        const n = S.nodes[idx];
-        const m = S.meta[n.group] || {};
-        const activity = parseInt(n.size) || 1;
-        const isCenter = S.searchIsolated && idx === S.currentSearchIdx;
-        const dot = `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${m.color || '#aaa'};margin-right:4px;vertical-align:middle"></span>`;
-        tip.innerHTML = `<strong>${n.label}</strong><br>${dot}${fmtGroup(n.group)}${isCenter ? ' &nbsp;<span style="opacity:.5;font-size:.7em">[selected]</span>' : ''}<br><span style="opacity:.6">Activity: ${activity.toLocaleString()}</span>`;
-        tip.style.left = (e.clientX + 14) + 'px';
-        tip.style.top = (e.clientY - 10) + 'px';
-        tip.classList.add('show');
-      } else {
-        tip.classList.remove('show');
-      }
+      if (!ptr.raf) ptr.raf = requestAnimationFrame(() => { ptr.raf = 0; setHover(pickNode(ptr.lastX, ptr.lastY)); });
     }
 
     function onPointerUp(e) {
-      if (S.dragGroup) {
-        if (S.isDragging) {
-          for (let k = 0; k < S.dragIndices.length; k++) {
-            const i = S.dragIndices[k];
-            S.nodes[i].layout_x = S.posArr[i * 3];
-            S.nodes[i].layout_y = S.posArr[i * 3 + 1];
-            S.nodes[i].layout_z = S.posArr[i * 3 + 2];
-          }
-          if (S.highlight && S.highlight.has(S.dragGroup) && S.megaMeta[S.dragPlatform]) {
-            showPlatformRelations(S.dragPlatform);
-          }
-        }
-        S.dragGroup = null;
-        S.controls.enabled = true;
-        document.body.style.cursor = '';
-      }
-
-      if (Math.abs(e.clientX - S.dragStartX) < 5 && Math.abs(e.clientY - S.dragStartY) < 5) {
-        onMouseClickWrapper(e);
-      }
-    }
-
-    function onMouseClickWrapper(e) {
+      const wasClick = ptr.down && !ptr.moved && ptr.button === 0 && performance.now() - ptr.t < 700;
+      ptr.down = false;
+      $('stage').classList.remove('dragging');
+      if (!wasClick) return;
       const idx = pickNode(e.clientX, e.clientY);
-      if (idx < 0) {
-        // Click on empty space — remove relation lines
-        clearRelations(); return;
-      }
+      if (idx >= 0) selectNode(idx, { fly: false });
+      else if (S.selected >= 0) clearSelection();
+    }
+
+    function onDoubleClick(e) {
+      const idx = pickNode(e.clientX, e.clientY);
+      if (idx >= 0) selectNode(idx, { fly: true });
+    }
+
+    function setHover(idx) {
+      if (idx === S.hover) { if (idx >= 0) placeTooltip(); return; }
+      S.hover = idx;
+      $('stage').classList.toggle('hovering', idx >= 0);
+      const tip = $('tooltip');
+      if (idx < 0) { tip.classList.remove('show'); updateLabels(true); return; }
       const n = S.nodes[idx];
-      const m = S.meta[n.group] || {};
-      $('toast-lbl').textContent = n.label;
-      $('toast-meta').innerHTML = `
-    <span><span class="tdot" style="background:${m.color || '#aaa'}"></span>${fmtGroup(n.group)}</span>
-    <span>Activity: ${(parseInt(n.size) || 1).toLocaleString()}</span>
-    <span style="font-size:.62rem;color:rgba(255,255,255,.2)">${n.id}</span>`;
-      $('toast').classList.add('show');
-      clearTimeout(S._toastTimer);
-      S._toastTimer = setTimeout(() => $('toast').classList.remove('show'), 5000);
-      showRelations(idx);
+      const when = Number.isFinite(n.first) ? ` · ${fmtMonth(n.first)}${fmtMonth(n.last) !== fmtMonth(n.first) ? ' – ' + fmtMonth(n.last) : ''}` : '';
+      tip.innerHTML = `<div class="tt-l">${esc(truncate(n.kind === 'thread' ? n.title : n.label, 90))}</div>
+        <div class="tt-m"><span class="dot" style="background:${esc(PLATFORM_COLORS[n.platform] || n.hex)}"></span>${esc(platformName(n.platform))} · ${esc(SUBTYPE_NAMES[n.subtype] || n.subtype)}<br>
+        ${fmtN(n.links.length)} connection${n.links.length === 1 ? '' : 's'} · ${fmtN(n.msgs)} message${n.msgs === 1 ? '' : 's'}${esc(when)}</div>`;
+      placeTooltip();
+      tip.classList.add('show');
+      updateLabels(true);
     }
 
-    function showRelations(nodeIdx) {
-      clearRelations();
-      const n = S.nodes[nodeIdx];
-      const neighbors = S.adj[n.id] || [];
-      if (!neighbors.length) return;
-      const nx = parseFloat(n.layout_x) || 0, ny = parseFloat(n.layout_y) || 0, nz = parseFloat(n.layout_z) || 0;
-      const pos = [];
-      const colors = [];
-      const sourceCol = new THREE.Color(n.color || '#4488ff');
-      neighbors.forEach(nid => {
-        const nb = S.nodeById[nid];
-        if (!nb) return;
-        const targetCol = new THREE.Color(nb.color || '#4488ff');
-        pos.push(nx, ny, nz);
-        colors.push(sourceCol.r, sourceCol.g, sourceCol.b);
-        pos.push(parseFloat(nb.layout_x) || 0, parseFloat(nb.layout_y) || 0, parseFloat(nb.layout_z) || 0);
-        colors.push(targetCol.r, targetCol.g, targetCol.b);
+    function placeTooltip() {
+      const tip = $('tooltip');
+      const w = tip.offsetWidth || 200, h = tip.offsetHeight || 50;
+      let x = ptr.lastX + 14, y = ptr.lastY + 14;
+      if (x + w > window.innerWidth - 8) x = ptr.lastX - w - 14;
+      if (y + h > window.innerHeight - 8) y = ptr.lastY - h - 14;
+      tip.style.transform = `translate(${Math.max(8, x)}px, ${Math.max(8, y)}px)`;
+    }
+
+    // ─── Camera ───────────────────────────────────────────────────────────────────
+    function flyTo(target, position, ms = 750) {
+      S.tween = {
+        t0: performance.now(), ms,
+        fromT: S.controls.target.clone(), toT: target.clone(),
+        fromP: S.camera.position.clone(), toP: position.clone(),
+      };
+    }
+
+    // Screen columns not covered by the sidebar or an open right-hand panel.
+    function freeArea() {
+      const W = window.innerWidth;
+      let right = W;
+      if (W > 720 && [...$('rightcol').children].some(p => !p.hidden)) right = $('rightcol').getBoundingClientRect().left - 10;
+      const left = sideInset();
+      return right - left > 200 ? { left, right } : { left: 0, right: W };
+    }
+
+    // Frames the nodes inside the free area, keeping the current viewing direction.
+    function flyToNodes(idxs, minFrac = 0.06) {
+      if (!idxs.length || !S.camera) return;
+      const c = new THREE.Vector3();
+      idxs.forEach(i => c.add(new THREE.Vector3(S.nodes[i].x, S.nodes[i].y, S.nodes[i].z)));
+      c.divideScalar(idxs.length);
+      let r = 0;
+      idxs.forEach(i => { const n = S.nodes[i]; r = Math.max(r, Math.hypot(n.x - c.x, n.y - c.y, n.z - c.z) + n.ws); });
+      const W = window.innerWidth, H = window.innerHeight, free = freeArea();
+      const dist = Math.max(fitDistance(Math.max(r, S.bounds.radius * minFrac), (free.right - free.left) / H), S.controls.minDistance * 2);
+      let dir = S.camera.position.clone().sub(S.controls.target);
+      if (dir.lengthSq() < 1e-9) dir.set(0, 0, 1);
+      dir.normalize();
+      // Slide the target sideways so the nodes land in the middle of the free area, not under a panel.
+      const worldPerPx = 2 * dist * Math.tan(THREE.MathUtils.degToRad(S.camera.fov) / 2) / H;
+      const shiftPx = (W / 2 + sideInset() / 2) - (free.left + free.right) / 2;
+      const right = new THREE.Vector3().setFromMatrixColumn(S.camera.matrixWorld, 0);
+      const t = c.clone().addScaledVector(right, shiftPx * worldPerPx);
+      flyTo(t, t.clone().add(dir.multiplyScalar(dist)));
+    }
+
+    function flyHome() { if (S.home) flyTo(S.home.target, S.home.position, 800); }
+
+    function stepTween(now) {
+      const t = S.tween;
+      if (!t) return;
+      const k = clamp((now - t.t0) / t.ms, 0, 1);
+      const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      S.controls.target.lerpVectors(t.fromT, t.toT, e);
+      S.camera.position.lerpVectors(t.fromP, t.toP, e);
+      if (k >= 1) S.tween = null;
+    }
+
+    // ─── Selection ────────────────────────────────────────────────────────────────
+    function selectNode(idx, { fly = false, keepHash = false } = {}) {
+      if (idx < 0 || idx >= S.nodes.length) return;
+      S.selected = idx;
+      refreshVisuals();
+      renderDetails();
+      if (fly) flyToNodes([idx, ...neighbours(idx).map(o => o.j)]);
+      if (!keepHash) setHash(S.nodes[idx].id);
+    }
+
+    function clearSelection() {
+      if (S.selected < 0) return;
+      S.selected = -1;
+      S.ctx.seq++;
+      $('details').hidden = true;
+      refreshVisuals();
+      setHash(null);
+    }
+
+    function setHash(id) {
+      const url = id ? `#node=${encodeURIComponent(id)}` : location.pathname + location.search;
+      try { history.replaceState(null, '', url); } catch (_) { /* sandboxed */ }
+    }
+
+    function hashNode() {
+      const m = /(?:^#|&)node=([^&]+)/.exec(location.hash);
+      try { return m ? decodeURIComponent(m[1]) : null; } catch (_) { return null; }   // malformed link: ignore
+    }
+
+    // ─── Details panel ────────────────────────────────────────────────────────────
+    function renderDetails() {
+      const i = S.selected;
+      if (i < 0) { $('details').hidden = true; return; }
+      const n = S.nodes[i];
+      const pc = PLATFORM_COLORS[n.platform] || n.hex;
+      $('d-chip').innerHTML = `<span class="dot" style="background:${esc(pc)}"></span>${esc(platformName(n.platform))} · ${esc(SUBTYPE_NAMES[n.subtype] || n.subtype)}`;
+      $('d-title').textContent = n.kind === 'thread' ? n.title : n.label;
+
+      const nb = neighbours(i).sort((a, b) => b.e.w - a.e.w || (S.nodes[a.j].label < S.nodes[b.j].label ? -1 : 1));
+      const hidden = nb.filter(o => !S.nodeVis[o.j]).length;
+      const when = Number.isFinite(n.first) ? fmtDate(n.first) : '—';
+      const until = Number.isFinite(n.last) ? fmtDate(n.last) : '—';
+      const linkWord = n.kind === 'thread' ? 'People in this thread' : 'Threads';
+
+      let html = `<div class="kv">
+          <div><div class="k">Connections</div><div class="v">${fmtN(nb.length)}</div></div>
+          <div><div class="k">Messages</div><div class="v">${fmtN(n.msgs)}</div></div>
+          <div><div class="k">First active</div><div class="v">${esc(when)}</div></div>
+          <div><div class="k">Last active</div><div class="v">${esc(until)}</div></div>
+        </div>`;
+      const why = semanticWhy(i);
+      if (why) html += `<div class="why">${why}</div>`;
+      if (!S.nodeVis[i]) html += `<div class="note warn">This node is outside the current filters; it stays visible while selected.</div>`;
+
+      html += `<div class="dsec"><div class="plbl">${esc(linkWord)} · ${fmtN(nb.length)}${hidden ? ` <span class="act" style="letter-spacing:0;text-transform:none">${fmtN(hidden)} outside filters</span>` : ''}</div>
+        <div class="nlist" id="d-links"></div></div>`;
+      if (n.kind === 'thread') {
+        html += `<div class="dsec"><div class="plbl">Conversation context</div><div id="d-ctx"><div class="note">Loading…</div></div></div>`;
+      }
+      html += `<div class="dactions">
+          <button class="btn sm" type="button" id="d-focus">Focus camera <kbd>F</kbd></button>
+          ${n.kind === 'thread' ? '<button class="btn sm" type="button" id="d-related">Find related memories</button>' : ''}
+        </div>`;
+      $('d-body').innerHTML = html;
+      $('d-body').scrollTop = 0;
+      renderLinkList(nb, LINK_LIST_PAGE);
+      $('d-focus').onclick = () => flyToNodes([i, ...nb.map(o => o.j)]);
+      if ($('d-related')) $('d-related').onclick = () => { setMemoryMode('search', false); $('sem-q').value = truncate(n.title, 300); semanticSearch(); };
+      $('details').hidden = false;
+      if (n.kind === 'thread') loadThreadContext(n);
+    }
+
+    function renderLinkList(nb, limit) {
+      const box = $('d-links');
+      if (!box) return;
+      if (!nb.length) { box.innerHTML = '<div class="note">No links in the exported graph.</div>'; return; }
+      box.innerHTML = nb.slice(0, limit).map(({ j, e }) => {
+        const m = S.nodes[j];
+        const span = Number.isFinite(e.first) ? fmtMonth(e.first) : '';
+        return `<button type="button" class="nitem${S.nodeVis[j] ? '' : ' outside'}" data-j="${j}" title="${esc(m.kind === 'thread' ? m.title : m.label)}">
+          <span class="sw" style="color:${esc(m.hex)};background:${m.kind === 'user' ? esc(m.hex) : 'transparent'}"></span>
+          <span class="nm">${esc(m.kind === 'thread' ? m.title : m.label)}</span>
+          <span class="ct">${fmtN(e.w)} msg${e.w === 1 ? '' : 's'}${span ? ' · ' + esc(span) : ''}</span></button>`;
+      }).join('') + (nb.length > limit ? `<button type="button" class="linkbtn" id="d-more" style="margin-top:4px">Show all ${fmtN(nb.length)}</button>` : '');
+      box.querySelectorAll('.nitem').forEach(b => b.addEventListener('click', () => selectNode(+b.dataset.j, { fly: true })));
+      if ($('d-more')) $('d-more').onclick = () => renderLinkList(nb, nb.length);
+    }
+
+    async function loadThreadContext(n) {
+      const seq = ++S.ctx.seq;
+      const box = () => (seq === S.ctx.seq ? $('d-ctx') : null);
+      try {
+        const data = await apiFetch(`/api/thread/${encodeURIComponent(n.id)}`, { timeout: 15000 });
+        const el = box();
+        if (!el) return;
+        if (!data.count) {
+          el.innerHTML = '<div class="note">This thread has no chunks in the memory index.</div>';
+          return;
+        }
+        const terms = S.sem.results.length ? queryTerms($('sem-title').dataset.q || '') : [];
+        el.innerHTML = `<div class="note" style="margin-bottom:6px">${fmtN(data.count)} indexed chunk${data.count === 1 ? '' : 's'} · ${esc(fmtDay(data.first_time))}${data.last_time && fmtDay(data.last_time) !== fmtDay(data.first_time) ? ' → ' + esc(fmtDay(data.last_time)) : ''}${data.count > data.chunks.length ? ` · showing first ${data.chunks.length}` : ''}</div>` +
+          data.chunks.map((c, k) => `<div class="ctx">
+            <div class="ctx-top"><span>${esc(fmtDay(c.start_time))}</span><span class="pp">${esc((c.people || []).slice(0, 5).join(', '))}</span></div>
+            <div class="ctx-snip clamp" data-k="${k}">${highlight(c.snippet, terms)}</div>
+            ${c.text && c.text.length > c.snippet.length ? `<button class="linkbtn" type="button" data-k="${k}">Show more</button>` : ''}
+          </div>`).join('');
+        el.querySelectorAll('button.linkbtn').forEach(b => b.addEventListener('click', () => {
+          const snip = el.querySelector(`.ctx-snip[data-k="${b.dataset.k}"]`);
+          const open = !snip.classList.contains('clamp');
+          const c = data.chunks[+b.dataset.k];
+          snip.classList.toggle('clamp', open);
+          snip.innerHTML = highlight(open ? c.snippet : c.text, terms);
+          b.textContent = open ? 'Show more' : 'Show less';
+        }));
+      } catch (e) {
+        const el = box();
+        if (!el) return;
+        const msg = e.code === 'offline' ? 'Conversation context needs the local API. Start it with <code>' + esc(SERVER_CMD) + '</code>.'
+          : e.code === 'index_unavailable' ? 'The memory index isn’t available yet, so there is no conversation context to show.'
+            : 'Could not load conversation context: ' + esc(e.message);
+        el.innerHTML = `<div class="note ${e.code === 'offline' ? '' : 'warn'}">${msg}</div>`;
+      }
+    }
+
+    // ─── Find (keyword) ───────────────────────────────────────────────────────────
+    function runFind(q) {
+      q = q.trim().toLowerCase();
+      S.find.q = q;
+      S.find.cur = -1;
+      if (!q) { S.find.matches = []; renderFind(); refreshVisuals(); return; }
+      const scored = [];
+      for (const n of S.nodes) {
+        const a = n.label.toLowerCase(), b = n.title.toLowerCase();
+        const p = a.indexOf(q), p2 = b.indexOf(q);
+        if (p < 0 && p2 < 0) continue;
+        const rank = (a === q ? 0 : p === 0 ? 1 : p > 0 ? 2 : 3);
+        scored.push([rank, -n.links.length, n.i]);
+      }
+      scored.sort((x, y) => x[0] - y[0] || x[1] - y[1]);
+      S.find.matches = scored.map(s => s[2]);
+      renderFind();
+      refreshVisuals();
+    }
+
+    function renderFind() {
+      const list = $('find-list'), note = $('find-note');
+      const m = S.find.matches;
+      if (!S.find.q) { list.innerHTML = ''; note.textContent = ''; return; }
+      if (!m.length) { list.innerHTML = ''; note.textContent = 'No node matches.'; return; }
+      list.innerHTML = m.slice(0, FIND_LIMIT).map((i, k) => {
+        const n = S.nodes[i];
+        return `<button type="button" role="option" id="find-${k}" aria-selected="${k === S.find.cur}" class="fitem${k === S.find.cur ? ' cur' : ''}" data-i="${i}">
+          <span class="sw" style="color:${esc(n.hex)};background:${n.kind === 'user' ? esc(n.hex) : 'transparent'}"></span>
+          <span class="nm">${esc(n.kind === 'thread' ? n.title : n.label)}</span><span class="ct">${fmtN(n.links.length)}</span></button>`;
+      }).join('');
+      list.querySelectorAll('.fitem').forEach(b => b.addEventListener('click', () => selectNode(+b.dataset.i, { fly: true })));
+      note.textContent = `${fmtN(m.length)} match${m.length === 1 ? '' : 'es'} highlighted${m.length > FIND_LIMIT ? ` · top ${FIND_LIMIT} listed` : ''} · Enter selects`;
+      $('find-q').setAttribute('aria-activedescendant', S.find.cur >= 0 ? `find-${S.find.cur}` : '');
+    }
+
+    function onFindKey(e) {
+      const m = S.find.matches, max = Math.min(m.length, FIND_LIMIT);
+      if (e.key === 'ArrowDown' && max) { e.preventDefault(); S.find.cur = (S.find.cur + 1) % max; renderFind(); }
+      else if (e.key === 'ArrowUp' && max) { e.preventDefault(); S.find.cur = (S.find.cur - 1 + max) % max; renderFind(); }
+      else if (e.key === 'Enter' && max) { e.preventDefault(); selectNode(m[Math.max(0, S.find.cur)], { fly: true }); }
+    }
+
+    // ─── Sidebar: platforms, node types, timeline ─────────────────────────────────
+    function swatch(color, kind) {
+      return kind === 'thread'
+        ? `<svg class="shape" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.2" fill="${esc(color)}" fill-opacity=".3" stroke="${esc(color)}" stroke-width="2"/></svg>`
+        : `<svg class="shape" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="${esc(color)}"/></svg>`;
+    }
+
+    function buildLegend() {
+      const counts = new Map();
+      S.nodes.forEach(n => counts.set(n.platform, (counts.get(n.platform) || 0) + 1));
+      S.platforms = [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([key, count]) => ({
+        key, count, name: platformName(key),
+        color: PLATFORM_COLORS[key] || (S.nodes.find(n => n.platform === key && n.kind === 'user') || S.nodes.find(n => n.platform === key)).hex,
+      }));
+      S.filter.platforms = new Set(S.platforms.map(p => p.key));
+      $('plat-list').innerHTML = S.platforms.map(p => `<div class="fwrap">
+          <button type="button" class="frow" aria-pressed="true" data-p="${esc(p.key)}" title="Show / hide ${esc(p.name)}">
+            <span class="sw" style="color:${esc(p.color)};background:${esc(p.color)}"></span>
+            <span class="nm">${esc(p.name)}</span><span class="ct" data-ct="${esc(p.key)}">${fmtN(p.count)}</span></button>
+          <button type="button" class="only" data-only="${esc(p.key)}" title="Show only ${esc(p.name)}">only</button></div>`).join('');
+      $('plat-list').querySelectorAll('.frow').forEach(b => b.addEventListener('click', () => togglePlatform(b.dataset.p)));
+      $('plat-list').querySelectorAll('.only').forEach(b => b.addEventListener('click', () => soloPlatform(b.dataset.only)));
+
+      const kc = { user: 0, thread: 0 };
+      S.nodes.forEach(n => kc[n.kind]++);
+      $('kind-list').innerHTML = ['user', 'thread'].map(k => `<button type="button" class="frow" aria-pressed="true" data-k="${k}">
+          ${swatch('#c8cbe0', k)}<span class="nm">${KIND_NAMES[k]}${k === 'user' ? ' · filled' : ' · ring'}</span><span class="ct" data-kct="${k}">${fmtN(kc[k])}</span></button>`).join('');
+      $('kind-list').querySelectorAll('.frow').forEach(b => b.addEventListener('click', () => toggleKind(b.dataset.k)));
+      $('plat-all').onclick = () => { S.filter.platforms = new Set(S.platforms.map(p => p.key)); syncLegend(); refreshVisuals(); };
+    }
+
+    function togglePlatform(p) {
+      const f = S.filter.platforms;
+      f.has(p) ? f.delete(p) : f.add(p);
+      syncLegend(); refreshVisuals();
+    }
+
+    function soloPlatform(p) {
+      const f = S.filter.platforms;
+      S.filter.platforms = (f.size === 1 && f.has(p)) ? new Set(S.platforms.map(x => x.key)) : new Set([p]);
+      syncLegend(); refreshVisuals();
+    }
+
+    function toggleKind(k) {
+      const f = S.filter.kinds;
+      f.has(k) ? f.delete(k) : f.add(k);
+      syncLegend(); refreshVisuals();
+    }
+
+    function syncLegend() {
+      $('plat-list').querySelectorAll('.frow').forEach(b => b.setAttribute('aria-pressed', S.filter.platforms.has(b.dataset.p)));
+      $('kind-list').querySelectorAll('.frow').forEach(b => b.setAttribute('aria-pressed', S.filter.kinds.has(b.dataset.k)));
+      $('plat-all').disabled = S.filter.platforms.size === S.platforms.length;
+      updateAskScope();
+    }
+
+    // Counts show "visible / total" once any filter hides something.
+    function updateLegendCounts() {
+      if (!S.nodeVis) return;
+      const vis = new Map(), kvis = { user: 0, thread: 0 }, ktot = { user: 0, thread: 0 };
+      S.nodes.forEach((n, i) => {
+        ktot[n.kind]++;
+        if (S.nodeVis[i]) { vis.set(n.platform, (vis.get(n.platform) || 0) + 1); kvis[n.kind]++; }
       });
-      if (!pos.length) return;
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-      geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-      const mat = new THREE.LineBasicMaterial({
-        vertexColors: true,
-        opacity: 0.85,
-        transparent: true,
-        blending: THREE.AdditiveBlending
+      const filtered = S.visibleNodes !== S.nodes.length;
+      S.platforms.forEach(p => {
+        const el = document.querySelector(`[data-ct="${CSS.escape(p.key)}"]`);
+        if (el) el.textContent = filtered ? `${fmtN(vis.get(p.key) || 0)} / ${fmtN(p.count)}` : fmtN(p.count);
       });
-      S.relLines = new THREE.LineSegments(geo, mat);
-      S.scene.add(S.relLines);
+      for (const k of ['user', 'thread']) {
+        const el = document.querySelector(`[data-kct="${k}"]`);
+        if (el) el.textContent = filtered ? `${fmtN(kvis[k])} / ${fmtN(ktot[k])}` : fmtN(ktot[k]);
+      }
     }
 
-    function clearRelations() {
-      if (!S.relLines) return;
-      S.scene.remove(S.relLines);
-      S.relLines.geometry.dispose();
-      S.relLines = null;
+    function buildTimeline() {
+      const box = $('timeline');
+      let min = Infinity, max = -Infinity;
+      for (const n of S.nodes) {
+        if (Number.isFinite(n.first)) min = Math.min(min, n.first);
+        if (Number.isFinite(n.last)) max = Math.max(max, n.last);
+      }
+      if (!Number.isFinite(min)) {
+        S.time = null;
+        box.innerHTML = `<div class="tl-note">The graph files have no activity dates, so the timeline is off. Re-export with <span class="code">${esc(PIPELINE_CMDS[0])}</span> then <span class="code">${esc(PIPELINE_CMDS[1])}</span> to enable it.</div>`;
+        return;
+      }
+      // Month buckets (UTC) from the first to the last activity.
+      const months = [];
+      const d = new Date(min * 1000);
+      let y = d.getUTCFullYear(), mo = d.getUTCMonth();
+      for (;;) {
+        const t = Date.UTC(y, mo, 1) / 1000;
+        if (t > max) break;
+        months.push(t);
+        if (++mo === 12) { mo = 0; y++; }
+        if (months.length > 1200) break;
+      }
+      const end = Date.UTC(y, mo, 1) / 1000;
+      const monthOf = ts => { let lo = 0, hi = months.length - 1; while (lo < hi) { const md = (lo + hi + 1) >> 1; if (months[md] <= ts) lo = md; else hi = md - 1; } return lo; };
+      // Histogram: threads active in each month (a thread counts in every month it spans).
+      const hist = new Array(months.length).fill(0);
+      for (const n of S.nodes) {
+        if (n.kind !== 'thread' || !Number.isFinite(n.first)) continue;
+        const a = monthOf(n.first), b = monthOf(n.last);
+        for (let k = a; k <= b; k++) hist[k]++;
+      }
+      S.time = { months, end, i0: 0, i1: months.length - 1, hist, monthOf };
+      const last = months.length - 1;
+      box.innerHTML = `
+        <svg id="tl-hist" viewBox="0 0 ${months.length} 30" preserveAspectRatio="none" role="img" aria-label="Active threads per month"></svg>
+        <div class="dual">
+          <div class="rail"></div><div class="fill" id="tl-fill"></div>
+          <input type="range" id="tl-a" min="0" max="${last}" value="0" step="1" aria-label="Timeline start month">
+          <input type="range" id="tl-b" min="0" max="${last}" value="${last}" step="1" aria-label="Timeline end month">
+        </div>
+        <div id="tl-lbl"><span id="tl-from"></span><span id="tl-to"></span></div>
+        <div id="tl-presets">
+          <button type="button" class="btn sm" data-m="3">3 mo</button>
+          <button type="button" class="btn sm" data-m="12">12 mo</button>
+          <button type="button" class="btn sm" data-m="0">All</button>
+        </div>
+        <div class="tl-note" style="margin-top:6px">Bars: threads active per month. Threads outside the range and people with no messages in it are hidden.</div>`;
+      const peak = Math.max(1, ...hist);
+      $('tl-hist').innerHTML = hist.map((v, k) => `<rect x="${k + 0.1}" width="0.8" y="${30 - Math.max(v ? 1.5 : 0, 30 * v / peak)}" height="${Math.max(v ? 1.5 : 0, 30 * v / peak)}"><title>${fmtMonth(months[k])}: ${v} thread${v === 1 ? '' : 's'}</title></rect>`).join('');
+      const onInput = e => {
+        let a = +$('tl-a').value, b = +$('tl-b').value;
+        if (a > b) { if (e && e.target.id === 'tl-a') b = a; else a = b; }
+        setTimeRange(a, b);
+      };
+      $('tl-a').addEventListener('input', onInput);
+      $('tl-b').addEventListener('input', onInput);
+      $('tl-presets').querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+        const m = +b.dataset.m;
+        setTimeRange(m ? Math.max(0, last - m + 1) : 0, last);
+      }));
+      $('tl-clear').onclick = () => setTimeRange(0, last);
+      syncTimeline();
     }
 
-    function showPlatformRelations(p) {
-      clearRelations();
-      const groups = S.megaMeta[p].groups;
-      const groupNodes = new Set(S.nodes.filter(n => groups.includes(n.group)).map(n => n.id));
-      const pos = [];
-      const colors = [];
+    function setTimeRange(a, b) {
+      if (!S.time) return;
+      S.time.i0 = a; S.time.i1 = b;
+      syncTimeline();
+      refreshVisuals();
+    }
 
-      groupNodes.forEach(nid => {
-        const n = S.nodeById[nid];
-        const neighbors = S.adj[nid] || [];
-        const sourceCol = new THREE.Color(n.color || '#4488ff');
-        const nx = parseFloat(n.layout_x) || 0, ny = parseFloat(n.layout_y) || 0, nz = parseFloat(n.layout_z) || 0;
+    function syncTimeline() {
+      const t = S.time;
+      if (!t) return;
+      const last = t.months.length - 1;
+      $('tl-a').value = t.i0; $('tl-b').value = t.i1;
+      $('tl-from').textContent = fmtMonth(t.months[t.i0]);
+      $('tl-to').textContent = fmtMonth(t.months[t.i1]);
+      const L = last ? (t.i0 / last) * 100 : 0, R = last ? (t.i1 / last) * 100 : 100;
+      $('tl-fill').style.left = L + '%'; $('tl-fill').style.width = (R - L) + '%';
+      $('tl-hist').querySelectorAll('rect').forEach((r, k) => r.classList.toggle('out', k < t.i0 || k > t.i1));
+      $('tl-clear').disabled = !timeActive();
+      updateAskScope();
+    }
 
-        neighbors.forEach(targetId => {
-          // Only draw relations within this mega-cluster to prevent 80k line explosion
-          // and only draw source < target to avoid duplicates
-          if (nid >= targetId || !groupNodes.has(targetId)) return;
+    // ─── Stats, empty state, labels ───────────────────────────────────────────────
+    function updateStats() {
+      const N = S.nodes.length, E = S.edges.length;
+      const parts = [
+        `<span class="st"><b>${fmtN(N)}</b> nodes</span>`, '<span class="sep">·</span>',
+        `<span class="st"><b>${fmtN(E)}</b> edges</span>`, '<span class="sep">·</span>',
+        `<span class="st opt"><b>${S.platforms.length}</b> platform${S.platforms.length === 1 ? '' : 's'}</span>`,
+      ];
+      if (S.visibleNodes !== N || S.visibleEdges !== E) {
+        parts.push('<span class="sep">|</span>', `<span class="st">showing <b>${fmtN(S.visibleNodes)}</b> · <b>${fmtN(S.visibleEdges)}</b></span>`);
+      }
+      if (S.find.q) parts.push('<span class="sep">|</span>', `<span class="st">${fmtN(S.find.matches.length)} found</span>`);
+      if (S.sem.set) parts.push('<span class="sep">|</span>', `<span class="st">${fmtN(S.sem.set.size)} memory hits</span>`);
+      if (S.selected >= 0) {
+        const n = S.nodes[S.selected];
+        parts.push('<span class="sep">|</span>', `<span class="st sel" title="${esc(n.title)}">selected: <b>${esc(truncate(n.label, 36))}</b> · ${fmtN(n.links.length)} link${n.links.length === 1 ? '' : 's'}</span>`);
+      }
+      if (S.layoutNote) parts.push('<span class="sep">|</span>', `<span class="st warn" title="${esc(S.layoutNote)}">layout fallback</span>`);
+      $('stats').innerHTML = parts.join('');
+    }
 
-          const nb = S.nodeById[targetId];
-          const targetCol = new THREE.Color(nb.color || '#4488ff');
-          pos.push(nx, ny, nz);
-          colors.push(sourceCol.r, sourceCol.g, sourceCol.b);
-          pos.push(parseFloat(nb.layout_x) || 0, parseFloat(nb.layout_y) || 0, parseFloat(nb.layout_z) || 0);
-          colors.push(targetCol.r, targetCol.g, targetCol.b);
+    function filtersActive() {
+      return S.filter.platforms.size !== S.platforms.length || S.filter.kinds.size !== 2 || timeActive();
+    }
+
+    function updateEmptyState() {
+      const empty = S.nodes.length > 0 && S.visibleNodes === 0 && S.selected < 0;
+      $('empty-state').hidden = !empty;
+      if (empty) $('empty-msg').textContent = 'No nodes match the current platform, type and timeline filters.';
+    }
+
+    // HTML labels for the selection, its strongest links, hover and memory hits.
+    function updateLabels(rebuild) {
+      if (!S.camera) return;
+      if (rebuild) {
+        const want = [];
+        const add = (i, cls) => { if (i >= 0 && !want.some(w => w.i === i)) want.push({ i, cls }); };
+        if (S.selected >= 0) {
+          add(S.selected, 'sel');
+          neighbours(S.selected).sort((a, b) => b.e.w - a.e.w).slice(0, MAX_LABELS - 1).forEach(o => add(o.j, ''));
+        } else if (S.sem.set) {
+          [...S.sem.set].filter(i => S.nodes[i].kind === 'thread').slice(0, 12).forEach(i => add(i, ''));
+        }
+        add(S.hover, S.hover === S.selected ? 'sel' : '');
+        const box = $('labels');
+        box.innerHTML = '';
+        S.labelEls = want.map(w => {
+          const el = document.createElement('div');
+          const n = S.nodes[w.i];
+          el.className = 'nlabel ' + w.cls;
+          el.textContent = truncate(n.kind === 'thread' ? n.title : n.label, 48);
+          box.appendChild(el);
+          return { el, i: w.i };
         });
-      });
-
-      if (!pos.length) return;
-      const geo = new THREE.BufferGeometry();
-      geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
-      geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
-      const mat = new THREE.LineBasicMaterial({
-        vertexColors: true,
-        opacity: 0.20, // softer opacity for mega clusters
-        transparent: true,
-        blending: THREE.AdditiveBlending
-      });
-      S.relLines = new THREE.LineSegments(geo, mat);
-      S.scene.add(S.relLines);
+      }
+      if (!S.labelEls.length) return;
+      const W = window.innerWidth, H = window.innerHeight, v = new THREE.Vector3(), taken = [];
+      const scale = S.uniforms.uScale.value;
+      for (const { el, i } of S.labelEls) {
+        const n = S.nodes[i];
+        v.set(n.x, n.y, n.z).project(S.camera);
+        const dist = S.camera.position.distanceTo(new THREE.Vector3(n.x, n.y, n.z));
+        const x = (v.x + 1) / 2 * W;
+        let y = (1 - v.y) / 2 * H - clamp(n.ws * scale / dist, 3, 56) / 2 - 2;
+        let show = v.z < 1 && x > -50 && x < W + 50 && y > 0 && y < H + 20;
+        // A label that would overlap one already placed (selection first, then strongest links) is
+        // stacked up to three lines higher; only if there is still no room is it hidden.
+        const hits = yy => taken.some(t => Math.abs(t[0] - x) < 90 && Math.abs(t[1] - yy) < 15);
+        if (show && hits(y)) {
+          let k = 1;
+          while (k <= 3 && hits(y - 16 * k)) k++;
+          if (k <= 3) y -= 16 * k; else show = i === S.selected || i === S.hover;
+        }
+        el.style.display = show ? '' : 'none';
+        if (show) { el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -100%)`; taken.push([x, y]); }
+      }
     }
 
     // ─── Render loop ──────────────────────────────────────────────────────────────
-    function renderLoop() {
+    function renderLoop(now) {
       requestAnimationFrame(renderLoop);
-      if (S.targetCamLook && S.is3D) {
-        S.controls.target.lerp(S.targetCamLook, 0.08);
-        S.camera3.position.lerp(S.targetCamPos, 0.08);
-        if (S.camera3.position.distanceTo(S.targetCamPos) < 15) S.targetCamLook = null;
-      } else if (S.orbit && S.is3D) {
-        // Slow cinematic orbit during recording, normal speed otherwise
-        const speed = (S.record && S._cinOrbitStyle === 'galaxy') ? 0.04 : 0.18;
-        S.orbitAngle += speed * (Math.PI / 180);
-        const r = S.camera3.position.length();
-        S.camera3.position.set(Math.sin(S.orbitAngle) * r, S.camera3.position.y, Math.cos(S.orbitAngle) * r);
-        S.camera3.lookAt(0, 0, 0);
-      }
+      stepTween(now);
       S.controls.update();
-      S.renderer.render(S.scene, S.is3D ? S.camera3 : S.camera2);
+      S.renderer.render(S.scene, S.camera);
+      updateLabels(false);
     }
 
-    // ─── 2D / 3D toggle ──────────────────────────────────────────────────────────
-    function toggleDim() {
-      S.is3D = !S.is3D;
-      $('btn-dim').textContent = S.is3D ? '⬡ 2D' : '⬡ 3D';
-      $('btn-orbit').style.display = S.is3D ? '' : 'none';
-      if (!S.is3D) {
-        stopOrbit();
-        // Flatten z in position buffer so 2D is truly flat
-        const N = S.nodes.length;
-        for (let i = 0; i < N; i++) S.posArr[i * 3 + 2] = 0;
-        S.geo.attributes.position.needsUpdate = true;
-      } else {
-        // Restore z from pre-computed layout
-        const N = S.nodes.length;
-        for (let i = 0; i < N; i++) S.posArr[i * 3 + 2] = parseFloat(S.nodes[i].layout_z) || 0;
-        S.geo.attributes.position.needsUpdate = true;
+    // ─── Reset ────────────────────────────────────────────────────────────────────
+    function resetFilters() {
+      S.filter.platforms = new Set(S.platforms.map(p => p.key));
+      S.filter.kinds = new Set(['user', 'thread']);
+      if (S.time) { S.time.i0 = 0; S.time.i1 = S.time.months.length - 1; syncTimeline(); }
+      syncLegend();
+    }
+
+    // Restores the original full view: no selection, search, memory highlights or filters; camera home.
+    function resetAll() {
+      S.selected = -1;
+      S.ctx.seq++;
+      $('details').hidden = true;
+      $('find-q').value = '';
+      S.find = { q: '', matches: [], cur: -1 };
+      renderFind();
+      resetSemantic({ refresh: false });
+      if (S.nodes.length) {
+        resetFilters();
+        refreshVisuals();
+        flyHome();
       }
-      // Switch OrbitControls to correct camera
-      S.controls.object = S.is3D ? S.camera3 : S.camera2;
-      S.controls.update();
+      setHover(-1);
+      setHash(null);
     }
 
-    // ─── Orbit ────────────────────────────────────────────────────────────────────
-    function toggleOrbit() { S.orbit ? stopOrbit() : startOrbit(); }
-    function startOrbit() { S.orbit = true; $('btn-orbit').classList.add('on'); }
-    function stopOrbit() { S.orbit = false; $('btn-orbit').classList.remove('on'); }
+    // ─── Help ─────────────────────────────────────────────────────────────────────
+    let _helpReturn = null;
+    function openHelp() {
+      _helpReturn = document.activeElement;
+      $('help-backdrop').hidden = false;
+      $('help-close').focus();
+    }
+    function closeHelp() {
+      $('help-backdrop').hidden = true;
+      if (_helpReturn && _helpReturn.focus) _helpReturn.focus();
+    }
+    const helpOpen = () => !$('help-backdrop').hidden;
 
-    // ─── Group Panel ──────────────────────────────────────────────────────────────
-    function buildGroups() {
-      const el = $('group-list'); el.innerHTML = '';
-      const sorted = Object.entries(S.megaMeta).sort((a, b) => b[1].count - a[1].count);
-      sorted.forEach(([name, m]) => {
-        const d = document.createElement('div');
-        d.className = 'gi'; d.dataset.p = name;
-        d.innerHTML = `<div class="gidot" style="background:${m.color};box-shadow:0 0 4px ${m.color}55"></div>
-<span class="giname">${fmtGroup(name)}</span><span class="gicnt">${m.count.toLocaleString()}</span>`;
-        d.onclick = () => clickGroup(name);
-        el.appendChild(d);
-      });
+    // ─── Keyboard ─────────────────────────────────────────────────────────────────
+    function isTyping(el) {
+      return el && (el.tagName === 'INPUT' && !['range', 'button', 'checkbox'].includes(el.type) || el.tagName === 'TEXTAREA' || el.isContentEditable);
     }
 
-    function clickGroup(p) {
-      if (S.cycle) stopCycle();
-      const groups = S.megaMeta[p].groups;
-      const activeGroups = Array.from(S.highlight || []);
-      const isExact = activeGroups.length === groups.length && activeGroups.every(g => groups.includes(g));
-
-      if (isExact) {
-        S.highlight = null;
-        clearRelations();
-        S.targetCamLook = null;
-      } else {
-        S.highlight = new Set(groups);
-        showPlatformRelations(p);
-        flyToPlatform(p);
-      }
-      syncGroupUI(); refreshColors();
-    }
-    function showAll() { S.highlight = null; syncGroupUI(); refreshColors(); S.targetCamLook = null; clearRelations(); }
-    function hideAll() { S.highlight = new Set(); syncGroupUI(); refreshColors(); S.targetCamLook = null; clearRelations(); }
-    function syncGroupUI() {
-      document.querySelectorAll('.gi').forEach(el => {
-        const p = el.dataset.p;
-        const groups = S.megaMeta[p].groups;
-        const vis = S.highlight === null || groups.every(g => S.highlight.has(g));
-        el.classList.toggle('dimmed', !vis);
-        el.classList.toggle('solo', !!(S.highlight && groups.length === S.highlight.size && groups.every(g => S.highlight.has(g))));
-      });
-    }
-
-    // ─── Cycle ────────────────────────────────────────────────────────────────────
-    function toggleCycle() { S.cycle ? stopCycle() : startCycle(); }
-    function startCycle() {
-      S.cycle = true;
-      S.cycleGroups = Object.entries(S.megaMeta).sort((a, b) => b[1].count - a[1].count).map(([k]) => k);
-      $('btn-cycle').textContent = '⏹ Cycling';
-      $('btn-cycle').classList.add('on');
-      $('cycbar').classList.add('show');
-      buildGdots();
-      showGroup(S.cycleIdx);
-      scheduleTick();
-      if (S.is3D && !S.orbit) startOrbit();
-    }
-    function stopCycle() {
-      S.cycle = false; clearTimeout(S.cycleTimer);
-      $('btn-cycle').textContent = '▶ Cycle'; $('btn-cycle').classList.remove('on');
-      $('cycbar').classList.remove('show');
-      S.highlight = null; syncGroupUI(); refreshColors(); resetFill();
-      S.targetCamLook = null;
-    }
-    function showGroup(idx) {
-      const p = S.cycleGroups[idx], m = S.megaMeta[p];
-      S.highlight = new Set(m.groups); syncGroupUI(); refreshColors();
-      $('gdname').textContent = fmtGroup(p);
-      $('gdname').style.color = m.color;
-      $('gdname').style.textShadow = `0 0 80px ${m.color}77`;
-      $('gdsub').textContent = `${m.count.toLocaleString()} NODES`;
-      document.querySelectorAll('.gdot').forEach((d, i) => {
-        d.classList.toggle('active', i === idx);
-        d.style.background = i === idx ? m.color : '';
-      });
-      const f = $('timerfill');
-      f.style.transition = 'none'; f.style.width = '0%'; f.style.background = m.color;
-      requestAnimationFrame(() => { f.style.transition = `width ${S.cycleMs}ms linear`; f.style.width = '100%'; });
-      flyToPlatform(p);
-    }
-
-    function flyToPlatform(p) {
-      const groups = S.megaMeta[p].groups;
-      const groupNodes = S.nodes.filter(n => groups.includes(n.group));
-      if (!groupNodes.length) return;
-      let bx = 0, by = 0, bz = 0;
-      groupNodes.forEach(n => { bx += parseFloat(n.layout_x) || 0; by += parseFloat(n.layout_y) || 0; bz += parseFloat(n.layout_z) || 0; });
-      const cnt = groupNodes.length;
-      bx /= cnt; by /= cnt; bz /= cnt;
-      const clusterCenter = new THREE.Vector3(bx, by, S.is3D ? bz : 0);
-      const clusterR = Math.sqrt(cnt) * 5.5;
-      const camDist = Math.max(800, Math.min(5000, clusterR * 2.0));
-
-      S.targetCamLook = clusterCenter.clone();
-      const dir = S.camera3.position.clone().sub(clusterCenter).normalize();
-      if (dir.lengthSq() < 0.01) dir.set(0, 0, 1);
-      S.targetCamPos = clusterCenter.clone().add(dir.multiplyScalar(camDist));
-    }
-    function scheduleTick() {
-      if (!S.cycle) return;
-      S.cycleTimer = setTimeout(() => {
-        S.cycleIdx = (S.cycleIdx + 1) % S.cycleGroups.length;
-        showGroup(S.cycleIdx); scheduleTick();
-      }, S.cycleMs);
-    }
-    function shift(d) {
-      if (!S.cycle) return;
-      clearTimeout(S.cycleTimer);
-      S.cycleIdx = (S.cycleIdx + d + S.cycleGroups.length) % S.cycleGroups.length;
-      showGroup(S.cycleIdx); scheduleTick();
-    }
-    function setSpeed(v) {
-      const s = 10 - parseInt(v); S.cycleMs = s * 1000;
-      $('splbl').textContent = s + 's';
-      if (S.cycle) { clearTimeout(S.cycleTimer); showGroup(S.cycleIdx); scheduleTick(); }
-    }
-    function buildGdots() {
-      $('gddots').innerHTML = '';
-      S.cycleGroups.forEach((_, i) => { const d = document.createElement('div'); d.className = 'gdot'; $('gddots').appendChild(d); });
-    }
-    function resetFill() { const f = $('timerfill'); f.style.transition = 'none'; f.style.width = '0%'; }
-
-    // ─── Record mode ──────────────────────────────────────────────────────────────
-    let _mediaRec = null;
-    let _recChunks = [];
-    let _cinTimer = null;
-    let _cinIdx = 0;
-    let _cinPlatforms = [];
-    let _cinT = 0;  // elapsed ms in current segment
-    const CIN_MS = 9000; // ms per cluster in fly-through styles
-
-    function toggleRecord() {
-      $('rec-modal').classList.add('show');
-    }
-    function closeRecModal() {
-      $('rec-modal').classList.remove('show');
-    }
-
-    function startRecord() {
-      closeRecModal();
-      const style = document.querySelector('input[name=recstyle]:checked').value;
-
-      // Start MediaRecorder on the THREE canvas
-      const canvas = S.renderer.domElement;
-      const stream = canvas.captureStream(60);
-      _mediaRec = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9', videoBitsPerSecond: 8_000_000 });
-      _recChunks = [];
-      _mediaRec.ondataavailable = e => { if (e.data.size > 0) _recChunks.push(e.data); };
-      _mediaRec.start(200);
-
-      S.record = true;
-      $('ui').classList.add('rec');
-      $('recov').classList.add('show');
-      $('btn-record').classList.add('on');
-      $('cin-style-badge').textContent = style.replace(/_/g, ' ');
-      $('cin-style-badge').style.opacity = '1';
-
-      // Stop any existing cycle
-      if (S.cycle) stopCycle();
-      stopOrbit();
-
-      _cinPlatforms = Object.entries(S.megaMeta).sort((a, b) => b[1].count - a[1].count).map(([k]) => k);
-      _cinIdx = 0;
-
-      switch (style) {
-        case 'galaxy_orbit': cinGalaxyOrbit(); break;
-        case 'cluster_flythrough': cinFlyThrough(); break;
-        case 'zoom_reveal': cinZoomReveal(); break;
-        case 'connection_web': cinConnectionWeb(); break;
-        case 'dramatic_sweep': cinDramaticSweep(); break;
-      }
-    }
-
-    function stopRecord() {
-      if (_cinTimer) { clearTimeout(_cinTimer); clearInterval(_cinTimer); _cinTimer = null; }
-      if (_mediaRec && _mediaRec.state !== 'inactive') {
-        _mediaRec.onstop = () => {
-          const blob = new Blob(_recChunks, { type: 'video/webm' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url; a.download = `sarthink_${Date.now()}.webm`;
-          a.click(); URL.revokeObjectURL(url);
-        };
-        _mediaRec.stop();
-      }
-      S.record = false;
-      $('ui').classList.remove('rec');
-      $('recov').classList.remove('show');
-      $('btn-record').classList.remove('on');
-      $('cin-name').style.opacity = '0';
-      $('cin-sub').style.opacity = '0';
-      S.highlight = null; syncGroupUI(); refreshColors(); clearRelations();
-      S.targetCamLook = null;
-      stopOrbit();
-    }
-
-    // ─ helpers ─
-    function cinTitle(name, sub, color) {
-      const el = $('cin-name'); const se = $('cin-sub');
-      el.style.opacity = '0'; se.style.opacity = '0';
-      setTimeout(() => {
-        el.textContent = name; el.style.color = color || '#fff';
-        el.style.textShadow = `0 0 80px ${color || '#fff'}66`;
-        se.textContent = sub || '';
-        el.style.opacity = '1'; se.style.opacity = '1';
-      }, 300);
-    }
-    function cinClear() {
-      $('cin-name').style.opacity = '0'; $('cin-sub').style.opacity = '0';
-    }
-    function cinFill(ms, color) {
-      const f = $('timerfill');
-      f.style.transition = 'none'; f.style.width = '0%'; f.style.background = color || '#fff';
-      requestAnimationFrame(() => { f.style.transition = `width ${ms}ms linear`; f.style.width = '100%'; });
-    }
-
-    // ─ compute cluster centroid and adaptive camera distance ─
-    function cinClusterInfo(p) {
-      const groups = S.megaMeta[p].groups;
-      const gpNodes = S.nodes.filter(n => groups.includes(n.group));
-      let bx = 0, by = 0, bz = 0;
-      gpNodes.forEach(n => { bx += parseFloat(n.layout_x) || 0; by += parseFloat(n.layout_y) || 0; bz += parseFloat(n.layout_z) || 0; });
-      const cnt = gpNodes.length;
-      bx /= cnt; by /= cnt; bz /= cnt;
-      const clusterR = Math.sqrt(cnt) * 5.5;
-      return { center: new THREE.Vector3(bx, by, bz), r: clusterR, cnt, m: S.megaMeta[p] };
-    }
-    function cinFlyTo(center, dist, instant) {
-      S.targetCamLook = center.clone();
-      let dir = S.camera3.position.clone().sub(center).normalize();
-      if (dir.lengthSq() < 0.01) dir.set(0, 0, 1);
-      S.targetCamPos = center.clone().add(dir.multiplyScalar(dist));
-    }
-
-    // ─── STYLE 1: Galaxy Orbit — slow rotation, all nodes visible ─────────────────
-    function cinGalaxyOrbit() {
-      S.highlight = null; syncGroupUI(); refreshColors(); clearRelations();
-      cinTitle('SARTHINK · MEMORY GRAPH', 'ALL CONNECTIONS', '#4f8eff');
-      // Fly out to see the whole galaxy
-      S.targetCamLook = new THREE.Vector3(0, 0, 0);
-      S.targetCamPos = new THREE.Vector3(0, 0, 14000);
-      // Start slow orbit
-      S.orbit = true;
-      S.controls.autoRotate = false;
-      // Custom slower angle increment
-      S._cinOrbitStyle = 'galaxy';
-    }
-
-    // ─── STYLE 2: Cluster Fly-Through ─────────────────────────────────────────────
-    function cinFlyThrough() {
-      cinFlyThroughStep();
-    }
-    function cinFlyThroughStep() {
-      if (!S.record) return;
-      const p = _cinPlatforms[_cinIdx];
-      const info = cinClusterInfo(p);
-      S.highlight = new Set(info.m.groups); syncGroupUI(); refreshColors();
-
-      // Adaptive distance: never too far or too close for cluster size
-      const dist = Math.max(900, Math.min(5500, info.r * 2.2));
-      cinFlyTo(info.center, dist);
-      cinTitle(p.toUpperCase(), `${info.cnt.toLocaleString()} NODES`, info.m.color);
-      cinFill(CIN_MS, info.m.color);
-
-      _cinTimer = setTimeout(() => {
-        cinClear();
-        _cinIdx = (_cinIdx + 1) % _cinPlatforms.length;
-        if (_cinIdx === 0) {
-          // Loop: pull back to galaxy view briefly
-          S.highlight = null; syncGroupUI(); refreshColors();
-          S.targetCamLook = new THREE.Vector3(0, 0, 0);
-          S.targetCamPos = S.camera3.position.clone().normalize().multiplyScalar(14000);
-          _cinTimer = setTimeout(() => cinFlyThroughStep(), 3000);
-        } else {
-          cinFlyThroughStep();
-        }
-      }, CIN_MS);
-    }
-
-    // ─── STYLE 3: Zoom Reveal — far to tight, then pull back ──────────────────────
-    function cinZoomReveal() { cinZoomRevealStep(); }
-    function cinZoomRevealStep() {
-      if (!S.record) return;
-      const p = _cinPlatforms[_cinIdx];
-      const info = cinClusterInfo(p);
-      S.highlight = new Set(info.m.groups); syncGroupUI(); refreshColors();
-
-      // Phase 1: fly to far position first
-      const farDist = Math.max(5000, info.r * 7);
-      const nearDist = Math.max(600, info.r * 1.4);
-      cinFlyTo(info.center, farDist);
-      cinTitle(p.toUpperCase(), 'APPROACHING…', info.m.color);
-
-      // Phase 2: zoom in close
-      _cinTimer = setTimeout(() => {
-        cinFlyTo(info.center, nearDist);
-        cinTitle(p.toUpperCase(), `${info.cnt.toLocaleString()} NODES`, info.m.color);
-        cinFill(CIN_MS * 0.6, info.m.color);
-
-        // Phase 3: next
-        _cinTimer = setTimeout(() => {
-          cinClear();
-          _cinIdx = (_cinIdx + 1) % _cinPlatforms.length;
-          cinZoomRevealStep();
-        }, CIN_MS * 0.65);
-      }, CIN_MS * 0.35);
-    }
-
-    // ─── STYLE 4: Connection Web — show glowing relations per cluster ──────────────
-    function cinConnectionWeb() { cinConnectionWebStep(); }
-    function cinConnectionWebStep() {
-      if (!S.record) return;
-      const p = _cinPlatforms[_cinIdx];
-      const info = cinClusterInfo(p);
-      S.highlight = new Set(info.m.groups); syncGroupUI(); refreshColors();
-
-      const dist = Math.max(1000, Math.min(5500, info.r * 2.4));
-      cinFlyTo(info.center, dist);
-
-      // Show connections after camera arrives
-      _cinTimer = setTimeout(() => {
-        showPlatformRelations(p);
-        cinTitle(p.toUpperCase(), `${info.cnt.toLocaleString()} NODES · CONNECTIONS`, info.m.color);
-        cinFill(CIN_MS * 0.7, info.m.color);
-
-        _cinTimer = setTimeout(() => {
-          clearRelations();
-          cinClear();
-          _cinIdx = (_cinIdx + 1) % _cinPlatforms.length;
-          cinConnectionWebStep();
-        }, CIN_MS * 0.72);
-      }, CIN_MS * 0.28);
-    }
-
-    // ─── STYLE 5: Dramatic Sweep — arcing camera through full galaxy ───────────────
-    let _sweepAngle = 0;
-    let _sweepRAF = null;
-    function cinDramaticSweep() {
-      S.highlight = null; syncGroupUI(); refreshColors(); clearRelations();
-      cinTitle('SARTHINK', 'MEMORY GRAPH', '#4f8eff');
-      _sweepAngle = 0;
-      S._cinOrbitStyle = 'sweep';
-
-      // Sweep through each platform after a delay
-      let delay = 4000;
-      _cinPlatforms.forEach((p, i) => {
-        setTimeout(() => {
-          if (!S.record) return;
-          const info = cinClusterInfo(p);
-          const dist = Math.max(3000, info.r * 4);
-          cinFlyTo(info.center, dist);
-          cinTitle(p.toUpperCase(), `${info.cnt.toLocaleString()} NODES`, info.m.color);
-          cinFill(CIN_MS * 0.9, info.m.color);
-          setTimeout(() => { if (S.record) cinClear(); }, CIN_MS * 0.75);
-        }, delay);
-        delay += CIN_MS;
-      });
-      // Final pull back
-      setTimeout(() => {
-        if (!S.record) return;
-        S.targetCamLook = new THREE.Vector3(0, 0, 0);
-        S.targetCamPos = S.camera3.position.clone().normalize().multiplyScalar(16000);
-        cinTitle('SARTHINK · MEMORY', 'END', '#4f8eff');
-      }, delay);
-    }
-
-    // ─── Search ───────────────────────────────────────────────────────────────────
-    function isolateSearchLayout(centerIdx, bfsByDepth) {
-      // bfsByDepth: array of arrays, index = depth level, values = node IDs at that depth
-      const N = S.nodes.length;
-      S.savedPositions = new Float32Array(S.posArr.buffer.slice(0));
-
-      const OFFSCREEN = 10_000_000;
-      for (let i = 0; i < N; i++) {
-        S.posArr[i * 3] = OFFSCREEN;
-        S.posArr[i * 3 + 1] = OFFSCREEN;
-        S.posArr[i * 3 + 2] = OFFSCREEN;
-      }
-
-      // Place the primary node at origin
-      S.posArr[centerIdx * 3] = 0;
-      S.posArr[centerIdx * 3 + 1] = 0;
-      S.posArr[centerIdx * 3 + 2] = 0;
-      const cn = S.nodes[centerIdx];
-      cn.layout_x = 0; cn.layout_y = 0; cn.layout_z = 0;
-
-      // Place each depth ring in expanding shells
-      const BASE_R = 340;
-      bfsByDepth.forEach((ring, depthIdx) => {
-        const R = BASE_R * (depthIdx + 1);
-        const cnt = ring.length;
-        ring.forEach((nid, k) => {
-          const nb = S.nodeById[nid];
-          if (!nb || nb.index === undefined) return;
-          const phi = Math.acos(-1 + (2 * k) / Math.max(cnt - 1, 1));
-          const theta = Math.sqrt(cnt * Math.PI) * phi;
-          const x = R * Math.sin(phi) * Math.cos(theta);
-          const y = R * Math.sin(phi) * Math.sin(theta);
-          const z = R * Math.cos(phi);
-          S.posArr[nb.index * 3] = x;
-          S.posArr[nb.index * 3 + 1] = y;
-          S.posArr[nb.index * 3 + 2] = z;
-          nb.layout_x = x; nb.layout_y = y; nb.layout_z = z;
-        });
-      });
-
-      S.geo.attributes.position.needsUpdate = true;
-      S.searchIsolated = true;
-    }
-
-    function restoreSearchLayout() {
-      if (!S.savedPositions) return;
-      const N = S.nodes.length;
-      for (let i = 0; i < N; i++) {
-        const ox = S.savedPositions[i * 3], oy = S.savedPositions[i * 3 + 1], oz = S.savedPositions[i * 3 + 2];
-        S.posArr[i * 3] = ox;
-        S.posArr[i * 3 + 1] = oy;
-        S.posArr[i * 3 + 2] = oz;
-        S.nodes[i].layout_x = ox;
-        S.nodes[i].layout_y = oy;
-        S.nodes[i].layout_z = oz;
-      }
-      S.geo.attributes.position.needsUpdate = true;
-      S.savedPositions = null;
-      S.searchIsolated = false;
-    }
-
-    function onSearch(v) {
-      const q = v.trim().toLowerCase();
-      S.search = q;
-      if (q && S.sem.set) clearSemanticHighlight();  // keyword search takes over the graph
-
-      // If clearing, restore everything
-      if (!q) {
-        if (S.searchIsolated) restoreSearchLayout();
-        S.currentSearchIdx = -1;
-        S.currentSearchSet = null;
-        clearRelations();
-        S.targetCamLook = null;
-        $('toast').classList.remove('show');
-        refreshColors();
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        if (helpOpen()) { closeHelp(); return; }
+        if (isTyping(document.activeElement)) document.activeElement.blur();
+        resetAll();
         return;
       }
-
-      runSearch();
-    }
-
-    function runSearch() {
-      const q = S.search;
-      if (!q) return;
-
-      if (S.searchIsolated) restoreSearchLayout();
-
-      S.currentSearchIdx = -1;
-      const N = S.nodes.length;
-      for (let i = 0; i < N; i++) {
-        if (S.nodes[i].label.toLowerCase().includes(q)) {
-          S.currentSearchIdx = i;
-          break;
-        }
+      if (helpOpen()) {
+        if (e.key === 'Tab') { e.preventDefault(); $('help-close').focus(); }   // keep focus in the dialog
+        return;
       }
-
-      if (S.currentSearchIdx >= 0) {
-        const n = S.nodes[S.currentSearchIdx];
-
-        // BFS up to S.searchDepth hops
-        const visited = new Set([n.id]);
-        const bfsByDepth = [];
-        let frontier = [n.id];
-
-        for (let d = 0; d < S.searchDepth; d++) {
-          const nextFrontier = [];
-          frontier.forEach(nid => {
-            (S.adj[nid] || []).forEach(neighbor => {
-              if (!visited.has(neighbor)) {
-                visited.add(neighbor);
-                nextFrontier.push(neighbor);
-              }
-            });
-          });
-          if (nextFrontier.length) bfsByDepth.push(nextFrontier);
-          frontier = nextFrontier;
-          if (!frontier.length) break;
-        }
-
-        // Build the visible index set
-        S.currentSearchSet = new Set([S.currentSearchIdx]);
-        bfsByDepth.flat().forEach(nid => {
-          const nb = S.nodeById[nid];
-          if (nb && nb.index !== undefined) S.currentSearchSet.add(nb.index);
-        });
-
-        // Physical relayout with concentric shells
-        isolateSearchLayout(S.currentSearchIdx, bfsByDepth);
-
-        // Draw relations from center only (depth-1 neighbors)
-        showRelations(S.currentSearchIdx);
-
-        const m = S.meta[n.group] || {};
-        const totalVisible = S.currentSearchSet.size;
-        $('toast-lbl').textContent = n.label;
-        $('toast-meta').innerHTML = `
-      <span><span class="tdot" style="background:${m.color || '#aaa'}"></span>${fmtGroup(n.group)}</span>
-      <span>Activity: ${(parseInt(n.size) || 1).toLocaleString()}</span>
-      <span style="opacity:.5">${totalVisible - 1} connected nodes · depth ${S.searchDepth}</span>
-      <span style="font-size:.62rem;color:rgba(255,255,255,.2)">${n.id}</span>`;
-        $('toast').classList.add('show');
-        clearTimeout(S._toastTimer);
-
-        // Camera distance scales with depth
-        const camR = 800 + (S.searchDepth - 1) * 600;
-        S.targetCamLook = new THREE.Vector3(0, 0, 0);
-        let dir = S.camera3.position.clone().normalize();
-        if (dir.lengthSq() < 0.01) dir.set(0, 0, 1);
-        S.targetCamPos = dir.multiplyScalar(camR);
-      } else {
-        S.currentSearchSet = new Set();
-        clearRelations();
-        $('toast').classList.remove('show');
-        S.targetCamLook = null;
-      }
-      refreshColors();
-    }
-
-    function onDepthChange(v) {
-      S.searchDepth = parseInt(v);
-      $('depth-val').textContent = v;
-      if (S.search) runSearch();
-    }
+      if (isTyping(document.activeElement) || e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.key === '/') { e.preventDefault(); $('find-q').focus(); $('find-q').select(); }
+      else if (e.key === '?') { e.preventDefault(); openHelp(); }
+      else if ((e.key === 'f' || e.key === 'F') && S.selected >= 0) { e.preventDefault(); flyToNodes([S.selected, ...neighbours(S.selected).map(o => o.j)]); }
+    });
 
     // ─── Semantic memory search (local API: scripts/api/server.py) ────────────────
     // Same origin when served by server.py; ?api=http://127.0.0.1:8000 when the page is served elsewhere.
@@ -1963,10 +2300,37 @@
     const SEM_LIMIT = 10;
     const SEM_TIMEOUT_MS = 180000;  // first query loads the embedding model on CPU
     const HEALTH_RETRY_MS = 15000;
-
-    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const STOPWORDS = new Set('a an and are as at be but by did do does for from had has have how i if in is it its me my of on or so that the this to was we what when where which who why will with you your about ke ki ka hai mein se ko amp quot'.split(' '));   // amp/quot would match inside escaped entities
     const normName = s => String(s || '').toLowerCase().replace(/^@|^u\//, '').replace(/[,"\r\n]/g, '').trim();
-    const fmtDay = iso => (iso ? String(iso).slice(0, 10) : '');
+
+    function queryTerms(q) {
+      return [...new Set(String(q).toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(w => w.length > 2 && !STOPWORDS.has(w)))];
+    }
+
+    // Escapes text and marks whole-word-prefix matches of the query terms.
+    function highlight(text, terms) {
+      const safe = esc(text);
+      if (!terms.length) return safe;
+      const re = new RegExp(`(^|[^\\p{L}\\p{N}])(${terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'giu');
+      return safe.replace(re, '$1<mark>$2</mark>');
+    }
+
+    function sharedTerms(r, terms) {
+      const hay = `${r.title || ''} ${r.text || r.snippet || ''}`.toLowerCase();
+      return terms.filter(t => new RegExp(`(^|[^\\p{L}\\p{N}])${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'u').test(hay));
+    }
+
+    function semanticWhy(i) {
+      if (!S.sem.results.length) return '';
+      const hits = [];
+      S.sem.results.forEach((r, k) => {
+        const m = r._nodes;
+        if (!m) return;
+        if (m.thread === i) hits.push(`${S.sem.mode === 'ask' ? 'Ask Sarthink source' : 'Memory result'} #${r.rank} for “${esc(S.sem.query)}” (similarity ${esc(r.similarity ?? '—')})${r._shared.length ? ` · shares: ${esc(r._shared.join(', '))}` : ' · matched by meaning, no shared keywords'}`);
+        else if (m.people.includes(i)) hits.push(`Took part in memory result #${r.rank}: ${esc(truncate(r.title || '(untitled)', 60))}`);
+      });
+      return hits.slice(0, 3).join('<br>');
+    }
 
     function semStatus(kind, html) {
       const el = $('sem-status');
@@ -2008,6 +2372,7 @@
     }
 
     async function checkSemanticHealth() {
+      clearTimeout(S.sem.healthTimer);
       try {
         const h = await apiFetch('/api/health');
         const ix = h.index || {};
@@ -2023,47 +2388,27 @@
         semStatus('err', e.code === 'offline' ? offlineHint() : esc(e.message));
       }
       // Keep polling so the UI flips to "Ready" once the embedding job finishes or the server starts.
-      clearTimeout(S.sem.healthTimer);
       S.sem.healthTimer = setTimeout(checkSemanticHealth, HEALTH_RETRY_MS);
     }
 
     // Thread node (T_<channel_id>) plus the participants of that thread that appear in the graph.
     function resultNodes(r) {
       const out = { thread: -1, people: [] };
-      const t = r.node_id && S.nodeById[r.node_id];
-      if (!t || t.index === undefined) return out;
-      out.thread = t.index;
+      const t = r.node_id && S.byId.get(r.node_id);
+      if (!t) return out;
+      out.thread = t.i;
       const want = new Set((r.people || []).map(normName));
       if (want.size) {
-        (S.adj[t.id] || []).forEach(nid => {
-          const nb = S.nodeById[nid];
-          if (nb && nb.index !== undefined && want.has(normName(nb.label))) out.people.push(nb.index);
-        });
+        for (const { j } of neighbours(t.i)) {
+          if (want.has(normName(S.nodes[j].label))) out.people.push(j);
+        }
       }
       return out;
     }
 
-    function nodePos(i) {
-      return new THREE.Vector3(S.posArr[i * 3], S.posArr[i * 3 + 1], S.is3D ? S.posArr[i * 3 + 2] : 0);
-    }
-
-    function flyToNodes(idxs, minDist) {
-      if (!idxs.length || !S.camera3) return;
-      const c = new THREE.Vector3();
-      idxs.forEach(i => c.add(nodePos(i)));
-      c.divideScalar(idxs.length);
-      let radius = 0;
-      idxs.forEach(i => { radius = Math.max(radius, nodePos(i).distanceTo(c)); });
-      const camDist = Math.max(minDist, Math.min(9000, radius * 2.4));
-      S.targetCamLook = c.clone();
-      const dir = S.camera3.position.clone().sub(c).normalize();
-      if (dir.lengthSq() < 0.01) dir.set(0, 0, 1);
-      S.targetCamPos = c.clone().add(dir.multiplyScalar(camDist));
-    }
-
     // Recomputes the highlight from the current results; `fly` moves the camera to frame them.
     function applySemanticHighlight(fly) {
-      if (!S.geo || !S.sem.results.length) return;
+      if (!S.pGeo || !S.sem.results.length) return;
       S.sem.set = new Set();
       S.sem.focus = new Set();
       const threads = [];
@@ -2076,49 +2421,71 @@
         if (k === S.sem.active) { S.sem.focus.add(m.thread); m.people.forEach(i => S.sem.focus.add(i)); }
       });
       document.querySelectorAll('#sem-list .sr').forEach((el, k) => {
-        el.classList.toggle('nonode', S.sem.results[k]._nodes.thread < 0);
+        const on = S.sem.results[k]._nodes.thread >= 0;
+        el.classList.toggle('nonode', !on);
+        const b = el.querySelector('.badge');
+        if (b) { b.textContent = on ? 'on graph' : 'not on graph'; b.classList.toggle('off', !on); }
       });
       const onGraph = threads.length;
       $('sem-sub').textContent = onGraph === S.sem.results.length
         ? `${onGraph} ON GRAPH`
         : `${onGraph} OF ${S.sem.results.length} ON GRAPH`;
-      if (!S.sem.set.size) S.sem.set = null;  // nothing to highlight: don't black out the graph
-      refreshColors();
-      if (fly) flyToNodes(threads, 900);
+      if (!S.sem.set.size) S.sem.set = null;  // nothing to highlight: don't dim the graph
+      refreshVisuals();
+      if (S.selected >= 0) renderDetails();
+      if (fly && threads.length) flyToNodes(threads, 0.05);
     }
 
-    function clearSemanticHighlight() {
+    function clearSemanticHighlight(refresh = true) {
       S.sem.set = null;
       S.sem.focus = new Set();
       S.sem.active = -1;
       document.querySelectorAll('#sem-list .sr.active').forEach(el => el.classList.remove('active', 'expanded'));
-      if (S.geo) { clearRelations(); refreshColors(); }
+      document.querySelectorAll('#sem-list .atl-item.active').forEach(el => el.classList.remove('active'));
+      if (S.pGeo && refresh) refreshVisuals();
     }
 
     function renderSemanticResults(data) {
       const list = $('sem-list');
       $('sem-title').textContent = `“${data.query}”`;
+      $('sem-title').dataset.q = data.query;
       $('sem-sub').textContent = '';
       if (!data.results.length) {
         list.innerHTML = `<div class="sem-empty">No matching memories.</div>`;
         return;
       }
+      const terms = queryTerms(data.query);
       const top = Math.max(...data.results.map(r => r.similarity || 0), 0.0001);
       list.innerHTML = data.results.map((r, k) => {
-        const when = fmtDay(r.start_time) + (r.end_time && fmtDay(r.end_time) !== fmtDay(r.start_time) ? ` → ${fmtDay(r.end_time)}` : '');
-        const pct = Math.max(4, Math.round(100 * (r.similarity || 0) / top));
-        const people = (r.people || []).slice(0, 6).join(', ') + ((r.people || []).length > 6 ? ` +${r.people.length - 6}` : '');
-        return `<div class="sr" data-k="${k}">
-          <div class="sr-top"><span class="sr-rank">#${r.rank}</span><span class="sr-plat">${esc(r.platform || 'unknown')}</span><span class="sr-date">${esc(when)}</span></div>
+        r._shared = sharedTerms(r, terms);
+        const why = r._shared.length ? `shares “${esc(r._shared.slice(0, 4).join('”, “'))}”` : 'matched by meaning (no shared keywords)';
+        return resultCard(r, k, terms, top, why);
+      }).join('');
+      wireResultCards(list);
+      list.scrollTop = 0;
+    }
+
+    // One result / source card. `whyHtml` must already be escaped. Card k maps to S.sem.results[k].
+    function resultCard(r, k, terms, top, whyHtml, cls = '') {
+      const when = fmtDay(r.start_time) + (r.end_time && fmtDay(r.end_time) !== fmtDay(r.start_time) ? ` → ${fmtDay(r.end_time)}` : '');
+      const pct = Math.max(4, Math.round(100 * (r.similarity || 0) / top));
+      const people = (r.people || []).slice(0, 6).join(', ') + ((r.people || []).length > 6 ? ` +${r.people.length - 6}` : '');
+      const pc = PLATFORM_COLORS[r.platform] || '#9aa0b4';
+      return `<div class="sr ${cls}" role="button" tabindex="0" data-k="${k}" aria-label="Result ${esc(r.rank)}: ${esc(r.title || 'untitled')}">
+          <div class="sr-top"><span class="sr-rank">#${esc(r.rank)}</span><span class="sr-plat"><i style="background:${esc(pc)}"></i>${esc(r.platform || 'unknown')}</span><span class="sr-date">${esc(when)}</span></div>
           <div class="sr-bar" title="similarity ${esc(r.similarity)}"><i style="width:${pct}%"></i></div>
           <div class="sr-title">${esc(r.title || '(untitled)')}</div>
           ${people ? `<div class="sr-people">${esc(people)}</div>` : ''}
-          <div class="sr-snip">${esc(r.snippet)}</div>
-          <div class="sr-foot">similarity ${esc(r.similarity ?? '—')}</div>
+          <div class="sr-snip">${highlight(r.snippet, terms)}</div>
+          <div class="sr-why"><span class="badge">…</span>similarity ${esc(r.similarity ?? '—')} · ${whyHtml}</div>
         </div>`;
-      }).join('');
-      list.querySelectorAll('.sr').forEach(el => el.addEventListener('click', () => focusSemanticResult(+el.dataset.k)));
-      list.scrollTop = 0;
+    }
+
+    function wireResultCards(list) {
+      list.querySelectorAll('.sr').forEach(el => {
+        el.addEventListener('click', () => focusSemanticResult(+el.dataset.k));
+        el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); focusSemanticResult(+el.dataset.k); } });
+      });
     }
 
     function focusSemanticResult(k) {
@@ -2126,22 +2493,30 @@
       if (!r) return;
       const els = document.querySelectorAll('#sem-list .sr');
       const same = S.sem.active === k;
-      els.forEach(el => el.classList.remove('active', 'expanded'));
+      const terms = queryTerms(S.sem.query || '');
+      els.forEach((el, j) => {
+        if (el.classList.contains('expanded')) el.querySelector('.sr-snip').innerHTML = highlight(S.sem.results[j].snippet, terms);
+        el.classList.remove('active', 'expanded');
+      });
       S.sem.active = same ? -1 : k;
+      document.querySelectorAll('#sem-list .atl-item').forEach(b => b.classList.toggle('active', +b.dataset.k === S.sem.active));
       const el = els[k];
       if (!same) {
         el.classList.add('active', 'expanded');
-        el.querySelector('.sr-snip').textContent = r.text || r.snippet;
-      } else {
-        el.querySelector('.sr-snip').textContent = r.snippet;
+        el.querySelector('.sr-snip').innerHTML = highlight(r.text || r.snippet, terms);
       }
-      if (!S.geo) return;
+      if (!S.pGeo) return;
       applySemanticHighlight(false);
-      clearRelations();
       const m = r._nodes || resultNodes(r);
       if (S.sem.active >= 0 && m.thread >= 0) {
-        showRelations(m.thread);
-        flyToNodes([m.thread, ...m.people], 700);
+        // Select the result's thread so its participants and links stay bright; the other hits stay highlighted.
+        S.selected = m.thread;
+        refreshVisuals();
+        renderDetails();
+        setHash(S.nodes[m.thread].id);
+        flyToNodes([m.thread, ...neighbours(m.thread).map(o => o.j)], 0.04);
+      } else if (same && S.selected >= 0) {
+        clearSelection();
       }
     }
 
@@ -2149,13 +2524,12 @@
       const q = $('sem-q').value.trim();
       if (!q) { $('sem-q').focus(); return; }
 
-      // Semantic results replace any keyword search isolation.
-      if (S.search) { $('srch').value = ''; onSearch(''); }
-
       const seq = ++S.sem.seq;
+      S.sem.mode = 'search';
+      askBusy(false);
       semBusy(true);
       semStatus('busy', S.sem.loadedOnce ? 'Searching…' : 'Searching… the first query loads the embedding model and can take a while on CPU.');
-      $('ui').classList.add('sem-open');
+      $('sem-panel').hidden = false;
       $('sem-title').textContent = `“${q}”`;
       $('sem-sub').textContent = 'SEARCHING…';
       $('sem-list').innerHTML = '';
@@ -2169,12 +2543,12 @@
         });
         if (seq !== S.sem.seq) return;  // a newer search or a reset superseded this one
         S.sem.loadedOnce = true;
+        S.sem.query = data.query;
         S.sem.results = data.results;
         S.sem.active = -1;
-        if (S.geo) clearRelations();
         renderSemanticResults(data);
         semStatus('ok', `${data.count} result${data.count === 1 ? '' : 's'} in ${(data.took_ms / 1000).toFixed(1)}s · <code>${esc(data.table)}</code>`);
-        if (S.geo) applySemanticHighlight(true);
+        if (S.pGeo) applySemanticHighlight(true);
         else if (data.results.length) $('sem-sub').textContent = 'GRAPH NOT LOADED';
       } catch (e) {
         if (seq !== S.sem.seq) return;
@@ -2186,114 +2560,310 @@
           timeout: 'Search timed out.',
         }[e.code] || 'Search failed.';
         $('sem-sub').textContent = e.code === 'index_unavailable' ? 'INDEX UNAVAILABLE' : 'ERROR';
-        $('sem-list').innerHTML = `<div class="sem-empty">${esc(msg)}</div>`;
+        $('sem-list').innerHTML = `<div class="sem-empty">${esc(msg)}${e.code === 'offline' ? `<br>Start it with <code>${esc(SERVER_CMD)}</code>` : ''}</div>`;
         if (e.code === 'offline') semStatus('err', offlineHint());
         else if (e.code === 'index_unavailable') semStatus('warn', esc(e.message.split('\n')[0]));
         else semStatus('err', esc(e.message));
-        if (e.code === 'offline' || e.code === 'index_unavailable') checkSemanticHealthLater();
+        if (e.code === 'offline' || e.code === 'index_unavailable') {
+          clearTimeout(S.sem.healthTimer);
+          S.sem.healthTimer = setTimeout(checkSemanticHealth, HEALTH_RETRY_MS);
+        }
       } finally {
         if (seq === S.sem.seq) semBusy(false);
       }
     }
 
-    function checkSemanticHealthLater() {
-      clearTimeout(S.sem.healthTimer);
-      S.sem.healthTimer = setTimeout(checkSemanticHealth, HEALTH_RETRY_MS);
-    }
-
-    function resetSemantic() {
+    function resetSemantic({ refresh = true } = {}) {
+      const hadResult = S.sem.active >= 0;
       S.sem.seq++;  // drop any in-flight response
       S.sem.results = [];
-      clearSemanticHighlight();
+      S.sem.query = '';
+      clearSemanticHighlight(refresh);
       semBusy(false);
+      askBusy(false);
+      S.sem.mode = 'search';
       $('sem-q').value = '';
+      $('ask-q').value = '';
       $('sem-list').innerHTML = '';
-      $('ui').classList.remove('sem-open');
-      S.targetCamLook = null;
+      $('sem-panel').hidden = true;
+      if (hadResult && refresh && S.selected >= 0) renderDetails();
       checkSemanticHealth();
     }
 
-    $('sem-q').addEventListener('keydown', e => { if (e.key === 'Escape') resetSemantic(); });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && $('ui').classList.contains('sem-open') && document.activeElement !== $('sem-q')) resetSemantic();
-    });
-    Object.assign(window, { semanticSearch, resetSemantic });
+    // ─── Ask Sarthink (POST /api/ask): an evidence-first brief over the same local index ───
+    // The server quotes retrieved chunks and grades the evidence; nothing here generates text.
+    // Sources become S.sem.results, so highlighting, selection and details work as for search.
+    const ASK_LIMIT = 8;
+    const CONF_TEXT = { high: 'High confidence', medium: 'Medium confidence', low: 'Low confidence' };
+
+    function setMemoryMode(mode, focus = true) {
+      document.querySelectorAll('.mtab').forEach(b => {
+        const on = b.dataset.mode === mode;
+        b.setAttribute('aria-selected', String(on));
+        b.tabIndex = on ? 0 : -1;
+      });
+      $('mode-search').hidden = mode !== 'search';
+      $('mode-ask').hidden = mode !== 'ask';
+      if (mode === 'ask') updateAskScope();
+      if (focus) $(mode === 'ask' ? 'ask-q' : 'sem-q').focus();
+    }
+
+    function askBusy(on) {
+      $('ask-go').disabled = on;
+      $('ask-go').textContent = on ? '…' : 'Ask';
+      document.querySelectorAll('.ask-chip').forEach(b => { b.disabled = on; });
+    }
+
+    // The sidebar's platform toggles and timeline range as /api/ask filters (omitted when unconstrained).
+    function askFilters() {
+      const f = {};
+      if (S.platforms.length && S.filter.platforms.size < S.platforms.length) f.platforms = [...S.filter.platforms].sort();
+      if (timeActive()) {
+        const [a, b] = timeRange();
+        f.date_from = new Date(a * 1000).toISOString();
+        f.date_to = new Date((b + 1) * 1000).toISOString();   // exclusive: start of the month after the range
+      }
+      return f;
+    }
+
+    function updateAskScope() {
+      const el = $('ask-scope');
+      if (!el) return;
+      const f = askFilters();
+      const plat = !f.platforms ? 'all platforms' : f.platforms.length ? f.platforms.map(platformName).join(', ') : 'no platforms';
+      const time = f.date_from ? `${fmtMonth(S.time.months[S.time.i0])} – ${fmtMonth(S.time.months[S.time.i1])}` : 'all time';
+      el.textContent = `Scope: ${plat} · ${time}`;
+    }
+
+    function askSourceAsResult(s) {
+      return {
+        rank: s.rank, similarity: s.similarity, start_time: s.date_start, end_time: s.date_end, platform: s.platform,
+        title: s.title, node_id: s.node_id, people: s.people || [], snippet: s.snippet, text: s.text,
+        relevant: !!s.relevant, _shared: s.matched_terms || [],
+      };
+    }
+
+    function renderAsk(data) {
+      const list = $('sem-list');
+      $('sem-title').textContent = data.question;
+      $('sem-title').dataset.q = data.question;
+      $('sem-title').title = data.question;
+      $('sem-sub').textContent = '';
+      const terms = (data.evidence && data.evidence.terms && data.evidence.terms.length) ? data.evidence.terms : queryTerms(data.question);
+      const conf = CONF_TEXT[data.confidence] ? data.confidence : 'low';
+      const ev = data.evidence ? `${data.evidence.relevant} supporting · ${data.evidence.considered} checked` : '';
+      const html = [`<div class="ask-brief">
+          <div class="ask-conf ${conf}" title="How well the retrieved sources support the answer"><span class="meter" aria-hidden="true"><i></i><i></i><i></i></span>${esc(CONF_TEXT[conf])}${ev ? `<span class="ev">· ${esc(ev)}</span>` : ''}</div>
+          <p class="ask-answer">${esc(data.answer)}</p>`];
+      if (data.summary_points.length) {
+        html.push(`<div><div class="ask-h">Key points</div><ul class="ask-points">${data.summary_points.map(pt => `<li>${esc(pt)}</li>`).join('')}</ul></div>`);
+      }
+      if (data.timeline.length) {
+        html.push(`<div><div class="ask-h">Timeline</div><div id="ask-timeline" class="ask-timeline">${data.timeline.map(t => `<button type="button" class="atl-item" data-k="${esc(t.source - 1)}"
+            style="--pc:${esc(PLATFORM_COLORS[t.platform] || '#9aa0b4')}" title="${esc(platformName(t.platform))} · ${esc(t.label)}"><span class="d">${esc(fmtDay(t.date))}</span><span class="l">${esc(t.label)}</span></button>`).join('')}</div></div>`);
+      }
+      if (data.notes && data.notes.length) html.push(`<div class="ask-notes">${data.notes.map(n => esc(n)).join('<br>')}</div>`);
+      html.push(`<div class="ask-h">${data.sources.length ? `Sources (${data.sources.length})` : 'No sources'}</div></div>`);
+
+      const top = Math.max(...S.sem.results.map(r => r.similarity || 0), 0.0001);
+      html.push(...S.sem.results.map((r, k) => {
+        const why = r.relevant
+          ? `evidence${r._shared.length ? ` · mentions “${esc(r._shared.slice(0, 4).join('”, “'))}”` : ''}`
+          : 'closest match only — not used as evidence';
+        return resultCard(r, k, terms, top, why, r.relevant ? '' : 'lead');
+      }));
+      list.innerHTML = html.join('');
+      wireResultCards(list);
+      list.querySelectorAll('.atl-item').forEach(b => b.addEventListener('click', () => focusAskSource(+b.dataset.k)));
+      list.scrollTop = 0;
+    }
+
+    // Timeline entries select their source (never toggle it off) and bring its card into view.
+    function focusAskSource(k) {
+      if (!S.sem.results[k]) return;
+      if (S.sem.active !== k) focusSemanticResult(k);
+      const el = document.querySelectorAll('#sem-list .sr')[k];
+      if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+
+    function askError(html, sub) {
+      S.sem.results = [];
+      clearSemanticHighlight();
+      if (S.selected >= 0) renderDetails();   // drop the previous brief's "why highlighted" note
+      $('sem-panel').hidden = false;
+      $('sem-sub').textContent = sub;
+      $('sem-list').innerHTML = `<div class="sem-empty">${html}</div>`;
+    }
+
+    async function askSarthink(question) {
+      if (typeof question === 'string') $('ask-q').value = question;
+      const q = $('ask-q').value.trim();
+      if (!q) { $('ask-q').focus(); return; }
+      const filters = askFilters();
+      $('sem-title').textContent = q;
+      if (filters.platforms && !filters.platforms.length) {
+        askError('Every platform is hidden in the sidebar. Turn at least one back on to ask.', 'NO PLATFORMS');
+        return;
+      }
+
+      const seq = ++S.sem.seq;
+      S.sem.mode = 'ask';
+      semBusy(false);
+      askBusy(true);
+      semStatus('busy', S.sem.loadedOnce ? 'Reading your memories…' : 'Reading your memories… the first question loads the embedding model and can take a while on CPU.');
+      S.sem.results = [];
+      clearSemanticHighlight();
+      if (S.selected >= 0) renderDetails();
+      $('sem-panel').hidden = false;
+      $('sem-sub').textContent = 'ASKING…';
+      $('sem-list').innerHTML = '<div class="ask-loading"><i></i>Retrieving memories and checking the evidence…</div>';
+
+      try {
+        const data = await apiFetch('/api/ask', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: q, limit: ASK_LIMIT, ...filters }),
+          timeout: SEM_TIMEOUT_MS,
+        });
+        if (seq !== S.sem.seq) return;  // a newer search/ask or a reset superseded this one
+        S.sem.loadedOnce = true;
+        S.sem.query = data.question;
+        S.sem.results = data.sources.map(askSourceAsResult);
+        S.sem.active = -1;
+        renderAsk(data);
+        const n = data.sources.length;
+        semStatus('ok', `${esc(CONF_TEXT[data.confidence] || 'Answered')} · ${n} source${n === 1 ? '' : 's'} in ${(data.took_ms / 1000).toFixed(1)}s`);
+        if (S.pGeo) applySemanticHighlight(true);
+        else if (n) $('sem-sub').textContent = 'GRAPH NOT LOADED';
+      } catch (e) {
+        if (seq !== S.sem.seq) return;
+        const retry = '<br><button type="button" class="btn sm" id="ask-retry">Retry</button>';
+        if (e.code === 'index_unavailable') {
+          askError(`The memory index is still building (or hasn’t been created yet). Your question is kept — retry once the embedding job finishes.${retry}`, 'INDEX STILL BUILDING');
+          semStatus('warn', esc(e.message.split('\n')[0]));
+        } else if (e.code === 'offline') {
+          askError(`Search API offline.<br>Start it with <code>${esc(SERVER_CMD)}</code>${retry}`, 'ERROR');
+          semStatus('err', offlineHint());
+        } else if (e.code === 'invalid_request') {
+          askError(esc(e.message), 'INVALID QUESTION');
+          semStatus('err', esc(e.message));
+        } else {
+          askError(`${esc(e.code === 'timeout' ? 'Ask timed out. The first question can be slow while the model loads.' : `Ask failed: ${e.message}`)}${retry}`, 'ERROR');
+          semStatus('err', esc(e.message));
+        }
+        const rb = $('ask-retry');
+        if (rb) rb.addEventListener('click', () => askSarthink(q));
+        if (e.code === 'offline' || e.code === 'index_unavailable') {
+          clearTimeout(S.sem.healthTimer);
+          S.sem.healthTimer = setTimeout(checkSemanticHealth, HEALTH_RETRY_MS);
+        }
+      } finally {
+        if (seq === S.sem.seq) askBusy(false);
+      }
+    }
+
+    Object.assign(window, { semanticSearch, resetSemantic, resetAll, askSarthink });
     checkSemanticHealth();
 
-    // ─── Stats ────────────────────────────────────────────────────────────────────
-    function updateStats(nNodes, nEdges) {
-      $('stats').innerHTML = `${nNodes.toLocaleString()} nodes &nbsp;·&nbsp; ${nEdges.toLocaleString()} edges<br>${Object.keys(S.meta).length} groups`;
-    }
+    // ─── Static wiring ────────────────────────────────────────────────────────────
+    $('btn-reset').addEventListener('click', resetAll);
+    $('btn-help').addEventListener('click', openHelp);
+    $('help-close').addEventListener('click', closeHelp);
+    $('help-backdrop').addEventListener('click', e => { if (e.target === $('help-backdrop')) closeHelp(); });
+    $('d-close').addEventListener('click', clearSelection);
+    $('empty-reset').addEventListener('click', () => { resetFilters(); refreshVisuals(); });
+    $('find-q').addEventListener('input', e => runFind(e.target.value));
+    $('find-q').addEventListener('keydown', onFindKey);
+    document.querySelectorAll('.mtab').forEach(b => b.addEventListener('click', () => setMemoryMode(b.dataset.mode)));
+    document.querySelector('.mtabs').addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); setMemoryMode($('mode-ask').hidden ? 'ask' : 'search'); $(!$('mode-ask').hidden ? 'tab-ask' : 'tab-search').focus(); }
+    });
+    $('ask-q').addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); askSarthink(); }
+    });
+    document.querySelectorAll('.ask-chip').forEach(b => b.addEventListener('click', () => askSarthink(b.textContent.trim())));
+    $('side-toggle').addEventListener('click', () => {
+      const c = $('sidebar').classList.toggle('collapsed');
+      $('side-toggle').textContent = c ? 'Expand' : 'Collapse';
+      $('side-toggle').setAttribute('aria-expanded', String(!c));
+    });
+    window.addEventListener('hashchange', () => {
+      const id = hashNode(), n = id && S.byId.get(id);
+      if (n && n.i !== S.selected) selectNode(n.i, { fly: true, keepHash: true });
+    });
 
-    // ─── Boot ─────────────────────────────────────────────────────────────────────
-    async function boot() {
-      lbar(8, 'Loading nodes…');
-      const rawNodes = await loadCSVText(NODES_URL);
-      lbar(42, 'Loading edges…');
-      const rawEdges = await loadCSVText(EDGES_URL);
-      // Build adjacency map for relation display (needs S.adj initialized first)
-      S.adj = {}; S.relLines = null;
-      rawEdges.forEach(e => {
-        if (!S.adj[e.source]) S.adj[e.source] = [];
-        if (!S.adj[e.target]) S.adj[e.target] = [];
-        S.adj[e.source].push(e.target);
-        S.adj[e.target].push(e.source);
-      });
-      lbar(72, 'Building scene…');
-
-      // Build metadata and node array
-      S.meta = {};
-      S.megaMeta = {};
-      S.nodes = rawNodes.map((n, idx) => {
-        n.index = idx; // required for neighbour lookups
-        if (!S.meta[n.group]) S.meta[n.group] = { color: n.color || '#888', count: 0 };
-        S.meta[n.group].count++;
-
-        const p = n.group.split('_')[0];
-        if (!S.megaMeta[p]) S.megaMeta[p] = { color: n.color || '#888', count: 0, groups: [] };
-        if (!S.megaMeta[p].groups.includes(n.group)) S.megaMeta[p].groups.push(n.group);
-        S.megaMeta[p].count++;
-
-        S.nodeById[n.id] = n;
-        return n;
-      });
-
-      const hasLayout = rawNodes[0] && rawNodes[0].layout_x !== undefined;
-      if (!hasLayout) throw new Error('Pre-computed layout not found!  Run:\n  python3 parsers/compute_layout.py');
-
-      lbar(82, 'Initializing WebGL…');
-      initThree();
-
-      lbar(90, 'Uploading point cloud…');
-      buildPointCloud(S.nodes);
-
-      buildGroups();
-      updateStats(S.nodes.length, rawEdges.length);
-
-      Object.assign(window, {
-        toggleOrbit, toggleDim, toggleRecord, toggleCycle,
-        showAll, hideAll, onSearch, onDepthChange, shift, setSpeed, clickGroup,
-        startRecord, stopRecord, closeRecModal
-      });
-
-      if (S.sem.results.length) applySemanticHighlight(true);  // a search finished before the graph loaded
-
-      lbar(100, 'Ready');
-      $('loading').classList.add('fade');
-      setTimeout(() => { $('loading').style.display = 'none'; }, 800);
-
-      renderLoop();
-    }
-
-    boot().catch(err => {
-      $('lmsg').innerHTML = `<span style="color:#ff6060">${err.message.replace(/\n/g, '<br>')}</span>`;
+    // ─── Fatal states ─────────────────────────────────────────────────────────────
+    function showFatal(err) {
+      const L = $('loading');
+      L.style.display = '';
+      L.classList.remove('fade');
       $('lbar').style.background = '#ff3333';
-      // Memory search doesn't need the graph, so let the user reach it anyway.
+      const m = $('lmsg');
+      m.className = 'lb-msg err';
+      const cmds = (err.kind === 'missing' || err.kind === 'empty')
+        ? `<br><br>Generate the graph files, then refresh:<br><code>${esc(PIPELINE_CMDS[0])}</code><br><code>${esc(PIPELINE_CMDS[1])}</code>`
+        : err.kind === 'network'
+          ? `<br><br>Start the local server and open <code>http://127.0.0.1:8000/</code>:<br><code>${esc(SERVER_CMD)}</code>`
+          : '';
+      m.innerHTML = esc(err.message) + cmds;
+      const acts = $('lactions');
+      acts.innerHTML = '';
+      const retry = document.createElement('button');
+      retry.className = 'btn primary'; retry.textContent = 'Retry';
+      retry.onclick = () => location.reload();
       const go = document.createElement('button');
       go.className = 'btn';
       go.textContent = 'Continue without graph (memory search only)';
-      go.onclick = () => { $('loading').style.display = 'none'; $('sem-q').focus(); };
-      $('loading').appendChild(go);
+      go.onclick = () => { L.style.display = 'none'; $('sem-q').focus(); };
+      acts.append(retry, go);
+    }
+
+    function showFatalOverlay(msg) { showFatal(new GraphError('webgl', msg)); }
+
+    // ─── Boot ─────────────────────────────────────────────────────────────────────
+    async function boot() {
+      if (typeof Papa === 'undefined') throw new GraphError('lib', 'Could not load the CSV parser (PapaParse from unpkg.com). Check the network connection and refresh.');
+      lbar(8, 'Loading nodes…');
+      const [nodesCsv, edgesCsv] = await Promise.all([fetchCSV(NODES_URL, 'nodes'), fetchCSV(EDGES_URL, 'edges')]);
+      lbar(45, 'Building graph…');
+      if (!nodesCsv.fields.includes('id')) throw new GraphError('missing', 'cosmograph_nodes.csv has no "id" column, so it is not a graph export.');
+      const g = buildGraph(nodesCsv.rows, edgesCsv.rows);
+      if (!g.nodes.length) throw new GraphError('empty', 'The graph export is empty: cosmograph_nodes.csv has no nodes yet.');
+      S.nodes = g.nodes; S.edges = g.edges; S.byId = g.byId;
+
+      const layout = resolvePositions(S.nodes);
+      if (layout.mode === 'fallback') {
+        S.layoutNote = layout.collapsed
+          ? 'Every node has the same layout position, so a fallback layout is shown. Run compute_layout.py.'
+          : 'The node file has no usable layout_x/y/z columns, so a fallback layout is shown. Run compute_layout.py.';
+      } else if (layout.mode === 'partial') {
+        S.layoutNote = `${layout.invalid} node${layout.invalid === 1 ? '' : 's'} had missing or invalid positions and were placed near their platform. Re-run compute_layout.py.`;
+      }
+      if (S.layoutNote) console.warn('[sarthink]', S.layoutNote);
+      if (g.dropped) console.warn(`[sarthink] ${g.dropped} edge(s) reference unknown nodes and were skipped.`);
+
+      lbar(70, 'Initializing WebGL…');
+      initThree();
+      buildScene();
+      buildLegend();
+      syncLegend();
+      buildTimeline();
+      refreshVisuals();
+
+      if (S.sem.results.length) applySemanticHighlight(true);  // a search finished before the graph loaded
+
+      const start = hashNode(), sn = start && S.byId.get(start);
+      if (sn) selectNode(sn.i, { fly: true, keepHash: true });
+
+      lbar(100, 'Ready');
+      $('loading').classList.add('fade');
+      setTimeout(() => { $('loading').style.display = 'none'; }, 650);
+      requestAnimationFrame(renderLoop);
+    }
+
+    boot().catch(err => {
+      console.error('[sarthink]', err);
+      showFatal(err instanceof GraphError ? err : new GraphError('internal', `Something went wrong while drawing the graph: ${err.message}`));
     });
   </script>
 </body>

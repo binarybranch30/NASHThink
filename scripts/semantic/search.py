@@ -137,7 +137,35 @@ def to_result(rank, row):
     }
 
 
-def search(table, model, query, limit=DEFAULT_LIMIT):
+PLATFORM_RE = re.compile(r"^[a-z0-9_]{1,32}$")
+ISO_UTC_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d{1,6})?\+00:00$")
+
+
+def filter_expression(platforms=None, date_from=None, date_to=None):
+    """LanceDB prefilter for platform and date-window constraints, or None when unconstrained.
+
+    Values are interpolated into SQL, so they are validated first: platforms must be plain lowercase
+    keys and dates UTC ISO strings as stored by chunk_builder.py (``YYYY-MM-DDTHH:MM:SS+00:00``).
+    ``date_to`` is exclusive. A chunk matches when its [start_time, end_time] window overlaps the range.
+    """
+    parts = []
+    if platforms:
+        bad = [p for p in platforms if not PLATFORM_RE.match(str(p))]
+        if bad:
+            raise SearchError(f"Invalid platform name(s): {', '.join(map(repr, bad))}")
+        parts.append("platform IN (" + ", ".join(f"'{p}'" for p in sorted(set(platforms))) + ")")
+    for value in (date_from, date_to):
+        if value is not None and not ISO_UTC_RE.match(value):
+            raise SearchError(f"Invalid date bound: {value!r}")
+    if date_from:
+        parts.append(f"(start_time >= '{date_from}' OR end_time >= '{date_from}')")
+    if date_to:
+        parts.append(f"start_time < '{date_to}'")
+    return " AND ".join(parts) or None
+
+
+def search(table, model, query, limit=DEFAULT_LIMIT, where=None):
+    """Top `limit` chunks by cosine similarity; `where` (see filter_expression) is applied before ranking."""
     query_vec = [float(x) for x in model.encode(query, convert_to_numpy=True)]
 
     dim = vector_dimension(table)
@@ -150,8 +178,43 @@ def search(table, model, query, limit=DEFAULT_LIMIT):
     # Cosine distance ignores vector magnitude (embedder.py stores unnormalized vectors).
     builder = table.search(query_vec)
     builder = builder.distance_type("cosine") if hasattr(builder, "distance_type") else builder.metric("cosine")
+    if where:
+        builder = builder.where(where, prefilter=True)
     rows = builder.limit(limit).to_list()
     return [to_result(i, row) for i, row in enumerate(rows, start=1)]
+
+
+CONTEXT_COLUMNS = ("parent_id", "channel_id", "platform", "title", "start_time", "end_time", "text")
+MAX_THREAD_CHUNKS = 500
+
+
+def thread_chunks(table, channel_id):
+    """All indexed chunks of one conversation thread, oldest first. Filter-only scan: no model needed.
+
+    `channel_id` must be the numeric Threads.id (the UI's T_<id> node); anything else is rejected
+    so user input never reaches the filter expression unvalidated.
+    """
+    cid = str(channel_id)
+    if not cid.isdigit():
+        raise SearchError(f"Invalid thread id: {channel_id!r}")
+    names = set(getattr(table.schema, "names", None) or CONTEXT_COLUMNS)
+    key = "parent_id" if "parent_id" in names else "channel_id"
+    builder = table.search().where(f"{key} = '{cid}'")
+    if hasattr(builder, "select"):
+        builder = builder.select([c for c in CONTEXT_COLUMNS if c in names])
+    rows = builder.limit(MAX_THREAD_CHUNKS).to_list()
+    rows.sort(key=lambda r: (r.get("start_time") or "", r.get("end_time") or ""))
+    return [
+        {
+            "start_time": r.get("start_time") or None,
+            "end_time": r.get("end_time") or None,
+            "platform": r.get("platform") or None,
+            "title": r.get("title") or None,
+            "people": extract_people(r),
+            "text": r.get("text") or "",
+        }
+        for r in rows
+    ]
 
 
 def format_results(query, results):

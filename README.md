@@ -122,11 +122,12 @@ HF_HUB_OFFLINE=1 .venv/bin/python scripts/semantic/search.py "when did I talk ab
 `search.py` reads the table's metadata and embeds the query with **the model that built that table**, so older tables keep working after the default changes. It refuses to search a table with no metadata, or whose vector dimension doesn't match its metadata.
 
 ### D. Graph Generation
-Compute the 3D layout and export the data for the web UI:
+Export the graph from SQLite, then compute its 3D layout (in this order: the export rewrites `cosmograph_nodes.csv`, and the layout step adds `layout_x/y/z` to it):
 ```bash
-python3 scripts/utils/compute_layout.py
-python3 scripts/utils/export_cosmograph.py
+python3 scripts/utils/export_cosmograph.py   # read-only on the DB -> processed_data/graph/cosmograph_{nodes,edges}.csv
+python3 scripts/utils/compute_layout.py      # adds layout_x, layout_y, layout_z (deterministic, seed 42)
 ```
+Nodes are people (`U_<id>`) and threads (`T_<id>`); an edge means that person wrote in that thread. Besides `id, label, group, size, color`, nodes carry `platform, kind (user|thread), messages, first_ts, last_ts, title` and edges carry `weight, first_ts, last_ts` (epoch seconds, UTC), which drive the graph's details panel and timeline filter. Older exports without these columns still load; the timeline then explains how to enable it.
 
 ### E. Visualizing + Memory Search
 `scripts/api/server.py` is a local FastAPI app that serves the 3D graph **and** a semantic search API over the LanceDB index. It binds to `127.0.0.1` only; queries are embedded on your CPU and nothing leaves the machine.
@@ -142,12 +143,37 @@ HF_HUB_OFFLINE=1 .venv/bin/python scripts/api/server.py
 ```
 Then open `http://127.0.0.1:8000/`. Options: `--table topics_multilingual_pilot` searches another table, `--port`, `--db`.
 
+**Using the graph** (press `?` in the page for the same list):
+- **Left-drag** orbits, **right-drag** or **Shift/Ctrl-drag** pans, **scroll** zooms toward the cursor. Dragging never moves nodes; any drag cancels a running camera flight.
+- **Hover** a node for its name, platform, connections and active months. **Click** selects it: the node, every direct neighbour and the links between them stay bright (drawn on top), everything else is dimmed, not hidden. **Double-click** (or `F`) flies the camera to it. Click empty space to deselect.
+- The **details panel** shows type, platform, connections, messages, first/last activity, the linked people or threads (click one to jump to it), and for threads the indexed **conversation context** from `/api/thread`. The selection is kept in the URL (`#node=T_12`), so a refresh or a shared local link reopens it.
+- **Find node** (`/`) matches names and thread titles, highlights all matches, and `↑ ↓ Enter` selects one.
+- **Platforms** and **Node types** in the sidebar are toggle filters (colour = platform, filled dot = person, ring = thread; **only** isolates one platform). The **Timeline** histogram shows active threads per month; drag its handles or use the 3/12-month presets to hide threads outside the range and people with no messages in it.
+- The top bar shows node/edge/platform totals, what the filters currently show, and the selection.
+- **Reset** (or `Esc`) restores the original full view: clears the selection, find, memory search and filters, and flies the camera home.
+- If a node has missing or invalid `layout_*` values it is placed near its platform; if the whole layout is missing or collapsed to one point, a deterministic fallback layout is drawn and the top bar says `layout fallback`.
+
 In the graph sidebar, type into **MEMORY SEARCH** and press Enter:
-- Results appear in a panel on the right (platform, date, people, similarity bar, snippet).
+- Results appear in a panel on the right (platform, date, people, similarity bar, snippet with the query words marked, and why it matched: shared words or "matched by meaning").
 - Matching conversation threads and their participants are highlighted on the graph and the camera flies to them; the rest of the graph is dimmed.
-- Click a result to focus its thread (shows its connections and full chunk text); click again to unfocus.
-- **Reset** (or `Esc`) clears the results and highlights.
+- Click a result to select its thread (its links, details and full chunk text); the other results stay highlighted. Click again to unfocus. **Find related memories** in a thread's details runs a search with its title.
+- **Clear** in the results panel removes only the memory search; **Reset** / `Esc` resets everything.
 - The first query loads the embedding model, so it takes longer than the rest.
+
+#### Ask Sarthink (evidence-first memory Q&A)
+Switch the sidebar's memory box to **ASK SARTHINK**, type a question (or click a sample chip) and press Enter (Shift+Enter for a new line):
+- *What was I stressed about during college?* · *How has my interest in photography changed?* · *What did I discuss about Python?* · *What was I working on around August 2026?*
+
+The right panel shows a short **answer**, a **confidence** level (high / medium / low), **key points**, a small chronological **timeline** and the **source cards**. Sources and their threads are highlighted on the graph; clicking a source card or a timeline entry selects and frames its thread exactly like a memory-search result. The question is limited to the platforms switched on in the sidebar and the timeline range (the scope line under the box shows what will be sent). Cards marked *closest match only* were retrieved but are not used as evidence.
+
+How the answer is made (`scripts/api/memory_brief.py`, deterministic, no language model):
+1. The question is embedded by the same already-loaded model as memory search, and the 60 nearest chunks are retrieved from `topics`, with the platform/date filters applied inside LanceDB before ranking. A month or year in the question (*around August 2026*, *in 2025*) becomes a date window when you haven't set one (±1 month for "around"), and is removed from the embedded text.
+2. Each chunk is checked against the question: it counts as **evidence** only if it is similar enough, has real content (tiny "ok"/"lol" chunks score high on similarity but are never used), and mentions the question's content words (question scaffolding like *what*, *discuss*, *changed*, *working* is ignored; longer questions need at least half of their words). Dates come from the message timestamps inside the chunk.
+3. Chunks repeating one another (overlapping session windows, crossposts) are merged, keeping the best one.
+4. The answer states how many memories matched, on which platforms and over which months, then quotes the strongest sentence verbatim with its author, date and platform (for "how has … changed" questions: the earliest and the latest). Key points quote one sentence per month and platform.
+5. Confidence is **high** with at least 3 supporting sources, 2 of which cover every content word; **medium** with fewer or partial support (the answer says so); **low** when nothing qualifies, in which case the answer says the evidence is weak and the closest chunks are shown as leads.
+
+This is **evidence-based synthesis, not a generative LLM**: every sentence is a verbatim quote, a count, a date, a platform or a title from a returned source, so it never invents an event, feeling, relationship or date, but it also doesn't interpret or summarise in its own words, can quote a sentence out of context, and depends on the words you use. Read the sources. Everything runs on this machine: no hosted APIs, no LLM service, no browser-side calls other than to the local server, no model downloads.
 
 If the index is still being built, the sidebar says so and the API answers `503 index_unavailable`; the server picks the table up automatically once it exists, no restart needed. If the page can't reach the API it shows the command to start it.
 
@@ -156,12 +182,27 @@ API (interactive docs at `/api/docs`):
 curl http://127.0.0.1:8000/api/health
 curl -X POST http://127.0.0.1:8000/api/search -H 'Content-Type: application/json' \
   -d '{"query": "college ke baare mein stress", "limit": 10}'
+curl http://127.0.0.1:8000/api/thread/T_12      # indexed chunks of one thread (no model load)
+curl -X POST http://127.0.0.1:8000/api/ask -H 'Content-Type: application/json' \
+  -d '{"question": "How has my interest in photography changed?", "limit": 8, "platforms": ["reddit", "instagram"], "date_from": "2025-01-01", "date_to": "2026-09-30"}'
 ```
+`/api/ask` takes `question` (required, ≤500 chars), `limit` (sources, 1–20, default 8), `platforms` (optional list; omit for all) and `date_from` / `date_to` (optional ISO dates or datetimes; a plain `date_to` includes that whole day, a datetime is exclusive; a chunk matches when its messages overlap the range). It returns `{question, answer, confidence, summary_points, timeline: [{date, label, node_id, platform, source}], sources: [{rank, node_id, title, platform, date_start, date_end, similarity, snippet, text, people, relevant, matched_terms}], notes, evidence: {retrieved, considered, relevant, terms}, filters, model, took_ms}`. `timeline[].source` is the 1-based index into `sources`; `notes` explains filtering and merging. Errors use the same codes as `/api/search`.
 `/api/search` returns `{query, table, model, count, took_ms, results: [...]}`; each result has `rank, similarity, distance, start_time, end_time, platform, title, channel_id, node_id, people, summary, snippet, text`. `node_id` (`T_<thread id>`) is the matching graph node. Errors are `{"error": {"code", "message"}}` with codes `invalid_request` (422), `index_unavailable` (503), `model_unavailable` and `search_failed` (500).
 
 The graph alone still works from any static server (`python3 -m http.server 8080`, then `http://localhost:8080/sarthink_graph.html`); memory search then needs the API running and `?api=http://127.0.0.1:8000` appended to the URL.
 
-Tests (fake model and table; no index or model needed):
+`/api/thread/T_<id>` returns `{node_id, channel_id, count, first_time, last_time, chunks: [...]}` with up to 8 chunks (oldest first; `start_time, end_time, platform, title, people, snippet, text`). It only filters the index, so it answers instantly even before the first search has loaded the model.
+
+Tests (fake model, table and a throwaway SQLite DB; no index, model or real data needed):
 ```bash
 .venv/bin/python scripts/tests/test_api.py
+.venv/bin/python scripts/tests/test_ask.py      # Ask Sarthink: grounding, weak evidence, filters, errors, model reuse
+python3 scripts/tests/test_graph_pipeline.py
 ```
+Browser end-to-end test of the graph against your real CSVs (needs the server running and Playwright, which is not a project dependency):
+```bash
+HF_HUB_OFFLINE=1 .venv/bin/python scripts/api/server.py --port 8765 &
+npm install --prefix /tmp/pw playwright && npx --prefix /tmp/pw playwright install chromium   # Node 18: playwright@1.49.1
+NODE_PATH=/tmp/pw/node_modules node scripts/tests/graph_ui_e2e.mjs http://127.0.0.1:8765/
+```
+It checks layout fidelity, orbit/pan/zoom, hover, selection and its links, filters, timeline, find, reset/Esc, refresh, memory search and Ask Sarthink (with stubbed, synthetic API answers: rendering, HTML escaping, filters, timeline/source focus, index-building retry), API-offline/index-unavailable states and layout fallbacks (by rewriting responses in the browser, never on disk). `SARTHINK_E2E_SEMANTIC=1` adds a real memory search.
