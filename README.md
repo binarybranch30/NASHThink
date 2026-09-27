@@ -43,6 +43,21 @@ From a laptop, forward the port over SSH and open `http://127.0.0.1:8000/` local
 ssh -N -L 8000:127.0.0.1:8000 naitik@185.2.102.128
 ```
 
+**Sample data and your own data (workspaces).** With `config/workspaces.json` (gitignored), one server holds
+several data folders and every browser starts on the default one. The hackathon setup keeps a fictional sample archive
+in `/home/naitik/sarthink-demo` (its own `archive/`, `processed_data/` and identity map) as the default, and this
+checkout's personal data as a second workspace behind a password. The small `Sample data ▾` control in the
+bottom-left corner unlocks it (a signed, HttpOnly cookie for 8 hours) and switches back; a server restart puts every
+browser back on the sample data. Only a salted PBKDF2 hash of the password is stored:
+`python3 scripts/utils/set_workspace_password.py personal`. Without the config file the server works exactly as before.
+```json
+{"default": "demo",
+ "workspaces": {"demo": {"label": "Sample data", "root": "/home/naitik/sarthink-demo"},
+                "personal": {"label": "My data", "root": "/home/naitik/sarthink-changes", "password": "pbkdf2_sha256$..."}}}
+```
+Build a workspace by running the pipeline (parsers, `export_cosmograph.py`, `compute_layout.py`, `chunk_builder.py`,
+`embedder.py`) from a copy of `scripts/` inside that folder: every script reads and writes data next to itself.
+
 **90-second demo flow**
 1. **Home** (0–10s): the page opens on one question box above the slowly drifting memory map. Everything else is a quiet link: *Explore the memory map*, *See insights*.
 2. **Ask** (10–30s): click a sample question, e.g. *How has my interest in photography changed?* The answer appears in place with a confidence level, key points, a timeline and the sources it quotes.
@@ -247,21 +262,23 @@ The right panel shows a short **answer**, a **confidence** level (high / medium 
 
 **Written answers (optional, local Llama).** The selector next to **Ask** chooses how the answer is written:
 **Best** (Llama 3.1 8B, about 4 minutes on this CPU), **Quick** (Llama 3.2 3B, about a minute) or **Evidence only**
-(instant, the deterministic brief below). With a model chosen and running (`scripts/llm.sh start best`), the evidence
-appears at once and a written answer streams in above it: a few short paragraphs in the question's language,
-with `[n]` citations you can click to select that source on the map. The deterministic summary folds under
-*Evidence summary*. The model sees only the question and the sources judged to be evidence, is told not to add
-anything that isn't in them, and doesn't run at all when the evidence is weak. It is still a language model, so check
-the cited sources. Setup, models, timings and the `/api/ask/stream` event format are in `docs/local_llm.md`.
+(instant, the deterministic brief below). With a model chosen and running (`scripts/llm.sh start best`), a loading
+screen shows the steps and a timer while the model reads, then a written answer streams in on top: a few short paragraphs
+in English (quotes keep the original words), with `[n]` citations you can click to open that source. The sources, timeline
+and deterministic evidence summary are folded into a **Sources (n)** dropdown below the answer. The model sees only the
+question and the sources judged to be evidence, is told not to add anything that isn't in them, and doesn't run at all
+when the evidence is weak. When the evidence is weak, the model says the sources don't answer the question, or its answer
+cites nothing (or misquotes most of what it cites), Ask shows **No relevant info found** instead of a guess. It is still a
+language model, so check the cited sources. Setup, models, timings and the `/api/ask/stream` event format are in `docs/local_llm.md`.
 
 How the evidence brief is made (`scripts/api/memory_brief.py`, deterministic, no language model):
 1. The question is embedded by the same already-loaded model as memory search, and the 60 nearest chunks are retrieved from `topics`, with the platform/date filters applied inside LanceDB before ranking. A month or year in the question (*around August 2026*, *in 2025*) becomes a date window when you haven't set one (±1 month for "around"), and is removed from the embedded text.
 2. Each chunk is checked against the question: it counts as **evidence** only if it is similar enough, has real content (tiny "ok"/"lol" chunks score high on similarity but are never used), and mentions the question's content words (question scaffolding like *what*, *discuss*, *changed*, *working* is ignored; longer questions need at least half of their words). Dates come from the message timestamps inside the chunk.
 3. Chunks repeating one another (overlapping session windows, crossposts) are merged, keeping the best one.
 4. The answer states how many memories matched, on which platforms and over which months, then quotes the strongest sentence verbatim with its author, date and platform (for "how has … changed" questions: the earliest and the latest). Key points quote one sentence per month and platform.
-5. Confidence is **high** with at least 3 supporting sources, 2 of which cover every content word; **medium** with fewer or partial support (the answer says so); **low** when nothing qualifies, in which case the answer says the evidence is weak and the closest chunks are shown as leads.
+5. Confidence is **high** with at least 3 supporting sources, 2 of which cover every content word; **medium** with fewer or partial support (the answer says so); **low** when nothing qualifies, in which case the answer says "No relevant info found" and the closest chunks are shown as leads.
 
-**Hinglish.** The embedding model understands Hindi in Devanagari but matches romanised Hindi mostly by style ("yaar", "hai", "nahi") rather than topic, so `scripts/semantic/hinglish.py` adds a small hand-curated vocabulary used by both search and Ask: Hinglish filler and negations are ignored when judging relevance, common spellings are normalised (nhi/nai → nahi, padhaai → padhai, nind → neend), and a limited set of topic words is matched across languages (sleep ↔ neend, study ↔ padhai, exam ↔ pariksha, stress ↔ tension, worry ↔ chinta/pareshan, …). When a question names such a topic, a second search with the same query vector is limited (a query-time `LIKE` prefilter, no index) to chunks containing the topic's words in the other language or other spellings, and its hits are interleaved into the normal ranking from position 4 on; results say `matched_via` / `expansion_terms`. Generic words (dost, ghar, paisa) are never expanded. Cross-language evidence needs similarity ≥ 0.2 instead of 0.35, and quotes are never shortened in a way that drops a negation ("neend nahi aati" stays whole). Questions without such a topic are searched exactly as before.
+**Hinglish.** About 15% of the archive is Hinglish (Hindi in English letters). The embedding model matches romanised Hindi by style ("yaar", "hai", "nahi") rather than topic, so `scripts/semantic/hinglish.py` adds a small curated layer used by search, Ask and the written answers: chat shorthand and spelling variants are normalised (h → hai, ni/nhi → nahi, clg → college), filler and negations are never topics (negations are never cut from quotes), topic words match across languages (sleep ↔ neend, fight ↔ ladai/jhagda, alone ↔ akela, parents ↔ mummy/papa, …), and any other Hinglish word gets a spelling-tolerant whole-word pattern (ladai ~ ladaai ~ ladayi). A Hinglish question runs a second search with the same query vector restricted to chunks containing its topic (one LanceDB `regexp_like` pass, ~0.25 s, no index), interleaved into the ranking; results say `matched_via` / `expansion_terms`. Thread titles only match whole words, a generic word alone (ghar, dost) doesn't count as evidence, and long chunks show the lines around the matches. Written answers are always in English, sized with the model's own tokenizer, get a shorthand glossary, and have their quotes checked against the cited source. On a fixed 12-question set the share of "relevant" sources that are really on topic went from 59% to 93% (`scripts/semantic/eval_hinglish.py`; details in `docs/hinglish.md`).
 
 The evidence brief itself is **evidence-based synthesis, not a generative LLM**: every sentence is a verbatim quote, a count, a date, a platform or a title from a returned source, so it never invents an event, feeling, relationship or date, but it also doesn't interpret or summarise in its own words, can quote a sentence out of context, and depends on the words you use. Read the sources. Everything runs on this machine: no hosted APIs, no hosted LLM service, no browser-side calls other than to the local server, no model downloads at query time.
 
@@ -298,7 +315,7 @@ Tests (fake model, table and a throwaway SQLite DB; no index, model or real data
 .venv/bin/python scripts/tests/test_answer_writer.py   # written answers: prompt, citations, streaming, offline/loading model (fake llama.cpp)
 .venv/bin/python scripts/tests/test_insights.py # /api/insights: shape, filters, empty state, owner exclusion, read-only, errors
 .venv/bin/python scripts/tests/test_people.py   # person profiles: counts, dates, filters, identity boundaries, sparse history, paging, links
-.venv/bin/python scripts/tests/test_hinglish.py # Hinglish vocabulary, expanded retrieval on a temp LanceDB table, Ask evidence, negation-safe quotes
+.venv/bin/python scripts/tests/test_hinglish.py # Hinglish vocabulary, shorthand, spelling patterns, expanded retrieval on a temp LanceDB table, Ask evidence, negation-safe quotes
 python3 scripts/tests/test_graph_pipeline.py
 python3 scripts/tests/test_discord_parser.py     # Discord: DMs, group DMs, channels, identity, UTC timestamps, duplicates, malformed records, staging
 .venv/bin/python scripts/tests/test_embedding_metadata.py   # includes --replace-platform (incremental index) refusals and idempotency

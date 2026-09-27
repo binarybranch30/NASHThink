@@ -642,6 +642,14 @@ async function askFlow(browser) {
   check('brief renders answer, confidence, key points, timeline and sources',
     /medium/.test(r.conf) && /sourdough/.test(r.answer) && r.points === 2 && r.tl === 2 && r.cards === 3 && r.leads === 1, JSON.stringify(r));
   check('archive text is escaped (no injected elements)', r.imgs === 0 && !r.xss && /<img src=x/.test(r.answer));
+  const fold = await page.evaluate(() => {
+    const d = document.querySelector('#sem-list .ask-sources');
+    return d && { open: d.open, last: d === d.parentElement.lastElementChild, cards: d.querySelectorAll('.sr').length,
+      tl: d.querySelectorAll('.atl-item').length, label: d.querySelector('summary').innerText, loader: !!document.querySelector('.ask-loading') };
+  });
+  check('sources fold into a closed dropdown under the answer', fold && !fold.open && fold.last && fold.cards === 3 && fold.tl === 2
+    && /Sources \(3\)/.test(fold.label) && !fold.loader, JSON.stringify(fold));
+  await page.click('#sem-list .ask-sources > summary');
   let st = await state(page);
   check('ask sources highlight their threads on the graph', st.semSet >= 2 && !st.semHidden);
   await shot(page, '11_ask');
@@ -1007,6 +1015,7 @@ async function homeFlow(browser) {
   await page.waitForSelector('#home .ask-brief', { timeout: 10000 });
   await page.waitForFunction(() => !document.getElementById('omni-go').disabled);
   const want = await page.evaluate(() => window.__sarthink.sem.results[0].node_id);
+  await page.click('#home #sem-list .ask-sources > summary');
   await page.click('#home #sem-list .sr >> nth=0');
   await settle(page);
   let st = await state(page);
@@ -1219,6 +1228,7 @@ async function homeWithoutGraph(browser) {
   await page.press('#omni-q', 'Enter');
   await page.waitForSelector('#home .ask-brief', { timeout: 10000 });
   check('no graph: Ask still answers on Memory Home', calls.length === 1);
+  await page.click('#home #sem-list .ask-sources > summary');
   await page.click('#home #sem-list .sr >> nth=0');
   check('no graph: a source expands in place instead of opening the graph', await page.evaluate(() => document.body.dataset.view === 'home' && document.querySelector('#sem-list .sr.expanded') !== null));
   await page.keyboard.press('g');
@@ -1507,12 +1517,13 @@ async function realSemantic(browser) {
   await page.close();
 }
 
-// Written answers (POST /api/ask/stream, stubbed with synthetic SSE): the answer-style picker, streamed prose
-// above the evidence, [n] citations selecting sources, escaping, offline/error/weak-evidence fallbacks, the
-// remembered choice, and that nothing reaches a real model.
+// Written answers (POST /api/ask/stream, stubbed with synthetic SSE): the answer-style picker, the loading screen,
+// streamed prose above a folded Sources dropdown, [n] citations selecting sources, escaping, offline/error fallbacks,
+// "No relevant info found" (weak evidence, the model unsure, an ungrounded draft), the remembered choice, and that
+// nothing reaches a real model.
 async function writerFlow(browser) {
   const calls = [];
-  let mode = 'ok';
+  let mode = 'ok', delay = 0;
   const sse = events => events.map(([e, d]) => `event: ${e}\ndata: ${JSON.stringify(d)}\n\n`).join('');
   const page = await open(browser, {
     route: async p => {
@@ -1521,6 +1532,7 @@ async function writerFlow(browser) {
       await p.route('**/api/ask/stream', async r => {
         const body = JSON.parse(r.request().postData());
         calls.push({ kind: 'stream', ...body });
+        if (delay) await new Promise(res => setTimeout(res, delay));
         const ids = await graphThreads(p).catch(() => []);
         const src = (k, id) => ({ rank: k + 1, node_id: id || null, title: `Synthetic thread ${k + 1}`, platform: 'reddit',
           date_start: `2024-0${k + 1}-02T09:00:00+00:00`, date_end: null, similarity: 0.7, snippet: 'synthetic sourdough note',
@@ -1530,9 +1542,14 @@ async function writerFlow(browser) {
           summary_points: [], timeline: [], sources, notes: [], evidence: { retrieved: 5, considered: 4, relevant: 2, terms: ['sourdough'] },
           filters: {}, model: 'm', took_ms: 21 };
         const tail = mode === 'error' ? [['error', { code: 'llm_offline', message: "The Best model isn't running. Start it with: scripts/llm.sh start best" }]]
-          : mode === 'weak' ? [['skipped', { code: 'weak_evidence', message: 'The evidence is too weak to write an answer from.' }]]
+          : mode === 'weak' || mode === 'unsure' ? [['skipped', { code: 'no_relevant_info', message: 'No relevant info found in your memories for this question.' }]]
+          : mode === 'ungrounded' ? [['token', { text: 'You probably like bread.' }],
+             ['done', { text: 'You probably like bread.', grounded: false, ungrounded_reason: 'no_citations', cited: [], quotes: [], unverified: 0,
+               profile: body.profile, model: 'x', took_ms: 900 }]]
           : [['token', { text: 'You started a **sourdough** starter [1]. ' }], ['token', { text: `Then you proofed it ${EVIL} [2][7].\n\n- a bullet [1]` }],
-             ['done', { text: `You started a **sourdough** starter [1]. Then you proofed it ${EVIL} [2][7].\n\n- a bullet [1]`, cited: [1, 2], profile: body.profile, model: 'x', took_ms: 1200 }]];
+             ['done', { text: `You started a **sourdough** starter ("my first starter") [1]. Then you proofed it ${EVIL} [2][7] ("made up words here") [2].\n\n- a bullet [1]`,
+               grounded: true, cited: [1, 2], profile: body.profile, model: 'x', took_ms: 1200,
+               quotes: [{ text: 'my first starter', ok: true, source: 1 }, { text: 'made up words here', ok: false, source: 2 }], unverified: 1 }]];
         await r.fulfill({ headers: { 'content-type': 'text/event-stream' },
           body: sse([['brief', brief], ['status', { stage: 'reading', elapsed_s: 0, sources: 2, profile: body.profile }], ...tail]) });
       });
@@ -1550,46 +1567,124 @@ async function writerFlow(browser) {
     await page.press('#omni-q', 'Enter');
     await page.waitForSelector('#sem-list .ask-brief', { timeout: 10000 });
   };
-  await ask('What did I say about sourdough?');
+  delay = 1500;
+  await page.fill('#omni-q', 'What did I say about sourdough?');
+  await page.press('#omni-q', 'Enter');
+  await page.waitForSelector('#sem-list .ask-loading .al-steps li.on', { timeout: 5000 });
+  let r = await page.evaluate(() => ({ steps: document.querySelectorAll('.ask-loading .al-steps li').length, title: document.querySelector('.al-title').innerText,
+    cards: document.querySelectorAll('#sem-list .sr').length, skel: document.querySelectorAll('.ask-loading .skel').length }));
+  check('a loading screen with steps shows before the answer, and no sources yet',
+    r.steps === 3 && /Llama 3\.1 8B/i.test(r.title) && r.cards === 0 && r.skel > 0, JSON.stringify(r));
+  await shot(page, '29_ask_loading');
+  delay = 0;
   await page.waitForFunction(() => /Done/.test((document.querySelector('.aw-state') || {}).textContent || ''), null, { timeout: 10000 });
-  let r = await page.evaluate(() => ({
+  r = await page.evaluate(() => ({
     written: !!document.querySelector('.ask-written'), paras: document.querySelectorAll('.aw-text p').length,
     bullets: document.querySelectorAll('.aw-text li').length, bold: document.querySelectorAll('.aw-text strong').length,
     cites: [...document.querySelectorAll('.aw-text .cite')].map(b => b.textContent).join(','),
     text: document.querySelector('.aw-text').innerText, imgs: document.querySelectorAll('#sem-list img').length, xss: window.__xss === 1,
-    folded: !document.querySelector('.ask-evsum').open, evidence: !!document.querySelector('.ask-evsum .ask-answer'),
+    folded: !document.querySelector('.ask-sources').open && !document.querySelector('.ask-sources').hidden,
+    evidence: !!document.querySelector('.ask-sources .ask-answer'), loader: !!document.querySelector('.ask-loading'),
     note: document.querySelector('.aw-note').innerText, by: document.querySelector('.aw-by').innerText,
     cards: document.querySelectorAll('#sem-list .sr').length,
   }));
   const stream = calls.filter(c => c.kind === 'stream');
   check('Best streams a written answer via /api/ask/stream', stream.length === 1 && stream[0].profile === 'best' && !calls.some(c => c.kind === 'ask'), JSON.stringify(calls));
   check('written answer renders paragraphs, a list, bold and citations above the sources',
-    r.written && r.paras === 1 && r.bullets === 1 && r.bold === 1 && r.cites === '1,2,1' && r.cards === 2 && /Llama 3\.1 8B/i.test(r.by), JSON.stringify(r));
+    r.written && r.paras === 1 && r.bullets === 1 && r.bold === 1 && r.cites === '1,2,2,1' && r.cards === 2 && /Llama 3\.1 8B/i.test(r.by), JSON.stringify(r));
   check('model text is escaped and out-of-range citations are dropped', r.imgs === 0 && !r.xss && /<img src=x/.test(r.text) && !/\[7\]|7/.test(r.cites));
-  check('evidence summary folds under the written answer', r.folded && r.evidence && /local model/.test(r.note));
+  check('sources and the evidence summary fold into a dropdown under the written answer', r.folded && r.evidence && !r.loader && /local model/.test(r.note), JSON.stringify(r));
+  // ok: "my first starter" plus the escaped "window.__xss=1" inside the injected test string
+  const q = await page.evaluate(() => ({ ok: document.querySelectorAll('.aw-text .aw-q:not(.bad)').length,
+    bad: [...document.querySelectorAll('.aw-text .aw-q.bad')].map(e => e.textContent), note: document.querySelector('.aw-note').className }));
+  check('quotes not found in their source are marked, and the note says so',
+    q.ok === 2 && q.bad.length === 1 && q.bad[0] === '"made up words here"' && /warn/.test(q.note) && /1 quote wasn’t found/.test(r.note), JSON.stringify({ q, note: r.note }));
   await page.click('.aw-text .cite >> nth=1');
   await settle(page);
-  check('clicking a citation selects that source', await page.evaluate(() => window.__sarthink.sem.active === 1));
+  check('clicking a citation opens the sources and selects that source',
+    await page.evaluate(() => window.__sarthink.sem.active === 1 && document.querySelector('.ask-sources').open));
   check('the Ask button is usable while/after writing', !(await page.isDisabled('#omni-go')));
   await shot(page, '30_written_answer');
 
+  // A stream that pauses after the brief (as a real model does while it reads): the loading screen tours the sources.
+  await page.evaluate(() => {
+    const orig = window.fetch;
+    window.fetch = async (url, opts) => {
+      if (!window.__slow || !String(url).includes('/api/ask/stream')) return orig(url, opts);
+      const text = await (await orig(url, opts)).text();
+      const cut = text.indexOf('event: token');
+      const enc = new TextEncoder();
+      const body = new ReadableStream({ async start(c) {
+        c.enqueue(enc.encode(text.slice(0, cut)));
+        await new Promise(res => { window.__release = res; });
+        c.enqueue(enc.encode(text.slice(cut)));
+        c.close();
+      } });
+      return new Response(body, { headers: { 'content-type': 'text/event-stream' } });
+    };
+    window.__slow = true;
+  });
+  await page.click('#btn-home').catch(() => {});
+  await page.waitForFunction(() => document.body.dataset.view === 'home', null, { timeout: 5000 }).catch(() => {});
+  await page.fill('#omni-q', 'What did I say about sourdough, slowly?');
+  await page.press('#omni-q', 'Enter');
+  await page.waitForSelector('.ask-loading .al-read:not([hidden]) .al-now .an-title', { timeout: 10000 });
+  r = await page.evaluate(() => ({ chips: document.querySelectorAll('.al-chip').length, on: document.querySelectorAll('.al-chip.on').length,
+    now: document.querySelector('.al-now').innerText, watch: !document.querySelector('.al-watch').hidden, skel: document.querySelector('.al-skel').hidden,
+    cards: document.querySelectorAll('#sem-list .ask-sources:not([hidden]) .sr').length }));
+  check('while the model reads, the loader shows the source it is on and chips for the rest',
+    r.chips === 2 && r.on === 1 && /Now reading/i.test(r.now) && /Synthetic thread 1/.test(r.now) && r.skel && r.cards === 0, JSON.stringify(r));
+  check('Memory Home offers to watch the reading on the map', r.watch);
+  await page.waitForFunction(() => /Synthetic thread 2/.test(document.querySelector('.al-now').innerText), null, { timeout: 8000 });
+  check('the reading card moves on to the next source by itself', true);
+  await page.click('.al-watch');
+  await page.waitForFunction(() => document.body.dataset.view === 'graph', null, { timeout: 5000 });
+  await page.waitForTimeout(1200);
+  r = await page.evaluate(() => ({ reading: window.__sarthink.sem.reading, label: !!document.querySelector('#labels .nlabel.reading') }));
+  check('on the map the source being read is marked', r.reading >= 0 && r.label, JSON.stringify(r));
+  await shot(page, '31_reading_tour');
+  await page.evaluate(() => { window.__slow = false; window.__release(); });
+  await page.waitForFunction(() => /Done/.test((document.querySelector('.aw-state') || {}).textContent || ''), null, { timeout: 10000 });
+  r = await page.evaluate(() => ({ reading: window.__sarthink.sem.reading, label: !!document.querySelector('#labels .nlabel.reading'), loader: !!document.querySelector('.ask-loading'),
+    waits: JSON.parse(localStorage.getItem('sarthink.waits') || '{}').best || [] }));
+  check('when the answer starts the tour ends and the wait is remembered', r.reading === -1 && !r.label && !r.loader && r.waits.length >= 1, JSON.stringify(r));
+
+  mode = 'unsure';
+  await ask('Something the sources do not answer?');
+  await page.waitForSelector('.ask-none', { timeout: 10000 });
+  r = await page.evaluate(() => ({ none: document.querySelector('.ask-none').innerText, written: !!document.querySelector('.ask-written'),
+    label: document.querySelector('.ask-sources summary').innerText, open: document.querySelector('.ask-sources').open }));
+  check('the model being unsure shows "No relevant info found" with closest matches folded',
+    /No relevant info found/.test(r.none) && !r.written && /Closest matches \(2\)/.test(r.label) && !r.open, JSON.stringify(r));
+
   mode = 'error';
   await ask('What did I say about sourdough again?');
-  await page.waitForFunction(() => !document.querySelector('.aw-note').hidden, null, { timeout: 10000 });
-  r = await page.evaluate(() => ({ note: document.querySelector('.aw-note').innerText, open: document.querySelector('.ask-evsum').open,
+  await page.waitForSelector('.ask-main > .aw-note', { timeout: 10000 });
+  r = await page.evaluate(() => ({ note: document.querySelector('.ask-main > .aw-note').innerText, evidence: !!document.querySelector('.ask-main .ask-answer'),
     code: document.querySelector('.aw-note code') && document.querySelector('.aw-note code').textContent }));
-  check('a model error keeps the evidence and says how to start the model', r.open && r.code === 'scripts/llm.sh start best' && /isn’t running|isn't running/.test(r.note), JSON.stringify(r));
+  check('a model error shows the evidence and says how to start the model', r.evidence && r.code === 'scripts/llm.sh start best' && /isn’t running|isn't running/.test(r.note), JSON.stringify(r));
+
+  mode = 'ungrounded';
+  await ask('Something the model cannot back up?');
+  await page.waitForSelector('.ask-none details', { timeout: 10000 });
+  r = await page.evaluate(() => ({ none: document.querySelector('.ask-none > b').innerText, written: !!document.querySelector('.ask-written'),
+    draft: document.querySelector('.ask-none details').innerText, open: document.querySelector('.ask-none details').open }));
+  check('an answer without citations becomes "No relevant info found", with the draft folded away',
+    /No relevant info found/.test(r.none) && !r.written && !r.open && /wrote anyway/.test(r.draft), JSON.stringify(r));
 
   mode = 'weak';
+  const nStream = calls.length;
   await ask('Something with weak evidence?');
-  await page.waitForFunction(() => !document.querySelector('.aw-note').hidden, null, { timeout: 10000 });
-  r = await page.evaluate(() => ({ note: document.querySelector('.aw-note').innerText, text: document.querySelector('.aw-text').innerText, open: document.querySelector('.ask-evsum').open }));
-  check('weak evidence skips writing and shows the evidence', r.open && !r.text && /too weak/.test(r.note), JSON.stringify(r));
+  await page.waitForFunction(() => document.querySelector('.ask-none') && !document.querySelector('.ask-none details'), null, { timeout: 10000 });
+  r = await page.evaluate(() => ({ loader: !!document.querySelector('.ask-loading'), label: document.querySelector('.ask-sources summary').innerText }));
+  check('weak evidence says "No relevant info found" without waiting for a model', !r.loader && /Closest matches/.test(r.label)
+    && calls.length === nStream + 1, JSON.stringify(r));
+  mode = 'ok';
 
   await page.selectOption('#omni-writer', 'quick');
   const before = calls.length;
   await ask('Quick but offline?');
-  await page.waitForSelector('.ask-written .aw-note:not([hidden])', { timeout: 10000 });
+  await page.waitForSelector('.ask-main > .aw-note', { timeout: 10000 });
   r = await page.evaluate(() => ({ note: document.querySelector('.aw-note').innerText, code: (document.querySelector('.aw-note code') || {}).textContent }));
   const newCalls = calls.slice(before).map(c => c.kind).join(',');
   check('an offline model falls back to /api/ask with a start hint', newCalls === 'ask' && r.code === 'scripts/llm.sh start quick', `${newCalls} ${JSON.stringify(r)}`);
@@ -1605,10 +1700,58 @@ async function writerFlow(browser) {
   await page.close();
 }
 
+// The corner workspace switch (stubbed /api/workspace*): quiet by default, a wrong password is refused, a right one
+// reloads the page; and the password never appears in the page itself.
+async function workspaceFlow(browser) {
+  const unlocks = [];
+  let active = 'demo';
+  const state = () => ({ active, label: active === 'demo' ? 'Sample data' : 'My data', default: 'demo', switchable: true,
+    workspaces: [{ id: 'demo', label: 'Sample data', locked: false }, { id: 'personal', label: 'My data', locked: true }] });
+  const page = await open(browser, { route: async p => {
+    await p.route('**/api/workspace', r => r.fulfill({ json: state() }));
+    await p.route('**/api/workspace/unlock', r => {
+      const b = JSON.parse(r.request().postData());
+      unlocks.push(b);
+      if (b.password !== 'right-one') return r.fulfill({ status: 401, json: { error: { code: 'wrong_password', message: 'Wrong password.' } } });
+      active = 'personal';
+      return r.fulfill({ json: state() });
+    });
+    await p.route('**/api/workspace/lock', r => { active = 'demo'; return r.fulfill({ json: state() }); });
+  } });
+  await ready(page, { view: 'home' });
+  await page.waitForSelector('#ws:not([hidden])', { timeout: 5000 });
+  let r = await page.evaluate(() => {
+    const b = document.getElementById('ws-btn').getBoundingClientRect();
+    return { text: document.getElementById('ws-btn').textContent, left: b.left, bottom: innerHeight - b.bottom, h: b.height,
+      opacity: +getComputedStyle(document.getElementById('ws-btn')).opacity };
+  });
+  check('a small switch sits in the bottom-left corner, showing the sample data', /Sample data/.test(r.text) && r.left < 30 && r.bottom < 30 && r.h < 30 && r.opacity < 0.8, JSON.stringify(r));
+  await page.click('#ws-btn');
+  await page.fill('#ws-pw', 'nope');
+  await page.press('#ws-pw', 'Enter');
+  await page.waitForFunction(() => /Wrong password/.test(document.getElementById('ws-msg').textContent), null, { timeout: 5000 });
+  check('a wrong password is refused and the page stays', unlocks.length === 1 && unlocks[0].workspace === 'personal');
+  const reloaded = page.waitForEvent('load', { timeout: 10000 }).then(() => true, () => false);
+  await page.fill('#ws-pw', 'right-one');
+  await page.click('#ws-go');
+  check('the right password reloads the page', await reloaded);
+  await page.waitForSelector('#ws:not([hidden])', { timeout: 10000 });
+  r = await page.evaluate(() => document.getElementById('ws-btn').textContent);
+  check('after unlocking the switch shows My data', /My data/.test(r), r);
+  await page.click('#ws-btn');
+  check('switching back needs no password', await page.isHidden('#ws-pw') && /Back to Sample data/.test(await page.textContent('#ws-go')));
+  await page.keyboard.press('Escape');
+  check('Esc closes the switch', await page.isHidden('#ws-pop'));
+  const html = await (await page.request.get(BASE)).text();
+  check('no password in the page source', !/naitik08/.test(html) && !/password"\s*:/.test(html));
+  check('no page errors with the switch', !page.errors.length, page.errors.join(' | '));
+  await page.close();
+}
+
 // SARTHINK_E2E_ONLY=homeFlow,insightsFlow runs just those flows.
 const ONLY = (process.env.SARTHINK_E2E_ONLY || '').split(',').filter(Boolean);
 const FLOWS = { mainFlow: async b => (await mainFlow(b)).close(), semanticFlow, askFlow, apiStates, dataStates, responsive,
-  homeFlow, arrowKeys, insightsFlow, homeWithoutGraph, homeResponsive, personFlow, writerFlow, ...(REAL_SEMANTIC ? { realSemantic } : {}) };
+  homeFlow, arrowKeys, insightsFlow, homeWithoutGraph, homeResponsive, personFlow, writerFlow, workspaceFlow, ...(REAL_SEMANTIC ? { realSemantic } : {}) };
 const browser = await chromium.launch({ args: ['--use-gl=swiftshader', '--enable-webgl', '--ignore-gpu-blocklist'] });
 try {
   for (const [name, flow] of Object.entries(FLOWS)) if (!ONLY.length || ONLY.includes(name)) await flow(browser);

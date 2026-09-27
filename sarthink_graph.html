@@ -175,6 +175,8 @@
 
     .nlabel.sel { color: #fff; font-weight: 600; font-size: .74rem; background: rgba(20, 30, 70, .85); border: 1px solid rgba(79, 142, 255, .6); }
     .nlabel.dimmed { color: rgba(255, 255, 255, .55); }
+    .nlabel.reading { color: #fff; font-weight: 600; background: rgba(62, 207, 142, .18); border: 1px solid rgba(62, 207, 142, .6); }
+    .nlabel.reading::before { content: 'Reading · '; color: var(--ok); font-weight: 500; }
 
     /* Every overlay below is sized to its own visible box, so the canvas keeps the rest of the
        screen for orbit/pan/zoom. Nothing is a full-screen wrapper with pointer-events. */
@@ -520,6 +522,7 @@
     .ask-chip:disabled { opacity: .5; cursor: default; }
 
     .ask-brief { display: flex; flex-direction: column; gap: 11px; padding: 2px 2px 4px; }
+    .ask-main { display: flex; flex-direction: column; gap: 11px; }
     .ask-conf { display: inline-flex; align-items: center; gap: 7px; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
     .ask-conf .meter { display: inline-flex; gap: 2px; }
     .ask-conf .meter i { width: 12px; height: 4px; border-radius: 1px; background: rgba(255, 255, 255, .12); }
@@ -545,11 +548,33 @@
     .aw-text .cite { font: inherit; font-size: .6rem; line-height: 1; vertical-align: super; margin: 0 1px; padding: 1px 4px; border-radius: 4px; cursor: pointer;
       border: 1px solid rgba(79, 142, 255, .5); background: rgba(79, 142, 255, .16); color: #cfe0ff; }
     .aw-text .cite:hover, .aw-text .cite:focus-visible { background: rgba(79, 142, 255, .4); color: #fff; }
+    .aw-q { color: #e8edff; }
+    .aw-q.bad { text-decoration: underline dashed var(--warn); text-underline-offset: 3px; cursor: help; }
     .aw-note { font-size: .66rem; line-height: 1.5; color: var(--dim); }
     .aw-note.warn { color: var(--warn); }
     .aw-note code { font-size: .62rem; color: var(--mid); background: rgba(255, 255, 255, .06); padding: 1px 5px; border-radius: 3px; }
-    .ask-evsum > summary { cursor: pointer; font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin-bottom: 5px; }
-    .ask-evsum > summary:hover { color: #fff; }
+    /* Sources dropdown: everything behind the answer (confidence, evidence summary, timeline, source cards), folded at the bottom */
+    .ask-sources { border-top: 1px solid var(--bdr); padding-top: 8px; }
+    .ask-sources > summary { list-style: none; display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 7px 10px; border-radius: 8px;
+      border: 1px solid var(--bdr); background: rgba(255, 255, 255, .04); font-size: .66rem; color: var(--mid); user-select: none; }
+    .ask-sources > summary::-webkit-details-marker { display: none; }
+    .ask-sources > summary::after { content: '▾'; margin-left: auto; transition: transform .15s; }
+    .ask-sources[open] > summary::after { transform: rotate(180deg); }
+    .ask-sources > summary:hover, .ask-sources > summary:focus-visible { color: #fff; border-color: var(--bdr2); }
+    .ask-sources > summary .as-n { font-weight: 600; color: #fff; }
+    .ask-sources > summary .ev { color: var(--dim); font-size: .6rem; white-space: nowrap; }
+    .ask-sources > summary .as-n { white-space: nowrap; }
+    .ask-sources[open] > summary { margin-bottom: 10px; }
+    .as-body { display: flex; flex-direction: column; gap: 11px; }
+    .as-cards { display: flex; flex-direction: column; gap: 6px; }
+    /* "No relevant info found": shown when the evidence is weak or the model can't ground an answer */
+    .ask-none { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255, 255, 255, .14); background: rgba(255, 255, 255, .04); }
+    .ask-none b { font-size: .84rem; color: #fff; font-weight: 600; }
+    .ask-none p { font-size: .7rem; line-height: 1.5; color: var(--mid); margin: 0; }
+    .ask-none details { margin-top: 4px; font-size: .66rem; color: var(--dim); }
+    .ask-none details > summary { cursor: pointer; }
+    .ask-none details > summary:hover { color: #fff; }
+    .ask-none .aw-text { font-size: .72rem; color: var(--mid); margin-top: 6px; }
     #omni-writer { flex: 0 0 auto; align-self: center; max-width: 150px; font: inherit; font-size: .72rem; color: var(--mid); cursor: pointer;
       background: rgba(255, 255, 255, .06); border: 1px solid var(--bdr); border-radius: 8px; padding: 6px 4px; }
     #omni-writer option { background: #151822; color: #fff; }
@@ -579,8 +604,59 @@
     .atl-item .d { color: var(--dim); font-variant-numeric: tabular-nums; white-space: nowrap; }
     .atl-item .l { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .ask-notes { font-size: .6rem; line-height: 1.45; color: var(--dim); }
-    .ask-loading { display: flex; align-items: center; gap: 8px; padding: 18px 8px; justify-content: center; font-size: .72rem; color: var(--mid); }
-    .ask-loading i { width: 7px; height: 7px; border-radius: 50%; background: var(--acc); animation: pulse 1s ease-in-out infinite; }
+    /* Workspace switch: a quiet corner control (sample data by default; other data behind a password) */
+    #ws { position: fixed; left: 10px; bottom: 8px; z-index: 40; font-size: .62rem; }
+    #ws-btn { background: none; border: none; padding: 3px 5px; color: var(--dim); opacity: .55; font: inherit; cursor: pointer; border-radius: 4px; }
+    #ws-btn:hover, #ws-btn:focus-visible, #ws-btn[aria-expanded="true"] { opacity: 1; color: #fff; background: rgba(255, 255, 255, .06); }
+    #ws-pop { position: absolute; left: 0; bottom: calc(100% + 6px); width: 220px; display: flex; flex-direction: column; gap: 7px; padding: 10px;
+      border-radius: 8px; border: 1px solid var(--bdr); background: rgba(12, 14, 24, .96); box-shadow: 0 8px 24px rgba(0, 0, 0, .4); }
+    #ws-pop[hidden] { display: none; }
+    #ws-text { color: var(--mid); line-height: 1.4; }
+    #ws-row { display: flex; gap: 6px; }
+    #ws-pw { flex: 1; min-width: 0; font: inherit; font-size: .7rem; color: #fff; background: rgba(255, 255, 255, .06); border: 1px solid var(--bdr); border-radius: 6px; padding: 4px 7px; }
+    #ws-pw[hidden] { display: none; }
+    #ws-msg { color: var(--err); min-height: 0; }
+    #ws-msg:empty { display: none; }
+
+    /* Ask loading screen: steps with a timer and a skeleton of the answer, until the answer starts */
+    .ask-loading { display: flex; flex-direction: column; gap: 12px; padding: 14px; border-radius: 10px; border: 1px solid rgba(79, 142, 255, .3); background: rgba(79, 142, 255, .05); }
+    .al-head { display: flex; align-items: center; gap: 8px; font-size: .72rem; color: #fff; }
+    .al-head .al-spin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(79, 142, 255, .25); border-top-color: var(--acc); animation: spin .8s linear infinite; }
+    .al-head .al-time { margin-left: auto; font-size: .64rem; color: var(--dim); font-variant-numeric: tabular-nums; }
+    .al-steps { list-style: none; display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; }
+    .al-steps li { display: flex; align-items: center; gap: 8px; font-size: .68rem; color: var(--dim); }
+    .al-steps li i { flex: 0 0 auto; width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .2); display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-size: .55rem; }
+    .al-steps li.on { color: #fff; }
+    .al-steps li.on i { border-color: var(--acc); background: rgba(79, 142, 255, .25); animation: pulse 1s ease-in-out infinite; }
+    .al-steps li.done { color: var(--mid); }
+    .al-steps li.done i { border-color: var(--ok); color: var(--ok); }
+    .al-steps li.done i::before { content: '✓'; }
+    .al-steps li small { margin-left: auto; color: var(--dim); font-size: .6rem; }
+    .al-skel { display: flex; flex-direction: column; gap: 7px; }
+    .al-skel .skel { height: 9px; border-radius: 4px; }
+    /* While the model reads: the source it is on, the others as chips, and progress against its usual time */
+    .al-now { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; border-radius: 8px; cursor: pointer; text-align: left; font: inherit; color: inherit;
+      border: 1px solid rgba(62, 207, 142, .35); background: rgba(62, 207, 142, .06); transition: opacity .35s, border-color .2s; }
+    .al-now:hover, .al-now:focus-visible { border-color: rgba(62, 207, 142, .75); }
+    .al-now.fade { opacity: 0; }
+    .al-now .an-top { display: flex; align-items: center; gap: 6px; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ok); }
+    .al-now .an-top i { width: 7px; height: 7px; border-radius: 50%; background: var(--pc, #9aa0b4); }
+    .al-now .an-top span:last-child { margin-left: auto; color: var(--dim); letter-spacing: .04em; text-transform: none; }
+    .al-now .an-title { font-size: .76rem; color: #fff; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .al-now .an-snip { font-size: .68rem; line-height: 1.45; color: var(--mid); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .al-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+    .al-chip { display: inline-flex; align-items: center; gap: 5px; max-width: 100%; padding: 3px 8px; border-radius: 12px; cursor: pointer; font: inherit; font-size: .62rem;
+      color: var(--mid); background: rgba(255, 255, 255, .04); border: 1px solid var(--bdr); }
+    .al-chip i { flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; background: var(--pc, #9aa0b4); }
+    .al-chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px; }
+    .al-chip:hover, .al-chip:focus-visible { color: #fff; border-color: var(--bdr2); }
+    .al-chip.on { color: #fff; border-color: rgba(62, 207, 142, .6); background: rgba(62, 207, 142, .1); }
+    .al-bar { height: 3px; border-radius: 2px; background: rgba(255, 255, 255, .08); overflow: hidden; }
+    .al-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--acc), var(--ok)); transition: width 1s linear; }
+    .al-watch { background: none; border: none; padding: 0; color: var(--acc); font: inherit; font-size: .62rem; cursor: pointer; }
+    .al-watch:hover, .al-watch:focus-visible { text-decoration: underline; }
+    .al-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: .6rem; color: var(--dim); line-height: 1.4; }
+    @keyframes spin { to { transform: rotate(360deg); } }
     .sr.lead { opacity: .72; }
     .sem-empty .btn { margin-top: 10px; }
 
@@ -1354,6 +1430,15 @@
     </section>
   </div>
 
+  <div id="ws" hidden>
+    <button type="button" id="ws-btn" aria-haspopup="dialog" aria-expanded="false"></button>
+    <form id="ws-pop" hidden autocomplete="off">
+      <div id="ws-text"></div>
+      <div id="ws-row"><input id="ws-pw" type="password" maxlength="200" aria-label="Password" placeholder="Password"><button type="submit" class="btn sm" id="ws-go"></button></div>
+      <div id="ws-msg" aria-live="polite"></div>
+    </form>
+  </div>
+
   <div id="hint" class="panel fade-layer">
     <span><b>Drag</b> orbit</span><span><b>Right-drag</b> / <b>Shift-drag</b> pan</span><span><b>Scroll</b> zoom</span>
     <span class="opt"><b>Click</b> select · <b>Double-click</b> focus</span><span class="opt"><b>Arrows</b> move</span><button type="button" class="linkbtn" id="hint-close" aria-label="Hide these tips">Got it</button><span><b>Esc</b> reset</span>
@@ -1458,7 +1543,7 @@
       selected: -1,
       hover: -1,
       find: { q: '', matches: [], cur: -1 },
-      sem: { results: [], set: null, focus: new Set(), active: -1, seq: 0, ready: false, loadedOnce: false, healthTimer: null, mode: 'search' },
+      sem: { results: [], set: null, focus: new Set(), reading: -1, active: -1, seq: 0, ready: false, loadedOnce: false, healthTimer: null, mode: 'search' },
       ctx: { seq: 0 },
       nodeVis: null, edgeVis: null, visibleNodes: 0, visibleEdges: 0,
       home: null, tween: null, bounds: null,
@@ -2933,6 +3018,7 @@
       if (rebuild) {
         const want = [];
         const add = (i, cls) => { if (i >= 0 && !want.some(w => w.i === i)) want.push({ i, cls }); };
+        if (S.sem.reading >= 0) add(S.sem.reading, 'reading');
         if (S.selected >= 0) {
           add(S.selected, 'sel');
           neighbours(S.selected).sort((a, b) => b.e.w - a.e.w).slice(0, MAX_LABELS - 1).forEach(o => add(o.j, ''));
@@ -3457,47 +3543,245 @@
       };
     }
 
-    function renderAsk(data) {
+    // No written answer should be attempted: nothing retrieved clearly addresses the question (as should_write()).
+    const askWeak = data => data.confidence === 'low' || !data.sources.some(s => s.relevant);
+
+    function confHtml(data) {
+      const conf = CONF_TEXT[data.confidence] ? data.confidence : 'low';
+      const ev = data.evidence ? `${data.evidence.relevant} supporting · ${data.evidence.considered} checked` : '';
+      return `<div class="ask-conf ${conf}" title="How well the retrieved sources support the answer"><span class="meter" aria-hidden="true"><i></i><i></i><i></i></span>${esc(CONF_TEXT[conf])}${ev ? `<span class="ev">· ${esc(ev)}</span>` : ''}</div>`;
+    }
+
+    function pointsHtml(data) {
+      return data.summary_points.length
+        ? `<div><div class="ask-h">Key points</div><ul class="ask-points">${data.summary_points.map(pt => `<li>${esc(pt)}</li>`).join('')}</ul></div>` : '';
+    }
+
+    // The evidence-only answer: confidence, the quoted brief and its key points.
+    function evidenceMainHtml(data) {
+      return `${confHtml(data)}<p class="ask-answer">${esc(data.answer)}</p>${pointsHtml(data)}`;
+    }
+
+    function noRelevantHtml(nLeads, extra = '') {
+      return `<div class="ask-none"><b>No relevant info found</b><p>${nLeads
+        ? 'Nothing in your memories clearly answers this. The closest matches are in the dropdown below, but they may be unrelated.'
+        : 'Nothing in your memories matches this question.'} Try different wording, widen the date range or turn on more platforms in Filters.</p>${extra}</div>`;
+    }
+
+    function sourcesSummary(n, weak, supporting = 0) {
+      return weak
+        ? `<span class="as-n">Closest matches (${n})</span><span class="ev">not evidence, may be unrelated</span>`
+        : `<span class="as-n">Sources (${n})</span><span class="ev">${supporting} supporting</span>`;
+    }
+
+    // Answer on top (.ask-main); what it rests on (confidence, evidence summary, timeline, source cards) folds into the
+    // Sources dropdown at the bottom. `pending`: a local model is about to write, so the loading screen stays on top and
+    // the dropdown waits until the answer starts.
+    function renderAsk(data, pending = false) {
       const list = $('sem-list');
       $('sem-title').textContent = data.question;
       $('sem-title').dataset.q = data.question;
       $('sem-title').title = data.question;
       $('sem-sub').textContent = '';
       const terms = (data.evidence && data.evidence.terms && data.evidence.terms.length) ? data.evidence.terms : queryTerms(data.question);
-      const conf = CONF_TEXT[data.confidence] ? data.confidence : 'low';
-      const ev = data.evidence ? `${data.evidence.relevant} supporting · ${data.evidence.considered} checked` : '';
-      const html = [`<div class="ask-brief">
-          <div class="ask-conf ${conf}" title="How well the retrieved sources support the answer"><span class="meter" aria-hidden="true"><i></i><i></i><i></i></span>${esc(CONF_TEXT[conf])}${ev ? `<span class="ev">· ${esc(ev)}</span>` : ''}</div>
-          <p class="ask-answer">${esc(data.answer)}</p>`];
-      if (data.summary_points.length) {
-        html.push(`<div><div class="ask-h">Key points</div><ul class="ask-points">${data.summary_points.map(pt => `<li>${esc(pt)}</li>`).join('')}</ul></div>`);
-      }
+      const weak = askWeak(data);
+      if (weak) pending = false;
+      const main = weak ? noRelevantHtml(data.sources.length) : pending ? '' : evidenceMainHtml(data);
+      const body = [];
+      if (weak || pending) body.push(confHtml(data));
+      if (pending) body.push(`<div><div class="ask-h">Evidence summary</div><p class="ask-answer">${esc(data.answer)}</p></div>`, pointsHtml(data));
       if (data.timeline.length) {
-        html.push(`<div><div class="ask-h">Timeline</div><div id="ask-timeline" class="ask-timeline">${data.timeline.map(t => `<button type="button" class="atl-item" data-k="${esc(t.source - 1)}"
+        body.push(`<div><div class="ask-h">Timeline</div><div id="ask-timeline" class="ask-timeline">${data.timeline.map(t => `<button type="button" class="atl-item" data-k="${esc(t.source - 1)}"
             style="--pc:${esc(PLATFORM_COLORS[t.platform] || '#9aa0b4')}" title="${esc(platformName(t.platform))} · ${esc(t.label)}"><span class="d" title="${esc(exactSpan(t.date))}">${esc(dayName(t.date))}</span><span class="l">${esc(t.label)}</span></button>`).join('')}</div></div>`);
       }
-      if (data.notes && data.notes.length) html.push(`<div class="ask-notes">${data.notes.map(n => esc(n)).join('<br>')}</div>`);
-      html.push(`<div class="ask-h">${data.sources.length ? `Sources (${data.sources.length})` : 'No sources'}</div></div>`);
-
+      if (data.notes && data.notes.length) body.push(`<div class="ask-notes">${data.notes.map(n => esc(n)).join('<br>')}</div>`);
       const top = Math.max(...S.sem.results.map(r => r.similarity || 0), 0.0001);
-      html.push(...S.sem.results.map((r, k) => {
+      const cards = S.sem.results.map((r, k) => {
         const why = r.relevant
           ? `evidence${r._shared.length ? ` · mentions “${esc(r._shared.slice(0, 4).join('”, “'))}”` : ''}`
           : 'closest match only — not used as evidence';
         return resultCard(r, k, terms, top, why, r.relevant ? '' : 'lead');
-      }));
-      list.innerHTML = html.join('');
+      });
+      body.push(`<div class="as-cards">${cards.join('')}</div>`);
+      list.innerHTML = `<div class="ask-brief"><div class="ask-main">${main}</div>${data.sources.length
+        ? `<details class="ask-sources"${pending ? ' hidden' : ''}><summary>${sourcesSummary(data.sources.length, weak, data.sources.filter(x => x.relevant).length)}</summary><div class="as-body">${body.join('')}</div></details>`
+        : ''}</div>`;
+      if (pending && S.sem.loader) list.querySelector('.ask-main').append(S.sem.loader.el);
+      else clearAskLoader();
       wireResultCards(list);
       list.querySelectorAll('.atl-item').forEach(b => b.addEventListener('click', () => focusAskSource(+b.dataset.k)));
       list.scrollTop = 0;
     }
 
-    // Timeline entries select their source (never toggle it off) and bring its card into view.
+    // Reveals the Sources dropdown (hidden while the loading screen shows); `weak` relabels it as closest matches.
+    function showAskSources(weak = false) {
+      const d = document.querySelector('#sem-list .ask-sources');
+      if (!d) return;
+      d.hidden = false;
+      if (weak) d.querySelector('summary').innerHTML = sourcesSummary(S.sem.results.length, true);
+    }
+
+    // Timeline entries and [n] citations select their source (never toggle it off), opening the dropdown first.
     function focusAskSource(k) {
       if (!S.sem.results[k]) return;
+      const d = document.querySelector('#sem-list .ask-sources');
+      if (d) { d.hidden = false; d.open = true; }
       if (S.sem.active !== k) focusSemanticResult(k);
       const el = document.querySelectorAll('#sem-list .sr')[k];
       if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+
+    function citeClick(e) {
+      const b = e.target.closest('.cite');
+      if (b) focusAskSource(+b.dataset.k);
+    }
+
+    // ─── Ask loading screen: steps with a timer until the answer (or the evidence) is ready ───
+    const LOAD_STEPS = [['search', 'Searching your memories'], ['check', 'Checking the evidence'], ['read', 'Reading the sources']];
+
+    function showAskLoader() {
+      clearAskLoader();
+      const el = document.createElement('div');
+      el.className = 'ask-loading';
+      el.setAttribute('role', 'status');
+      el.innerHTML = `<div class="al-head"><span class="al-spin" aria-hidden="true"></span><span class="al-title">Looking through your memories</span><span class="al-time">0:00</span></div>
+        <ol class="al-steps">${LOAD_STEPS.map(([k, label]) => `<li data-step="${k}"><i aria-hidden="true"></i><span>${esc(label)}</span><small></small></li>`).join('')}</ol>
+        <div class="al-skel" aria-hidden="true"><div class="skel" style="width:94%"></div><div class="skel" style="width:81%"></div><div class="skel" style="width:88%"></div><div class="skel" style="width:46%"></div></div>
+        <div class="al-read" hidden><button type="button" class="al-now" title="Open this conversation on the map"></button><div class="al-chips"></div></div>
+        <div class="al-bar" hidden aria-hidden="true"><i></i></div>
+        <div class="al-foot"><span class="al-hint">${S.sem.loadedOnce ? '' : 'The first question after a start takes a little longer.'}</span>
+          <button type="button" class="al-watch" hidden>Watch on the map →</button><button type="button" class="btn sm al-stop" hidden>Stop</button></div>`;
+      const L = { el, started: performance.now(), tick: 0, typical: 0 };
+      L.tick = setInterval(() => {
+        const secs = (performance.now() - L.started) / 1000;
+        el.querySelector('.al-time').textContent = mmss(secs);
+        if (L.typical) el.querySelector('.al-bar i').style.width = `${Math.min(96, 100 * secs * 1000 / L.typical).toFixed(1)}%`;
+      }, 1000);
+      el.querySelector('.al-watch').addEventListener('click', () => {
+        el.querySelector('.al-watch').hidden = true;
+        if (L.tour) L.tour.manual = false;
+        setView('graph');
+        if (L.tour) setTimeout(() => L.tour && L.tour.focus(), 850);   // after the view's own camera move
+      });
+      S.sem.loader = L;
+      askLoaderStep('search');
+      return el;
+    }
+
+    // Which model will write (null: evidence only, so there is no reading step).
+    function askLoaderModel(name, profile) {
+      const L = S.sem.loader;
+      if (!L) return;
+      const read = L.el.querySelector('[data-step="read"]');
+      if (!name) { read.remove(); return; }
+      read.querySelector('span').textContent = `Reading the sources with ${name}`;
+      L.el.querySelector('.al-title').textContent = `Preparing an answer with ${name}`;
+      L.typical = typicalWait(profile);
+      L.el.querySelector('.al-bar').hidden = !L.typical;
+      L.el.querySelector('.al-hint').textContent = L.typical
+        ? `Runs on this device. It usually starts writing after about ${mmss(L.typical / 1000)}.`
+        : 'Runs on this device. Longer questions can take a minute or two.';
+    }
+
+    // How long each model usually takes to start writing here (this browser only; a convenience, not data).
+    const WAIT_KEY = 'sarthink.waits';
+    function typicalWait(profile) {
+      try {
+        const v = (JSON.parse(localStorage.getItem(WAIT_KEY) || '{}')[profile] || []).filter(Number.isFinite).sort((a, b) => a - b);
+        return v.length ? v[Math.floor(v.length / 2)] : 0;
+      } catch (_) { return 0; }
+    }
+    function recordWait(profile, ms) {
+      try {
+        const all = JSON.parse(localStorage.getItem(WAIT_KEY) || '{}');
+        all[profile] = [...(all[profile] || []), Math.round(ms)].slice(-5);
+        localStorage.setItem(WAIT_KEY, JSON.stringify(all));
+      } catch (_) { /* storage blocked */ }
+    }
+
+    // While the model reads: the card shows one evidence source at a time (the chips list all of them), and on the
+    // map the camera moves from source to source with a "Reading" label. Dragging the map stops the camera moves;
+    // clicking the card or a chip opens that conversation.
+    function startReadingTour() {
+      const L = S.sem.loader;
+      if (!L || L.tour) return;
+      const items = S.sem.results.map((r, k) => ({ r, k })).filter(x => x.r.relevant);
+      if (!items.length) return;
+      const box = L.el.querySelector('.al-read'), now = box.querySelector('.al-now'), chips = box.querySelector('.al-chips');
+      L.el.querySelector('.al-skel').hidden = true;
+      box.hidden = false;
+      chips.innerHTML = items.map(({ r }, j) => `<button type="button" class="al-chip" data-j="${j}" style="--pc:${esc(PLATFORM_COLORS[r.platform] || '#9aa0b4')}"
+        title="${esc(platformName(r.platform))} · ${esc(dateRange(r.start_time, r.end_time))}"><i></i><span>${esc(r.title || '(untitled)')}</span></button>`).join('');
+      const T = L.tour = { j: 0, timer: 0, manual: false };
+      T.focus = () => {
+        const { r } = items[T.j];
+        if (!S.pGeo) return;
+        const m = r._nodes || resultNodes(r);
+        S.sem.reading = m.thread;
+        if (S.sem.active < 0) { S.sem.focus = new Set(m.thread >= 0 ? [m.thread, ...m.people] : []); refreshVisuals(); }
+        updateLabels(true);
+        if (m.thread >= 0 && S.view === 'graph' && !T.manual) flyToNodes([m.thread, ...m.people], 0.04);
+      };
+      const show = j => {
+        T.j = j;
+        const { r } = items[j];
+        now.classList.add('fade');
+        setTimeout(() => {
+          if (S.sem.loader !== L) return;
+          now.style.setProperty('--pc', PLATFORM_COLORS[r.platform] || '#9aa0b4');
+          now.innerHTML = `<span class="an-top"><i></i>Now reading · ${esc(platformName(r.platform))}<span>${esc(dateRange(r.start_time, r.end_time))}</span></span>
+            <span class="an-title">${esc(r.title || '(untitled)')}</span><span class="an-snip">${esc(stripStamps(r.snippet || ''))}</span>`;
+          now.classList.remove('fade');
+        }, 250);
+        chips.querySelectorAll('.al-chip').forEach((c, i) => c.classList.toggle('on', i === j));
+        T.focus();
+      };
+      const open = j => {
+        clearInterval(T.timer);
+        T.manual = true;
+        show(j);
+        if (S.pGeo) focusSemanticResult(items[j].k);
+      };
+      now.addEventListener('click', () => open(T.j));
+      chips.addEventListener('click', e => { const c = e.target.closest('.al-chip'); if (c) open(+c.dataset.j); });
+      T.onDrag = () => { T.manual = true; };
+      if (S.controls) S.controls.addEventListener('start', T.onDrag);
+      L.el.querySelector('.al-watch').hidden = !(S.pGeo && S.view !== 'graph');
+      show(0);
+      if (items.length > 1) T.timer = setInterval(() => show((T.j + 1) % items.length), 4500);
+    }
+
+    function stopReadingTour(L) {
+      const T = L && L.tour;
+      if (!T) return;
+      L.tour = null;
+      clearInterval(T.timer);
+      if (S.controls) S.controls.removeEventListener('start', T.onDrag);
+      S.sem.reading = -1;
+      if (S.sem.results.length) applySemanticHighlight(false);   // back to the normal highlight (and the selected source)
+      if (S.camera) updateLabels(true);
+    }
+
+    // Marks `step` current and the steps before it done; `details` sets the small text beside any step.
+    function askLoaderStep(step, details = {}) {
+      const L = S.sem.loader;
+      if (!L) return;
+      let reached = false;
+      L.el.querySelectorAll('.al-steps li').forEach(li => {
+        const k = li.dataset.step, cur = k === step;
+        if (cur) reached = true;
+        li.className = cur ? 'on' : reached ? '' : 'done';
+        if (k in details) li.querySelector('small').textContent = details[k];
+      });
+    }
+
+    function clearAskLoader() {
+      const L = S.sem.loader;
+      S.sem.loader = null;
+      if (!L) return;
+      clearInterval(L.tick);
+      stopReadingTour(L);
+      L.el.remove();
     }
 
     // ─── Written answers (POST /api/ask/stream): a local Llama turns the evidence into prose ───
@@ -3542,6 +3826,7 @@
     }
 
     function stopWriting() {
+      clearAskLoader();
       const w = S.sem.writer;
       S.sem.writer = null;
       if (!w) return;
@@ -3551,12 +3836,20 @@
 
     const mmss = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
 
-    // Escaped text -> paragraphs, "- " lists and **bold**; [n] -> a button that selects source n.
-    function writtenHtml(text, nSources) {
-      const inline = t => esc(t)
+    // Escaped text -> paragraphs, "- " lists and **bold**; [n] -> a button that selects source n. Quotes the
+    // server couldn't find in the source they cite (`unverified`) are marked, so a misreading is visible.
+    function writtenHtml(text, nSources, unverified = new Set()) {
+      const plain = t => esc(t)
         .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
         .replace(/\[(\d{1,3})\]/g, (m, n) => (+n >= 1 && +n <= nSources)
           ? `<button type="button" class="cite" data-k="${+n - 1}" title="Source ${+n}">${+n}</button>` : '');
+      const inline = t => t.split(/("[^"\n]{2,300}"|“[^”\n]{2,300}”)/).map((part, k) => {
+        if (k % 2 === 0) return plain(part);
+        const inner = part.slice(1, -1);
+        return unverified.has(inner)
+          ? `<span class="aw-q bad" title="These words weren’t found in the source they cite — check it">${esc(part)}</span>`
+          : `<span class="aw-q">${esc(part)}</span>`;
+      }).join('');
       return text.trim().split(/\n\s*\n/).map(block => {
         const lines = block.split('\n').filter(l => l.trim());
         if (lines.length && lines.every(l => /^\s*[-*•]\s+/.test(l))) {
@@ -3630,27 +3923,18 @@
       return { brief: first.value[1], events: it, ctl };
     }
 
-    // The written-answer block at the top of the brief; the evidence summary folds under it.
+    // The written-answer block: replaces the loading screen once the model starts writing, and shows the sources.
     function writerBlock(profile) {
-      const brief = document.querySelector('#sem-list .ask-brief');
-      if (!brief) return null;
+      const main = document.querySelector('#sem-list .ask-main');
+      if (!main) return null;
+      clearAskLoader();
       const p = S.llm.profiles[profile] || {};
-      const box = document.createElement('div');
-      box.className = 'ask-written';
-      box.innerHTML = `<div class="aw-head"><span class="aw-by">${esc(p.model_name ? `Written by ${p.model_name}` : 'Written answer')} · on this device</span>
-        <span class="aw-state" aria-live="polite"></span></div><div class="aw-text"></div><div class="aw-note" hidden></div>`;
-      const ans = brief.querySelector('.ask-answer');
-      const fold = document.createElement('details');
-      fold.className = 'ask-evsum';
-      fold.innerHTML = '<summary>Evidence summary</summary>';
-      ans.before(fold);
-      fold.append(ans);
-      fold.before(box);
-      box.querySelector('.aw-text').addEventListener('click', e => {
-        const b = e.target.closest('.cite');
-        if (b) focusAskSource(+b.dataset.k);
-      });
-      return { box, fold, state: box.querySelector('.aw-state'), text: box.querySelector('.aw-text'), note: box.querySelector('.aw-note') };
+      main.innerHTML = `<div class="ask-written"><div class="aw-head"><span class="aw-by">${esc(p.model_name ? `Written by ${p.model_name}` : 'Written answer')} · on this device</span>
+        <span class="aw-state" aria-live="polite"></span></div><div class="aw-text"></div><div class="aw-note" hidden></div></div>`;
+      const box = main.firstElementChild;
+      box.querySelector('.aw-text').addEventListener('click', citeClick);
+      showAskSources();
+      return { box, state: box.querySelector('.aw-state'), text: box.querySelector('.aw-text'), note: box.querySelector('.aw-note') };
     }
 
     function writerNote(ui, html, warn = true) {
@@ -3659,86 +3943,124 @@
       ui.note.hidden = false;
     }
 
+    // No written answer: say why on top, then the evidence-only answer.
+    function askFallback(noteHtml) {
+      const main = document.querySelector('#sem-list .ask-main');
+      if (!main || !S.sem.brief) return;
+      clearAskLoader();
+      main.innerHTML = `<div class="aw-note warn">${noteHtml}</div>${evidenceMainHtml(S.sem.brief)}`;
+      showAskSources();
+    }
+
+    // The sources don't answer the question (the model said so, or couldn't back its answer with them).
+    // `draft`: what the model wrote anyway, folded away so it can still be checked.
+    function showNoRelevant(draft = '', nSources = 0, unverified = new Set(), who = 'the local model') {
+      const main = document.querySelector('#sem-list .ask-main');
+      if (!main) return;
+      clearAskLoader();
+      main.innerHTML = noRelevantHtml(S.sem.results.length, draft
+        ? `<details><summary>Show what ${esc(who)} wrote anyway</summary><div class="aw-text">${writtenHtml(draft, nSources, unverified)}</div></details>` : '');
+      const t = main.querySelector('.aw-text');
+      if (t) t.addEventListener('click', citeClick);
+      showAskSources(true);
+    }
+
     // Shown instead of a stream when the chosen model isn't running.
     function writerOffline(profile) {
-      const ui = writerBlock(profile);
-      if (!ui) return;
       const p = S.llm.profiles[profile] || { label: profile, start: `scripts/llm.sh start ${profile}` };
-      ui.state.textContent = '';
-      ui.fold.open = true;
-      writerNote(ui, `The ${esc(p.label)} model isn’t running, so here is the evidence summary. Start it with <code>${esc(p.start)}</code>, or pick another answer style.`);
+      askFallback(`The ${esc(p.label)} model isn’t running, so here is the evidence summary. Start it with <code>${esc(p.start)}</code>, or pick another answer style.`);
     }
 
     async function writeAnswer(stream, seq, profile, nSources) {
-      const ui = writerBlock(profile);
-      if (!ui) return;
       const p = S.llm.profiles[profile] || {};
+      const who = p.model_name || 'the local model';
       const started = performance.now();
-      const w = { ctl: stream.ctl, tick: 0, stage: 'reading', sources: 0 };
+      const w = { ctl: stream.ctl, tick: 0 };
+      const askStarted = S.sem.loader ? S.sem.loader.started : started;
       S.sem.writer = w;
-      let text = '', frame = 0, finished = false;
+      let ui = null, text = '', frame = 0, finished = false, unverified = new Set();
       const live = () => seq === S.sem.seq && S.sem.writer === w;
-      const paint = () => { frame = 0; ui.text.innerHTML = writtenHtml(text, nSources); };
+      const paint = () => { frame = 0; if (ui) ui.text.innerHTML = writtenHtml(text, nSources, unverified); };
       const tickState = () => {
-        const t = mmss((performance.now() - started) / 1000);
         ui.state.className = 'aw-state busy';
-        ui.state.textContent = w.stage === 'reading' ? `Reading ${w.sources || ''} source${w.sources === 1 ? '' : 's'} · ${t}`.replace('  ', ' ') : `Writing · ${t}`;
+        ui.state.textContent = `Writing · ${mmss((performance.now() - started) / 1000)}`;
       };
-      w.tick = setInterval(tickState, 1000);
-      tickState();
-      semStatus('busy', `${esc(p.model_name || 'The local model')} is writing an answer… the evidence is below.`);
+      const stop = S.sem.loader && S.sem.loader.el.querySelector('.al-stop');
+      if (stop) {
+        stop.hidden = false;
+        stop.addEventListener('click', () => {
+          if (!live()) return;
+          stopWriting();
+          askFallback('Stopped. Here is the evidence summary instead.');
+          semStatus('ok', 'Stopped');
+        });
+      }
+      semStatus('busy', `${esc(who)} is reading your sources…`);
       try {
         for await (const [ev, d] of stream.events) {
           if (!live()) return;
           if (ev === 'status') {
-            w.sources = d.sources || w.sources;
-            tickState();
+            if (!ui && d.sources) askLoaderStep('read', { read: `${d.sources} source${d.sources === 1 ? '' : 's'}` });
           } else if (ev === 'token') {
-            if (w.stage === 'reading') { w.stage = 'writing'; ui.text.classList.add('streaming'); }
+            if (!ui) {
+              recordWait(profile, performance.now() - askStarted);
+              ui = writerBlock(profile);
+              if (!ui) return;
+              ui.text.classList.add('streaming');
+              w.tick = setInterval(tickState, 1000);
+              tickState();
+              semStatus('busy', `${esc(who)} is writing an answer…`);
+            }
             text += d.text;
             if (!frame) frame = requestAnimationFrame(paint);
           } else if (ev === 'done') {
             finished = true;
             text = d.text;
+            unverified = new Set((d.quotes || []).filter(q => !q.ok).map(q => q.text));
+            if (d.grounded === false) {
+              showNoRelevant(text, nSources, unverified, who);
+              semStatus('ok', `No relevant info found · ${esc(who)} couldn’t back an answer with your sources`);
+              continue;
+            }
+            if (!ui) ui = writerBlock(profile);
             paint();
             ui.state.className = 'aw-state';
             ui.state.textContent = `Done in ${mmss((performance.now() - started) / 1000)}`;
-            writerNote(ui, 'Drafted by a local model from the sources below — click a number to check it.', false);
-            semStatus('ok', `Answer written by ${esc(p.model_name || 'the local model')} in ${mmss(d.took_ms / 1000)}`);
+            const bad = unverified.size;
+            writerNote(ui, bad
+              ? `Drafted by a local model. ${bad} quote${bad === 1 ? ' wasn’t' : 's weren’t'} found in the cited source (underlined) — check those against the sources below.`
+              : 'Drafted by a local model from the sources below — click a number to check it.', !!bad);
+            semStatus('ok', `Answer written by ${esc(who)} in ${mmss(d.took_ms / 1000)}`);
           } else if (ev === 'skipped') {
             finished = true;
-            ui.state.textContent = '';
-            ui.fold.open = true;
-            writerNote(ui, esc(d.message), false);
-            semStatus('ok', 'Evidence too weak for a written answer');
+            if (d.code === 'no_relevant_info' || d.code === 'weak_evidence') {
+              showNoRelevant();
+              semStatus('ok', 'No relevant info found');
+            } else {
+              askFallback(esc(d.message));
+              semStatus('ok', 'Showing the evidence');
+            }
           } else if (ev === 'error') {
             finished = true;
-            ui.state.textContent = '';
-            ui.fold.open = true;
             const cmd = d.code === 'llm_offline' ? (p.start || `scripts/llm.sh start ${profile}`) : '';
-            writerNote(ui, `${esc(d.message.replace(/ Start it with:.*$/, ''))}${cmd ? ` Start it with <code>${esc(cmd)}</code>.` : ''} The evidence summary is below.`);
+            askFallback(`${esc(d.message.replace(/ Start it with:.*$/, ''))}${cmd ? ` Start it with <code>${esc(cmd)}</code>.` : ''} Here is the evidence summary instead.`);
             semStatus('warn', 'Written answer unavailable — showing the evidence');
           }
         }
-        if (!finished && live()) {
-          ui.state.textContent = '';
-          ui.fold.open = true;
-          writerNote(ui, 'The answer stopped early (the connection closed).');
-        }
+        if (!finished && live()) askFallback('The answer stopped early (the connection closed). Here is the evidence summary instead.');
       } catch (e) {
         if (!live()) return;
-        ui.state.textContent = '';
-        ui.fold.open = true;
-        writerNote(ui, 'The answer stopped early (the connection to the app server broke).');
+        askFallback('The answer stopped early (the connection to the app server broke). Here is the evidence summary instead.');
       } finally {
         if (frame) cancelAnimationFrame(frame);
-        if (S.sem.writer === w) { clearInterval(w.tick); S.sem.writer = null; }
-        ui.text.classList.remove('streaming');
-        if (ui.text.innerHTML === '' && text) paint();
+        clearInterval(w.tick);
+        if (S.sem.writer === w) S.sem.writer = null;
+        if (ui) ui.text.classList.remove('streaming');
       }
     }
 
     function askError(html, sub) {
+      clearAskLoader();
       S.sem.results = [];
       clearSemanticHighlight();
       if (S.selected >= 0) renderDetails();   // drop the previous brief's "why highlighted" note
@@ -3768,7 +4090,7 @@
       if (S.selected >= 0) renderDetails();
       $('sem-panel').hidden = false;
       $('sem-sub').textContent = 'Asking…';
-      $('sem-list').innerHTML = '<div class="ask-loading"><i></i>Retrieving memories and checking the evidence…</div>';
+      $('sem-list').replaceChildren(showAskLoader());
 
       try {
         await refreshLlm();
@@ -3776,6 +4098,7 @@
         const writer = writerChoice();
         const wp = S.llm.profiles[writer];
         const useModel = writer !== 'evidence' && wp && wp.state !== 'offline';
+        askLoaderModel(useModel ? (wp.model_name || wp.label) : null, writer);
         const body = { question: q, limit: ASK_LIMIT, ...filters };
         let stream = null, data;
         if (useModel) {
@@ -3792,15 +4115,21 @@
         if (seq !== S.sem.seq) { if (stream) stream.ctl.abort(); return; }  // a newer search/ask or a reset superseded this one
         S.sem.loadedOnce = true;
         S.sem.query = data.question;
+        S.sem.brief = data;
         S.sem.results = data.sources.map(askSourceAsResult);
         S.sem.active = -1;
-        renderAsk(data);
         const n = data.sources.length;
-        semStatus('ok', `${esc(CONF_TEXT[data.confidence] || 'Answered')} · ${n} source${n === 1 ? '' : 's'} in ${(data.took_ms / 1000).toFixed(1)}s`);
+        const weak = askWeak(data);
+        const ev = data.evidence || {};
+        askLoaderStep('read', { search: `${fmtN(ev.considered ?? n)} checked`, check: `${fmtN(ev.relevant ?? 0)} supporting` });
+        renderAsk(data, !!stream && !weak);
+        if (weak) semStatus('ok', `No relevant info found · ${n} closest match${n === 1 ? '' : 'es'} in ${(data.took_ms / 1000).toFixed(1)}s`);
+        else semStatus('ok', `${esc(CONF_TEXT[data.confidence] || 'Answered')} · ${n} source${n === 1 ? '' : 's'} in ${(data.took_ms / 1000).toFixed(1)}s`);
         if (S.pGeo) applySemanticHighlight(true);
         else if (n) $('sem-sub').textContent = 'Map not available';
-        if (stream) writeAnswer(stream, seq, writer, n);
-        else if (writer !== 'evidence' && wp) writerOffline(writer);
+        if (stream && weak) stream.ctl.abort();   // no model runs over weak evidence
+        else if (stream) { startReadingTour(); writeAnswer(stream, seq, writer, n); }
+        else if (writer !== 'evidence' && wp && !weak) writerOffline(writer);
       } catch (e) {
         if (seq !== S.sem.seq) return;
         const retry = '<br><button type="button" class="btn sm" id="ask-retry">Retry</button>';
@@ -4224,6 +4553,7 @@
     });
     $('omni-writer').addEventListener('focus', refreshLlm);
     refreshLlm();
+    initWorkspace();
     document.querySelector('.omodes').addEventListener('keydown', e => {
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         e.preventDefault();
@@ -4286,6 +4616,49 @@
     function showFatalOverlay(msg) { showFatal(new GraphError('webgl', msg)); }
 
     // ─── Boot ─────────────────────────────────────────────────────────────────────
+    // ─── Workspace switch (GET/POST /api/workspace…): the server decides; a change reloads the page ───
+    async function initWorkspace() {
+      let w;
+      try { w = await apiFetch('/api/workspace', { timeout: 4000 }); } catch (_) { return; }   // older server: no switch
+      if (!w.switchable) return;
+      const other = w.workspaces.find(x => x.id !== w.active && x.locked) || w.workspaces.find(x => x.id !== w.active);
+      if (!other) return;
+      const onDefault = w.active === w.default;
+      const btn = $('ws-btn'), pop = $('ws-pop'), pw = $('ws-pw'), msg = $('ws-msg');
+      btn.textContent = `${w.label || w.active} ▾`;
+      btn.title = 'Switch data';
+      $('ws-text').textContent = onDefault ? `Switch to ${other.label || other.id}` : `Showing ${w.label || w.active}.`;
+      $('ws-go').textContent = onDefault ? 'Unlock' : `Back to ${(w.workspaces.find(x => x.id === w.default) || {}).label || 'default'}`;
+      pw.hidden = !onDefault;
+      $('ws').hidden = false;
+      const close = () => { pop.hidden = true; btn.setAttribute('aria-expanded', 'false'); msg.textContent = ''; pw.value = ''; };
+      btn.addEventListener('click', () => {
+        const open = pop.hidden;
+        close();
+        if (open) { pop.hidden = false; btn.setAttribute('aria-expanded', 'true'); (onDefault ? pw : $('ws-go')).focus(); }
+      });
+      pop.addEventListener('keydown', e => { if (e.key === 'Escape') { e.stopPropagation(); close(); btn.focus(); } });
+      document.addEventListener('pointerdown', e => { if (!pop.hidden && !$('ws').contains(e.target)) close(); });
+      pop.addEventListener('submit', async e => {
+        e.preventDefault();
+        msg.textContent = '';
+        $('ws-go').disabled = true;
+        try {
+          if (onDefault) {
+            await apiFetch('/api/workspace/unlock', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ workspace: other.id, password: pw.value }) });
+          } else {
+            await apiFetch('/api/workspace/lock', { method: 'POST' });
+          }
+          location.reload();
+        } catch (err) {
+          msg.textContent = err.code === 'wrong_password' ? 'Wrong password.' : err.message;
+          pw.select();
+          $('ws-go').disabled = false;
+        }
+      });
+    }
+
     async function boot() {
       if (typeof Papa === 'undefined') throw new GraphError('lib', 'Could not load the CSV parser (PapaParse from unpkg.com). Check the network connection and refresh.');
       lbar(8, 'Loading graph…');
