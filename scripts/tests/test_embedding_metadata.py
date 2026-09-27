@@ -182,5 +182,88 @@ class EmbedderMetadataTests(unittest.TestCase):
         self.assertTrue(json.loads(out.getvalue()))
 
 
+DISCORD_CHUNKS = [
+    {"channel_id": "7", "platform": "discord", "title": "DM Alice", "participants": ["Me"],
+     "start_time": "2024-03-01T00:00:00+00:00", "end_time": "2024-03-01T02:00:00+00:00",
+     "density_score": 0.3, "ego_weight": 1.0, "summary": "",
+     "text": "[2024-03-01 00:00:00] Me: synthetic zebra plan\n\n[2024-03-01 02:00:00] Me: later"},
+    {"channel_id": "8", "platform": "discord", "title": "#general (S)", "participants": ["Me"],
+     "start_time": "2024-03-02T00:00:00+00:00", "end_time": "2024-03-02T00:00:00+00:00",
+     "density_score": 0.1, "ego_weight": 1.0, "summary": "",
+     "text": "[2024-03-02 00:00:00] Me: one burst only"},
+]
+
+
+@unittest.skipUnless(HAVE_LANCEDB, "lancedb not installed")
+class ReplacePlatformTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.db = os.path.join(self.tmp.name, "lancedb")
+        self.base = os.path.join(self.tmp.name, "chunks.json")
+        self.discord = os.path.join(self.tmp.name, "discord.json")
+        for path, data in ((self.base, CHUNKS), (self.discord, DISCORD_CHUNKS)):
+            with open(path, "w") as f:
+                json.dump(data, f)
+        self.assertEqual(self.run_embedder(self.base)[0], 0)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def run_embedder(self, path, *extra):
+        argv = ["--input", path, "--db", self.db, "--topics-only", "--topics-table", "topics_test", *extra]
+        with mock.patch.object(embedder, "load_embedding_model", return_value=FakeModel()) as load, \
+             redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()) as err:
+            code = embedder.main(argv)
+        return code, load, err.getvalue()
+
+    def rows(self):
+        t = lancedb.connect(self.db).open_table("topics_test")
+        return sorted((r["platform"], r["text"]) for r in t.to_arrow().select(["platform", "text"]).to_pylist())
+
+    def test_single_burst_session_becomes_one_topic(self):
+        topics = embedder.topic_chunk_burst(DISCORD_CHUNKS[1], FakeModel())
+        self.assertEqual([t["text"] for t in topics], ["[2024-03-02 00:00:00] Me: one burst only"])
+        self.assertEqual(embedder.topic_chunk_burst({"text": "  "}, FakeModel()), [])
+
+    def test_adds_platform_rows_and_keeps_the_rest(self):
+        before = self.rows()
+        meta_before = embedding_config.get_table_metadata("topics_test", self.db)
+        code, load, _ = self.run_embedder(self.discord, "--replace-platform", "discord")
+        self.assertEqual(code, 0)
+        load.assert_called_once_with(MULTILINGUAL)          # the table's recorded model
+        after = self.rows()
+        self.assertEqual([r for r in after if r[0] != "discord"], before)
+        self.assertEqual(sum(r[0] == "discord" for r in after), 2)
+        meta = embedding_config.get_table_metadata("topics_test", self.db)
+        self.assertEqual((meta["model"], meta["vector_dim"], meta["created_at"]),
+                         (meta_before["model"], meta_before["vector_dim"], meta_before["created_at"]))
+        self.assertEqual(meta["rows"], len(after))
+        upd = meta["platform_updates"]["discord"]
+        self.assertEqual((upd["rows"], upd["replaced_rows"]), (2, 0))
+        self.assertLess(upd["version_before"], upd["version_after"])
+
+    def test_rerun_replaces_instead_of_duplicating(self):
+        self.assertEqual(self.run_embedder(self.discord, "--replace-platform", "discord")[0], 0)
+        first = self.rows()
+        self.assertEqual(self.run_embedder(self.discord, "--replace-platform", "discord")[0], 0)
+        self.assertEqual(self.rows(), first)
+        meta = embedding_config.get_table_metadata("topics_test", self.db)
+        self.assertEqual(meta["platform_updates"]["discord"]["replaced_rows"], 2)
+
+    def test_refusals_leave_table_untouched(self):
+        before = self.rows()
+        version = lancedb.connect(self.db).open_table("topics_test").version
+        cases = [(self.base, ["--replace-platform", "discord"], "other platforms"),
+                 (self.discord, ["--replace-platform", "discord", "--model", "other/model"], "was embedded with"),
+                 (self.discord, ["--replace-platform", "disc'ord"], "Invalid platform"),
+                 (self.discord, ["--replace-platform", "discord", "--topics-table", "missing"], "must already exist")]
+        for path, extra, message in cases:
+            code, _, err = self.run_embedder(path, *extra)
+            self.assertEqual(code, 1, extra)
+            self.assertIn(message, err)
+        self.assertEqual(self.rows(), before)
+        self.assertEqual(lancedb.connect(self.db).open_table("topics_test").version, version)
+
+
 if __name__ == "__main__":
     unittest.main()

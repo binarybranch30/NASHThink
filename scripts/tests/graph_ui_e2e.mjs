@@ -319,7 +319,7 @@ async function mainFlow(browser) {
   const details = await page.evaluate(() => document.getElementById('details').innerText);
   check('details show counts and dates in plain words', selKind === 'user'
     ? /CONVERSATIONS/i.test(details) && /MESSAGES/i.test(details)
-    : /PEOPLE/i.test(details) && /MESSAGES/i.test(details) && /STARTED/i.test(details), selKind);
+    : /PEOPLE/i.test(details) && /MESSAGES/i.test(details) && /ACTIVE \(UTC\)/i.test(details), selKind);
   st = await state(page);
   check('selection is written to the URL hash', st.hash.startsWith('#node='), st.hash);
   await shot(page, '02_selected');
@@ -502,7 +502,8 @@ async function semanticFlow(browser) {
         const results = nodes.map((n, k) => ({
           rank: k + 1, similarity: 0.7 - k * 0.1, distance: 0.3 + k * 0.1, start_time: '2026-01-01T00:00:00+00:00', end_time: null,
           platform: 'reddit', title: n.title, channel_id: n.id.slice(2), node_id: n.id, people: n.people, summary: null,
-          snippet: `talking about ${body.query} here`, text: `talking about ${body.query} here, in full`,
+          snippet: `[2026-01-01 09:00:00] Me: talking about ${body.query} here [2026-01-01 09:05:00] Bob: <b>ok</b>`,
+          text: `[2026-01-01 09:00:00] Me: talking about ${body.query} here, in full\n[2026-01-01 09:05:00] Bob: <b>ok</b>\n\n[2026-01-02 18:30:00] Me: next day`,
         }));
         results.push({ rank: 3, similarity: 0.4, distance: 0.6, start_time: null, end_time: null, platform: 'reddit', title: 'orphan',
           channel_id: null, node_id: null, people: [], summary: null, snippet: 'nothing', text: 'nothing' });
@@ -522,6 +523,8 @@ async function semanticFlow(browser) {
   check('each result says why it matched, in words', why.length === 3 && why.every(w => /match/.test(w) && !/similarity/.test(w)), why[0]);
   const marks = await page.$$eval('#sem-list .sr-snip mark', els => els.length);
   check('query words are marked in snippets', marks > 0);
+  const card0 = await page.evaluate(() => ({ snip: document.querySelector('#sem-list .sr-snip').innerText, date: document.querySelector('#sem-list .sr-date').innerText }));
+  check('collapsed cards show one date label and no per-message timestamps', !/\d{2}:\d{2}/.test(card0.snip) && card0.date === '1 Jan 2026', JSON.stringify(card0));
   const semDim = await page.evaluate(() => { const S = window.__sarthink; return S.nodes.some((n, i) => !S.sem.set.has(i) && S.pAlpha[i] > 0 && S.pAlpha[i] < 0.5); });
   check('non-matching nodes are dimmed during memory search', semDim);
   await shot(page, '05_semantic');
@@ -537,6 +540,12 @@ async function semanticFlow(browser) {
   check('selection and memory highlight coexist', st.semSet >= 2 && st.focusEdges > 0);
   const whyPanel = await page.evaluate(() => { const w = document.querySelector('#details .why'); return w ? w.innerText : ''; });
   check('details explain why the node is highlighted', /Search result #1/.test(whyPanel), whyPanel.slice(0, 90));
+  const open0 = await page.evaluate(() => { const el = document.querySelector('#sem-list .sr.expanded .sr-snip'); return el && {
+    days: [...el.querySelectorAll('.cx-day')].map(d => d.innerText), times: [...el.querySelectorAll('.cx-t')].map(t => t.innerText),
+    tags: el.querySelectorAll('b').length }; });
+  check('an expanded result groups its messages by day with UTC times, text escaped',
+    open0 && open0.days.length === 2 && /1 Jan 2026/i.test(open0.days[0]) && /UTC/i.test(open0.days[0]) && open0.times.join() === '09:00,09:05,18:30' && open0.tags === 0,
+    JSON.stringify(open0));
   await shot(page, '06_semantic_selected');
 
   // Selecting another node by clicking keeps the memory highlight.
@@ -1374,6 +1383,7 @@ async function personFlow(browser) {
   await page.click('#pf-clist .pf-item >> nth=0');
   await page.waitForSelector('#pf-msgs .pm', { timeout: 10000 });
   check('a conversation opens its messages in place', calls.some(c => /\/messages\?.*thread=T_/.test(c)) && await page.isVisible('#pf-onmap'));
+  check('an opened conversation shows each message time', await page.isVisible('#pf-msgs .pm .pm-h .tm'));
   await shot(page, '41_person_conversation');
   await page.click('#pf-back');
   await page.waitForSelector('#d-body .pf-brief', { timeout: 10000 });
@@ -1387,6 +1397,9 @@ async function personFlow(browser) {
     count: document.getElementById('pf-count').innerText, imgs: document.querySelectorAll('#d-body img').length }));
   check('full history loads one page with timestamps', h.msgs === 30 && h.days > 1 && h.you > 0 && /42 messages/.test(h.count), JSON.stringify(h));
   check('long messages are folded and history text is escaped', h.clamp === 1 && h.imgs === 0 && !(await page.evaluate(() => window.__xss === 1)));
+  check('full history hides per-message times until a message is opened', !(await page.isVisible('#pf-msgs .pm .pm-h .tm')));
+  await page.click('#pf-msgs .pm >> nth=1 >> .pm-h b');
+  check('clicking a message header reveals its time', await page.isVisible('#pf-msgs .pm >> nth=1 >> .pm-h .tm'));
   await page.click('#pf-msgs .pm-more');
   check('Show more unfolds a long message', await page.evaluate(() => !document.querySelector('#pf-msgs .pm-t').classList.contains('clamp')));
   await page.click('#pf-mnext');

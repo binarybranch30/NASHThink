@@ -212,7 +212,8 @@ def extract_subreddit(titles):
                 return parts[1].split()[0].split('|')[0].strip()
     return None
 
-def build_chunks(dry_run=False):
+def build_chunks(dry_run=False, platforms=None, output=None):
+    """Chunks every conversation session, or only sessions on `platforms`, into `output` (JSON)."""
     conn = get_db_connection()
     cursor = conn.cursor()
     
@@ -230,6 +231,8 @@ def build_chunks(dry_run=False):
     for root_id, thread_list in sessions.items():
         thread_ids = [t['id'] for t in thread_list]
         platform = thread_list[0]['platform']
+        if platforms and platform not in platforms:
+            continue
         titles = [t['title'] for t in thread_list if t['title']]
         primary_title = titles[0] if titles else "Untitled Session"
         subreddit = extract_subreddit(titles) if platform == 'reddit' else None
@@ -389,7 +392,7 @@ def build_chunks(dry_run=False):
 
     if map_changed: save_twitter_map(tw_map)
 
-    output_path = REPO_ROOT / "processed_data" / "semantic" / ("dry_run_chunks.json" if dry_run else "session_chunks.json")
+    output_path = Path(output) if output else REPO_ROOT / "processed_data" / "semantic" / ("dry_run_chunks.json" if dry_run else "session_chunks.json")
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(session_chunks, f, indent=2, ensure_ascii=False)
         
@@ -398,5 +401,7 @@ def build_chunks(dry_run=False):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--dry-run', action='store_true')
+    parser.add_argument('--platform', action='append', help="Only chunk this platform (repeatable), e.g. --platform discord")
+    parser.add_argument('--output', help="Output JSON (default processed_data/semantic/session_chunks.json)")
     args = parser.parse_args()
-    build_chunks(dry_run=args.dry_run)
+    build_chunks(dry_run=args.dry_run, platforms=set(args.platform or []), output=args.output)

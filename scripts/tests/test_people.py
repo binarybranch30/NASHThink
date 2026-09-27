@@ -348,5 +348,61 @@ class PageEscapingTests(unittest.TestCase):
         self.assertIn("'/api/person/'", html.replace("`/api/person/${", "'/api/person/'"))
 
 
+class MemberOnlyTests(unittest.TestCase):
+    """Discord data packages hold only the owner's messages: DM partners exist only as ThreadMembers."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.db = Path(self.tmp.name) / "memory.db"
+        make_db(self.db)
+        conn = sqlite3.connect(self.db)
+        conn.executescript("""
+            CREATE TABLE ThreadMembers (thread_id INTEGER, user_id INTEGER, PRIMARY KEY (thread_id, user_id));
+            INSERT INTO Users VALUES (40, 'discord', 'me', 'Test Owner (me)'), (41, 'discord', '9001', 'Dana'),
+                                     (42, 'discord', '9002', 'Eli');
+            INSERT INTO Threads VALUES (50, 'discord', 'c1', 'DM Dana'), (51, 'discord', 'c2', 'Group trip'),
+                                       (52, 'discord', 'c3', 'DM Eli');
+            INSERT INTO ThreadMembers VALUES (50, 41), (51, 41), (51, 42), (52, 42);
+        """)
+        rows = [(f"d{i}", 50, 40, ts(2024, 3, 1 + i), f"dm to dana {i}", None) for i in range(4)]
+        rows += [("g1", 51, 40, ts(2024, 9, 1), "group msg", None)]      # Eli's DM (52) has no messages at all
+        conn.executemany("INSERT INTO Messages VALUES (?,?,?,?,?,?)", rows)
+        conn.commit()
+        conn.close()
+        self.svc = people.PeopleService(self.db, identity_map=OWNER)
+
+    def test_profile_counts_your_side_and_says_so(self):
+        p = self.svc.profile("U_41")
+        s = p["stats"]
+        self.assertEqual((s["conversations"], s["their_messages"], s["your_messages"]), (2, 0, 5))
+        self.assertEqual((s["first_date"][:10], s["latest_date"][:10]), ("2024-03-01", "2024-09-01"))
+        self.assertEqual(s["platforms"], ["discord"])
+        self.assertEqual({x["node_id"]: x["people"] for x in p["sources"]}, {"T_50": 2, "T_51": 3})
+        text = " ".join(x["text"] for x in p["brief"]["sentences"])
+        self.assertIn("none of Dana’s messages, only yours: you wrote 5 messages in 2 conversations with them on Discord", text)
+        self.assertTrue(p["brief"]["sentences"][0]["sources"])
+
+    def test_messages_show_your_side(self):
+        page = self.svc.messages("U_41", limit=10)
+        self.assertEqual(page["total"], 5)
+        self.assertEqual({m["author"] for m in page["messages"]}, {"you"})
+
+    def test_filters_and_empty_membership(self):
+        s = self.svc.profile("U_41", date_from=dt.datetime(2024, 6, 1, tzinfo=UTC))["stats"]
+        self.assertEqual((s["conversations"], s["your_messages"]), (1, 1))
+        self.assertEqual(self.svc.profile("U_41", platforms=["reddit"])["stats"]["conversations"], 0)
+        self.assertEqual(self.svc.profile("U_42")["stats"]["conversations"], 1, "only the group; the empty DM is left out")
+
+    def test_database_without_members_table_still_works(self):
+        self.assertEqual(people.PeopleService(self._plain_db(), identity_map=OWNER)
+                         .profile("U_2")["stats"]["conversations"], 4)
+
+    def _plain_db(self):
+        path = Path(self.tmp.name) / "plain.db"
+        make_db(path)
+        return path
+
+
 if __name__ == "__main__":
     unittest.main()

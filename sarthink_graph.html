@@ -725,6 +725,15 @@
       overflow: hidden;
     }
     .sr.expanded .sr-snip { display: block; white-space: pre-wrap; max-height: 260px; overflow-y: auto; }
+    /* Expanded chunk text: grouped by day (UTC), one narrow time column; collapsed views show no per-line times. */
+    .sr-snip.cx, .ctx-snip.cx { white-space: normal; }
+    .cx-day { font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin: 9px 0 3px; }
+    .cx-day:first-child { margin-top: 0; }
+    .cx-day .tz { letter-spacing: .02em; text-transform: none; opacity: .8; }
+    .cx-m { display: flex; gap: 8px; line-height: 1.5; }
+    .cx-m + .cx-m { margin-top: 2px; }
+    .cx-t { flex: none; width: 2.8em; color: var(--dim); font-variant-numeric: tabular-nums; }
+    .cx-b { min-width: 0; white-space: pre-wrap; word-break: break-word; }
     .sr-snip mark, .ctx-snip mark { background: rgba(245, 194, 107, .25); color: #fff; border-radius: 2px; padding: 0 1px; }
     .sr-why { margin-top: 5px; font-size: .62rem; color: rgba(255, 255, 255, .42); line-height: 1.4; }
     .sr-why .badge {
@@ -1123,6 +1132,9 @@
     .pm { padding: 7px 9px; border: 1px solid var(--bdr); border-radius: 8px; background: rgba(255, 255, 255, .02); }
     .pm + .pm { margin-top: 5px; }
     .pm.you { background: rgba(79, 142, 255, .06); border-color: rgba(79, 142, 255, .2); }
+    .pm-h .tm { font-variant-numeric: tabular-nums; }
+    .pm.hide-t .pm-h .tm { display: none; }
+    .pm.hide-t .pm-h { cursor: pointer; }
     .pm-h { display: flex; gap: 6px; align-items: baseline; font-size: .62rem; color: var(--dim); }
     .pm-h b { color: #fff; font-weight: 600; font-size: .66rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40%; }
     .pm-h span { white-space: nowrap; }
@@ -1434,13 +1446,51 @@
     const fmtN = n => Number(n || 0).toLocaleString();
     const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
     const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const fmtDate = ts => {
-      if (!Number.isFinite(ts)) return '—';
-      const d = new Date(ts * 1000);
-      return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
-    };
     const fmtMonth = ts => { const d = new Date(ts * 1000); return `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`; };
-    const fmtDay = iso => (iso ? String(iso).slice(0, 10) : '');
+    // Every date and time in the UI is UTC (the database stores UTC epochs; the API returns UTC ISO strings).
+    const ymdParts = iso => (iso && /^\d{4}-\d{2}-\d{2}/.test(iso) ? String(iso).slice(0, 10).split('-').map(Number) : null);
+    const dayName = iso => { const p = ymdParts(iso); return p ? `${p[2]} ${MONTHS[p[1] - 1]} ${p[0]}` : ''; };
+    // One readable label for a span: "3 Mar 2024", "3–18 Mar 2024", "3 Mar – 18 Jun 2024", "Mar 2023 – Jun 2024".
+    function dateRange(a, b) {
+      const x = ymdParts(a), y = ymdParts(b) || x;
+      if (!x) return '';
+      if (x.join() === y.join()) return dayName(a);
+      if (x[0] === y[0] && x[1] === y[1]) return `${x[2]}–${y[2]} ${MONTHS[x[1] - 1]} ${x[0]}`;
+      if (x[0] === y[0]) return `${x[2]} ${MONTHS[x[1] - 1]} – ${y[2]} ${MONTHS[y[1] - 1]} ${x[0]}`;
+      return `${MONTHS[x[1] - 1]} ${x[0]} – ${MONTHS[y[1] - 1]} ${y[0]}`;
+    }
+    const exactSpan = (a, b) => { const f = iso => String(iso).slice(0, 16).replace('T', ' '); return a ? `${f(a)}${b && b !== a ? ' → ' + f(b) : ''} UTC` : ''; };
+    // Chunk text from chunk_builder.format_message: chat lines "[YYYY-MM-DD HH:MM:SS] Author: text", forum lines
+    // "[POST] u/x — YYYY-MM-DD HH:MM:SS" before the body. Collapsed views drop these per-line stamps (the card
+    // carries one date label); chunkHtml groups the lines by day with the time in a narrow column.
+    const STAMP_RE = /\[\d{4}-\d{2}-\d{2} \d{2}:\d{2}(?::\d{2})?\] ?| — \d{4}-\d{2}-\d{2} \d{2}:\d{2}(?::\d{2})?/g;
+    const stripStamps = s => String(s ?? '').replace(STAMP_RE, '');
+    const CHAT_LINE_RE = /^\[(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2})(?::\d{2})?\] ?/;
+    const FORUM_LINE_RE = /^(\[(?:TWEET|REPLY|POST|REPLY\/COMMENT)\] \S+) — (\d{4}-\d{2}-\d{2}) (\d{2}:\d{2})(?::\d{2})?\s*$/;
+    function chunkHtml(text, terms) {
+      const out = [];
+      let day = null, cur = null;
+      const flush = () => {
+        if (cur) out.push(`<div class="cx-m"><span class="cx-t">${esc(cur.t)}</span><span class="cx-b">${highlight(cur.body.replace(/\s+$/, ''), terms)}</span></div>`);
+        cur = null;
+      };
+      for (const line of String(text ?? '').split('\n')) {
+        const m = CHAT_LINE_RE.exec(line), f = m ? null : FORUM_LINE_RE.exec(line);
+        if (m || f) {
+          flush();
+          const ymd = m ? m[1] : f[2];
+          if (ymd !== day) out.push(`<div class="cx-day">${esc(dayName(ymd))}${day === null ? ' <span class="tz">· times in UTC</span>' : ''}</div>`);
+          day = ymd;
+          cur = { t: m ? m[2] : f[3], body: m ? line.slice(m[0].length) : f[1] };
+        } else if (cur) {
+          cur.body += '\n' + line;
+        } else if (line.trim()) {
+          out.push(`<div class="cx-m"><span class="cx-t"></span><span class="cx-b">${highlight(line, terms)}</span></div>`);
+        }
+      }
+      flush();
+      return out.join('');
+    }
     const truncate = (s, n) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
     const platformName = p => PLATFORM_NAMES[p] || (p ? p[0].toUpperCase() + p.slice(1) : 'Other');
 
@@ -1531,7 +1581,9 @@
         const key = a.i < b.i ? a.i + ':' + b.i : b.i + ':' + a.i;
         if (seen.has(key)) continue;
         seen.add(key);
-        const e = { i: edges.length, s: a.i, t: b.i, w: Math.max(1, parseInt(r.weight, 10) || 1), first: parseTs(r.first_ts), last: parseTs(r.last_ts) };
+        // w: drawing weight (at least 1); m: messages actually written (0 = in the conversation, none of theirs exported).
+        const m = Math.max(0, parseInt(r.weight, 10) || 0);
+        const e = { i: edges.length, s: a.i, t: b.i, w: Math.max(1, m), m, first: parseTs(r.first_ts), last: parseTs(r.last_ts) };
         if (!Number.isFinite(e.last)) e.last = e.first;
         edges.push(e);
         a.links.push(e.i);
@@ -2223,8 +2275,8 @@
       const nb = neighbours(i).sort((a, b) => b.e.w - a.e.w || (S.nodes[a.j].label < S.nodes[b.j].label ? -1 : 1));
       if (n.kind === 'user') { renderPerson(i, nb); return; }
       const hidden = nb.filter(o => !S.nodeVis[o.j]).length;
-      const when = Number.isFinite(n.first) ? fmtDate(n.first) : '—';
-      const until = Number.isFinite(n.last) ? fmtDate(n.last) : '—';
+      const iso = ts => (Number.isFinite(ts) ? new Date(ts * 1000).toISOString() : null);
+      const active = Number.isFinite(n.first) ? dateRange(iso(n.first), iso(n.last)) : '—';
       const linkWord = 'People in this conversation';
 
       // Opened from a person's profile: a way back, and their messages in this conversation.
@@ -2234,8 +2286,7 @@
       html += `<div class="kv">
           <div><div class="k">People</div><div class="v">${fmtN(nb.length)}</div></div>
           <div><div class="k">Messages</div><div class="v">${fmtN(n.msgs)}</div></div>
-          <div><div class="k">Started</div><div class="v">${esc(when)}</div></div>
-          <div><div class="k">Last message</div><div class="v">${esc(until)}</div></div>
+          <div style="grid-column:span 2"><div class="k">Active (UTC)</div><div class="v" title="${esc(exactSpan(iso(n.first), iso(n.last)))}">${esc(active)}</div></div>
         </div>`;
       const why = semanticWhy(i);
       if (why) html += `<div class="why">${why}</div>`;
@@ -2285,7 +2336,7 @@
     }
 
     const dayLong = iso => { if (!iso) return 'Undated'; const d = new Date(iso); return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`; };
-    const timeOf = iso => (iso ? new Date(iso).toISOString().slice(11, 16) + ' UTC' : '');
+    const timeOf = iso => (iso ? new Date(iso).toISOString().slice(11, 16) : '');
     const monthOfIso = iso => (iso ? `${MONTHS[+iso.slice(5, 7) - 1]} ${iso.slice(0, 4)}` : '—');
 
     function renderPerson(i, nb) {
@@ -2375,7 +2426,8 @@
     function convItem(c, k, numbered = true) {
       const pc = PLATFORM_COLORS[c.platform] || '#9aa0b4';
       const span = monthOfIso(c.first_date) === monthOfIso(c.latest_date) ? monthOfIso(c.first_date) : `${monthOfIso(c.first_date)} – ${monthOfIso(c.latest_date)}`;
-      const counts = c.your_messages && c.shared ? `${fmtN(c.their_messages)} · you ${fmtN(c.your_messages)}` : `${fmtN(c.their_messages)} msg${c.their_messages === 1 ? '' : 's'}`;
+      const counts = !c.their_messages && c.your_messages ? `you ${fmtN(c.your_messages)}`
+        : c.your_messages && c.shared ? `${fmtN(c.their_messages)} · you ${fmtN(c.your_messages)}` : `${fmtN(c.their_messages)} msg${c.their_messages === 1 ? '' : 's'}`;
       return `<button type="button" class="pf-item" data-node="${esc(c.node_id)}" data-title="${esc(c.title)}" title="Open this conversation">
           <span class="n">${numbered ? esc(k) : ''}</span>
           <span style="min-width:0"><b>${esc(c.title)}</b><small><i style="background:${esc(pc)}"></i>${esc(platformName(c.platform))} · ${esc(span)}${c.large ? ` · <span class="pf-tag">large thread · ${fmtN(c.people)} people</span>` : ''}</small></span>
@@ -2402,11 +2454,13 @@
       const sentences = d.brief.sentences.map(s => `<p>${esc(s.text)}${citeHtml(s.sources)}</p>`).join('');
       const notable = d.sources.filter(s => s.notable), cited = d.sources.filter(s => !s.notable);
       const stat = (k, v, sub = '') => `<div><div class="k">${esc(k)}</div><div class="v">${v}${sub ? ` <small>${esc(sub)}</small>` : ''}</div></div>`;
+      const span = monthOfIso(st.first_date) === monthOfIso(st.latest_date) ? monthOfIso(st.first_date) : `${monthOfIso(st.first_date)} – ${monthOfIso(st.latest_date)}`;
+      const active = `<div style="grid-column:span 2"><div class="k">Active (UTC)</div><div class="v" title="${esc(exactSpan(st.first_date, st.latest_date))}">${esc(st.first_date ? span : '—')}</div></div>`;
       const stats = you
         ? [stat('Conversations', fmtN(st.conversations)), stat('Messages', fmtN(st.their_messages)), stat('Accounts', fmtN(d.accounts.length)),
-          stat('First', esc(monthOfIso(st.first_date))), stat('Latest', esc(monthOfIso(st.latest_date))), stat('Platforms', esc(st.platforms.map(platformName).join(', ') || '—'))]
+          active, stat('Platforms', esc(st.platforms.map(platformName).join(', ') || '—'))]
         : [stat('Conversations', fmtN(st.conversations)), stat('Their messages', fmtN(st.their_messages)), stat('Your replies', fmtN(st.your_messages)),
-          stat('First', esc(monthOfIso(st.first_date))), stat('Latest', esc(monthOfIso(st.latest_date))), stat('Platforms', esc(st.platforms.map(platformName).join(', ') || '—'))];
+          active, stat('Platforms', esc(st.platforms.map(platformName).join(', ') || '—'))];
       const topics = d.topics.length ? `<div><div class="pf-h">Recurring words <span class="act pf-note">from their messages</span></div><div class="pf-topics">${d.topics.map(t =>
         `<button type="button" class="pf-topic" data-src="${esc(t.sources[0] || '')}" title="${esc(t.mentions)} mentions in ${esc(t.conversations)} conversation${t.conversations === 1 ? '' : 's'} over ${esc(t.months)} month${t.months === 1 ? '' : 's'}">${esc(t.word)}<small>${t.conversations >= 2 ? `${fmtN(t.conversations)} conv.` : `${fmtN(t.months)} mo.`}</small></button>`).join('')}</div></div>` : '';
       const same = d.same_name_elsewhere.length
@@ -2479,7 +2533,7 @@
       }
     }
 
-    function messagesHtml(items, showThread) {
+    function messagesHtml(items, showThread, showTimes) {
       let day = null;
       return items.map(m => {
         const d = dayLong(m.date);
@@ -2487,8 +2541,8 @@
         day = d;
         const t = m.text || '';
         const long = t.length > 420 || t.split('\n').length > 6;
-        return `${head}<div class="pm${m.author === 'you' ? ' you' : ''}">
-            <div class="pm-h"><b>${esc(m.author_label)}</b><span>${esc(timeOf(m.date))}</span>${showThread ? `<button type="button" class="th" data-node="${esc(m.node_id)}" data-title="${esc(m.thread_title)}" title="${esc(m.thread_title)}">${esc(m.thread_title)}</button>` : ''}</div>
+        return `${head}<div class="pm${m.author === 'you' ? ' you' : ''}${showTimes ? '' : ' hide-t'}">
+            <div class="pm-h"${showTimes ? '' : ' title="Show time"'}><b>${esc(m.author_label)}</b><span class="tm">${esc(timeOf(m.date))}</span>${showThread ? `<button type="button" class="th" data-node="${esc(m.node_id)}" data-title="${esc(m.thread_title)}" title="${esc(m.thread_title)}">${esc(m.thread_title)}</button>` : ''}</div>
             <div class="pm-t${long ? ' clamp' : ''}">${esc(t)}${m.clipped ? ' …' : ''}</div>
             ${long ? '<button type="button" class="linkbtn pm-more">Show more</button>' : ''}
             ${m.clipped ? '<div class="pf-note">Very long message: the start is shown here; the full text stays in your archive.</div>' : ''}</div>`;
@@ -2501,10 +2555,13 @@
         b.textContent = open ? 'Show more' : 'Show less';
       });
       box.querySelectorAll('.th').forEach(b => b.onclick = () => { S.person.view = 'thread'; showThread({ node_id: b.dataset.node, title: b.dataset.title }, true); });
+      box.querySelectorAll('.pm.hide-t .pm-h').forEach(h => h.addEventListener('click', e => {
+        if (!e.target.closest('.th')) h.parentElement.classList.remove('hide-t');
+      }));
     }
 
     // Paged messages (newest first): the whole history with this person, or one conversation of it.
-    async function loadMessages(st, box, extra, showThreadLink) {
+    async function loadMessages(st, box, extra, showThreadLink, showTimes) {
       const n = S.nodes[S.person.idx];
       try {
         const d = await apiFetch(`/api/person/${encodeURIComponent(n.id)}/messages${personQuery({ ...extra, cursor: st.cursor, limit: PERSON_PAGE })}`, { timeout: 30000 });
@@ -2512,10 +2569,10 @@
         if (d.total != null) { st.total = d.total; $('pf-count').textContent = `${fmtN(d.total)} message${d.total === 1 ? '' : 's'} · newest first`; }
         st.items.push(...d.messages);
         st.cursor = d.next_cursor;
-        box.innerHTML = st.items.length ? messagesHtml(st.items, showThreadLink) : '<div class="note">No messages in the current filters.</div>';
+        box.innerHTML = st.items.length ? messagesHtml(st.items, showThreadLink, showTimes) : '<div class="note">No messages in the current filters.</div>';
         wireMessages(box);
         $('pf-mmore').innerHTML = d.next_cursor ? `<button type="button" class="btn sm pf-loadmore" id="pf-mnext">Load older messages</button>` : (st.items.length ? '<div class="pf-note" style="text-align:center;margin-top:8px">That’s the beginning.</div>' : '');
-        if ($('pf-mnext')) $('pf-mnext').onclick = () => { $('pf-mnext').disabled = true; loadMessages(st, box, extra, showThreadLink); };
+        if ($('pf-mnext')) $('pf-mnext').onclick = () => { $('pf-mnext').disabled = true; loadMessages(st, box, extra, showThreadLink, showTimes); };
       } catch (e) {
         if (st.seq === S.person.seq) box.innerHTML = personError(e, 'The message history');
       }
@@ -2526,10 +2583,10 @@
       const st = S.person.hist = { cursor: null, items: [], total: null, seq: ++S.person.seq };
       personShell(`<div class="pf">${backHtml()}
           <div class="pf-h">Full history with ${esc(n.label)} <span class="act pf-note" id="pf-count"></span></div>
-          <div class="pf-note">Their messages, plus yours in small conversations with them (up to 12 people). Shown in pages; nothing is left out of your archive.</div>
+          <div class="pf-note">Their messages, plus yours in small conversations with them (up to 12 people), grouped by day (UTC). Click a message’s name to see its time.</div>
           <div id="pf-msgs"><div class="skel-line"></div><div class="skel-line"></div><div class="skel-line" style="width:70%"></div></div><div id="pf-mmore"></div></div>`);
       wireBack();
-      loadMessages(st, $('pf-msgs'), {}, true);
+      loadMessages(st, $('pf-msgs'), {}, true, false);
     }
 
     function showThread(t, reset) {
@@ -2541,11 +2598,11 @@
       personShell(`<div class="pf">${backHtml()}
           <div><div class="pf-h">Conversation <span class="act pf-note" id="pf-count"></span></div><div style="font-size:.84rem;color:#fff;font-weight:600;line-height:1.3">${esc(t.title || '(untitled)')}</div></div>
           <div class="pf-actions">${onMap ? '<button type="button" class="btn sm" id="pf-onmap">Show on map</button>' : '<span class="pf-note">Not on the current map.</span>'}</div>
-          <div class="pf-note">Messages from ${esc(n.label)}${S.person.data && S.person.data.kind === 'you' ? '' : ' and you'} in this conversation, newest first.</div>
+          <div class="pf-note">Messages from ${esc(n.label)}${S.person.data && S.person.data.kind === 'you' ? '' : ' and you'} in this conversation, newest first. Times in UTC.</div>
           <div id="pf-msgs"><div class="skel-line"></div><div class="skel-line"></div></div><div id="pf-mmore"></div></div>`);
       wireBack();
       if ($('pf-onmap')) $('pf-onmap').onclick = () => openConversation(t.node_id, t.title);
-      loadMessages(st, $('pf-msgs'), { thread: t.node_id }, false);
+      loadMessages(st, $('pf-msgs'), { thread: t.node_id }, false, true);
     }
 
     function schedulePersonRefresh() {
@@ -2565,7 +2622,7 @@
         return `<button type="button" class="nitem${S.nodeVis[j] ? '' : ' outside'}" data-j="${j}" title="${esc(m.kind === 'thread' ? m.title : m.label)}">
           <span class="sw" style="color:${esc(m.hex)};background:${m.kind === 'user' ? esc(m.hex) : 'transparent'}"></span>
           <span class="nm">${esc(m.kind === 'thread' ? m.title : m.label)}</span>
-          <span class="ct">${fmtN(e.w)} msg${e.w === 1 ? '' : 's'}${span ? ' · ' + esc(span) : ''}</span></button>`;
+          <span class="ct">${e.m ? `${fmtN(e.m)} msg${e.m === 1 ? '' : 's'}` : 'member'}${span ? ' · ' + esc(span) : ''}</span></button>`;
       }).join('') + (nb.length > limit ? `<button type="button" class="linkbtn" id="d-more" style="margin-top:4px">Show all ${fmtN(nb.length)}</button>` : '');
       box.querySelectorAll('.nitem').forEach(b => b.addEventListener('click', () => selectNode(+b.dataset.j, { fly: true })));
       if ($('d-more')) $('d-more').onclick = () => renderLinkList(nb, nb.length);
@@ -2583,10 +2640,10 @@
           return;
         }
         const terms = S.sem.results.length ? queryTerms($('sem-title').dataset.q || '') : [];
-        el.innerHTML = `<div class="note" style="margin-bottom:6px">${fmtN(data.count)} excerpt${data.count === 1 ? '' : 's'} · ${esc(fmtDay(data.first_time))}${data.last_time && fmtDay(data.last_time) !== fmtDay(data.first_time) ? ' → ' + esc(fmtDay(data.last_time)) : ''}${data.count > data.chunks.length ? ` · showing first ${data.chunks.length}` : ''}</div>` +
+        el.innerHTML = `<div class="note" style="margin-bottom:6px">${fmtN(data.count)} excerpt${data.count === 1 ? '' : 's'} · ${esc(dateRange(data.first_time, data.last_time))}${data.count > data.chunks.length ? ` · showing first ${data.chunks.length}` : ''}</div>` +
           data.chunks.map((c, k) => `<div class="ctx">
-            <div class="ctx-top"><span>${esc(fmtDay(c.start_time))}</span><span class="pp">${esc((c.people || []).slice(0, 5).join(', '))}</span></div>
-            <div class="ctx-snip clamp" data-k="${k}">${highlight(c.snippet, terms)}</div>
+            <div class="ctx-top"><span title="${esc(exactSpan(c.start_time, c.end_time))}">${esc(dateRange(c.start_time, c.end_time))}</span><span class="pp">${esc((c.people || []).slice(0, 5).join(', '))}</span></div>
+            <div class="ctx-snip clamp" data-k="${k}">${highlight(stripStamps(c.snippet), terms)}</div>
             ${c.text && c.text.length > c.snippet.length ? `<button class="linkbtn" type="button" data-k="${k}">Show more</button>` : ''}
           </div>`).join('');
         el.querySelectorAll('button.linkbtn').forEach(b => b.addEventListener('click', () => {
@@ -2594,7 +2651,8 @@
           const open = !snip.classList.contains('clamp');
           const c = data.chunks[+b.dataset.k];
           snip.classList.toggle('clamp', open);
-          snip.innerHTML = highlight(open ? c.snippet : c.text, terms);
+          snip.classList.toggle('cx', !open);
+          snip.innerHTML = open ? highlight(stripStamps(c.snippet), terms) : chunkHtml(c.text, terms);
           b.textContent = open ? 'Show more' : 'Show less';
         }));
       } catch (e) {
@@ -3187,16 +3245,16 @@
 
     // One result / source card. `whyHtml` must already be escaped. Card k maps to S.sem.results[k].
     function resultCard(r, k, terms, top, whyHtml, cls = '') {
-      const when = fmtDay(r.start_time) + (r.end_time && fmtDay(r.end_time) !== fmtDay(r.start_time) ? ` → ${fmtDay(r.end_time)}` : '');
+      const when = dateRange(r.start_time, r.end_time);
       const pct = Math.max(4, Math.round(100 * (r.similarity || 0) / top));
       const people = (r.people || []).slice(0, 6).join(', ') + ((r.people || []).length > 6 ? ` +${r.people.length - 6}` : '');
       const pc = PLATFORM_COLORS[r.platform] || '#9aa0b4';
       return `<div class="sr ${cls}" role="button" tabindex="0" data-k="${k}" aria-label="Result ${esc(r.rank)}: ${esc(r.title || 'untitled')}">
-          <div class="sr-top"><span class="sr-rank">#${esc(r.rank)}</span><span class="sr-plat"><i style="background:${esc(pc)}"></i>${esc(platformName(r.platform))}</span><span class="sr-date">${esc(when)}</span></div>
+          <div class="sr-top"><span class="sr-rank">#${esc(r.rank)}</span><span class="sr-plat"><i style="background:${esc(pc)}"></i>${esc(platformName(r.platform))}</span><span class="sr-date" title="${esc(exactSpan(r.start_time, r.end_time))}">${esc(when)}</span></div>
           <div class="sr-bar" title="${esc(matchWord(r.similarity))} (${esc(r.similarity)})"><i style="width:${pct}%"></i></div>
           <div class="sr-title">${esc(r.title || '(untitled)')}</div>
           ${people ? `<div class="sr-people">${esc(people)}</div>` : ''}
-          <div class="sr-snip">${highlight(r.snippet, terms)}</div>
+          <div class="sr-snip">${highlight(stripStamps(r.snippet), terms)}</div>
           <div class="sr-why"><span class="badge">…</span>${esc(matchWord(r.similarity))} · ${whyHtml}</div>
         </div>`;
     }
@@ -3215,7 +3273,11 @@
       const same = S.sem.active === k;
       const terms = queryTerms(S.sem.query || '');
       els.forEach((el, j) => {
-        if (el.classList.contains('expanded')) el.querySelector('.sr-snip').innerHTML = highlight(S.sem.results[j].snippet, terms);
+        if (el.classList.contains('expanded')) {
+          const sn = el.querySelector('.sr-snip');
+          sn.classList.remove('cx');
+          sn.innerHTML = highlight(stripStamps(S.sem.results[j].snippet), terms);
+        }
         el.classList.remove('active', 'expanded');
       });
       S.sem.active = same ? -1 : k;
@@ -3223,7 +3285,9 @@
       const el = els[k];
       if (!same) {
         el.classList.add('active', 'expanded');
-        el.querySelector('.sr-snip').innerHTML = highlight(r.text || r.snippet, terms);
+        const sn = el.querySelector('.sr-snip');
+        sn.classList.add('cx');
+        sn.innerHTML = chunkHtml(r.text || r.snippet, terms);
       }
       if (!S.pGeo) return;
       // In Memory Home a cited source opens the graph workspace focused on its conversation.
@@ -3377,7 +3441,7 @@
       }
       if (data.timeline.length) {
         html.push(`<div><div class="ask-h">Timeline</div><div id="ask-timeline" class="ask-timeline">${data.timeline.map(t => `<button type="button" class="atl-item" data-k="${esc(t.source - 1)}"
-            style="--pc:${esc(PLATFORM_COLORS[t.platform] || '#9aa0b4')}" title="${esc(platformName(t.platform))} · ${esc(t.label)}"><span class="d">${esc(fmtDay(t.date))}</span><span class="l">${esc(t.label)}</span></button>`).join('')}</div></div>`);
+            style="--pc:${esc(PLATFORM_COLORS[t.platform] || '#9aa0b4')}" title="${esc(platformName(t.platform))} · ${esc(t.label)}"><span class="d" title="${esc(exactSpan(t.date))}">${esc(dayName(t.date))}</span><span class="l">${esc(t.label)}</span></button>`).join('')}</div></div>`);
       }
       if (data.notes && data.notes.length) html.push(`<div class="ask-notes">${data.notes.map(n => esc(n)).join('<br>')}</div>`);
       html.push(`<div class="ask-h">${data.sources.length ? `Sources (${data.sources.length})` : 'No sources'}</div></div>`);

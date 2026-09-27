@@ -294,5 +294,38 @@ class AskPageTests(unittest.TestCase):
             self.assertNotRegex(block, r"\$\{" + re.escape(field) + r"[}.\s]", f"unescaped interpolation of {field} in renderAsk")
 
 
+# Synthetic Discord chunks as chunk_builder writes them for a data package: only the owner's lines.
+DISCORD = [
+    row(501, "discord", "2025-04-02", [("Me", "Booked the synthetic zebra-kite workshop for Saturday morning."),
+                                       ("Me", "Bringing the spare zebra-kite lines too.")], 0.25, "DM Test Friend"),
+    row(502, "discord", "2025-04-03", [("Me", "zebra-kite photos from the workshop are in the drive")], 0.30, "#general (Test Server)"),
+]
+
+
+@unittest.skipUnless(HAVE_FASTAPI, "fastapi not installed (.venv/bin/pip install fastapi uvicorn)")
+class DiscordSourceTests(ApiTestCase):
+    """A Discord chunk reaches Search and Ask as a source that links to its graph conversation node."""
+
+    def test_search_returns_clickable_discord_result(self):
+        c = self.client(FakeTable(DISCORD + NOISE))
+        body = c.post("/api/search", json={"query": "zebra-kite workshop", "limit": 5}).json()
+        hit = next(r for r in body["results"] if r["platform"] == "discord")
+        self.assertEqual((hit["node_id"], hit["title"]), ("T_501", "DM Test Friend"))
+        self.assertEqual(hit["people"], ["Me"])
+        self.assertEqual((hit["start_time"][:10], hit["end_time"][:10]), ("2025-04-02", "2025-04-02"))
+
+    def test_ask_cites_discord_source_with_platform_filter(self):
+        table = FakeTable(DISCORD + NOISE)
+        c = self.client(table)
+        r = c.post("/api/ask", json={"question": "What did I say about the zebra-kite workshop?", "platforms": ["discord"]})
+        self.assertEqual(r.status_code, 200, r.text)
+        body = r.json()
+        self.assertIn("platform IN ('discord')", table.queries[0].filter)
+        relevant = [s for s in body["sources"] if s["relevant"]]
+        self.assertTrue(relevant)
+        self.assertTrue(all(s["platform"] == "discord" and re.fullmatch(r"T_50[12]", s["node_id"]) for s in relevant))
+        self.assertIn("zebra-kite", " ".join(s["text"] for s in relevant))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -83,7 +83,7 @@ sarthink/
 ├── archive/
 │   ├── twitter/                # Unzipped X/Twitter archive (tweets*.js, account.js found recursively)
 │   ├── reddit-export/          # posts.csv, comments.csv, chat_history.csv
-│   ├── Discord_DM_Export/      # DiscordChatExporter JSON files
+│   ├── discord/<name>/         # Official Discord data package, staged by stage_discord_export.py (or DiscordChatExporter JSON)
 │   ├── instagram-*.zip         # Meta GDPR zips in JSON format, left zipped ("instagram"/"facebook" in the name)
 │   ├── whatsapp/               # "WhatsApp Chat with X.txt" files or the exported .zip per chat
 │   ├── chatgpt/                # ChatGPT data export (conversations.json)
@@ -96,7 +96,29 @@ sarthink/
 ### A. Context Fetching
 Fetch the conversation context that isn't included in your raw exports:
 - **Twitter**: Run `python3 scripts/context/twitter_fetch_context.py`
-- **Reddit**: Run `python3 scripts/context/reddit_fetch_context.py`
+- **Reddit**: Run `python3 scripts/context/reddit_fetch_context.py`. It needs `asyncpraw` and `pandas`
+  (`.venv/bin/pip install asyncpraw pandas`) and a Reddit *script* app's `REDDIT_CLIENT_ID`, `REDDIT_CLIENT_SECRET`,
+  `REDDIT_USER_AGENT`, `REDDIT_USERNAME` and `REDDIT_PASSWORD` in the environment (see `.env.example`; Reddit may
+  require API access approval for new apps). It only writes JSON files under `processed_data/context/reddit/`, never the
+  database, and skips items already fetched, so it can be stopped and resumed.
+
+#### Discord data package
+Request your data at Discord → Settings → Privacy & Safety → *Request all of my data*, put `package.zip` in
+`incoming/discord/`, then stage only what the parser needs (messages, channel titles, and your account id and
+friends' names; the multi-gigabyte `Activity/` analytics, avatars, billing and contact details are left in the ZIP):
+```bash
+python3 scripts/utils/stage_discord_export.py --expected-size <bytes of the original file>   # -> archive/discord/naitik (0700/0600)
+python3 scripts/parsers/discord_parser.py --dry-run    # counts only
+python3 scripts/parsers/discord_parser.py
+```
+The staging step checks the size, every member's CRC and path (absolute paths, `..`, symlinks and encrypted members
+are refused) and free disk space before writing anything. The package contains **only messages you sent**; the parser
+confirms your account from `Account/user.json` (its id must be in every DM's recipients, otherwise it stops rather than
+guess) and records the other people in DMs and group DMs as conversation members (`ThreadMembers`), so they appear on
+the map and in *Your history with …* with your side of the conversation. Timestamps are stored as the original UTC
+times (the package's `Timestamp` matches each message ID's snowflake time). Attachments are kept as
+`[Attachment: file name]` and never downloaded; empty messages are skipped. Re-running is idempotent: unchanged
+messages are left alone, edits in a newer export are updated, and ids stay stable.
 
 ### B. Parsing Data
 Run the platform-specific parsers to populate the database:
@@ -128,6 +150,7 @@ The model is downloaded once into `.cache/models/` on first use; after that it l
 #### 2. Build chunks
 ```bash
 python3 scripts/semantic/chunk_builder.py   # SQLite -> processed_data/semantic/session_chunks.json
+python3 scripts/semantic/chunk_builder.py --platform discord --output processed_data/semantic/discord_chunks.json   # one platform
 ```
 `scripts/semantic/summarizer.py` calls a hosted LLM (Cerebras) and is optional; skip it to stay local.
 
@@ -143,6 +166,18 @@ tail -f processed_data/embed_full.log
 - `--model NAME` embeds with a different model; `--max-topics N --topics-table NAME` builds a small pilot.
 - Every table embedder.py creates is recorded in `processed_data/graph/sarthink_lancedb.metadata.json` (table, model, vector dimension, creation time, source file, row count).
 
+**Adding one platform without re-embedding the rest** (e.g. after a new Discord import):
+```bash
+nohup env HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 .venv/bin/python scripts/semantic/embedder.py \
+  --input processed_data/semantic/discord_chunks.json --topics-table topics --replace-platform discord \
+  > processed_data/logs/embed_discord.log 2>&1 &
+```
+`--replace-platform` swaps only that platform's rows in the existing table, embedding with the table's recorded model;
+it refuses mixed-platform input, a different model or dimension, or a missing table. Re-running replaces rather than
+duplicates. The metadata entry keeps its model and creation time and gains `platform_updates` with the LanceDB version
+before and after, so `lancedb.connect(path).open_table("topics").restore(<version_before>)` undoes it. A running server
+keeps the table version it opened until it is restarted.
+
 #### 4. Search a table
 ```bash
 HF_HUB_OFFLINE=1 .venv/bin/python scripts/semantic/search.py "college ke baare mein stress"
@@ -156,7 +191,7 @@ Export the graph from SQLite, then compute its 3D layout (in this order: the exp
 python3 scripts/utils/export_cosmograph.py   # read-only on the DB -> processed_data/graph/cosmograph_{nodes,edges}.csv
 python3 scripts/utils/compute_layout.py      # adds layout_x, layout_y, layout_z (deterministic, seed 42)
 ```
-Nodes are people (`U_<id>`) and threads (`T_<id>`); an edge means that person wrote in that thread. Besides `id, label, group, size, color`, nodes carry `platform, kind (user|thread), messages, first_ts, last_ts, title` and edges carry `weight, first_ts, last_ts` (epoch seconds, UTC), which drive the graph's details panel and timeline filter. Older exports without these columns still load; the timeline then explains how to enable it.
+Nodes are people (`U_<id>`) and threads (`T_<id>`); an edge means that person wrote in that thread, or, with `weight` 0, that they were in it without any message of theirs in the export (Discord DM partners). Besides `id, label, group, size, color`, nodes carry `platform, kind (user|thread), messages, first_ts, last_ts, title` and edges carry `weight, first_ts, last_ts` (epoch seconds, UTC), which drive the graph's details panel and timeline filter. Older exports without these columns still load; the timeline then explains how to enable it.
 
 ### E. Visualizing + Memory Search
 `scripts/api/server.py` is a local FastAPI app that serves the UI (Memory Home, the 3D graph and Insights) **and** a semantic search API over the LanceDB index. It binds to `127.0.0.1` only; queries are embedded on your CPU and nothing leaves the machine. `scripts/start_sarthink.sh` / `status_sarthink.sh` / `stop_sarthink.sh` wrap it for demos (see *Run the demo* above).
@@ -179,14 +214,16 @@ Then open `http://127.0.0.1:8000/`. Options: `--table topics_multilingual_pilot`
 **Your history with a person.** Clicking a person (a filled dot) opens a profile instead of a list of every link. It is built by `GET /api/person/U_<id>` from the SQLite database only (read-only, no embedding model), and shows:
 - a short **brief** whose sentences are counts, dates and conversation titles, each with numbered citations; click a number to open that conversation on the map, where **‹ Back to …** returns to the profile. Sparse histories say *There isn’t enough history to summarize*; automated or deleted accounts are flagged; nothing about feelings or relationships is inferred;
 - conversations, their messages, your replies, first and latest message, platforms; a month-by-month strip; **recurring words** (in at least two conversations, or in three different months of one long chat); up to five **notable conversations** — back-and-forth ones first, large public threads (over 12 people) last so one huge thread can't dominate; and other people from the same small conversations;
-- **View conversations** (20 at a time, latest first) and **Show full history** (30 messages at a time, newest first, grouped by day, with *Load older*). Your own messages are included only for small conversations (up to 12 people). Very long messages are shortened on screen only; the database keeps everything;
+- **View conversations** (20 at a time, latest first) and **Show full history** (30 messages at a time, newest first, grouped by day, with *Load older*; click a message's name to see its time — an opened conversation shows every time). Your own messages are included only for small conversations (up to 12 people). Very long messages are shortened on screen only; the database keeps everything;
 - with Filters on, the numbers follow them and the profile says *Filtered*, with the all-time counts next to it.
 Accounts are never merged by name: if another platform has an account with the same name, the profile says so and links to it separately. Only your own accounts, as mapped in `config/identity_map.json`, are combined (clicking yourself shows *Your own activity*).
+
+**Dates and times** are shown in UTC everywhere (the database stores UTC epoch seconds, untouched). Collapsed cards show one date or range (hover for the exact span); expanded text is grouped by day with times.
 
 **Using the map** (press `?` in the page for the same list, including the optional keyboard shortcuts):
 - **Left-drag** orbits, **right-drag** or **Shift/Ctrl-drag** pans, **scroll** zooms toward the cursor. Dragging never moves nodes; any drag cancels a running camera flight.
 - **Hover** a node for its name, platform, connections and active months. **Click** selects it: the node, every direct neighbour and the links between them stay bright (drawn on top), everything else is dimmed, not hidden. **Double-click** (or `F`) flies the camera to it. Click empty space to deselect.
-- For a conversation, the **details panel** shows its people, messages, first and last message, and searchable **excerpts** from `/api/thread`; for a person, the profile above. The selection is kept in the URL (`#node=T_12`), so a refresh or a shared local link reopens it.
+- For a conversation, the **details panel** shows its people, messages, the dates it was active, and searchable **excerpts** from `/api/thread` (one date label each; *Show more* lays the messages out by day with their times); for a person, the profile above. The selection is kept in the URL (`#node=T_12`), so a refresh or a shared local link reopens it.
 - **Arrow keys** move the graph in the pressed direction (hold to keep moving); **Shift + arrows** orbit. They only act on the graph when you're not typing or in a list/tab strip.
 - **Find a person or conversation** (`/`) matches names and titles, highlights all matches, and `↑ ↓ Enter` selects one.
 - **Filters** (folded by default; a badge shows how many are on): **Platforms** (**only** isolates one), **Show** people and/or conversations, and **Time range** — a histogram of active conversations per month with handles and 3/12-month presets.
@@ -252,6 +289,8 @@ Tests (fake model, table and a throwaway SQLite DB; no index, model or real data
 .venv/bin/python scripts/tests/test_people.py   # person profiles: counts, dates, filters, identity boundaries, sparse history, paging, links
 .venv/bin/python scripts/tests/test_hinglish.py # Hinglish vocabulary, expanded retrieval on a temp LanceDB table, Ask evidence, negation-safe quotes
 python3 scripts/tests/test_graph_pipeline.py
+python3 scripts/tests/test_discord_parser.py     # Discord: DMs, group DMs, channels, identity, UTC timestamps, duplicates, malformed records, staging
+.venv/bin/python scripts/tests/test_embedding_metadata.py   # includes --replace-platform (incremental index) refusals and idempotency
 ```
 Browser end-to-end test of the graph against your real CSVs (needs the server running and Playwright, which is not a project dependency):
 ```bash

@@ -207,6 +207,22 @@ class ExportTests(unittest.TestCase):
         self.assertEqual((lurker["messages"], lurker["first_ts"], lurker["last_ts"]), ("0", "", ""))
         self.assertEqual(nodes["U_2"]["label"], "Friend quoted")
 
+    def test_thread_members_without_messages_get_weight_zero_edges(self):
+        conn = sqlite3.connect(self.db)
+        conn.executescript("""
+            CREATE TABLE ThreadMembers (thread_id INTEGER, user_id INTEGER, PRIMARY KEY (thread_id, user_id));
+            INSERT INTO Users VALUES (5, 'discord', '4242', 'Dana');
+            INSERT INTO ThreadMembers VALUES (11, 5), (11, 1), (13, 5);   -- (11,1) already has messages; 13 is empty
+        """)
+        conn.commit()
+        conn.close()
+        _, nodes, edges = self.export()
+        dana = [(e["target"], e["weight"], e["first_ts"], e["last_ts"]) for e in edges if e["source"] == "U_5"]
+        self.assertEqual(dana, [("T_11", "0", "1690000000", "1690000000")])
+        self.assertEqual(sum((e["source"], e["target"]) == ("U_1", "T_11") for e in edges), 1)
+        self.assertEqual((nodes["U_5"]["messages"], nodes["U_5"]["size"], nodes["U_5"]["first_ts"]), ("0", "1", "1690000000"))
+        self.assertEqual(nodes["T_11"]["messages"], "1")
+
     def test_every_group_gets_a_platform_colour_not_white(self):
         _, nodes, _ = self.export()
         for n in nodes.values():

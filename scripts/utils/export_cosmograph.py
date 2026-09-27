@@ -1,7 +1,7 @@
 """Exports the SQLite memory graph to the CSVs the 3D graph UI reads.
 
 Nodes are people (U_<Users.id>) and conversation threads (T_<Threads.id>); an edge links a person to
-a thread they wrote in. Besides the label/group/size/color columns, every node and edge carries its
+a thread they wrote in, or (weight 0) to one the ThreadMembers table says they were in without writing. Besides the label/group/size/color columns, every node and edge carries its
 message count and first/last activity (epoch seconds, UTC) so the UI can filter by date.
 
 The database is opened read-only. Run compute_layout.py afterwards to add layout_x/y/z:
@@ -196,10 +196,25 @@ def export_to_cosmograph(db_path=None, out_dir=None, identity_map=None):
         touch(u_node, weight, first, last)
         touch(t_node, weight, first, last)
 
+    # 1b. MEMBERSHIP EDGES: people recorded in a conversation without any message of theirs in the export
+    # (the other side of a Discord DM). Weight 0 = no messages; the activity span is the conversation's.
+    has_members = cursor.execute(
+        "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'ThreadMembers'").fetchone()
+    if has_members:
+        linked = {(e['source'], e['target']) for e in edges}
+        for thread_id, user_id in cursor.execute("SELECT thread_id, user_id FROM ThreadMembers ORDER BY thread_id, user_id"):
+            u_node, t_node = f"U_{user_id}", f"T_{thread_id}"
+            if (u_node, t_node) in linked or t_node not in node_weights:
+                continue   # already linked by messages, or the thread has no messages and isn't exported
+            first, last = node_first.get(t_node), node_last.get(t_node)
+            edges.append({'source': u_node, 'target': t_node, 'weight': 0,
+                          'first_ts': '' if first is None else first, 'last_ts': '' if last is None else last})
+            touch(u_node, 0, first, last)
+
     def node_row(node_id, label, group, platform, kind, title):
         return {
             'id': node_id, 'label': label, 'group': group,
-            'size': node_weights.get(node_id, 1), 'color': group_color(group),
+            'size': max(1, node_weights.get(node_id, 1)), 'color': group_color(group),
             'platform': platform, 'kind': kind, 'messages': node_weights.get(node_id, 0),
             'first_ts': node_first.get(node_id, ''), 'last_ts': node_last.get(node_id, ''),
             'title': title,

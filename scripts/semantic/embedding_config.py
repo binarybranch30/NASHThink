@@ -84,3 +84,17 @@ def save_table_metadata(table_name, model_name, vector_dim, source, db_path=LANC
         json.dump({"version": METADATA_VERSION, "tables": tables}, f, indent=2)
     os.replace(tmp, path)
     return entry
+
+
+def update_table_metadata(table_name, db_path=LANCEDB_PATH, **fields):
+    """Merges `fields` into an existing entry (model, dims and created_at are kept). Written atomically."""
+    tables = load_metadata(db_path)
+    if table_name not in tables:
+        raise KeyError(f"no metadata entry for table {table_name!r}")
+    tables[table_name].update(fields)
+    path = metadata_path(db_path)
+    tmp = path.with_name(path.name + ".tmp")
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump({"version": METADATA_VERSION, "tables": tables}, f, indent=2)
+    os.replace(tmp, path)
+    return tables[table_name]

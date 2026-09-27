@@ -233,8 +233,17 @@ class PeopleService:
             "users": users,
         }
 
+    @staticmethod
+    def _has_members(conn):
+        return conn.execute("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'ThreadMembers'").fetchone() is not None
+
     def _threads(self, conn, who, platforms, date_from, date_to):
-        """Per conversation the person wrote in (within the filters): their/your counts, size, dates."""
+        """Per conversation the person wrote in (within the filters): their/your counts, size, dates.
+
+        Conversations the person is recorded in without writing (ThreadMembers, e.g. the other side of a
+        Discord DM, whose package holds only your messages) are included with their_messages = 0 when you
+        wrote in them within the filters.
+        """
         where, params = self._filters_sql(platforms, date_from, date_to)
         rows = conn.execute(
             f"SELECT m.thread_id, t.platform, t.title, COUNT(*), MIN({TS_SQL}), MAX({TS_SQL}) "
@@ -245,16 +254,43 @@ class PeopleService:
                          "title": clean_text(title or "")[:TITLE_CHARS] or "(untitled)",
                          "their_messages": n, "your_messages": 0, "people": 1, "first_ts": a, "last_ts": b}
                    for tid, plat, title, n, a, b in rows}
+        members = self._has_members(conn) and not who["you"]
+        if members:
+            t_where = [w for w in where if w.startswith("t.")]
+            t_params = params[:len(platforms)] if platforms else []
+            for tid, plat, title in conn.execute(
+                    f"SELECT t.id, t.platform, t.title FROM ThreadMembers tm JOIN Threads t ON t.id = tm.thread_id "
+                    f"WHERE tm.user_id IN (SELECT value FROM json_each(?)) {''.join(' AND ' + w for w in t_where)}",
+                    [json.dumps(who["accounts"])] + t_params):
+                if tid not in threads:
+                    threads[tid] = {"thread_id": tid, "node_id": f"T_{tid}", "platform": plat,
+                                    "title": clean_text(title or "")[:TITLE_CHARS] or "(untitled)",
+                                    "their_messages": 0, "your_messages": 0, "people": 1, "first_ts": None,
+                                    "last_ts": None, "member_only": True}
         if threads and not who["you"]:
             ts_where, ts_params = self._filters_sql(None, date_from, date_to, alias="m2")
             cond = " AND ".join(ts_where) or "1"
-            for tid, people, yours in conn.execute(
-                    f"SELECT m2.thread_id, COUNT(DISTINCT m2.author_id), "
-                    f"SUM(CASE WHEN m2.author_id IN (SELECT value FROM json_each(?)) AND {cond} THEN 1 ELSE 0 END) "
+            ids = json.dumps(list(threads))
+            ts2 = TS_SQL.replace("m.", "m2.")
+            for tid, yours, a, b in conn.execute(
+                    f"SELECT m2.thread_id, "
+                    f"SUM(CASE WHEN m2.author_id IN (SELECT value FROM json_each(?)) AND {cond} THEN 1 ELSE 0 END), "
+                    f"MIN(CASE WHEN m2.author_id IN (SELECT value FROM json_each(?)) AND {cond} THEN {ts2} END), "
+                    f"MAX(CASE WHEN m2.author_id IN (SELECT value FROM json_each(?)) AND {cond} THEN {ts2} END) "
                     f"FROM Messages m2 WHERE m2.thread_id IN (SELECT value FROM json_each(?)) GROUP BY m2.thread_id",
-                    [json.dumps(who["owner"])] + ts_params + [json.dumps(list(threads))]):
-                threads[tid]["people"] = people
+                    [json.dumps(who["owner"])] + ts_params + [json.dumps(who["owner"])] + ts_params
+                    + [json.dumps(who["owner"])] + ts_params + [ids]):
                 threads[tid]["your_messages"] = yours or 0
+                if threads[tid].get("member_only"):
+                    threads[tid]["first_ts"], threads[tid]["last_ts"] = a, b
+            people_sql = "SELECT DISTINCT thread_id, author_id FROM Messages WHERE thread_id IN (SELECT value FROM json_each(?))"
+            if members:
+                people_sql += " UNION SELECT thread_id, user_id FROM ThreadMembers WHERE thread_id IN (SELECT value FROM json_each(?))"
+            for tid, people in conn.execute(f"SELECT thread_id, COUNT(*) FROM ({people_sql}) GROUP BY thread_id",
+                                            [ids, ids] if members else [ids]):
+                threads[tid]["people"] = people
+            # A conversation they only belong to counts when you wrote in it within the filters.
+            threads = {tid: t for tid, t in threads.items() if not t.get("member_only") or t["your_messages"]}
         for t in threads.values():
             t["large"] = t["people"] > SMALL_THREAD
             t["shared"] = bool(t["your_messages"]) and not t["large"]
@@ -273,8 +309,8 @@ class PeopleService:
             "shared_conversations": sum(t["shared"] for t in threads.values()),
             "their_messages": sum(t["their_messages"] for t in threads.values()),
             "your_messages": sum(t["your_messages"] for t in threads.values() if t["shared"]),
-            "first_date": iso_ts(min(t["first_ts"] for t in threads.values())),
-            "latest_date": iso_ts(max(t["last_ts"] for t in threads.values())),
+            "first_date": iso_ts(min((t["first_ts"] for t in threads.values() if t["first_ts"] is not None), default=None)),
+            "latest_date": iso_ts(max((t["last_ts"] for t in threads.values() if t["last_ts"] is not None), default=None)),
             "platforms": [p for p, _ in plats.most_common()],
         }
 
@@ -419,6 +455,14 @@ class PeopleService:
             return {"sentences": out, "sparse": n < SPARSE_MESSAGES}
         if who["automated"]:
             say(f"{label} looks like an automated or deleted account, so its messages may not come from a person.")
+        if n == 0 and c:
+            # Only your side exists (e.g. a Discord data package, which holds just the owner's messages).
+            span = month_label(stats["first_date"]), month_label(stats["latest_date"])
+            say(f"This export has none of {label}’s messages, only yours: you wrote {plural(stats['your_messages'], 'message')} "
+                f"in {plural(c, 'conversation')} with them on {' and '.join(PLATFORM_NAMES.get(p, p.title()) for p in stats['platforms'])}, "
+                + (f"in {span[0]}." if span[0] == span[1] else f"from {span[0]} to {span[1]}."),
+                [cite_of[t] for t in threads if t in cite_of][:3])
+            return {"sentences": out, "sparse": True}
         if n == 0:
             say(f"No messages from {label} match the current filters.")
             return {"sentences": out, "sparse": True}

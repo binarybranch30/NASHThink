@@ -67,6 +67,16 @@ class SarthinkMemoryLayer:
             CREATE INDEX IF NOT EXISTS idx_author    ON Messages(author_id);
             -- Thread-tree traversal (parent_msg_id self-join)
             CREATE INDEX IF NOT EXISTS idx_parent    ON Messages(parent_msg_id);
+
+            -- People known to be in a conversation even when the export holds none of their
+            -- messages (e.g. the other side of a Discord DM: the data package only has yours).
+            CREATE TABLE IF NOT EXISTS ThreadMembers (
+                thread_id INTEGER NOT NULL,
+                user_id   INTEGER NOT NULL,
+                PRIMARY KEY (thread_id, user_id),
+                FOREIGN KEY(thread_id) REFERENCES Threads(id),
+                FOREIGN KEY(user_id) REFERENCES Users(id)
+            );
         ''')
         self.conn.commit()
 
@@ -190,7 +200,7 @@ class SarthinkMemoryLayer:
 
     # ─── Maintenance ──────────────────────────────────────────────────────────
 
-    def purge_platform(self, platform):
+    def purge_platform(self, platform, commit=True):
         """Delete all data for a platform so it can be re-ingested cleanly.
         Caches are refreshed after purge so subsequent get_or_create_* calls
         work correctly on the now-empty tables.
@@ -198,11 +208,14 @@ class SarthinkMemoryLayer:
         logging.info(f"Purging all '{platform}' data from DB...")
         self.cursor.execute("DELETE FROM Messages WHERE msg_id LIKE ?", (f"{platform}_%",))
         msg_count = self.cursor.rowcount
+        self.cursor.execute("DELETE FROM ThreadMembers WHERE thread_id IN (SELECT id FROM Threads WHERE platform = ?)",
+                            (platform,))
         self.cursor.execute("DELETE FROM Users WHERE platform = ?", (platform,))
         user_count = self.cursor.rowcount
         self.cursor.execute("DELETE FROM Threads WHERE platform = ?", (platform,))
         thread_count = self.cursor.rowcount
-        self.conn.commit()
+        if commit:
+            self.conn.commit()
         # Rebuild caches to reflect the now-empty tables
         self._warm_caches()
         logging.info(
