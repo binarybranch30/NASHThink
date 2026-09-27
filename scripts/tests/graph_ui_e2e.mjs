@@ -1572,9 +1572,9 @@ async function writerFlow(browser) {
   await page.press('#omni-q', 'Enter');
   await page.waitForSelector('#sem-list .ask-loading .al-steps li.on', { timeout: 5000 });
   let r = await page.evaluate(() => ({ steps: document.querySelectorAll('.ask-loading .al-steps li').length, title: document.querySelector('.al-title').innerText,
-    cards: document.querySelectorAll('#sem-list .sr').length, skel: document.querySelectorAll('.ask-loading .skel').length }));
-  check('a loading screen with steps shows before the answer, and no sources yet',
-    r.steps === 3 && /Llama 3\.1 8B/i.test(r.title) && r.cards === 0 && r.skel > 0, JSON.stringify(r));
+    cards: document.querySelectorAll('#sem-list .sr').length, viz: document.querySelectorAll('.ask-loading .al-viz canvas').length }));
+  check('a loading screen with steps and the thinking graph shows before the answer, and no sources yet',
+    r.steps === 3 && /Llama 3\.1 8B/i.test(r.title) && r.cards === 0 && r.viz === 1, JSON.stringify(r));
   await shot(page, '29_ask_loading');
   delay = 0;
   await page.waitForFunction(() => /Done/.test((document.querySelector('.aw-state') || {}).textContent || ''), null, { timeout: 10000 });
@@ -1628,15 +1628,21 @@ async function writerFlow(browser) {
   await page.waitForFunction(() => document.body.dataset.view === 'home', null, { timeout: 5000 }).catch(() => {});
   await page.fill('#omni-q', 'What did I say about sourdough, slowly?');
   await page.press('#omni-q', 'Enter');
-  await page.waitForSelector('.ask-loading .al-read:not([hidden]) .al-now .an-title', { timeout: 10000 });
-  r = await page.evaluate(() => ({ chips: document.querySelectorAll('.al-chip').length, on: document.querySelectorAll('.al-chip.on').length,
-    now: document.querySelector('.al-now').innerText, watch: !document.querySelector('.al-watch').hidden, skel: document.querySelector('.al-skel').hidden,
-    cards: document.querySelectorAll('#sem-list .ask-sources:not([hidden]) .sr').length }));
-  check('while the model reads, the loader shows the source it is on and chips for the rest',
-    r.chips === 2 && r.on === 1 && /Now reading/i.test(r.now) && /Synthetic thread 1/.test(r.now) && r.skel && r.cards === 0, JSON.stringify(r));
+  await page.waitForFunction(() => /Reading/.test((document.querySelector('.ask-loading .al-cap') || {}).textContent || ''), null, { timeout: 10000 });
+  await page.waitForTimeout(400);
+  r = await page.evaluate(() => {
+    const c = document.querySelector('.ask-loading .al-viz canvas'), d = c.getContext('2d').getImageData(0, 0, c.width, c.height).data;
+    let lit = 0; for (let i = 3; i < d.length; i += 4) if (d[i] > 40) lit++;
+    return { w: c.width, lit, cap: document.querySelector('.al-cap').innerText, watch: !document.querySelector('.al-watch').hidden,
+      thinking: document.body.classList.contains('thinking'), cards: document.querySelectorAll('#sem-list .ask-sources:not([hidden]) .sr').length };
+  });
+  check('while the model reads, the loader animates the memory graph and names the source being read',
+    r.w > 100 && r.lit > 200 && /Synthetic thread 1/.test(r.cap) && r.thinking && r.cards === 0, JSON.stringify(r));
   check('Memory Home offers to watch the reading on the map', r.watch);
-  await page.waitForFunction(() => /Synthetic thread 2/.test(document.querySelector('.al-now').innerText), null, { timeout: 8000 });
-  check('the reading card moves on to the next source by itself', true);
+  await page.waitForTimeout(1500);
+  await shot(page, '30b_reading_home');
+  await page.waitForFunction(() => /Synthetic thread 2/.test(document.querySelector('.al-cap').innerText), null, { timeout: 8000 });
+  check('the animation moves on to the next source by itself', true);
   await page.click('.al-watch');
   await page.waitForFunction(() => document.body.dataset.view === 'graph', null, { timeout: 5000 });
   await page.waitForTimeout(1200);
@@ -1648,6 +1654,7 @@ async function writerFlow(browser) {
   r = await page.evaluate(() => ({ reading: window.__sarthink.sem.reading, label: !!document.querySelector('#labels .nlabel.reading'), loader: !!document.querySelector('.ask-loading'),
     waits: JSON.parse(localStorage.getItem('sarthink.waits') || '{}').best || [] }));
   check('when the answer starts the tour ends and the wait is remembered', r.reading === -1 && !r.label && !r.loader && r.waits.length >= 1, JSON.stringify(r));
+  check('the map stops "thinking" with the loader', !(await page.evaluate(() => document.body.classList.contains('thinking'))));
 
   mode = 'unsure';
   await ask('Something the sources do not answer?');
@@ -1719,6 +1726,18 @@ async function workspaceFlow(browser) {
     await p.route('**/api/workspace/lock', r => { active = 'demo'; return r.fulfill({ json: state() }); });
   } });
   await ready(page, { view: 'home' });
+  // Branding: NASH Think with its logo; the logo goes home.
+  let b = await page.evaluate(() => ({ title: document.title, brand: document.getElementById('brand').innerText,
+    logo: document.querySelector('#brand img').naturalWidth, fav: !!document.querySelector('link[rel="icon"][href*="nashthink"]'),
+    kicker: document.querySelector('.h-kicker').innerText, tab: document.getElementById('omode-ask').innerText,
+    old: /sarthink/i.test(document.body.innerText) }));
+  check('the UI is named NASH Think, with the logo top-left and as the tab icon',
+    /NASH Think/.test(b.title) && /NASH\s*Think/.test(b.brand) && b.logo > 0 && b.fav && /NASH THINK/.test(b.kicker) && /NASH Think/.test(b.tab) && !b.old, JSON.stringify(b));
+  await page.click('#btn-explore');
+  await page.waitForFunction(() => document.body.dataset.view === 'graph');
+  await page.click('#brand');
+  await page.waitForFunction(() => document.body.dataset.view === 'home', null, { timeout: 5000 }).catch(() => {});
+  check('clicking the logo goes back to Memory Home', await page.evaluate(() => document.body.dataset.view === 'home'));
   await page.waitForSelector('#ws:not([hidden])', { timeout: 5000 });
   let r = await page.evaluate(() => {
     const b = document.getElementById('ws-btn').getBoundingClientRect();

@@ -4,9 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sarthink · Memory Graph</title>
+  <title>NASH Think · Memory Graph</title>
+  <link rel="icon" type="image/png" href="./assets/nashthink-icon.png">
   <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Quicksand:wght@500;600;700&display=swap"
     rel="stylesheet">
   <script src="https://unpkg.com/papaparse@5/papaparse.min.js"></script>
 
@@ -35,7 +36,8 @@
       --dim: rgba(255, 255, 255, 0.42);
       --mid: rgba(255, 255, 255, 0.70);
       --hi: #fff;
-      --acc: #4f8eff;
+      --acc: #7fc3c4;      /* NASH Think teal (logo) */
+      --coral: #ea9488;    /* NASH Think coral (logo) */
       --ok: #3ecf8e;
       --warn: #f5c26b;
       --err: #ff8080;
@@ -86,12 +88,17 @@
     #loading.fade { opacity: 0; pointer-events: none; }
 
     .lb-brand {
-      font-family: 'Orbitron', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      font-family: 'Quicksand', 'Outfit', sans-serif;
       font-size: 1.9rem;
-      font-weight: 900;
-      letter-spacing: .32em;
+      font-weight: 700;
+      letter-spacing: .04em;
       color: #fff;
     }
+    .lb-brand img { width: 72px; height: auto; animation: pulse 2.4s ease-in-out infinite; }
 
     .lb-brand em, .brand em { color: var(--acc); font-style: normal; }
 
@@ -125,7 +132,7 @@
       display: inline-block;
       font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
       font-size: .74rem;
-      color: #cfe0ff;
+      color: #d4eeee;
       background: rgba(255, 255, 255, .06);
       padding: 2px 6px;
       border-radius: 4px;
@@ -173,10 +180,10 @@
       text-shadow: 0 1px 2px #000;
     }
 
-    .nlabel.sel { color: #fff; font-weight: 600; font-size: .74rem; background: rgba(20, 30, 70, .85); border: 1px solid rgba(79, 142, 255, .6); }
+    .nlabel.sel { color: #fff; font-weight: 600; font-size: .74rem; background: rgba(14, 40, 44, .88); border: 1px solid rgba(127, 195, 196, .6); }
     .nlabel.dimmed { color: rgba(255, 255, 255, .55); }
-    .nlabel.reading { color: #fff; font-weight: 600; background: rgba(62, 207, 142, .18); border: 1px solid rgba(62, 207, 142, .6); }
-    .nlabel.reading::before { content: 'Reading · '; color: var(--ok); font-weight: 500; }
+    .nlabel.reading { color: #fff; font-weight: 600; background: rgba(234, 148, 136, .18); border: 1px solid rgba(234, 148, 136, .65); }
+    .nlabel.reading::before { content: 'Reading · '; color: var(--coral); font-weight: 500; }
 
     /* Every overlay below is sized to its own visible box, so the canvas keeps the rest of the
        screen for orbit/pan/zoom. Nothing is a full-screen wrapper with pointer-events. */
@@ -205,15 +212,23 @@
     #topbar > * { pointer-events: auto; }
 
     .brand {
-      font-family: 'Orbitron', monospace;
-      font-size: .8rem;
-      font-weight: 900;
-      letter-spacing: .24em;
-      color: rgba(255, 255, 255, .9);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 3px 9px 3px 3px;
+      border-radius: 10px;
+      font-family: 'Quicksand', 'Outfit', sans-serif;
+      font-size: 1.02rem;
+      font-weight: 700;
+      letter-spacing: .02em;
+      color: #fff;
+      text-decoration: none;
       white-space: nowrap;
-      pointer-events: none !important;
       text-shadow: 0 1px 6px #000;
+      transition: background .2s;
     }
+    .brand img { width: 30px; height: 30px; filter: drop-shadow(0 0 6px rgba(234, 148, 136, .25)); }
+    .brand:hover, .brand:focus-visible { background: rgba(255, 255, 255, .06); }
 
     #stats {
       display: flex;
@@ -231,7 +246,7 @@
     #stats .st { white-space: nowrap; }
     #stats .st b { color: #fff; font-weight: 600; }
     #stats .sep { color: rgba(255, 255, 255, .2); }
-    #stats .st.sel { color: #cfe0ff; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+    #stats .st.sel { color: #d4eeee; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
     #stats .st.warn { color: var(--warn); }
 
     #tbtns { margin-left: auto; display: flex; gap: 7px; }
@@ -255,7 +270,7 @@
 
     .btn:hover { background: rgba(255, 255, 255, .09); border-color: rgba(255, 255, 255, .24); color: #fff; }
     .btn:disabled { opacity: .4; cursor: default; }
-    .btn.primary { background: rgba(79, 142, 255, .18); border-color: rgba(79, 142, 255, .55); color: #cfe0ff; }
+    .btn.primary { background: rgba(127, 195, 196, .18); border-color: rgba(127, 195, 196, .55); color: #d4eeee; }
     .btn.sm { padding: 3px 8px; font-size: .68rem; }
     .btn kbd, .kbd {
       font-family: inherit;
@@ -308,7 +323,7 @@
       padding: 0 2px;
     }
 
-    .linkbtn:hover { color: #9cc0ff; text-decoration: underline; }
+    .linkbtn:hover { color: #a6dcdc; text-decoration: underline; }
     .linkbtn:disabled { color: var(--dim); cursor: default; text-decoration: none; }
 
     .inp {
@@ -346,7 +361,7 @@
     }
 
     .fitem:hover, .fitem.cur { background: rgba(255, 255, 255, .06); color: #fff; }
-    .fitem.cur { border-color: rgba(79, 142, 255, .5); }
+    .fitem.cur { border-color: rgba(127, 195, 196, .5); }
     .fitem .nm { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .fitem .ct { color: var(--dim); font-size: .62rem; font-variant-numeric: tabular-nums; }
     .find-note { font-size: .64rem; color: var(--dim); margin-top: 5px; }
@@ -401,7 +416,7 @@
 
     /* Timeline */
     #tl-hist { display: block; width: 100%; height: 38px; margin: 2px 0 0; }
-    #tl-hist rect { fill: rgba(79, 142, 255, .75); }
+    #tl-hist rect { fill: rgba(127, 195, 196, .75); }
     #tl-hist rect.out { fill: rgba(255, 255, 255, .12); }
 
     .dual { position: relative; height: 18px; }
@@ -419,12 +434,12 @@
       pointer-events: auto;
       -webkit-appearance: none;
       width: 12px; height: 12px; border-radius: 50%;
-      background: #cfe0ff; border: 2px solid var(--acc); cursor: ew-resize;
+      background: #d4eeee; border: 2px solid var(--acc); cursor: ew-resize;
     }
     .dual input[type=range]::-moz-range-thumb {
       pointer-events: auto;
       width: 10px; height: 10px; border-radius: 50%;
-      background: #cfe0ff; border: 2px solid var(--acc); cursor: ew-resize;
+      background: #d4eeee; border: 2px solid var(--acc); cursor: ew-resize;
     }
     .dual .rail { position: absolute; left: 0; right: 0; top: 8px; height: 2px; background: rgba(255, 255, 255, .1); border-radius: 1px; }
     .dual .fill { position: absolute; top: 8px; height: 2px; background: var(--acc); }
@@ -498,7 +513,7 @@
       white-space: nowrap;
     }
     .mtab:hover { color: #fff; }
-    .mtab[aria-selected="true"] { background: rgba(79, 142, 255, .18); color: #cfe0ff; }
+    .mtab[aria-selected="true"] { background: rgba(127, 195, 196, .18); color: #d4eeee; }
     #mode-ask[hidden], #mode-search[hidden] { display: none; }
 
     #ask-form { display: flex; flex-direction: column; gap: 6px; }
@@ -533,9 +548,9 @@
     .ask-conf .ev { color: var(--dim); letter-spacing: .06em; text-transform: none; font-size: .62rem; }
     .ask-answer { font-size: .76rem; line-height: 1.55; color: #fff; word-break: break-word; }
     /* Written answer (POST /api/ask/stream): a local Llama's prose over the evidence, with [n] citations */
-    .ask-written { display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(79, 142, 255, .35); background: rgba(79, 142, 255, .07); }
+    .ask-written { display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(127, 195, 196, .35); background: rgba(127, 195, 196, .07); }
     .aw-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
-    .aw-head .aw-by { color: #cfe0ff; }
+    .aw-head .aw-by { color: #d4eeee; }
     .aw-state { letter-spacing: .04em; text-transform: none; font-size: .62rem; display: inline-flex; align-items: center; gap: 6px; }
     .aw-state.busy::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--acc); animation: pulse 1s ease-in-out infinite; }
     .aw-text { font-size: .8rem; line-height: 1.6; color: #fff; word-break: break-word; }
@@ -546,9 +561,9 @@
     .aw-text li { margin-bottom: 3px; }
     .aw-text.streaming > :last-child::after { content: '▍'; color: var(--acc); animation: pulse 1s ease-in-out infinite; }
     .aw-text .cite { font: inherit; font-size: .6rem; line-height: 1; vertical-align: super; margin: 0 1px; padding: 1px 4px; border-radius: 4px; cursor: pointer;
-      border: 1px solid rgba(79, 142, 255, .5); background: rgba(79, 142, 255, .16); color: #cfe0ff; }
-    .aw-text .cite:hover, .aw-text .cite:focus-visible { background: rgba(79, 142, 255, .4); color: #fff; }
-    .aw-q { color: #e8edff; }
+      border: 1px solid rgba(127, 195, 196, .5); background: rgba(127, 195, 196, .16); color: #d4eeee; }
+    .aw-text .cite:hover, .aw-text .cite:focus-visible { background: rgba(127, 195, 196, .4); color: #fff; }
+    .aw-q { color: #eef7f6; }
     .aw-q.bad { text-decoration: underline dashed var(--warn); text-underline-offset: 3px; cursor: help; }
     .aw-note { font-size: .66rem; line-height: 1.5; color: var(--dim); }
     .aw-note.warn { color: var(--warn); }
@@ -619,40 +634,34 @@
     #ws-msg:empty { display: none; }
 
     /* Ask loading screen: steps with a timer and a skeleton of the answer, until the answer starts */
-    .ask-loading { display: flex; flex-direction: column; gap: 12px; padding: 14px; border-radius: 10px; border: 1px solid rgba(79, 142, 255, .3); background: rgba(79, 142, 255, .05); }
+    .ask-loading { display: flex; flex-direction: column; gap: 12px; padding: 14px; border-radius: 10px; border: 1px solid rgba(127, 195, 196, .3); background: rgba(127, 195, 196, .05); }
     .al-head { display: flex; align-items: center; gap: 8px; font-size: .72rem; color: #fff; }
-    .al-head .al-spin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(79, 142, 255, .25); border-top-color: var(--acc); animation: spin .8s linear infinite; }
+    .al-head .al-spin { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(127, 195, 196, .25); border-top-color: var(--acc); animation: spin .8s linear infinite; }
     .al-head .al-time { margin-left: auto; font-size: .64rem; color: var(--dim); font-variant-numeric: tabular-nums; }
     .al-steps { list-style: none; display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; }
     .al-steps li { display: flex; align-items: center; gap: 8px; font-size: .68rem; color: var(--dim); }
     .al-steps li i { flex: 0 0 auto; width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .2); display: inline-flex; align-items: center; justify-content: center; font-style: normal; font-size: .55rem; }
     .al-steps li.on { color: #fff; }
-    .al-steps li.on i { border-color: var(--acc); background: rgba(79, 142, 255, .25); animation: pulse 1s ease-in-out infinite; }
+    .al-steps li.on i { border-color: var(--acc); background: rgba(127, 195, 196, .25); animation: pulse 1s ease-in-out infinite; }
     .al-steps li.done { color: var(--mid); }
     .al-steps li.done i { border-color: var(--ok); color: var(--ok); }
     .al-steps li.done i::before { content: '✓'; }
     .al-steps li small { margin-left: auto; color: var(--dim); font-size: .6rem; }
-    .al-skel { display: flex; flex-direction: column; gap: 7px; }
-    .al-skel .skel { height: 9px; border-radius: 4px; }
     /* While the model reads: the source it is on, the others as chips, and progress against its usual time */
-    .al-now { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; border-radius: 8px; cursor: pointer; text-align: left; font: inherit; color: inherit;
-      border: 1px solid rgba(62, 207, 142, .35); background: rgba(62, 207, 142, .06); transition: opacity .35s, border-color .2s; }
-    .al-now:hover, .al-now:focus-visible { border-color: rgba(62, 207, 142, .75); }
-    .al-now.fade { opacity: 0; }
-    .al-now .an-top { display: flex; align-items: center; gap: 6px; font-size: .58rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ok); }
-    .al-now .an-top i { width: 7px; height: 7px; border-radius: 50%; background: var(--pc, #9aa0b4); }
-    .al-now .an-top span:last-child { margin-left: auto; color: var(--dim); letter-spacing: .04em; text-transform: none; }
-    .al-now .an-title { font-size: .76rem; color: #fff; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .al-now .an-snip { font-size: .68rem; line-height: 1.45; color: var(--mid); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .al-chips { display: flex; flex-wrap: wrap; gap: 5px; }
-    .al-chip { display: inline-flex; align-items: center; gap: 5px; max-width: 100%; padding: 3px 8px; border-radius: 12px; cursor: pointer; font: inherit; font-size: .62rem;
-      color: var(--mid); background: rgba(255, 255, 255, .04); border: 1px solid var(--bdr); }
-    .al-chip i { flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; background: var(--pc, #9aa0b4); }
-    .al-chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px; }
-    .al-chip:hover, .al-chip:focus-visible { color: #fff; border-color: var(--bdr2); }
-    .al-chip.on { color: #fff; border-color: rgba(62, 207, 142, .6); background: rgba(62, 207, 142, .1); }
+    .al-viz { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid rgba(127, 195, 196, .18);
+      background: radial-gradient(ellipse at 50% 50%, rgba(234, 148, 136, .07), rgba(0, 0, 16, .55) 70%); }
+    .al-viz canvas { display: block; width: 100%; height: 190px; }
+    body[data-view="graph"] .al-viz canvas { height: 128px; }
+    .al-cap { position: absolute; left: 10px; right: 10px; bottom: 8px; display: flex; align-items: center; gap: 6px; font-size: .66rem;
+      color: var(--mid); pointer-events: none; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    .al-cap:empty { display: none; }
+    .al-cap i { flex: 0 0 auto; width: 7px; height: 7px; border-radius: 50%; background: var(--pc, #9aa0b4); box-shadow: 0 0 8px var(--pc, #9aa0b4); }
+    .al-cap b { color: var(--coral); font-weight: 600; }
+    .al-cap span { color: var(--dim); margin-left: auto; padding-left: 8px; }
+    /* While Ask thinks, the map behind Memory Home comes forward and turns faster */
+    body.thinking #veil { opacity: .55; }
     .al-bar { height: 3px; border-radius: 2px; background: rgba(255, 255, 255, .08); overflow: hidden; }
-    .al-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--acc), var(--ok)); transition: width 1s linear; }
+    .al-bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--coral), var(--acc)); transition: width 1s linear; }
     .al-watch { background: none; border: none; padding: 0; color: var(--acc); font: inherit; font-size: .62rem; cursor: pointer; }
     .al-watch:hover, .al-watch:focus-visible { text-decoration: underline; }
     .al-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: .6rem; color: var(--dim); line-height: 1.4; }
@@ -736,9 +745,9 @@
     .why {
       font-size: .7rem;
       line-height: 1.5;
-      color: #cfe0ff;
-      background: rgba(79, 142, 255, .09);
-      border: 1px solid rgba(79, 142, 255, .28);
+      color: #d4eeee;
+      background: rgba(127, 195, 196, .09);
+      border: 1px solid rgba(127, 195, 196, .28);
       border-radius: 7px;
       padding: 7px 9px;
     }
@@ -805,7 +814,7 @@
     }
 
     .sr:hover { background: rgba(255, 255, 255, .06); border-color: rgba(255, 255, 255, .18); }
-    .sr.active { border-color: var(--acc); background: rgba(79, 142, 255, .10); }
+    .sr.active { border-color: var(--acc); background: rgba(127, 195, 196, .10); }
     .sr.nonode { cursor: default; }
     .sr-top { display: flex; align-items: center; gap: 6px; font-size: .62rem; color: var(--dim); }
     .sr-rank { color: var(--mid); font-variant-numeric: tabular-nums; }
@@ -907,7 +916,7 @@
       background: var(--gb2);
     }
 
-    #help h2 { font-family: 'Orbitron', monospace; font-size: .8rem; letter-spacing: .2em; color: #fff; margin-bottom: 14px; }
+    #help h2 { font-family: 'Quicksand', 'Outfit', sans-serif; font-size: .9rem; letter-spacing: .08em; color: #fff; margin-bottom: 14px; }
     #help h3 { font-size: .62rem; letter-spacing: .18em; color: var(--dim); text-transform: uppercase; margin: 14px 0 6px; font-weight: 600; }
     #help table { width: 100%; border-collapse: collapse; font-size: .76rem; }
     #help td { padding: 4px 0; color: var(--mid); vertical-align: top; }
@@ -989,10 +998,10 @@
     }
     body.has-results #home { top: max(56px, 5vh); max-height: calc(100vh - max(56px, 5vh) - var(--gap)); }
 
-    .h-kicker { font-family: 'Orbitron', monospace; font-size: .64rem; font-weight: 700; letter-spacing: .32em; color: var(--dim); }
-    .h-kicker em { color: var(--acc); font-style: normal; }
+    .h-kicker { font-family: 'Quicksand', 'Outfit', sans-serif; font-size: .7rem; font-weight: 700; letter-spacing: .28em; color: var(--dim); }
+    .h-kicker em { color: var(--coral); font-style: normal; }
     #home h1 { font-size: clamp(1.5rem, 3.6vw, 2.15rem); font-weight: 600; color: #fff; letter-spacing: -.01em; line-height: 1.15; margin-top: 10px; }
-    #home h1 .grad { background: linear-gradient(90deg, #8fb4ff, #c79bff 55%, #ff9a7a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    #home h1 .grad { background: linear-gradient(90deg, #ee9a8e, #e9b4a6 40%, #9ad3d2 75%, #7fc3c4); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .h-sub { font-size: .86rem; color: var(--mid); line-height: 1.55; margin-top: 8px; max-width: 58ch; }
     body.has-results .h-sub, body.has-results #home h1 { display: none; }
 
@@ -1006,13 +1015,13 @@
       color: var(--mid); cursor: pointer; white-space: nowrap; transition: background .15s, color .15s;
     }
     .omode:hover { color: #fff; }
-    .omode[aria-selected="true"] { background: rgba(79, 142, 255, .22); color: #fff; box-shadow: inset 0 0 0 1px rgba(79, 142, 255, .45); }
+    .omode[aria-selected="true"] { background: rgba(127, 195, 196, .22); color: #fff; box-shadow: inset 0 0 0 1px rgba(127, 195, 196, .45); }
     .orow {
       display: flex; align-items: flex-end; gap: 8px; padding: 8px 8px 8px 16px; border-radius: 14px;
       background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .14);
       transition: border-color .2s, box-shadow .2s;
     }
-    .orow:focus-within { border-color: rgba(79, 142, 255, .7); box-shadow: 0 0 0 4px rgba(79, 142, 255, .14); }
+    .orow:focus-within { border-color: rgba(127, 195, 196, .7); box-shadow: 0 0 0 4px rgba(127, 195, 196, .14); }
     #omni-q {
       flex: 1; min-width: 0; background: none; border: none; outline: none; resize: none; color: #fff;
       font: inherit; font-size: 1.02rem; line-height: 1.45; padding: 7px 0; max-height: 132px;
@@ -1108,7 +1117,7 @@
     #ins-chart { display: block; overflow: visible; }
     #ins-chart .bar { fill: var(--acc); }
     #ins-chart .hit { fill: transparent; cursor: default; }
-    #ins-chart .col:hover .bar, #ins-chart .col.on .bar { fill: #9cc0ff; }
+    #ins-chart .col:hover .bar, #ins-chart .col.on .bar { fill: #a6dcdc; }
     #ins-chart .grid { stroke: rgba(255, 255, 255, .07); stroke-width: 1; }
     #ins-chart .base { stroke: rgba(255, 255, 255, .22); stroke-width: 1; }
     #ins-chart text { fill: var(--dim); font-size: 10px; font-family: inherit; font-variant-numeric: tabular-nums; }
@@ -1147,7 +1156,7 @@
     .ritem .c { font-size: .72rem; color: #fff; font-variant-numeric: tabular-nums; white-space: nowrap; }
     .ritem .c small { display: block; color: var(--dim); font-size: .6rem; text-align: right; }
     .ins-state { padding: 40px 16px; text-align: center; font-size: .8rem; color: var(--mid); line-height: 1.6; }
-    .ins-state code { font-size: .7rem; color: #cfe0ff; background: rgba(255, 255, 255, .06); padding: 2px 6px; border-radius: 4px; }
+    .ins-state code { font-size: .7rem; color: #d4eeee; background: rgba(255, 255, 255, .06); padding: 2px 6px; border-radius: 4px; }
     .ins-state .btn { margin-top: 12px; }
     .ins-note { font-size: .66rem; color: var(--dim); line-height: 1.5; }
     .ins-toast { font-size: .7rem; color: var(--warn); min-height: 1em; }
@@ -1168,7 +1177,7 @@
     .fsum:hover { color: #fff; }
     .fchev { margin-left: auto; transition: transform .2s; font-size: .7rem; }
     #filters[open] .fchev { transform: rotate(180deg); }
-    .fbadge { letter-spacing: .02em; text-transform: none; font-weight: 500; color: #cfe0ff; background: rgba(79, 142, 255, .18); border-radius: 8px; padding: 1px 7px; font-size: .62rem; }
+    .fbadge { letter-spacing: .02em; text-transform: none; font-weight: 500; color: #d4eeee; background: rgba(127, 195, 196, .18); border-radius: 8px; padding: 1px 7px; font-size: .62rem; }
     .fsec { margin-top: 12px; }
     .sem-scope { font-size: .6rem; color: var(--dim); margin-top: 2px; }
     #sem-status { font-size: .62rem; color: var(--dim); padding: 6px 12px 8px; border-top: 1px solid var(--bdr); min-height: 0; margin: 0; }
@@ -1179,8 +1188,8 @@
     /* ── Person profile ("Your history with …") ───────────────────────── */
     .pf { display: flex; flex-direction: column; gap: 14px; }
     .pf-scope { font-size: .62rem; color: var(--dim); display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-    .pf-scope .tag { color: #cfe0ff; background: rgba(79, 142, 255, .14); border-radius: 8px; padding: 1px 7px; }
-    .pf-brief { border: 1px solid rgba(79, 142, 255, .28); background: rgba(79, 142, 255, .07); border-radius: 10px; padding: 11px 12px; }
+    .pf-scope .tag { color: #d4eeee; background: rgba(127, 195, 196, .14); border-radius: 8px; padding: 1px 7px; }
+    .pf-brief { border: 1px solid rgba(127, 195, 196, .28); background: rgba(127, 195, 196, .07); border-radius: 10px; padding: 11px 12px; }
     .pf-brief h3 { font-size: .82rem; font-weight: 600; color: #fff; margin-bottom: 6px; }
     .pf-brief p { font-size: .74rem; line-height: 1.55; color: rgba(255, 255, 255, .82); }
     .pf-brief p + p { margin-top: 5px; }
@@ -1188,10 +1197,10 @@
     .pf-brief .flag { display: inline-block; font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--warn); border: 1px solid rgba(245, 194, 107, .45); border-radius: 4px; padding: 0 5px; margin-bottom: 6px; }
     .cite {
       display: inline-flex; align-items: center; justify-content: center; min-width: 16px; height: 15px; padding: 0 4px; margin-left: 2px;
-      font-size: .58rem; font-weight: 600; color: #cfe0ff; background: rgba(79, 142, 255, .22); border: none; border-radius: 4px;
+      font-size: .58rem; font-weight: 600; color: #d4eeee; background: rgba(127, 195, 196, .22); border: none; border-radius: 4px;
       cursor: pointer; vertical-align: 1px; font-variant-numeric: tabular-nums;
     }
-    .cite:hover, .cite:focus-visible { background: rgba(79, 142, 255, .45); color: #fff; }
+    .cite:hover, .cite:focus-visible { background: rgba(127, 195, 196, .45); color: #fff; }
     .pf-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .pf-stats div { min-width: 0; }
     .pf-stats .k { font-size: .56rem; letter-spacing: .12em; color: var(--dim); text-transform: uppercase; }
@@ -1233,7 +1242,7 @@
     .pf-day:first-child { margin-top: 0; }
     .pm { padding: 7px 9px; border: 1px solid var(--bdr); border-radius: 8px; background: rgba(255, 255, 255, .02); }
     .pm + .pm { margin-top: 5px; }
-    .pm.you { background: rgba(79, 142, 255, .06); border-color: rgba(79, 142, 255, .2); }
+    .pm.you { background: rgba(127, 195, 196, .06); border-color: rgba(127, 195, 196, .2); }
     .pm-h .tm { font-variant-numeric: tabular-nums; }
     .pm.hide-t .pm-h .tm { display: none; }
     .pm.hide-t .pm-h { cursor: pointer; }
@@ -1283,7 +1292,7 @@
       .prow { grid-template-columns: 90px 1fr auto; }
       #tbtns { gap: 5px; }
       #tbtns .btn { padding: 5px 9px; }
-      .brand { display: none; }
+      .brand span { display: none; }
       #rightcol { left: var(--gap); right: var(--gap); width: auto; top: auto; bottom: var(--gap); max-height: 48vh; }
       #sidebar { width: calc(100vw - 2 * var(--gap)); max-height: 40vh; }
       #hint { display: none; }
@@ -1299,7 +1308,7 @@
 
   <!-- Fatal graph error after start-up (e.g. WebGL context lost). The graph loads behind Memory Home, not behind this. -->
   <div id="loading" role="status" aria-live="polite" style="display:none">
-    <div class="lb-brand">SARTHINK <em>·</em> MEMORY</div>
+    <div class="lb-brand"><img src="./assets/nashthink-mark.png" alt="" width="72" height="90"><span>NASH <em>Think</em></span></div>
     <div class="lb-track">
       <div class="lb-fill" id="lbar"></div>
     </div>
@@ -1313,7 +1322,7 @@
 
   <!-- Top bar -->
   <header id="topbar">
-    <div class="brand">SARTHINK <em>·</em> MEMORY</div>
+    <a class="brand" id="brand" href="./" title="NASH Think home" aria-label="NASH Think home"><img src="./assets/nashthink-icon.png" alt="" width="30" height="30"><span>NASH <em>Think</em></span></a>
     <div id="stats" class="panel fade-layer" aria-live="polite"></div>
     <div id="tbtns">
       <button id="btn-explore" class="btn" type="button" title="Open the memory map (G)">Memory map</button>
@@ -1326,17 +1335,17 @@
 
   <!-- Memory Home: the opening surface, above the (ambient, still interactive) graph -->
   <main id="home" class="panel" aria-labelledby="home-h">
-    <div class="h-kicker">SARTHINK <em>·</em> MEMORY HOME</div>
+    <div class="h-kicker">NASH THINK <em>·</em> MEMORY HOME</div>
     <h1 id="home-h">Ask your <span class="grad">second brain</span></h1>
     <p class="h-sub">Ask a question about your conversations. Every answer shows the messages it comes from.</p>
     <div id="home-slot">
       <form id="omni" role="search" aria-label="Ask or search your memories">
         <div class="omodes" role="tablist" aria-label="Question mode">
-          <button type="button" class="omode" role="tab" id="omode-ask" data-omode="ask" aria-selected="true">Ask<span class="long"> Sarthink</span></button>
+          <button type="button" class="omode" role="tab" id="omode-ask" data-omode="ask" aria-selected="true">Ask<span class="long"> NASH Think</span></button>
           <button type="button" class="omode" role="tab" id="omode-search" data-omode="search" aria-selected="false" tabindex="-1">Find<span class="long"> memories</span></button>
         </div>
         <div class="orow">
-          <textarea id="omni-q" rows="1" maxlength="500" autocomplete="off" spellcheck="false" aria-label="Question for Ask Sarthink"
+          <textarea id="omni-q" rows="1" maxlength="500" autocomplete="off" spellcheck="false" aria-label="Question for Ask NASH Think"
             placeholder="Ask anything about your memories…"></textarea>
           <select id="omni-writer" aria-label="How to answer" title="How Ask answers: a local Llama writes it (Best, Quick) or quotes only (Evidence)">
             <option value="best">Best</option>
@@ -3636,6 +3645,203 @@
       if (b) focusAskSource(+b.dataset.k);
     }
 
+    // ─── Loading animation: the memory graph "thinking" ───
+    // A 2D canvas drawn from the real map (a sample of its busiest threads and people at their layout positions,
+    // turning slowly), with signals running along real connections and lighting the nodes they reach. Once the
+    // sources are known they glow with their people, and signals run from the centre to the one being read.
+    // Clicking a lit source opens that conversation. Without a graph it animates a small synthetic network.
+    function thinkingGraph(canvas, onPick) {
+      const ctx = canvas.getContext('2d');
+      const still = reducedMotion();
+      const N = [], E = [], adj = [], pulses = [];
+      const local = new Map();                       // S.nodes index -> N index
+      // The layout has a few far-apart clusters, so positions are spread by rank: each node keeps its direction from the
+      // centre, and its distance becomes its rank among all distances, which fills a ball evenly.
+      let norm = null;                               // set once the first sample is normalised; later nodes follow it
+      const spread = (x, y, z) => {
+        const d = Math.hypot(x, y, z) || 1e-9, ds = norm.dists;
+        let lo = 0, hi = ds.length;
+        while (lo < hi) { const m = (lo + hi) >> 1; if (ds[m] < d) lo = m + 1; else hi = m; }
+        const r = Math.cbrt((lo + .5) / (ds.length + 1));
+        return [x / d * r, y / d * r, z / d * r];
+      };
+      const add = (x, y, z, col, ref = -1, size = 1, unit = false) => {
+        if (norm && !unit) [x, y, z] = spread(x - norm.cx, y - norm.cy, z - norm.cz);
+        N.push({ x, y, z, col, ref, size, glow: 0 }); adj.push([]);
+        if (ref >= 0) local.set(ref, N.length - 1);
+        return N.length - 1;
+      };
+      const link = (a, b) => { if (a === b) return; E.push([a, b]); adj[a].push(E.length - 1); adj[b].push(E.length - 1); };
+      if (S.nodes && S.nodes.length && S.edges) {
+        const pick = S.nodes.map((n, i) => i).sort((a, b) => (S.nodes[b].msgs || 0) - (S.nodes[a].msgs || 0)).slice(0, 170);
+        const addNode = i => { const n = S.nodes[i]; return local.has(i) ? local.get(i) : add(n.x, n.y, n.z, PLATFORM_COLORS[n.platform] || n.hex || '#9aa0b4', i, n.kind === 'thread' ? 1 : .8); };
+        pick.forEach(addNode);
+        for (const e of S.edges) if (local.has(e.s) && local.has(e.t) && E.length < 420) link(local.get(e.s), local.get(e.t));
+        var ensure = i => {
+          const had = local.has(i), k = addNode(i);
+          for (const { j } of neighbours(i)) if (local.has(j) && !adj[k].some(q => E[q].includes(local.get(j)))) link(k, local.get(j));
+          const near = adj[k].map(q => E[q][0] === k ? E[q][1] : E[q][0]).filter(q => q !== k);
+          if (!had && norm && norm.placed) {   // a node added after the layout: beside its neighbours, or at a random spot
+            const m = N[k];
+            if (near.length) { m.x = near.reduce((a, q) => a + N[q].x, 0) / near.length; m.y = near.reduce((a, q) => a + N[q].y, 0) / near.length; m.z = near.reduce((a, q) => a + N[q].z, 0) / near.length; }
+            else { m.x = Math.random() - .5; m.y = Math.random() - .5; m.z = Math.random() - .5; }
+            m.x += (Math.random() - .5) * .15; m.y += (Math.random() - .5) * .15; m.z += (Math.random() - .5) * .15;
+          }
+          return k;
+        };
+      } else {
+        for (let k = 0; k < 110; k++) { const u = Math.random() * 2 - 1, t = Math.random() * 6.283, r = Math.sqrt(1 - u * u);
+          add(r * Math.cos(t), u, r * Math.sin(t), k % 2 ? '#7fc3c4' : '#ea9488'); }
+        for (let k = 0; k < 110; k++) for (let q = 0; q < 2; q++) link(k, Math.floor(Math.random() * 110));
+        var ensure = () => -1;
+      }
+      // normalise the layout into a unit sphere around its centre
+      const cx = N.reduce((a, n) => a + n.x, 0) / N.length, cy = N.reduce((a, n) => a + n.y, 0) / N.length, cz = N.reduce((a, n) => a + n.z, 0) / N.length;
+      for (const n of N) { n.x -= cx; n.y -= cy; n.z -= cz; }
+      norm = { cx, cy, cz, dists: N.map(n => Math.hypot(n.x, n.y, n.z)).sort((a, b) => a - b) };
+      for (const n of N) { [n.x, n.y, n.z] = spread(n.x, n.y, n.z); n.x += (Math.random() - .5) * .1; n.y += (Math.random() - .5) * .1; n.z += (Math.random() - .5) * .1; }
+      // Relax into a readable network (Fruchterman–Reingold in 3D): linked nodes pull together, all nodes push apart,
+      // a little gravity keeps it round. ~170 nodes: a few ms per iteration, done once.
+      (() => {
+        const n = N.length, k = .85 * Math.cbrt(4.19 / n), dx = new Float32Array(n), dy = new Float32Array(n), dz = new Float32Array(n);
+        for (let it = 0, iters = 140; it < iters; it++) {
+          dx.fill(0); dy.fill(0); dz.fill(0);
+          for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+            const x = N[i].x - N[j].x, y = N[i].y - N[j].y, z = N[i].z - N[j].z, d2 = x * x + y * y + z * z + 1e-4, f = k * k / d2;
+            dx[i] += x * f; dy[i] += y * f; dz[i] += z * f; dx[j] -= x * f; dy[j] -= y * f; dz[j] -= z * f;
+          }
+          for (const [a, b] of E) {
+            const x = N[a].x - N[b].x, y = N[a].y - N[b].y, z = N[a].z - N[b].z, f = Math.hypot(x, y, z) / k;
+            dx[a] -= x * f; dy[a] -= y * f; dz[a] -= z * f; dx[b] += x * f; dy[b] += y * f; dz[b] += z * f;
+          }
+          const temp = .09 * (1 - it / iters) + .005;
+          for (let i = 0; i < n; i++) {
+            const m = N[i];
+            dx[i] -= m.x * .6; dy[i] -= m.y * .6; dz[i] -= m.z * .6;
+            const l = Math.hypot(dx[i], dy[i], dz[i]) || 1, step = Math.min(l, temp) / l;
+            m.x += dx[i] * step; m.y += dy[i] * step; m.z += dz[i] * step;
+          }
+        }
+        const r = N.map(m => Math.hypot(m.x, m.y, m.z)).sort((a, b) => a - b)[Math.floor(n * .95)] || 1;
+        for (const m of N) { m.x /= r; m.y /= r; m.z /= r; }
+      })();
+      norm.placed = true;
+
+      let mode = 'search', sources = [], current = -1, raf = 0, last = performance.now(), angle = 0, spawnAt = 0, W = 0, H = 0;
+      const proj = new Array(N.length);
+      const size = () => {
+        const dpr = Math.min(2, window.devicePixelRatio || 1);
+        W = canvas.clientWidth; H = canvas.clientHeight;
+        canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      };
+      const fire = (from, colour) => {
+        const opts = adj[from];
+        if (!opts.length) return;
+        const e = opts[Math.floor(Math.random() * opts.length)];
+        pulses.push({ a: from, b: E[e][0] === from ? E[e][1] : E[e][0], t: 0, v: 1.2 + Math.random() * 1.3, col: colour || N[from].col, hops: 2 });
+      };
+      const frame = now => {
+        const dt = Math.min(.05, (now - last) / 1000); last = now;
+        if (!still) angle += dt * (mode === 'read' ? .12 : .22);
+        // fill the canvas: the ball's height fits, and it may stretch up to 1.8x sideways in a wide panel
+        const ca = Math.cos(angle), sa = Math.sin(angle), ox = W / 2, oy = H / 2;
+        const sy = H * .44 / .53, sx = Math.min(W * .44 / .53, sy * 1.8);
+        N.forEach((n, i) => {
+          const x = n.x * ca + n.z * sa, z = -n.x * sa + n.z * ca, d = 1 / (1.9 - z * .6);
+          proj[i] = { x: ox + x * sx * d, y: oy - n.y * sy * d, d };
+        });
+        if (!still && now > spawnAt) {
+          if (mode === 'search') { for (let k = 0; k < 2; k++) fire(Math.floor(Math.random() * N.length)); spawnAt = now + 90; }
+          else if (sources.length) {
+            const src = sources[current] || sources[0];
+            pulses.push({ a: -1, b: src.k, t: 0, v: 1.1, col: '#ea9488', hops: 0 });
+            src.people.forEach(p => pulses.push({ a: src.k, b: p, t: -.3 - Math.random() * .4, v: 1.4, col: '#7fc3c4', hops: 0 }));
+            if (Math.random() < .5) fire(Math.floor(Math.random() * N.length));
+            spawnAt = now + 650;
+          }
+        }
+        ctx.clearRect(0, 0, W, H);
+        const lit = new Set(sources.flatMap(s => [s.k, ...s.people]));
+        // edges
+        ctx.lineWidth = 1;
+        for (const [a, b] of E) {
+          const on = lit.has(a) && lit.has(b);
+          ctx.strokeStyle = on ? 'rgba(234, 148, 136, .45)' : `rgba(127, 195, 196, ${mode === 'read' ? .05 : .09})`;
+          ctx.beginPath(); ctx.moveTo(proj[a].x, proj[a].y); ctx.lineTo(proj[b].x, proj[b].y); ctx.stroke();
+        }
+        // pulses
+        for (let k = pulses.length - 1; k >= 0; k--) {
+          const p = pulses[k];
+          p.t += dt * p.v;
+          if (p.t < 0) continue;
+          const A = p.a < 0 ? { x: ox, y: oy } : proj[p.a], B = proj[p.b];
+          if (p.t >= 1) {
+            N[p.b].glow = 1;
+            if (p.hops > 0 && Math.random() < .7) { fire(p.b, p.col); pulses[pulses.length - 1].hops = p.hops - 1; }
+            pulses.splice(k, 1);
+            continue;
+          }
+          const x = A.x + (B.x - A.x) * p.t, y = A.y + (B.y - A.y) * p.t;
+          const g = ctx.createRadialGradient(x, y, 0, x, y, 7);
+          g.addColorStop(0, p.col); g.addColorStop(1, 'rgba(0,0,0,0)');
+          ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, 7, 0, 6.283); ctx.fill();
+        }
+        // nodes, far ones first
+        const order = N.map((n, i) => i).sort((a, b) => proj[a].d - proj[b].d);
+        for (const i of order) {
+          const n = N[i], q = proj[i], isLit = lit.has(i), isCur = sources[current] && sources[current].k === i;
+          n.glow = Math.max(0, n.glow - dt * 1.4);
+          const r = (isCur ? 6 : isLit ? 4.4 : 2.5 * n.size) * q.d * 1.5 + n.glow * 3;
+          ctx.globalAlpha = Math.min(1, (mode === 'read' && !isLit ? .28 : .55) * q.d * 1.4 + n.glow * .8 + (isLit ? .45 : 0));
+          if (n.glow > .05 || isLit) {
+            const g = ctx.createRadialGradient(q.x, q.y, 0, q.x, q.y, r * 3.2);
+            g.addColorStop(0, n.col); g.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = g; ctx.beginPath(); ctx.arc(q.x, q.y, r * 3.2, 0, 6.283); ctx.fill();
+          }
+          ctx.fillStyle = n.col; ctx.beginPath(); ctx.arc(q.x, q.y, r, 0, 6.283); ctx.fill();
+          if (isCur) { ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(q.x, q.y, r + 3, 0, 6.283); ctx.stroke(); }
+        }
+        ctx.globalAlpha = 1;
+        // the question at the centre
+        const pulse = still ? .5 : .5 + .5 * Math.sin(now / 380);
+        const g = ctx.createRadialGradient(ox, oy, 0, ox, oy, 16 + pulse * 6);
+        g.addColorStop(0, 'rgba(255, 236, 230, .95)'); g.addColorStop(.35, 'rgba(234, 148, 136, .55)'); g.addColorStop(1, 'rgba(127, 195, 196, 0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(ox, oy, 22 + pulse * 6, 0, 6.283); ctx.fill();
+        if (!still) raf = requestAnimationFrame(frame);
+      };
+      canvas.addEventListener('click', e => {
+        const r = canvas.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+        let best = null, bd = 18;
+        sources.forEach((s, j) => { const q = proj[s.k]; const d = q && Math.hypot(q.x - x, q.y - y); if (d < bd) { bd = d; best = j; } });
+        if (best !== null) onPick(best);
+      });
+      canvas.addEventListener('mousemove', e => {
+        const r = canvas.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+        canvas.style.cursor = sources.some(s => { const q = proj[s.k]; return q && Math.hypot(q.x - x, q.y - y) < 18; }) ? 'pointer' : '';
+      });
+      size();
+      raf = requestAnimationFrame(frame);
+      return {
+        // results: [{ r, k }] evidence sources; their threads (and people) become the lit nodes
+        read(items) {
+          mode = 'read';
+          sources = items.map(({ r }) => {
+            const m = r._nodes || (S.pGeo ? resultNodes(r) : { thread: -1, people: [] });
+            let k = m.thread >= 0 ? ensure(m.thread) : -1;
+            if (k < 0) k = add(Math.random() - .5, Math.random() - .5, Math.random() - .5, PLATFORM_COLORS[r.platform] || '#9aa0b4', -1, 1, true);
+            return { k, people: m.people.map(ensure).filter(p => p >= 0) };
+          });
+          for (let k = proj.length; k < N.length; k++) proj.push({ x: 0, y: 0, d: 1 });
+          current = 0;
+          if (still) requestAnimationFrame(frame);
+        },
+        focus(j) { current = j; if (sources[j]) N[sources[j].k].glow = 1; if (still) requestAnimationFrame(frame); },
+        resize: size,
+        stop() { cancelAnimationFrame(raf); },
+      };
+    }
+
     // ─── Ask loading screen: steps with a timer until the answer (or the evidence) is ready ───
     const LOAD_STEPS = [['search', 'Searching your memories'], ['check', 'Checking the evidence'], ['read', 'Reading the sources']];
 
@@ -3646,14 +3852,20 @@
       el.setAttribute('role', 'status');
       el.innerHTML = `<div class="al-head"><span class="al-spin" aria-hidden="true"></span><span class="al-title">Looking through your memories</span><span class="al-time">0:00</span></div>
         <ol class="al-steps">${LOAD_STEPS.map(([k, label]) => `<li data-step="${k}"><i aria-hidden="true"></i><span>${esc(label)}</span><small></small></li>`).join('')}</ol>
-        <div class="al-skel" aria-hidden="true"><div class="skel" style="width:94%"></div><div class="skel" style="width:81%"></div><div class="skel" style="width:88%"></div><div class="skel" style="width:46%"></div></div>
-        <div class="al-read" hidden><button type="button" class="al-now" title="Open this conversation on the map"></button><div class="al-chips"></div></div>
+        <div class="al-viz"><canvas aria-hidden="true"></canvas><div class="al-cap" aria-live="polite"></div></div>
         <div class="al-bar" hidden aria-hidden="true"><i></i></div>
         <div class="al-foot"><span class="al-hint">${S.sem.loadedOnce ? '' : 'The first question after a start takes a little longer.'}</span>
           <button type="button" class="al-watch" hidden>Watch on the map →</button><button type="button" class="btn sm al-stop" hidden>Stop</button></div>`;
-      const L = { el, started: performance.now(), tick: 0, typical: 0 };
+      const L = { el, started: performance.now(), tick: 0, typical: 0, viz: null, w: 0 };
+      const canvas = el.querySelector('.al-viz canvas');
+      requestAnimationFrame(() => {   // once the loader is on the page, so the canvas has a size
+        if (S.sem.loader === L) L.viz = thinkingGraph(canvas, j => L.tour && L.tour.open(j));
+      });
+      document.body.classList.add('thinking');
+      if (S.controls) S.controls.autoRotateSpeed = 0.9;
       L.tick = setInterval(() => {
         const secs = (performance.now() - L.started) / 1000;
+        if (L.viz && canvas.clientWidth && canvas.clientWidth !== L.w) { L.w = canvas.clientWidth; L.viz.resize(); }
         el.querySelector('.al-time').textContent = mmss(secs);
         if (L.typical) el.querySelector('.al-bar i').style.width = `${Math.min(96, 100 * secs * 1000 / L.typical).toFixed(1)}%`;
       }, 1000);
@@ -3699,20 +3911,18 @@
       } catch (_) { /* storage blocked */ }
     }
 
-    // While the model reads: the card shows one evidence source at a time (the chips list all of them), and on the
-    // map the camera moves from source to source with a "Reading" label. Dragging the map stops the camera moves;
-    // clicking the card or a chip opens that conversation.
+    // While the model reads: the thinking graph lights the evidence sources and runs signals to one at a time,
+    // the caption names it, and on the map the camera moves from source to source with a "Reading" label.
+    // Dragging the map stops the camera moves; clicking a lit source opens that conversation.
     function startReadingTour() {
       const L = S.sem.loader;
       if (!L || L.tour) return;
       const items = S.sem.results.map((r, k) => ({ r, k })).filter(x => x.r.relevant);
       if (!items.length) return;
-      const box = L.el.querySelector('.al-read'), now = box.querySelector('.al-now'), chips = box.querySelector('.al-chips');
-      L.el.querySelector('.al-skel').hidden = true;
-      box.hidden = false;
-      chips.innerHTML = items.map(({ r }, j) => `<button type="button" class="al-chip" data-j="${j}" style="--pc:${esc(PLATFORM_COLORS[r.platform] || '#9aa0b4')}"
-        title="${esc(platformName(r.platform))} · ${esc(dateRange(r.start_time, r.end_time))}"><i></i><span>${esc(r.title || '(untitled)')}</span></button>`).join('');
+      const cap = L.el.querySelector('.al-cap');
       const T = L.tour = { j: 0, timer: 0, manual: false };
+      const whenViz = fn => L.viz ? fn(L.viz) : requestAnimationFrame(() => L.viz && fn(L.viz));
+      whenViz(v => v.read(items));
       T.focus = () => {
         const { r } = items[T.j];
         if (!S.pGeo) return;
@@ -3725,25 +3935,17 @@
       const show = j => {
         T.j = j;
         const { r } = items[j];
-        now.classList.add('fade');
-        setTimeout(() => {
-          if (S.sem.loader !== L) return;
-          now.style.setProperty('--pc', PLATFORM_COLORS[r.platform] || '#9aa0b4');
-          now.innerHTML = `<span class="an-top"><i></i>Now reading · ${esc(platformName(r.platform))}<span>${esc(dateRange(r.start_time, r.end_time))}</span></span>
-            <span class="an-title">${esc(r.title || '(untitled)')}</span><span class="an-snip">${esc(stripStamps(r.snippet || ''))}</span>`;
-          now.classList.remove('fade');
-        }, 250);
-        chips.querySelectorAll('.al-chip').forEach((c, i) => c.classList.toggle('on', i === j));
+        cap.innerHTML = `<i style="--pc:${esc(PLATFORM_COLORS[r.platform] || '#9aa0b4')}"></i><b>Reading</b> ${esc(r.title || '(untitled)')}
+          <span>${esc(platformName(r.platform))} · ${esc(dateRange(r.start_time, r.end_time))}</span>`;
+        whenViz(v => v.focus(j));
         T.focus();
       };
-      const open = j => {
+      T.open = j => {
         clearInterval(T.timer);
         T.manual = true;
         show(j);
         if (S.pGeo) focusSemanticResult(items[j].k);
       };
-      now.addEventListener('click', () => open(T.j));
-      chips.addEventListener('click', e => { const c = e.target.closest('.al-chip'); if (c) open(+c.dataset.j); });
       T.onDrag = () => { T.manual = true; };
       if (S.controls) S.controls.addEventListener('start', T.onDrag);
       L.el.querySelector('.al-watch').hidden = !(S.pGeo && S.view !== 'graph');
@@ -3781,6 +3983,9 @@
       if (!L) return;
       clearInterval(L.tick);
       stopReadingTour(L);
+      if (L.viz) L.viz.stop();
+      document.body.classList.remove('thinking');
+      if (S.controls) S.controls.autoRotateSpeed = 0.28;
       L.el.remove();
     }
 
@@ -4220,7 +4425,7 @@
         b.tabIndex = on ? 0 : -1;
       });
       $('omni-q').placeholder = mode === 'ask' ? 'Ask anything about your memories…' : 'Describe a memory to find — topic, person, feeling…';
-      $('omni-q').setAttribute('aria-label', mode === 'ask' ? 'Question for Ask Sarthink' : 'Memory search');
+      $('omni-q').setAttribute('aria-label', mode === 'ask' ? 'Question for Ask NASH Think' : 'Memory search');
       $('home-chips').innerHTML = HOME_PROMPTS[mode].map(q => `<button type="button" class="ask-chip">${esc(q)}</button>`).join('');
       $('home-chips').querySelectorAll('.ask-chip').forEach(b => b.addEventListener('click', () => { $('omni-q').value = b.textContent; submitOmni(); }));
       syncOmniBusy();
@@ -4538,6 +4743,15 @@
     $('btn-explore').addEventListener('click', () => setView('graph'));
     $('home-explore').addEventListener('click', () => setView('graph'));
     $('btn-home').addEventListener('click', () => setView('home'));
+    // The logo goes home, like on any site: from the map or Insights back to Memory Home; on Home it clears the answer.
+    $('brand').addEventListener('click', e => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;   // new tab/window: a plain link
+      e.preventDefault();
+      if (helpOpen()) closeHelp();
+      closeInsights();
+      if (S.view !== 'home') setView('home');
+      else { resetSemantic(); $('omni-q').focus(); }
+    });
     $('btn-insights').addEventListener('click', () => (insightsOpen() ? closeInsights() : openInsights()));
     $('home-insights').addEventListener('click', openInsights);
     $('ins-close').addEventListener('click', closeInsights);
