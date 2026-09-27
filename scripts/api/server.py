@@ -638,6 +638,15 @@ def _quietly(fn):
         pass
 
 
+def clean_examples(value):
+    """{"ask": [...], "search": [...]} with at most 6 short strings each, or None."""
+    if not isinstance(value, dict):
+        return None
+    lists = {k: value.get(k) if isinstance(value.get(k), list) else [] for k in ("ask", "search")}
+    out = {k: [q.strip()[:120] for q in v if isinstance(q, str) and q.strip()][:6] for k, v in lists.items()}
+    return {k: v for k, v in out.items() if v} or None
+
+
 def build_spaces(config, table=search.DEFAULT_TABLE):
     """A WorkspaceSet from config/workspaces.json: one set of services per data folder, one shared embedding model."""
     loader, lock = workspaces.shared_model_loader(search.load_model), threading.Lock()
@@ -647,7 +656,8 @@ def build_spaces(config, table=search.DEFAULT_TABLE):
         ins = insights.InsightsService(paths["memory_db"], paths["identity_map"])
         spaces[wid] = workspaces.Workspace(
             wid, cfg.get("label") or wid, SearchService(paths["lancedb"], table, model_loader=loader, lock=lock),
-            ins, people.PeopleService(ins.db_path, ins.identity_map), paths["graph_dir"], cfg.get("password"))
+            ins, people.PeopleService(ins.db_path, ins.identity_map), paths["graph_dir"], cfg.get("password"),
+            clean_examples(cfg.get("examples")))
     return workspaces.WorkspaceSet(spaces, config["default"])
 
 

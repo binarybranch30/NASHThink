@@ -151,6 +151,12 @@
     }
 
     #stage canvas { display: block; outline: none; }
+    #stage {
+      background:
+        radial-gradient(ellipse 55% 45% at 18% 22%, rgba(127, 195, 196, .07), transparent 70%),
+        radial-gradient(ellipse 50% 40% at 84% 78%, rgba(234, 148, 136, .06), transparent 70%),
+        radial-gradient(ellipse 90% 80% at 50% 50%, #04061a, #000010 75%);
+    }
     #stage.hovering canvas { cursor: pointer; }
     #stage.dragging canvas { cursor: grabbing; }
 
@@ -1462,7 +1468,7 @@
     <div id="help" class="panel" role="dialog" aria-modal="true" aria-labelledby="help-h" tabindex="-1">
       <h2 id="help-h">HOW IT WORKS</h2>
       <h3>Ask and find</h3>
-      <p>Type a question in the box and press Enter. <b>Ask</b> answers with quotes from your own messages and lists the conversations they come from; <b>Find</b> shows the closest memories. Click any source to open it on the memory map. Everything runs on this device.</p>
+      <p>Type a question in the box and press Enter. <b>Ask</b> answers from your own messages and lists the conversations it used, folded under <b>Sources</b>; <b>Find</b> shows the closest memories. Click any source to open it on the memory map. Everything runs on this device.</p>
       <h3>People</h3>
       <p>Click a person (a filled dot) to see <b>Your history with them</b>: a short summary built only from counts, dates and conversation titles, with numbered links to the conversations it is based on. <b>View conversations</b> and <b>Show full history</b> load the messages in pages when you want them; <b>Back</b> returns to the profile.</p>
       <h3>The memory map</h3>
@@ -1486,7 +1492,7 @@
         <tr><td><span class="kbd">Esc</span></td><td>Close this dialog or Insights, otherwise reset the view</td></tr>
         <tr><td><span class="kbd">?</span></td><td>Show / hide this help</td></tr>
       </table>
-      <p style="margin-top:10px">Ask never uses a language model: every sentence is a quote, a count, a date or a title from your sources, so it can’t invent facts — but read the sources before drawing conclusions.</p>
+      <p style="margin-top:10px">With <b>Evidence only</b>, Ask uses no language model: every sentence is a quote, a count, a date or a title from your sources. With <b>Best</b> or <b>Quick</b>, a local Llama on this device writes the answer from those sources and cites them; when they don’t answer the question it says <i>No relevant info found</i> instead of guessing. Either way, read the sources before drawing conclusions.</p>
       <div class="foot"><button class="btn primary" type="button" id="help-close">Got it</button></div>
     </div>
   </div>
@@ -1787,13 +1793,13 @@
     function initThree() {
       const W = window.innerWidth, H = window.innerHeight;
       try {
-        S.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance', preserveDrawingBuffer: false });
+        S.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance', preserveDrawingBuffer: false });
       } catch (e) {
         throw new GraphError('webgl', 'WebGL is not available in this browser, so the 3D graph cannot be drawn. Try another browser or enable hardware acceleration.');
       }
       S.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
       S.renderer.setSize(W, H);
-      S.renderer.setClearColor(BG_COLOR, 1);
+      S.renderer.setClearColor(BG_COLOR, 0);   // transparent: #stage paints the night sky behind the graph
       $('stage').appendChild(S.renderer.domElement);
       S.renderer.domElement.tabIndex = -1;
 
@@ -1941,6 +1947,35 @@
       return S.bounds.unit * (0.9 + 0.5 * Math.log2(1 + n.size));
     }
 
+    // A quiet sky behind the graph: tiny stars on a far shell (beyond the farthest zoom), mostly pale with a few in
+    // the logo's teal and coral. They turn with the camera, so the map feels like it floats in space.
+    function addStarfield(center, rad) {
+      const n = 1600, pos = new Float32Array(n * 3), col = new Float32Array(n * 3);
+      const tints = [[.86, .9, .93], [.5, .76, .77], [.92, .58, .53]];
+      let seed = 7;
+      const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;   // same sky on every load
+      for (let i = 0; i < n; i++) {
+        const u = rnd() * 2 - 1, t = rnd() * Math.PI * 2, r = Math.sqrt(1 - u * u), d = rad * (60 + rnd() * 35);
+        pos.set([center.x + r * Math.cos(t) * d, center.y + u * d, center.z + r * Math.sin(t) * d], i * 3);
+        const tint = tints[rnd() < .86 ? 0 : rnd() < .5 ? 1 : 2], b = .18 + Math.pow(rnd(), 3) * .75;
+        col.set(tint.map(v => v * b), i * 3);
+      }
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+      const dot = document.createElement('canvas');
+      dot.width = dot.height = 32;
+      const x = dot.getContext('2d'), grd = x.createRadialGradient(16, 16, 0, 16, 16, 16);
+      grd.addColorStop(0, 'rgba(255,255,255,1)'); grd.addColorStop(.35, 'rgba(255,255,255,.55)'); grd.addColorStop(1, 'rgba(255,255,255,0)');
+      x.fillStyle = grd; x.fillRect(0, 0, 32, 32);
+      const m = new THREE.PointsMaterial({ size: 2.6, sizeAttenuation: false, vertexColors: true, map: new THREE.CanvasTexture(dot),
+        transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
+      S.stars = new THREE.Points(g, m);
+      S.stars.renderOrder = -1;
+      S.stars.frustumCulled = false;
+      S.scene.add(S.stars);
+    }
+
     function buildScene() {
       const N = S.nodes.length, E = S.edges.length;
 
@@ -1957,6 +1992,7 @@
       applyViewOffset();
       S.controls.minDistance = S.bounds.unit * 3;
       S.controls.maxDistance = rad * 30;
+      addStarfield(c, rad);
 
       // Nodes
       const pos = new Float32Array(N * 3), col = new Float32Array(N * 3);
@@ -3728,6 +3764,7 @@
       norm.placed = true;
 
       let mode = 'search', sources = [], current = -1, raf = 0, last = performance.now(), angle = 0, spawnAt = 0, W = 0, H = 0;
+      const sky = Array.from({ length: 70 }, () => ({ x: Math.random(), y: Math.random(), r: .4 + Math.random() * .8, p: Math.random() * 6.3 }));
       const proj = new Array(N.length);
       const size = () => {
         const dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -3762,6 +3799,11 @@
           }
         }
         ctx.clearRect(0, 0, W, H);
+        for (const st of sky) {   // a faint, slowly twinkling sky, as behind the big map
+          ctx.globalAlpha = .18 + .14 * (still ? .5 : Math.sin(now / 900 + st.p) * .5 + .5);
+          ctx.fillStyle = '#dfe8ea'; ctx.beginPath(); ctx.arc(st.x * W, st.y * H, st.r, 0, 6.283); ctx.fill();
+        }
+        ctx.globalAlpha = 1;
         const lit = new Set(sources.flatMap(s => [s.k, ...s.people]));
         // edges
         ctx.lineWidth = 1;
@@ -4834,6 +4876,10 @@
     async function initWorkspace() {
       let w;
       try { w = await apiFetch('/api/workspace', { timeout: 4000 }); } catch (_) { return; }   // older server: no switch
+      if (w.examples) {   // this workspace's own sample questions
+        for (const k of ['ask', 'search']) if (Array.isArray(w.examples[k]) && w.examples[k].length) HOME_PROMPTS[k] = w.examples[k];
+        setOmniMode(S.omniMode);
+      }
       if (!w.switchable) return;
       const other = w.workspaces.find(x => x.id !== w.active && x.locked) || w.workspaces.find(x => x.id !== w.active);
       if (!other) return;

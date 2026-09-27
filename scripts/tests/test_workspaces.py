@@ -173,6 +173,14 @@ class RouteTests(unittest.TestCase):
         r = self.c.post("/api/workspace/unlock", json={"workspace": "personal", "password": PASSWORD})
         self.assertEqual((r.status_code, r.json()["error"]["code"]), (429, "too_many_attempts"))
 
+    def test_examples_follow_the_workspace(self):
+        self.spaces.spaces["demo"].examples = {"ask": ["Sample question?"]}
+        self.assertEqual(self.c.get("/api/workspace").json()["examples"], {"ask": ["Sample question?"]})
+        self.c.post("/api/workspace/unlock", json={"workspace": "personal", "password": PASSWORD})
+        self.assertIsNone(self.c.get("/api/workspace").json()["examples"])
+        self.assertEqual(server.clean_examples({"ask": [" q ", 3, ""], "search": "x"}), {"ask": ["q"]})
+        self.assertIsNone(server.clean_examples(["q"]))
+
     def test_build_spaces_from_config(self):
         root = Path(self.tmp.name)
         config = {"default": "demo", "workspaces": {"demo": {"root": str(root / "a")},

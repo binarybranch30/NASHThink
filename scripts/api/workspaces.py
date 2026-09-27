@@ -6,6 +6,8 @@ config/workspaces.json (gitignored) lists them; without it the server has one wo
      "workspaces": {"demo":     {"label": "Sample data", "root": "/home/me/sarthink-demo"},
                     "personal": {"label": "My data", "root": "/home/me/sarthink", "password": "pbkdf2_sha256$..."}}}
 
+A workspace may also carry "examples": {"ask": [...], "search": [...]}, the sample questions its home page offers.
+
 Each root is a Sarthink folder with its own processed_data/ (LanceDB index, memory DB, graph CSVs) and
 config/identity_map.json. A browser sees the default workspace until it unlocks another one with that
 workspace's password; the choice is a signed, HttpOnly cookie that expires, and every server restart signs
@@ -96,6 +98,7 @@ class Workspace:
     people: Any
     graph_dir: Path
     password_hash: Optional[str] = None
+    examples: Optional[dict] = None     # {"ask": [...], "search": [...]}: the home page's sample questions
 
 
 @dataclass
@@ -165,6 +168,7 @@ class WorkspaceSet:
             "label": active.label,
             "default": self.default,
             "switchable": self.switchable,
+            "examples": active.examples,
             "workspaces": [{"id": w.id, "label": w.label, "locked": w.id != self.default} for w in self.spaces.values()],
         }
 
