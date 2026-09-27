@@ -369,6 +369,16 @@ class HelperTests(unittest.TestCase):
         lm.assert_not_called()
 
 
+class AssetTests(ApiTestCase):
+    def test_only_the_logo_is_served(self):
+        c = self.client()
+        r = c.get("/assets/nashthink-icon.png")
+        self.assertEqual((r.status_code, r.headers["content-type"]), (200, "image/png"))
+        self.assertTrue(r.content.startswith(b"\x89PNG"))
+        for bad in ("/assets/nashthink-logo-original.jpeg", "/assets/..%2Fconfig%2Fworkspaces.json", "/assets/missing.png"):
+            self.assertEqual(c.get(bad).status_code, 404, bad)
+
+
 class GraphPageTests(unittest.TestCase):
     """The UI calls the API and exposes the controls the README documents."""
 

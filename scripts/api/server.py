@@ -22,6 +22,7 @@ Endpoints:
     GET  /api/insights        read-only activity aggregates from the SQLite memory DB (see insights.py);
                               optional ?platforms=a,b&date_from=...&date_to=...&top=10
     GET  /processed_data/graph/cosmograph_{nodes,edges}.csv   graph data for the UI
+    GET  /assets/nashthink-{mark,icon}.png                    the NASH Think logo
 """
 import argparse
 import asyncio
@@ -68,6 +69,8 @@ GRAPH_HTML = REPO_ROOT / "sarthink_graph.html"
 GRAPH_DIR = REPO_ROOT / "processed_data" / "graph"
 # Only these files are served from processed_data/; everything else there stays private.
 GRAPH_FILES = ("cosmograph_nodes.csv", "cosmograph_edges.csv")
+ASSETS_DIR = REPO_ROOT / "assets"
+ASSET_FILES = {"nashthink-mark.png": "image/png", "nashthink-icon.png": "image/png"}   # the UI's logo
 
 
 class ApiError(Exception):
@@ -609,6 +612,13 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
         if not Path(graph_html).is_file():
             raise HTTPException(404, "sarthink_graph.html not found")
         return FileResponse(graph_html, media_type="text/html")
+
+    @app.get("/assets/{name}", include_in_schema=False)
+    def asset(name: str):
+        path = ASSETS_DIR / name
+        if name not in ASSET_FILES or not path.is_file():
+            raise HTTPException(404, "not found")
+        return FileResponse(path, media_type=ASSET_FILES[name], headers={"Cache-Control": "public, max-age=3600"})
 
     @app.get("/processed_data/graph/{name}", include_in_schema=False)
     def graph_data(name: str, request: Request):
