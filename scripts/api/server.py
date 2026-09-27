@@ -9,11 +9,13 @@ Usage:
 
 Endpoints:
     GET  /                    sarthink_graph.html
-    GET  /api/health          index/model status (never loads the model)
+    GET  /api/health          index/model status (never loads the model) + whether the memory DB exists
     POST /api/search          {"query": "...", "limit": 10} -> structured results
     POST /api/ask             {"question": "...", "limit": 8, "platforms": [...], "date_from": ..., "date_to": ...}
                               -> evidence-first memory brief (deterministic; see memory_brief.py)
     GET  /api/thread/T_<id>   indexed conversation chunks of one graph thread (no model load)
+    GET  /api/insights        read-only activity aggregates from the SQLite memory DB (see insights.py);
+                              optional ?platforms=a,b&date_from=...&date_to=...&top=10
     GET  /processed_data/graph/cosmograph_{nodes,edges}.csv   graph data for the UI
 """
 import argparse
@@ -25,7 +27,7 @@ import time
 from pathlib import Path
 from typing import List, Optional
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from pydantic import BaseModel, Field, field_validator
@@ -34,6 +36,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = Path(os.path.dirname(os.path.dirname(SCRIPT_DIR)))
 sys.path.append(str(REPO_ROOT / "scripts" / "semantic"))
 
+import insights  # noqa: E402
 import memory_brief  # noqa: E402
 import search  # noqa: E402
 from embedding_config import LANCEDB_PATH  # noqa: E402
@@ -175,6 +178,8 @@ class SearchResult(BaseModel):
     summary: Optional[str]
     snippet: str
     text: str
+    matched_via: str = "query"            # "query", "expansion" (Hinglish/English topic words) or "both"
+    expansion_terms: List[str] = []
 
 
 class SearchResponse(BaseModel):
@@ -312,7 +317,7 @@ class SearchService:
             except search.SearchError as e:
                 raise ApiError(500, "model_unavailable", str(e))
             try:
-                results = search.search(table, model, query, limit, where=where)
+                results = search.search_expanded(table, model, query, limit, where=where)
             except search.SearchError as e:
                 raise ApiError(500, "search_failed", str(e))
             except Exception as e:  # lancedb/IO errors: report them instead of a bare 500
@@ -324,8 +329,31 @@ def error_body(code, message):
     return {"error": {"code": code, "message": message}}
 
 
-def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR):
+def parse_platforms(values):
+    """?platforms=a,b and/or repeated ?platforms=a&platforms=b -> sorted list, or None for all."""
+    out = sorted({p.strip().lower() for v in (values or []) for p in v.split(",") if p.strip()})
+    bad = [p for p in out if not search.PLATFORM_RE.match(p)]
+    if bad:
+        raise ApiError(422, "invalid_request", f"platforms: invalid platform name: {bad[0]!r}")
+    if len(out) > 32:
+        raise ApiError(422, "invalid_request", "platforms: at most 32 platforms")
+    return out or None
+
+
+def parse_date_param(name, value, end=False):
+    if value is None or not value.strip():
+        return None
+    if len(value) > 40:
+        raise ApiError(422, "invalid_request", f"{name}: too long")
+    try:
+        return memory_brief.parse_bound(value, end=end)
+    except ValueError:
+        raise ApiError(422, "invalid_request", f"{name}: must be an ISO date (YYYY-MM-DD) or datetime")
+
+
+def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insights_service=None):
     service = service or SearchService()
+    insights_service = insights_service or insights.InsightsService()
     app = FastAPI(title="Sarthink local search", version="1.0", docs_url="/api/docs", openapi_url="/api/openapi.json")
     app.state.search_service = service
 
@@ -352,7 +380,7 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR):
 
     @app.get("/api/health")
     def health():
-        return {"status": "ok", "index": service.status()}
+        return {"status": "ok", "index": service.status(), "memory_db": {"available": insights_service.available()}}
 
     # Sync handler: FastAPI runs it in a worker thread, so a slow CPU encode doesn't block the event loop.
     @app.post("/api/search", response_model=SearchResponse)
@@ -410,6 +438,20 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR):
             "chunks": chunks[:CONTEXT_CHUNKS],
         }
 
+    @app.get("/api/insights")
+    def get_insights(platforms: Optional[List[str]] = Query(None), date_from: Optional[str] = None,
+                     date_to: Optional[str] = None, top: int = Query(insights.DEFAULT_TOP, ge=1, le=insights.MAX_TOP)):
+        """Read-only aggregates over the memory database. A plain date_to includes that whole day."""
+        plats = parse_platforms(platforms)
+        start = parse_date_param("date_from", date_from)
+        end = parse_date_param("date_to", date_to, end=True)
+        if start and end and start >= end:
+            raise ApiError(422, "invalid_request", "date_from must be before date_to")
+        try:
+            return insights_service.insights(plats, start, end, top)
+        except insights.InsightsUnavailable as e:
+            raise ApiError(503, "database_unavailable", str(e))
+
     @app.get("/", include_in_schema=False)
     @app.get("/sarthink_graph.html", include_in_schema=False)
     def graph_page():
@@ -428,17 +470,28 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR):
     return app
 
 
+def _quietly(fn):
+    try:
+        fn()
+    except Exception:   # a missing DB is reported by the endpoint itself
+        pass
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Serve the Sarthink graph UI and local semantic search API.")
     parser.add_argument("--host", default=DEFAULT_HOST, help=f"Bind address (default {DEFAULT_HOST}; keep it local)")
     parser.add_argument("--port", type=int, default=DEFAULT_PORT, help=f"Port (default {DEFAULT_PORT})")
     parser.add_argument("--table", default=search.DEFAULT_TABLE, help=f"LanceDB table to search (default {search.DEFAULT_TABLE})")
     parser.add_argument("--db", default=LANCEDB_PATH, help="Path to the LanceDB directory")
+    parser.add_argument("--memory-db", default=str(insights.DEFAULT_DB), help="SQLite memory database for /api/insights (opened read-only)")
     args = parser.parse_args(argv)
 
     import uvicorn
 
-    app = create_app(SearchService(args.db, args.table))
+    ins = insights.InsightsService(args.memory_db)
+    app = create_app(SearchService(args.db, args.table), insights_service=ins)
+    # Warm the unfiltered insights in the background so the first Insights view opens instantly.
+    threading.Thread(target=lambda: _quietly(ins.insights), daemon=True).start()
     print(f"Sarthink: http://{args.host}:{args.port}/  (searching table '{args.table}')", file=sys.stderr)
     uvicorn.run(app, host=args.host, port=args.port, log_level="info")
     return 0

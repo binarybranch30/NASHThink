@@ -60,7 +60,7 @@ class FakeQuery:
         # Applies only the `col = 'value'` form thread_chunks() builds; other expressions
         # (search.filter_expression) are recorded for assertions and left to the caller's post-filter.
         self.filter, self.prefilter = expr, prefilter
-        if " AND " not in expr and " IN " not in expr and ">" not in expr and "<" not in expr:
+        if " AND " not in expr and " IN " not in expr and ">" not in expr and "<" not in expr and " LIKE " not in expr:
             col, value = [p.strip() for p in expr.split("=", 1)]
             self.rows = [r for r in self.rows if str(r.get(col)) == value.strip("'")]
         return self

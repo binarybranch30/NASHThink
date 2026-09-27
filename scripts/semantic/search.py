@@ -21,6 +21,7 @@ sys.path.append(SCRIPT_DIR)
 
 from embedding_config import (EMBEDDING_DEVICE, LANCEDB_PATH, get_table_metadata, list_table_names,
                               load_embedding_model, metadata_path)
+import hinglish  # noqa: E402
 
 DEFAULT_TABLE = "topics"
 DEFAULT_LIMIT = 5
@@ -164,9 +165,10 @@ def filter_expression(platforms=None, date_from=None, date_to=None):
     return " AND ".join(parts) or None
 
 
-def search(table, model, query, limit=DEFAULT_LIMIT, where=None):
+def search(table, model, query, limit=DEFAULT_LIMIT, where=None, query_vec=None):
     """Top `limit` chunks by cosine similarity; `where` (see filter_expression) is applied before ranking."""
-    query_vec = [float(x) for x in model.encode(query, convert_to_numpy=True)]
+    if query_vec is None:
+        query_vec = [float(x) for x in model.encode(query, convert_to_numpy=True)]
 
     dim = vector_dimension(table)
     if dim is not None and len(query_vec) != dim:
@@ -182,6 +184,64 @@ def search(table, model, query, limit=DEFAULT_LIMIT, where=None):
         builder = builder.where(where, prefilter=True)
     rows = builder.limit(limit).to_list()
     return [to_result(i, row) for i, row in enumerate(rows, start=1)]
+
+
+# ─── Hinglish-aware retrieval ────────────────────────────────────────────────
+# The plain vector search is run as before. When the query names a topic from hinglish.CONCEPTS, a second
+# search with the *same query vector* is limited (prefilter) to chunks containing that topic's words in the
+# other language or in Hinglish spelling variants. The two rankings are interleaved by rank: each chunk keeps
+# its best weighted reciprocal-rank placement (max, not sum, so a chunk in the tail of both lists can't jump
+# over the top plain hit). Similarity alone can't do it: Hinglish chats about the topic score below Hinglish small talk
+# for a Hinglish query, and below everything for an English one. Similarities reported stay the real cosine
+# similarities to the query; no index or table is modified.
+RRF_K = 10              # small k: the top of each list counts, the tail fades quickly
+EXPANSION_WEIGHT = 0.8  # expansion hits rank a little below equally placed plain hits
+EXPANSION_POOL = 40     # minimum candidates taken from the expansion search
+
+
+def chunk_key(r):
+    return (r.get("channel_id"), r.get("start_time"), r.get("end_time"), hash(r.get("text") or ""))
+
+
+def search_expanded(table, model, query, limit=DEFAULT_LIMIT, where=None):
+    """search() plus conservative Hinglish/English topic expansion, merged and deduplicated.
+
+    Each result gains `matched_via` ("query", "expansion" or "both") and `expansion_terms` (the topic words
+    that brought it in). Queries without an expandable topic return exactly what search() returns.
+    """
+    query_vec = [float(x) for x in model.encode(query, convert_to_numpy=True)]
+    plain = search(table, model, query, limit, where=where, query_vec=query_vec)
+    for r in plain:
+        r["matched_via"], r["expansion_terms"] = "query", []
+    exp = hinglish.Expansion(query)
+    if not exp:
+        return plain
+    ewhere = f"({where}) AND {exp.filter_expression()}" if where else exp.filter_expression()
+    extra = []
+    for r in search(table, model, query, max(limit, EXPANSION_POOL), where=ewhere, query_vec=query_vec):
+        found = exp.found(r.get("text"))   # LIKE matches substrings; keep whole-word matches only
+        if found:
+            r["expansion_terms"] = found
+            extra.append(r)
+
+    merged = {}
+    for weight, ranked in ((1.0, plain), (EXPANSION_WEIGHT, extra)):
+        for rank, r in enumerate(ranked, start=1):
+            key = chunk_key(r)
+            m = merged.get(key)
+            if m is None:
+                m = merged[key] = {**r, "_rrf": 0.0, "matched_via": "query" if weight == 1.0 else "expansion"}
+            else:
+                m["matched_via"] = "both"
+                m["expansion_terms"] = m.get("expansion_terms") or r.get("expansion_terms") or []
+                if (r.get("similarity") or -1) > (m.get("similarity") or -1):   # same vector, so normally equal
+                    m.update(similarity=r["similarity"], distance=r["distance"])
+            m["_rrf"] = max(m["_rrf"], weight / (RRF_K + rank))
+    out = sorted(merged.values(), key=lambda m: (-m["_rrf"], -(m.get("similarity") or 0)))[:limit]
+    for rank, m in enumerate(out, start=1):
+        m.pop("_rrf")
+        m["rank"] = rank
+    return out
 
 
 CONTEXT_COLUMNS = ("parent_id", "channel_id", "platform", "title", "start_time", "end_time", "text")
@@ -256,7 +316,7 @@ def main(argv=None):
         meta = table_model_metadata(table, args.table, args.db)
         print(f"Searching '{args.table}' with {meta['model']} ({meta['vector_dim']} dims)", file=sys.stderr)
         model = load_model(meta["model"])
-        results = search(table, model, args.query, args.limit)
+        results = search_expanded(table, model, args.query, args.limit)
     except SearchError as e:
         print(f"Error: {e}", file=sys.stderr)
         return 1

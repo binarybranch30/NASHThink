@@ -827,6 +827,227 @@
     #tooltip .tt-m { font-size: .64rem; margin-top: 2px; line-height: 1.5; }
     #tooltip .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; vertical-align: middle; }
 
+    /* ── Views: Memory Home (default) ⇄ graph workspace ─────────────────────
+       body[data-view] switches layouts; the graph canvas stays mounted and interactive in both.
+       Hidden layers use visibility (not display) so they can fade, and never catch the pointer. */
+    #stage { opacity: 0; transition: opacity .9s ease; }
+    body[data-graph="ready"] #stage { opacity: 1; }
+
+    .fade-layer { transition: opacity .38s ease, transform .38s ease, visibility 0s linear 0s; }
+    body[data-view="home"] #sidebar,
+    body[data-view="home"] #rightcol,
+    body[data-view="home"] #hint,
+    body[data-view="home"] #stats,
+    body[data-view="home"] #btn-reset,
+    body[data-view="home"] #btn-home,
+    body[data-view="home"] #labels,
+    body[data-view="home"] #empty-state {
+      opacity: 0; visibility: hidden; pointer-events: none !important;
+      transition: opacity .3s ease, transform .3s ease, visibility 0s linear .3s;
+    }
+    body[data-view="home"] #sidebar { transform: translateX(-14px); }
+    body[data-view="home"] #rightcol { transform: translateX(14px); }
+    body[data-view="graph"] #btn-explore, body[data-view="home"] #btn-home, body[data-view="home"] #btn-reset { display: none; }
+
+    #veil {
+      position: fixed; inset: 0; z-index: 60; pointer-events: none;
+      background: radial-gradient(ellipse 70% 62% at 50% 44%, rgba(0, 0, 16, .82) 0%, rgba(0, 0, 16, .5) 48%, rgba(0, 0, 16, .12) 100%);
+      transition: opacity .5s ease;
+    }
+    body[data-view="graph"] #veil { opacity: 0; }
+
+    #home {
+      position: fixed;
+      left: 50%;
+      top: max(64px, 11vh);
+      width: min(760px, calc(100vw - 2 * var(--gap)));
+      max-height: calc(100vh - max(64px, 11vh) - var(--gap));
+      transform: translateX(-50%);
+      z-index: 110;
+      display: flex;
+      flex-direction: column;
+      padding: 26px 28px 18px;
+      background: rgba(6, 6, 24, .74);
+      border-color: rgba(255, 255, 255, .1);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .55), inset 0 1px 0 rgba(255, 255, 255, .05);
+      transition: opacity .4s ease, transform .4s ease, visibility 0s linear 0s, top .35s ease;
+    }
+    body[data-view="graph"] #home, body[data-insights="open"] #home {
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transform: translateX(-50%) translateY(-10px) scale(.985);
+      transition: opacity .3s ease, transform .3s ease, visibility 0s linear .3s;
+    }
+    body.has-results #home { top: max(56px, 5vh); max-height: calc(100vh - max(56px, 5vh) - var(--gap)); }
+
+    .h-kicker { font-family: 'Orbitron', monospace; font-size: .64rem; font-weight: 700; letter-spacing: .32em; color: var(--dim); }
+    .h-kicker em { color: var(--acc); font-style: normal; }
+    #home h1 { font-size: clamp(1.5rem, 3.6vw, 2.15rem); font-weight: 600; color: #fff; letter-spacing: -.01em; line-height: 1.15; margin-top: 10px; }
+    #home h1 .grad { background: linear-gradient(90deg, #8fb4ff, #c79bff 55%, #ff9a7a); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .h-sub { font-size: .86rem; color: var(--mid); line-height: 1.55; margin-top: 8px; max-width: 58ch; }
+    body.has-results .h-sub, body.has-results #home h1 { display: none; }
+
+    /* Omni box: the one question input. Big inside Memory Home, docked as a command bar in the graph topbar. */
+    #home-slot { margin-top: 18px; }
+    body.has-results #home-slot { margin-top: 12px; }
+    #omni { display: flex; flex-direction: column; gap: 10px; }
+    .omodes { display: inline-flex; align-self: flex-start; gap: 2px; padding: 3px; border-radius: 9px; background: rgba(255, 255, 255, .05); border: 1px solid var(--bdr); }
+    .omode {
+      background: none; border: none; border-radius: 6px; padding: 5px 12px; font-size: .74rem; font-weight: 500;
+      color: var(--mid); cursor: pointer; white-space: nowrap; transition: background .15s, color .15s;
+    }
+    .omode:hover { color: #fff; }
+    .omode[aria-selected="true"] { background: rgba(79, 142, 255, .22); color: #fff; box-shadow: inset 0 0 0 1px rgba(79, 142, 255, .45); }
+    .orow {
+      display: flex; align-items: flex-end; gap: 8px; padding: 8px 8px 8px 16px; border-radius: 14px;
+      background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .14);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .orow:focus-within { border-color: rgba(79, 142, 255, .7); box-shadow: 0 0 0 4px rgba(79, 142, 255, .14); }
+    #omni-q {
+      flex: 1; min-width: 0; background: none; border: none; outline: none; resize: none; color: #fff;
+      font: inherit; font-size: 1.02rem; line-height: 1.45; padding: 7px 0; max-height: 132px;
+    }
+    #omni-q::placeholder { color: rgba(255, 255, 255, .38); }
+    #omni-go { padding: 9px 18px; font-size: .82rem; border-radius: 10px; font-weight: 600; }
+    #omni-go:disabled { opacity: .55; }
+
+    .hchips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .hchips .ask-chip { font-size: .72rem; padding: 5px 11px; border-radius: 14px; }
+    body.has-results .hchips { display: none; }
+
+    #home-foot { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    #home-foot .grow { flex: 1; }
+    #home-foot .btn { font-size: .78rem; padding: 7px 14px; }
+    #home-status { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: .7rem; color: var(--dim); margin-top: 14px; }
+    .hs { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+    .hs i { width: 6px; height: 6px; border-radius: 50%; background: var(--dim); flex-shrink: 0; }
+    .hs.ok i { background: var(--ok); }
+    .hs.warn { color: var(--warn); } .hs.warn i { background: var(--warn); }
+    .hs.err { color: var(--err); } .hs.err i { background: #ff6060; }
+    .hs.busy i { background: var(--acc); animation: pulse 1s ease-in-out infinite; }
+    .hs code { font-size: .64rem; color: var(--mid); background: rgba(255, 255, 255, .06); padding: 1px 5px; border-radius: 3px; }
+    #graph-note { font-size: .7rem; line-height: 1.5; color: var(--warn); margin-top: 10px; }
+    #graph-note[hidden] { display: none; }
+    #graph-note code { font-size: .64rem; color: var(--mid); background: rgba(255, 255, 255, .06); padding: 1px 5px; border-radius: 3px; }
+
+    /* Results live inside Memory Home until the graph workspace opens, then move to the right column. */
+    #home-results { min-height: 0; display: flex; flex-direction: column; }
+    #home-results:empty { display: none; }
+    body.has-results #home-results { flex: 1 1 auto; margin-top: 12px; }
+    #home #sem-panel { background: rgba(255, 255, 255, .025); border-color: var(--bdr); backdrop-filter: none; -webkit-backdrop-filter: none; min-height: 0; display: flex; flex-direction: column; flex: 1 1 auto; }
+    #home #sem-panel[hidden] { display: none; }
+    #home .ask-answer { font-size: .86rem; }
+    #home .sr-snip { font-size: .72rem; }
+    .to-graph { font-size: .66rem; color: var(--dim); padding: 8px 12px 10px; border-top: 1px solid var(--bdr); display: none; }
+    #home .to-graph { display: block; }
+    body[data-graph="error"] .to-graph { display: none !important; }
+
+    /* Docked command bar in the graph workspace */
+    #topbar #omni { flex: 1 1 380px; max-width: 520px; min-width: 220px; flex-direction: row; align-items: center; gap: 0; }
+    #topbar .omodes { padding: 2px; border-radius: 8px 0 0 8px; border-right: none; height: 32px; align-items: center; background: var(--gb); backdrop-filter: blur(18px); }
+    #topbar .omode { padding: 3px 8px; font-size: .64rem; }
+    #topbar .orow { flex: 1; min-width: 0; padding: 2px 3px 2px 10px; border-radius: 0 8px 8px 0; height: 32px; align-items: center; background: var(--gb); backdrop-filter: blur(18px); }
+    #topbar #omni-q { font-size: .78rem; padding: 0; height: 20px; line-height: 20px; white-space: nowrap; overflow: hidden; }
+    #topbar #omni-go { padding: 3px 11px; font-size: .7rem; border-radius: 6px; }
+    #topbar .omode .long { display: none; }
+
+    /* ── Insights ─────────────────────────────────────────────────────────── */
+    #insights {
+      position: fixed;
+      top: var(--top-h);
+      bottom: var(--gap);
+      left: 50%;
+      width: min(1080px, calc(100vw - 2 * var(--gap)));
+      transform: translateX(-50%);
+      z-index: 150;
+      display: flex;
+      flex-direction: column;
+      background: rgba(6, 6, 24, .9);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, .55);
+      transition: opacity .3s ease, transform .3s ease, visibility 0s linear 0s;
+    }
+    #insights[hidden] { display: flex; opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(-50%) translateY(10px); transition: opacity .25s ease, transform .25s ease, visibility 0s linear .25s; }
+    body[data-view="graph"] #insights { left: calc(var(--gap) + var(--side-w) + 10px); right: var(--gap); width: auto; transform: none; }
+    body[data-view="graph"] #insights[hidden] { transform: translateY(10px); }
+    #insights .phead { align-items: center; padding: 14px 18px 12px; }
+    #ins-h { font-size: 1.05rem; font-weight: 600; color: #fff; }
+    #ins-scope { font-size: .7rem; color: var(--mid); margin-top: 2px; }
+    #ins-scope .linkbtn { font-size: .7rem; }
+    #ins-body { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 18px; position: relative; }
+    .ins-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pchip {
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 14px; font-size: .7rem;
+      color: var(--mid); background: rgba(255, 255, 255, .03); border: 1px solid var(--bdr); cursor: pointer;
+    }
+    .pchip i { width: 8px; height: 8px; border-radius: 50%; }
+    .pchip[aria-pressed="false"] { opacity: .45; }
+    .pchip[aria-pressed="false"] i { background: transparent !important; box-shadow: inset 0 0 0 1.5px currentColor; }
+    .pchip:hover { color: #fff; border-color: var(--bdr2); }
+    .pchip:disabled { cursor: default; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+    .card { border: 1px solid var(--bdr); border-radius: 10px; padding: 12px 14px; background: rgba(255, 255, 255, .025); min-width: 0; }
+    .card .k { font-size: .6rem; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); }
+    .card .v { font-size: 1.5rem; font-weight: 600; color: #fff; margin-top: 4px; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card .v.sm { font-size: 1rem; line-height: 1.35; padding-top: 6px; white-space: normal; }
+    .card .s { font-size: .66rem; color: var(--mid); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ins-sec h3 { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); font-weight: 600; margin-bottom: 10px; display: flex; align-items: baseline; gap: 8px; }
+    .ins-sec h3 .act { margin-left: auto; letter-spacing: .02em; text-transform: none; font-weight: 400; }
+    .ins-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .chart-wrap { position: relative; border: 1px solid var(--bdr); border-radius: 10px; padding: 12px 12px 8px; background: rgba(255, 255, 255, .02); }
+    #ins-chart { display: block; overflow: visible; }
+    #ins-chart .bar { fill: var(--acc); }
+    #ins-chart .hit { fill: transparent; cursor: default; }
+    #ins-chart .col:hover .bar, #ins-chart .col.on .bar { fill: #9cc0ff; }
+    #ins-chart .grid { stroke: rgba(255, 255, 255, .07); stroke-width: 1; }
+    #ins-chart .base { stroke: rgba(255, 255, 255, .22); stroke-width: 1; }
+    #ins-chart text { fill: var(--dim); font-size: 10px; font-family: inherit; font-variant-numeric: tabular-nums; }
+    #ins-chart .peak { fill: var(--mid); }
+    #ins-tip {
+      position: absolute; left: 0; top: 0; pointer-events: none; z-index: 5; min-width: 150px;
+      background: var(--gb2); border: 1px solid var(--bdr2); border-radius: 8px; padding: 8px 10px; font-size: .7rem; color: var(--mid);
+      opacity: 0; transition: opacity .1s;
+    }
+    #ins-tip.show { opacity: 1; }
+    #ins-tip b { color: #fff; font-weight: 600; }
+    #ins-tip .row { display: flex; align-items: center; gap: 6px; margin-top: 3px; }
+    #ins-tip .row i { width: 7px; height: 7px; border-radius: 50%; }
+    #ins-tip .row span:last-child { margin-left: auto; color: #fff; font-variant-numeric: tabular-nums; padding-left: 10px; }
+    .years { display: flex; flex-wrap: wrap; gap: 4px 14px; margin-top: 8px; font-size: .68rem; color: var(--dim); font-variant-numeric: tabular-nums; }
+    .years b { color: var(--mid); font-weight: 500; }
+    .prow { display: grid; grid-template-columns: 110px 1fr auto; align-items: center; gap: 10px; padding: 6px 0; }
+    .prow + .prow { border-top: 1px solid var(--bdr); }
+    .prow .nm { display: flex; align-items: center; gap: 7px; font-size: .78rem; color: #fff; min-width: 0; }
+    .prow .nm i { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .prow .track { height: 6px; border-radius: 3px; background: rgba(255, 255, 255, .06); overflow: hidden; }
+    .prow .track i { display: block; height: 100%; border-radius: 3px; min-width: 3px; }
+    .prow .num { font-size: .74rem; color: #fff; font-variant-numeric: tabular-nums; text-align: right; }
+    .prow .meta { grid-column: 1 / -1; font-size: .64rem; color: var(--dim); margin-top: -2px; }
+    .rank { display: flex; flex-direction: column; gap: 2px; }
+    .ritem {
+      display: grid; grid-template-columns: 18px 1fr auto; align-items: center; gap: 8px; width: 100%; padding: 6px 8px;
+      background: none; border: 1px solid transparent; border-radius: 7px; color: var(--mid); text-align: left; cursor: pointer; font-size: .76rem;
+    }
+    .ritem:hover, .ritem:focus-visible { background: rgba(255, 255, 255, .06); color: #fff; }
+    .ritem .n { color: var(--dim); font-size: .64rem; font-variant-numeric: tabular-nums; text-align: right; }
+    .ritem .who { min-width: 0; }
+    .ritem .who b { display: block; font-weight: 500; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ritem .who small { display: flex; align-items: center; gap: 5px; font-size: .64rem; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ritem .who small i { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .ritem .c { font-size: .72rem; color: #fff; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .ritem .c small { display: block; color: var(--dim); font-size: .6rem; text-align: right; }
+    .ins-state { padding: 40px 16px; text-align: center; font-size: .8rem; color: var(--mid); line-height: 1.6; }
+    .ins-state code { font-size: .7rem; color: #cfe0ff; background: rgba(255, 255, 255, .06); padding: 2px 6px; border-radius: 4px; }
+    .ins-state .btn { margin-top: 12px; }
+    .ins-note { font-size: .66rem; color: var(--dim); line-height: 1.5; }
+    .ins-toast { font-size: .7rem; color: var(--warn); min-height: 1em; }
+    .skel { border-radius: 10px; background: linear-gradient(90deg, rgba(255,255,255,.03), rgba(255,255,255,.08), rgba(255,255,255,.03)); background-size: 200% 100%; animation: shimmer 1.2s linear infinite; }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+    #insights.busy #ins-body > :not(.ins-state) { opacity: .55; transition: opacity .2s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; }
+    }
+
     /* ── Responsive (laptop first; small screens stack panels) ───────────── */
     @media (max-width: 1280px) {
       :root { --side-w: 248px; --right-w: 316px; }
@@ -835,15 +1056,30 @@
     @media (max-width: 1100px) {
       #stats .opt { display: none; }
       #hint .opt { display: none; }
+      body[data-view="graph"] #stats { display: none; }
     }
 
     @media (max-width: 900px) {
       :root { --right-w: 290px; }
       #sidebar.collapsed .sec:not(:first-child) { display: none; }
       #side-toggle { display: inline-block !important; }
+      .ins-grid { grid-template-columns: 1fr; }
+      body[data-view="graph"] #insights { left: var(--gap); }
+      #tbtns .btn kbd { display: none; }
     }
 
     @media (max-width: 720px) {
+      /* The command bar gets its own row under the buttons. */
+      body[data-view="graph"] { --top-h: 92px; }
+      body[data-view="graph"] #topbar { flex-wrap: wrap; height: auto; row-gap: 6px; }
+      body[data-view="graph"] #topbar #omni { order: 5; flex: 1 1 100%; max-width: none; }
+      #home { padding: 20px 16px 14px; top: 56px; max-height: calc(100vh - 56px - var(--gap)); }
+      body.has-results #home { top: 52px; }
+      #home-foot .btn { padding: 6px 10px; }
+      .card .v { font-size: 1.2rem; }
+      .prow { grid-template-columns: 90px 1fr auto; }
+      #tbtns { gap: 5px; }
+      #tbtns .btn { padding: 5px 9px; }
       .brand { display: none; }
       #rightcol { left: var(--gap); right: var(--gap); width: auto; top: auto; bottom: var(--gap); max-height: 48vh; }
       #sidebar { width: calc(100vw - 2 * var(--gap)); max-height: 40vh; }
@@ -856,10 +1092,10 @@
   </style>
 </head>
 
-<body>
+<body data-view="home" data-graph="loading">
 
-  <!-- Loading / fatal error -->
-  <div id="loading" role="status" aria-live="polite">
+  <!-- Fatal graph error after start-up (e.g. WebGL context lost). The graph loads behind Memory Home, not behind this. -->
+  <div id="loading" role="status" aria-live="polite" style="display:none">
     <div class="lb-brand">SARTHINK <em>·</em> MEMORY</div>
     <div class="lb-track">
       <div class="lb-fill" id="lbar"></div>
@@ -869,20 +1105,69 @@
   </div>
 
   <div id="stage" aria-label="3D memory graph. Use the sidebar to find nodes; press ? for controls." role="application"></div>
-  <div id="labels" aria-hidden="true"></div>
+  <div id="labels" class="fade-layer" aria-hidden="true"></div>
+  <div id="veil" aria-hidden="true"></div>
 
   <!-- Top bar -->
   <header id="topbar">
-    <div class="brand">SARTHINK <em>·</em> MEMORY GRAPH</div>
-    <div id="stats" class="panel" aria-live="polite"></div>
+    <div class="brand">SARTHINK <em>·</em> MEMORY</div>
+    <div id="stats" class="panel fade-layer" aria-live="polite"></div>
     <div id="tbtns">
+      <button id="btn-explore" class="btn" type="button" title="Open the graph workspace (G)">Explore graph<kbd>G</kbd></button>
+      <button id="btn-home" class="btn fade-layer" type="button" title="Back to Memory Home (G)">Home<kbd>G</kbd></button>
+      <button id="btn-insights" class="btn" type="button" title="Activity insights (I)" aria-controls="insights" aria-expanded="false">Insights<kbd>I</kbd></button>
       <button id="btn-help" class="btn" type="button" title="Controls & shortcuts (?)" aria-haspopup="dialog">Help<kbd>?</kbd></button>
-      <button id="btn-reset" class="btn" type="button" title="Restore the full graph view (Esc)">Reset<kbd>Esc</kbd></button>
+      <button id="btn-reset" class="btn fade-layer" type="button" title="Restore the full graph view (Esc)">Reset<kbd>Esc</kbd></button>
     </div>
   </header>
 
+  <!-- Memory Home: the opening surface, above the (ambient, still interactive) graph -->
+  <main id="home" class="panel" aria-labelledby="home-h">
+    <div class="h-kicker">SARTHINK <em>·</em> MEMORY HOME</div>
+    <h1 id="home-h">Ask your <span class="grad">second brain</span></h1>
+    <p class="h-sub">Answers and memories from your own conversation archives, with the sources that back them, searched privately on this machine.</p>
+    <div id="home-slot">
+      <form id="omni" role="search" aria-label="Ask or search your memories">
+        <div class="omodes" role="tablist" aria-label="Question mode">
+          <button type="button" class="omode" role="tab" id="omode-ask" data-omode="ask" aria-selected="true">Ask<span class="long"> Sarthink</span></button>
+          <button type="button" class="omode" role="tab" id="omode-search" data-omode="search" aria-selected="false" tabindex="-1">Find<span class="long"> memories</span></button>
+        </div>
+        <div class="orow">
+          <textarea id="omni-q" rows="1" maxlength="500" autocomplete="off" spellcheck="false" aria-label="Question for Ask Sarthink"
+            placeholder="Ask anything about your memories…"></textarea>
+          <button id="omni-go" class="btn primary" type="submit">Ask</button>
+        </div>
+      </form>
+    </div>
+    <div id="home-chips" class="hchips" aria-label="Sample prompts"></div>
+    <div id="home-results"></div>
+    <div id="home-foot">
+      <button id="home-explore" class="btn primary" type="button">Explore graph →</button>
+      <button id="home-insights" class="btn" type="button">Insights</button>
+      <span class="grow"></span>
+    </div>
+    <div id="graph-note" hidden role="status"></div>
+    <div id="home-status" aria-live="polite">
+      <span class="hs busy" id="hs-api"><i></i>Connecting…</span>
+      <span class="hs busy" id="hs-graph"><i></i>Loading graph…</span>
+      <span class="hs"><i style="background:var(--acc)"></i>Private · runs on this machine</span>
+    </div>
+  </main>
+
+  <!-- Insights: read-only activity overview from GET /api/insights -->
+  <section id="insights" class="panel" hidden aria-labelledby="ins-h" role="dialog" aria-modal="false">
+    <div class="phead">
+      <div class="ttl">
+        <h2 id="ins-h">Insights</h2>
+        <div id="ins-scope"></div>
+      </div>
+      <button class="xbtn" type="button" id="ins-close" title="Close insights (Esc)" aria-label="Close insights">×</button>
+    </div>
+    <div id="ins-body" class="scroll"></div>
+  </section>
+
   <!-- Sidebar -->
-  <aside id="sidebar" class="panel" aria-label="Graph controls">
+  <aside id="sidebar" class="panel fade-layer" aria-label="Graph controls">
     <section class="sec">
       <label class="plbl" for="find-q">Find node <span class="act"><button id="side-toggle" class="linkbtn" type="button" style="display:none" aria-expanded="true">Collapse</button></span></label>
       <input id="find-q" class="inp" type="search" placeholder="Name or thread title…  ( / )" autocomplete="off"
@@ -937,7 +1222,7 @@
   </aside>
 
   <!-- Right column: selected node details + memory search results -->
-  <div id="rightcol">
+  <div id="rightcol" class="fade-layer">
     <section id="details" class="panel" hidden aria-labelledby="d-title">
       <div class="phead">
         <div class="ttl">
@@ -958,12 +1243,13 @@
         <button class="btn sm" type="button" onclick="resetSemantic()" title="Clear memory search results and highlights">Clear</button>
       </div>
       <div id="sem-list" class="scroll"></div>
+      <div class="to-graph">Click a source to open it on the graph.</div>
     </section>
   </div>
 
-  <div id="hint" class="panel">
+  <div id="hint" class="panel fade-layer">
     <span><b>Drag</b> orbit</span><span><b>Right-drag</b> / <b>Shift-drag</b> pan</span><span><b>Scroll</b> zoom</span>
-    <span class="opt"><b>Click</b> select · <b>Double-click</b> focus</span><span><b>Esc</b> reset</span>
+    <span class="opt"><b>Click</b> select · <b>Double-click</b> focus</span><span class="opt"><b>Arrows</b> move</span><span><b>Esc</b> reset</span>
   </div>
 
   <div id="empty-state" class="panel" hidden role="status">
@@ -986,12 +1272,18 @@
       </table>
       <h3>Keyboard</h3>
       <table>
-        <tr><td><span class="kbd">/</span></td><td>Find a node by name or title</td></tr>
+        <tr><td><span class="kbd">G</span></td><td>Switch between Memory Home and the graph workspace</td></tr>
+        <tr><td><span class="kbd">I</span></td><td>Open / close Insights</td></tr>
+        <tr><td><span class="kbd">/</span></td><td>Find a node by name or title (in Memory Home: focus the question box)</td></tr>
         <tr><td><span class="kbd">↑</span> <span class="kbd">↓</span> <span class="kbd">Enter</span></td><td>Pick a find result</td></tr>
         <tr><td><span class="kbd">F</span></td><td>Fly to the selected node</td></tr>
-        <tr><td><span class="kbd">Esc</span></td><td>Close this dialog, otherwise reset to the full graph</td></tr>
+        <tr><td><span class="kbd">←</span> <span class="kbd">→</span> <span class="kbd">↑</span> <span class="kbd">↓</span></td><td>Move the graph in that direction (hold to keep moving)</td></tr>
+        <tr><td><span class="kbd">Shift</span> + arrows</td><td>Orbit (rotate) the graph</td></tr>
+        <tr><td><span class="kbd">Esc</span></td><td>Close this dialog or Insights, otherwise reset to the full graph</td></tr>
         <tr><td><span class="kbd">?</span></td><td>Show / hide this help</td></tr>
       </table>
+      <h3>Memory Home</h3>
+      <p>Ask a question (or switch to <b>Find memories</b> for plain semantic search). Answers come with their sources; click a source to open its conversation on the graph. <b>Explore graph</b> opens the full workspace, where the same box stays in the top bar. <b>Insights</b> summarises your activity and follows the platform and timeline filters.</p>
       <h3>Reading the graph</h3>
       <p>Colour is the platform. Filled dots are <b>people</b>; rings are <b>threads</b> (conversations, chats, posts). A line means that person wrote in that thread. Toggle platforms and node types in the sidebar, and narrow the timeline to the months you care about.</p>
       <p style="margin-top:8px">Memory search runs locally against your index and highlights the matching threads and their participants. Everything stays on this machine.</p>
@@ -1015,8 +1307,9 @@
   </script>
 
   <script type="module">
-    import * as THREE from 'three';
-    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    // three.js is imported on demand in boot(), so Memory Home, search, Ask and Insights keep working
+    // even when the 3D engine (a CDN module) or the graph files are unavailable.
+    let THREE = null, OrbitControls = null;
 
     window.__sarthinkStarted = true;
 
@@ -1089,7 +1382,7 @@
     const truncate = (s, n) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
     const platformName = p => PLATFORM_NAMES[p] || (p ? p[0].toUpperCase() + p.slice(1) : 'Other');
 
-    function lbar(p, m) { $('lbar').style.width = p + '%'; $('lmsg').textContent = m; }
+    function lbar(p, m) { graphProgress(p, m); }
 
     function hexToRgb(hex) {
       const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || '').trim());
@@ -1276,8 +1569,10 @@
       S.controls.panSpeed = 1.0;
       S.controls.screenSpacePanning = true;
       S.controls.zoomToCursor = true;
-      // Any user input cancels a running camera flight instead of fighting it.
-      S.controls.addEventListener('start', () => { S.tween = null; });
+      // Any user input cancels a running camera flight (and Memory Home's slow drift) instead of fighting it.
+      S.controls.addEventListener('start', () => { S.tween = null; S.controls.autoRotate = false; });
+      S.controls.autoRotateSpeed = 0.28;
+      S.controls.autoRotate = ambientMotion();
 
       S.uniforms = {
         uScale: { value: 1 },
@@ -1302,6 +1597,7 @@
     // Shifts the projection centre right so the graph is centred in the space the sidebar leaves
     // free. Picking and labels use camera.projectionMatrix, so they stay in sync.
     function sideInset() {
+      if (document.body.dataset.view !== 'graph') return 0;   // Memory Home: the graph is centred behind the card
       const side = $('sidebar').getBoundingClientRect();
       return window.innerWidth > 720 && side.width ? side.right : 0;
     }
@@ -1462,13 +1758,23 @@
       S.edgesObj.frustumCulled = false;
       S.scene.add(S.edgesObj);
 
-      // Home view: frame the whole layout from a slightly elevated 3/4 angle.
-      const dir = new THREE.Vector3(0.35, 0.28, 1).normalize();
-      const dist = tightenFit(c, dir, fitDistance(rad));
-      S.home = { target: c.clone(), position: c.clone().add(dir.multiplyScalar(dist)) };
+      frameHome();
       S.camera.position.copy(S.home.position);
       S.controls.target.copy(S.home.target);
       S.controls.update();
+    }
+
+    // Home camera: the whole layout from a slightly elevated 3/4 angle, fitted to the space the current
+    // view leaves free (the full window in Memory Home, right of the sidebar in the graph workspace).
+    function frameHome() {
+      const c = S.bounds.center, rad = S.bounds.radius;
+      const saved = [S.camera.position.clone(), S.camera.quaternion.clone()];
+      applyViewOffset();
+      const dir = new THREE.Vector3(0.35, 0.28, 1).normalize();
+      const dist = tightenFit(c, dir, fitDistance(rad));
+      S.home = { target: c.clone(), position: c.clone().add(dir.multiplyScalar(dist)) };
+      S.camera.position.copy(saved[0]); S.camera.quaternion.copy(saved[1]);   // tightenFit moved the camera
+      S.camera.updateMatrixWorld();
     }
 
     // The bounding-sphere distance is conservative for flat or elongated layouts. Project the real
@@ -1669,9 +1975,10 @@
     // ─── Picking (screen space) ───────────────────────────────────────────────────
     // Picks the node whose drawn disc is nearest the cursor. Hidden nodes are never picked; the
     // selection and its neighbours (drawn on top) win ties over dimmed nodes behind them.
-    const _vp = new THREE.Matrix4();
+    let _vp = null;
     function pickNode(cx, cy) {
-      if (!S.nodes.length) return -1;
+      if (!S.nodes.length || !S.camera) return -1;
+      _vp = _vp || new THREE.Matrix4();
       const W = window.innerWidth, H = window.innerHeight;
       S.camera.updateMatrixWorld();
       _vp.multiplyMatrices(S.camera.projectionMatrix, S.camera.matrixWorldInverse);
@@ -1815,6 +2122,7 @@
     // ─── Selection ────────────────────────────────────────────────────────────────
     function selectNode(idx, { fly = false, keepHash = false } = {}) {
       if (idx < 0 || idx >= S.nodes.length) return;
+      if (S.view !== 'graph') { setView('graph', { camera: false }); fly = true; }   // a selection always opens the workspace
       S.selected = idx;
       refreshVisuals();
       renderDetails();
@@ -2275,6 +2583,7 @@
       if (e.key === 'Escape') {
         e.preventDefault();
         if (helpOpen()) { closeHelp(); return; }
+        if (insightsOpen()) { closeInsights(); return; }
         if (isTyping(document.activeElement)) document.activeElement.blur();
         resetAll();
         return;
@@ -2284,10 +2593,55 @@
         return;
       }
       if (isTyping(document.activeElement) || e.ctrlKey || e.metaKey || e.altKey) return;
-      if (e.key === '/') { e.preventDefault(); $('find-q').focus(); $('find-q').select(); }
+      if (e.key === '/') {
+        e.preventDefault();
+        const box = S.view === 'graph' ? $('find-q') : $('omni-q');
+        box.focus(); box.select();
+      }
       else if (e.key === '?') { e.preventDefault(); openHelp(); }
+      else if (e.key === 'g' || e.key === 'G') { e.preventDefault(); toggleView(); }
+      else if (e.key === 'i' || e.key === 'I') { e.preventDefault(); insightsOpen() ? closeInsights() : openInsights(); }
       else if ((e.key === 'f' || e.key === 'F') && S.selected >= 0) { e.preventDefault(); flyToNodes([S.selected, ...neighbours(S.selected).map(o => o.j)]); }
+      else if (ARROWS[e.key] && arrowsMoveGraph()) { e.preventDefault(); nudgeCamera(ARROWS[e.key], e.shiftKey); }
     });
+
+    // ─── Arrow keys: move the graph in the pressed direction (Shift: orbit) ─────
+    const ARROWS = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, 1], ArrowDown: [0, -1] };
+    const PAN_STEP = 0.06;      // fraction of the visible height per key press (repeats while held)
+    const ORBIT_STEP = 0.06;    // radians per key press
+
+    // Only in the graph workspace, and never while the arrows already mean something else:
+    // typing, tab strips, lists, sliders, scrollable panels or an open dialog.
+    function arrowsMoveGraph() {
+      if (S.view !== 'graph' || !S.camera || insightsOpen() || helpOpen()) return false;
+      const el = document.activeElement;
+      if (!el || el === document.body || el === S.renderer.domElement) return true;
+      return !el.closest('[role="tablist"], [role="listbox"], [role="option"], input, select, textarea, .scroll, #insights, .sr');
+    }
+
+    function nudgeCamera([dx, dy], orbit) {
+      S.tween = null;
+      const off = S.camera.position.clone().sub(S.controls.target);
+      if (orbit) {
+        // Rotate the view around the orbit target: left/right about the vertical axis, up/down tilts.
+        const sph = new THREE.Spherical().setFromVector3(off);
+        sph.theta -= dx * ORBIT_STEP;
+        sph.phi = clamp(sph.phi + dy * ORBIT_STEP, 0.05, Math.PI - 0.05);
+        off.setFromSpherical(sph);
+        S.camera.position.copy(S.controls.target).add(off);
+        S.camera.lookAt(S.controls.target);
+      } else {
+        // Content follows the arrow: moving the graph right means moving the camera (and target) left.
+        const h = 2 * off.length() * Math.tan(THREE.MathUtils.degToRad(S.camera.fov) / 2) * PAN_STEP;
+        S.camera.updateMatrixWorld();
+        const right = new THREE.Vector3().setFromMatrixColumn(S.camera.matrixWorld, 0);
+        const up = new THREE.Vector3().setFromMatrixColumn(S.camera.matrixWorld, 1);
+        const move = right.multiplyScalar(-dx * h).add(up.multiplyScalar(-dy * h));
+        S.camera.position.add(move);
+        S.controls.target.add(move);
+      }
+      S.controls.update();
+    }
 
     // ─── Semantic memory search (local API: scripts/api/server.py) ────────────────
     // Same origin when served by server.py; ?api=http://127.0.0.1:8000 when the page is served elsewhere.
@@ -2296,7 +2650,7 @@
       if (p) return p.replace(/\/+$/, '');
       return location.protocol.startsWith('http') ? '' : 'http://127.0.0.1:8000';
     })();
-    const SERVER_CMD = 'HF_HUB_OFFLINE=1 .venv/bin/python scripts/api/server.py';
+    const SERVER_CMD = 'scripts/start_sarthink.sh';
     const SEM_LIMIT = 10;
     const SEM_TIMEOUT_MS = 180000;  // first query loads the embedding model on CPU
     const HEALTH_RETRY_MS = 15000;
@@ -2341,6 +2695,7 @@
     function semBusy(on) {
       $('sem-go').disabled = on;
       $('sem-go').textContent = on ? '…' : 'Go';
+      syncOmniBusy();
     }
 
     async function apiFetch(path, opts = {}) {
@@ -2377,15 +2732,19 @@
         const h = await apiFetch('/api/health');
         const ix = h.index || {};
         S.sem.ready = !!ix.available;
+        S.memoryDb = !!(h.memory_db && h.memory_db.available);
         if (ix.available) {
           const rows = ix.rows ? `${Number(ix.rows).toLocaleString()} chunks · ` : '';
           semStatus('ok', `Ready · ${esc(rows)}table <code>${esc(ix.table)}</code>`);
+          homeStatus('hs-api', 'ok', ix.rows ? `Memory index ready · ${fmtN(ix.rows)} passages` : 'Memory index ready');
           return;
         }
         semStatus('warn', `Index <code>${esc(ix.table)}</code> not available yet — it may still be building. ${esc(ix.reason || '')}`);
+        homeStatus('hs-api', 'warn', 'Memory index still building — answers appear once it’s ready');
       } catch (e) {
         S.sem.ready = false;
         semStatus('err', e.code === 'offline' ? offlineHint() : esc(e.message));
+        homeStatus('hs-api', 'err', e.code === 'offline' ? `Local API offline · start it with <code>${esc(SERVER_CMD)}</code>` : 'Local API error', true);
       }
       // Keep polling so the UI flips to "Ready" once the embedding job finishes or the server starts.
       S.sem.healthTimer = setTimeout(checkSemanticHealth, HEALTH_RETRY_MS);
@@ -2433,7 +2792,7 @@
       if (!S.sem.set.size) S.sem.set = null;  // nothing to highlight: don't dim the graph
       refreshVisuals();
       if (S.selected >= 0) renderDetails();
-      if (fly && threads.length) flyToNodes(threads, 0.05);
+      if (fly && threads.length && S.view === 'graph') flyToNodes(threads, 0.05);
     }
 
     function clearSemanticHighlight(refresh = true) {
@@ -2458,7 +2817,9 @@
       const top = Math.max(...data.results.map(r => r.similarity || 0), 0.0001);
       list.innerHTML = data.results.map((r, k) => {
         r._shared = sharedTerms(r, terms);
-        const why = r._shared.length ? `shares “${esc(r._shared.slice(0, 4).join('”, “'))}”` : 'matched by meaning (no shared keywords)';
+        const via = r.matched_via === 'expansion' && (r.expansion_terms || []).length
+          ? `found via “${esc(r.expansion_terms.slice(0, 3).join('”, “'))}” (Hinglish ↔ English topic match)` : '';
+        const why = via || (r._shared.length ? `shares “${esc(r._shared.slice(0, 4).join('”, “'))}”` : 'matched by meaning (no shared keywords)');
         return resultCard(r, k, terms, top, why);
       }).join('');
       wireResultCards(list);
@@ -2506,6 +2867,8 @@
         el.querySelector('.sr-snip').innerHTML = highlight(r.text || r.snippet, terms);
       }
       if (!S.pGeo) return;
+      // In Memory Home a cited source opens the graph workspace focused on its conversation.
+      if (S.view !== 'graph' && S.sem.active >= 0 && (r._nodes || resultNodes(r)).thread >= 0) setView('graph', { camera: false });
       applySemanticHighlight(false);
       const m = r._nodes || resultNodes(r);
       if (S.sem.active >= 0 && m.thread >= 0) {
@@ -2584,6 +2947,8 @@
       S.sem.mode = 'search';
       $('sem-q').value = '';
       $('ask-q').value = '';
+      $('omni-q').value = '';
+      autosizeOmni();
       $('sem-list').innerHTML = '';
       $('sem-panel').hidden = true;
       if (hadResult && refresh && S.selected >= 0) renderDetails();
@@ -2612,6 +2977,7 @@
       $('ask-go').disabled = on;
       $('ask-go').textContent = on ? '…' : 'Ask';
       document.querySelectorAll('.ask-chip').forEach(b => { b.disabled = on; });
+      syncOmniBusy();
     }
 
     // The sidebar's platform toggles and timeline range as /api/ask filters (omitted when unconstrained).
@@ -2633,6 +2999,7 @@
       const plat = !f.platforms ? 'all platforms' : f.platforms.length ? f.platforms.map(platformName).join(', ') : 'no platforms';
       const time = f.date_from ? `${fmtMonth(S.time.months[S.time.i0])} – ${fmtMonth(S.time.months[S.time.i1])}` : 'all time';
       el.textContent = `Scope: ${plat} · ${time}`;
+      scheduleInsights();
     }
 
     function askSourceAsResult(s) {
@@ -2762,11 +3129,408 @@
       }
     }
 
+    // ─── Views: Memory Home ⇄ graph workspace ─────────────────────────────────────
+    // One page, two layouts. The canvas stays mounted in both; switching only moves the question box
+    // and the results panel, re-frames the camera and fades the workspace panels in or out.
+    const reducedMotion = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ambientMotion = () => S.view === 'home' && !reducedMotion();
+    S.view = 'home';
+    S.graphState = 'loading';   // loading | ready | error
+    S.omniMode = 'ask';
+
+    function setView(view, { camera = true } = {}) {
+      if (view === 'graph' && S.graphState !== 'ready') view = 'home';
+      const changed = view !== S.view;
+      S.view = view;
+      document.body.dataset.view = view;
+      // The question box lives in Memory Home, or docks as the command bar in the workspace top bar.
+      if (view === 'graph') $('tbtns').before($('omni')); else $('home-slot').append($('omni'));
+      // Results: inside Memory Home, or the right-hand column next to the details panel.
+      if (view === 'graph') $('rightcol').append($('sem-panel')); else $('home-results').append($('sem-panel'));
+      $('omni-q').rows = 1;
+      autosizeOmni();
+      setHover(-1);
+      // Focus must not stay on a control that just faded out.
+      const a = document.activeElement;
+      if (a && a !== document.body && (a.offsetParent === null || a.closest(view === 'graph' ? '#home' : '#sidebar, #rightcol, #btn-home, #btn-reset'))) a.blur();
+      if (S.controls) {
+        S.controls.autoRotate = ambientMotion();
+        frameHome();
+        if (camera && changed) {
+          if (view === 'graph' && S.selected >= 0) flyToNodes([S.selected, ...neighbours(S.selected).map(o => o.j)]);
+          else if (view === 'graph' && S.sem.set) flyToNodes([...S.sem.set].filter(i => S.nodes[i].kind === 'thread'), 0.05);
+          else flyHome();
+        }
+        updateLabels(true);
+      }
+      syncViewButtons();
+    }
+
+    const toggleView = () => setView(S.view === 'graph' ? 'home' : 'graph');
+
+    function syncViewButtons() {
+      const can = S.graphState === 'ready';
+      for (const id of ['btn-explore', 'home-explore']) {
+        const b = $(id);
+        b.disabled = !can;
+        b.title = can ? 'Open the graph workspace (G)' : (S.graphState === 'loading' ? 'The graph is still loading…' : 'The graph is unavailable (see the note below)');
+      }
+    }
+
+    // ─── Omni box: Ask Sarthink / Find memories ───────────────────────────────────
+    const HOME_PROMPTS = {
+      ask: ['What was I stressed about during college?', 'How has my interest in photography changed?', 'What did I discuss about Python?', 'What was I working on around August 2026?'],
+      search: ['college exams stress', 'photography and cameras', 'python projects', 'travel plans'],
+    };
+
+    function setOmniMode(mode, focus = false) {
+      S.omniMode = mode;
+      document.querySelectorAll('.omode').forEach(b => {
+        const on = b.dataset.omode === mode;
+        b.setAttribute('aria-selected', String(on));
+        b.tabIndex = on ? 0 : -1;
+      });
+      $('omni-q').placeholder = mode === 'ask' ? 'Ask anything about your memories…' : 'Describe a memory to find — topic, person, feeling…';
+      $('omni-q').setAttribute('aria-label', mode === 'ask' ? 'Question for Ask Sarthink' : 'Memory search');
+      $('home-chips').innerHTML = HOME_PROMPTS[mode].map(q => `<button type="button" class="ask-chip">${esc(q)}</button>`).join('');
+      $('home-chips').querySelectorAll('.ask-chip').forEach(b => b.addEventListener('click', () => { $('omni-q').value = b.textContent; submitOmni(); }));
+      syncOmniBusy();
+      if (focus) $('omni-q').focus();
+    }
+
+    function syncOmniBusy() {
+      const busy = $('ask-go').disabled && S.sem.mode === 'ask' || $('sem-go').disabled && S.sem.mode === 'search';
+      const b = $('omni-go');
+      b.disabled = busy;
+      b.textContent = busy ? '…' : (S.omniMode === 'ask' ? 'Ask' : 'Search');
+      document.querySelectorAll('#home-chips .ask-chip').forEach(c => { c.disabled = busy; });
+    }
+
+    // Runs the existing Ask / search flows, keeping the sidebar's boxes in sync with the omni box.
+    function submitOmni() {
+      const q = $('omni-q').value.trim();
+      if (!q) { $('omni-q').focus(); return; }
+      setMemoryMode(S.omniMode, false);
+      if (S.omniMode === 'ask') askSarthink(q);
+      else { $('sem-q').value = q; semanticSearch(); }
+    }
+
+    function autosizeOmni() {
+      const t = $('omni-q');
+      if (S.view === 'graph') { t.style.height = ''; return; }
+      t.style.height = 'auto';
+      t.style.height = Math.min(t.scrollHeight, 132) + 'px';
+    }
+
+    // ─── Home status ──────────────────────────────────────────────────────────────
+    function homeStatus(id, kind, html, isHtml = false) {
+      const el = $(id);
+      el.className = 'hs ' + (kind || '');
+      el.innerHTML = `<i></i>${isHtml || /<code>/.test(html) ? html : esc(html)}`;
+    }
+
+    function graphProgress(pct, msg) {
+      if (S.graphState === 'loading') homeStatus('hs-graph', 'busy', `${msg} ${pct < 100 ? pct + '%' : ''}`.trim());
+    }
+
+    // The graph failed to load: Memory Home keeps working and says honestly what is missing.
+    function graphUnavailable(err) {
+      S.graphState = 'error';
+      document.body.dataset.graph = 'error';
+      setView('home');
+      homeStatus('hs-graph', 'warn', 'Graph unavailable');
+      const cmds = (err.kind === 'missing' || err.kind === 'empty')
+        ? `<br>Generate the graph files, then refresh: <code>${esc(PIPELINE_CMDS[0])}</code> then <code>${esc(PIPELINE_CMDS[1])}</code>`
+        : err.kind === 'network' ? `<br>Start the local server with <code>${esc(SERVER_CMD)}</code> and open <code>http://127.0.0.1:8000/</code>` : '';
+      $('graph-note').innerHTML = `Graph unavailable: ${esc(err.message)}${cmds}<br>Ask, memory search and Insights still work.`;
+      $('graph-note').hidden = false;
+      syncViewButtons();
+    }
+
+    // ─── Insights (GET /api/insights) ─────────────────────────────────────────────
+    S.ins = { seq: 0, key: '', data: null, timer: 0, ret: null, localPlats: null };
+    const insightsOpen = () => !$('insights').hidden;
+
+    function openInsights() {
+      if (insightsOpen()) return;
+      S.ins.ret = document.activeElement;
+      $('insights').hidden = false;
+      document.body.dataset.insights = 'open';
+      $('btn-insights').setAttribute('aria-expanded', 'true');
+      $('ins-close').focus();
+      loadInsights(true);
+    }
+
+    function closeInsights() {
+      if (!insightsOpen()) return;
+      $('insights').hidden = true;
+      delete document.body.dataset.insights;
+      $('btn-insights').setAttribute('aria-expanded', 'false');
+      hideInsTip();
+      const r = S.ins.ret;
+      if (r && r.isConnected && r.offsetParent !== null && getComputedStyle(r).visibility !== 'hidden') r.focus();
+    }
+
+    // The same filters Ask uses: sidebar platform toggles + timeline. Without a graph, Insights' own chips.
+    function insightsFilters() {
+      const f = askFilters();
+      if (!S.platforms.length && S.ins.localPlats) f.platforms = [...S.ins.localPlats].sort();
+      return f;
+    }
+
+    function scopeText(f) {
+      const plat = !f.platforms ? 'All platforms' : f.platforms.length ? f.platforms.map(platformName).join(', ') : 'No platforms';
+      const time = f.date_from && S.time ? `${fmtMonth(S.time.months[S.time.i0])} – ${fmtMonth(S.time.months[S.time.i1])}` : 'all time';
+      return `${plat} · ${time}`;
+    }
+
+    function scheduleInsights() {
+      if (!insightsOpen()) return;
+      clearTimeout(S.ins.timer);
+      S.ins.timer = setTimeout(() => loadInsights(false), 250);
+    }
+
+    async function loadInsights(force) {
+      const f = insightsFilters();
+      const key = JSON.stringify(f);
+      const filtered = !!(f.platforms || f.date_from);
+      $('ins-scope').innerHTML = `${esc(scopeText(f))}${filtered ? ` · <button type="button" class="linkbtn" id="ins-clear">Clear filters</button>` : ''}`;
+      if ($('ins-clear')) $('ins-clear').onclick = clearInsightFilters;
+      if (!force && key === S.ins.key && S.ins.data) return;
+      S.ins.key = key;
+      const seq = ++S.ins.seq;
+      if (f.platforms && !f.platforms.length) {
+        renderInsightsState('No platforms are selected. Turn at least one back on to see insights.', 'Show all platforms');
+        return;
+      }
+      if (!S.ins.data) $('ins-body').innerHTML = insightsSkeleton();
+      $('insights').classList.add('busy');
+      const qs = new URLSearchParams();
+      if (f.platforms) qs.set('platforms', f.platforms.join(','));
+      if (f.date_from) qs.set('date_from', f.date_from);
+      if (f.date_to) qs.set('date_to', f.date_to);
+      try {
+        const data = await apiFetch('/api/insights' + (qs.toString() ? '?' + qs : ''), { timeout: 60000 });
+        if (seq !== S.ins.seq) return;
+        S.ins.data = data;
+        renderInsights(data);
+      } catch (e) {
+        if (seq !== S.ins.seq) return;
+        S.ins.data = null;
+        if (e.code === 'offline') renderInsightsState(`The local API is offline, so there are no insights to show.<br>Start it with <code>${esc(SERVER_CMD)}</code>`, 'Retry', true);
+        else if (e.code === 'database_unavailable') renderInsightsState(`The memory database isn’t available: ${esc(e.message)}`, 'Retry', true);
+        else renderInsightsState(`Could not load insights: ${esc(e.message)}`, 'Retry', true);
+      } finally {
+        if (seq === S.ins.seq) $('insights').classList.remove('busy');
+      }
+    }
+
+    function clearInsightFilters() {
+      S.ins.localPlats = null;
+      if (S.platforms.length) { resetFilters(); refreshVisuals(); }   // syncLegend → updateAskScope → reload
+      else loadInsights(true);
+    }
+
+    function renderInsightsState(html, action, retry = false) {
+      $('insights').classList.remove('busy');
+      $('ins-body').innerHTML = `<div class="ins-state">${html}${action ? `<br><button type="button" class="btn primary" id="ins-act">${esc(action)}</button>` : ''}</div>`;
+      if ($('ins-act')) $('ins-act').onclick = () => (retry ? loadInsights(true) : clearInsightFilters());
+    }
+
+    function insightsSkeleton() {
+      return `<div class="cards">${'<div class="card skel" style="height:78px"></div>'.repeat(5)}</div>
+        <div class="skel" style="height:210px"></div><div class="ins-grid"><div class="skel" style="height:220px"></div><div class="skel" style="height:220px"></div></div>`;
+    }
+
+    const fmtCompact = n => (n >= 1e6 ? (n / 1e6).toFixed(n >= 1e7 ? 0 : 1) + 'M' : n >= 1e3 ? (n / 1e3).toFixed(n >= 1e4 ? 0 : 1) + 'k' : String(n));
+    const monthLabel = key => `${MONTHS[+key.slice(5, 7) - 1]} ${key.slice(0, 4)}`;
+    const dayLabel = iso => { if (!iso) return '—'; const d = new Date(iso); return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`; };
+    const spanLabel = (a, b) => { if (!a) return '—'; const x = monthLabel(a.slice(0, 7)), y = b ? monthLabel(b.slice(0, 7)) : x; return x === y ? x : `${x} – ${y}`; };
+    const pcolor = p => PLATFORM_COLORS[p] || '#9aa0b4';
+
+    function renderInsights(d) {
+      const body = $('ins-body');
+      const avail = d.available_platforms || [];
+      const selected = S.platforms.length ? S.filter.platforms : (S.ins.localPlats || new Set(avail));
+      const chips = avail.length > 1 ? `<div class="ins-chips" role="group" aria-label="Platforms">${avail.map(p => `<button type="button" class="pchip" data-p="${esc(p)}" aria-pressed="${selected.has(p)}"><i style="background:${esc(pcolor(p))}"></i>${esc(platformName(p))}</button>`).join('')}</div>` : '';
+      if (d.empty) {
+        body.innerHTML = chips + `<div class="ins-state">No memories match these filters.<br><button type="button" class="btn primary" id="ins-act">Clear filters</button></div>`;
+        wireChips(body);
+        $('ins-act').onclick = clearInsightFilters;
+        return;
+      }
+      const t = d.totals;
+      const years = d.first_date && d.latest_date ? (new Date(d.latest_date) - new Date(d.first_date)) / (365.25 * 864e5) : 0;
+      const card = (k, v, s, cls = '') => `<div class="card"><div class="k">${esc(k)}</div><div class="v ${cls}">${v}</div>${s ? `<div class="s">${s}</div>` : ''}</div>`;
+      const top = d.platforms[0];
+      const cards = [
+        card('Messages', esc(fmtN(t.messages)), top ? `${esc(fmtCompact(top.messages))} on ${esc(platformName(top.platform))}` : ''),
+        card('Conversations', esc(fmtN(t.threads)), esc(`${(t.messages / Math.max(1, t.threads)).toFixed(0)} messages each on average`)),
+        card('People', esc(fmtN(t.people)), d.owner && d.owner.configured ? 'excluding you' : 'your own accounts included'),
+        card('Platforms', esc(fmtN(t.platforms)), esc(d.platforms.map(p => platformName(p.platform)).join(' · '))),
+        card('Memory span', esc(spanLabel(d.first_date, d.latest_date)), esc(years >= 1 ? `${years.toFixed(1)} years · latest ${dayLabel(d.latest_date)}` : `latest ${dayLabel(d.latest_date)}`), 'sm'),
+      ].join('');
+
+      const maxP = Math.max(1, ...d.platforms.map(p => p.messages));
+      const plats = d.platforms.map(p => `<div class="prow">
+          <div class="nm"><i style="background:${esc(pcolor(p.platform))}"></i>${esc(platformName(p.platform))}</div>
+          <div class="track" title="${esc((p.share * 100).toFixed(1))}% of messages"><i style="width:${(100 * p.messages / maxP).toFixed(1)}%;background:${esc(pcolor(p.platform))}"></i></div>
+          <div class="num">${esc(fmtN(p.messages))} <span style="color:var(--dim)">· ${esc((p.share * 100).toFixed(p.share < 0.01 ? 1 : 0))}%</span></div>
+          <div class="meta">${esc(fmtN(p.threads))} conversations · ${esc(fmtN(p.people))} people · ${esc(spanLabel(p.first_date, p.last_date))}</div>
+        </div>`).join('');
+
+      const rank = (items, fn) => items.length ? `<div class="rank">${items.map(fn).join('')}</div>` : '<div class="ins-note">Nothing to rank for these filters.</div>';
+      const contacts = rank(d.top_contacts, (c, k) => `<button type="button" class="ritem" data-node="${esc(c.node_id)}" title="Focus ${esc(c.label)} on the graph">
+          <span class="n">${k + 1}</span><span class="who"><b>${esc(c.label)}</b><small><i style="background:${esc(pcolor(c.platform))}"></i>${esc(platformName(c.platform))} · ${esc(spanLabel(c.first_date, c.last_date))}</small></span>
+          <span class="c">${esc(fmtN(c.messages))}<small>${esc(fmtN(c.threads))} conv.</small></span></button>`);
+      const convs = rank(d.top_conversations, (c, k) => `<button type="button" class="ritem" data-node="${esc(c.node_id)}" title="Focus this conversation on the graph">
+          <span class="n">${k + 1}</span><span class="who"><b>${esc(c.title)}</b><small><i style="background:${esc(pcolor(c.platform))}"></i>${esc(platformName(c.platform))} · ${esc(spanLabel(c.first_date, c.last_date))}</small></span>
+          <span class="c">${esc(fmtN(c.messages))}<small>${esc(fmtN(c.people))} people</small></span></button>`);
+
+      const yearsRow = (d.activity.years || []).map(y => `<span><b>${esc(y.year)}</b> ${esc(fmtCompact(y.total))}</span>`).join('');
+      body.innerHTML = `${chips}
+        <div class="cards">${cards}</div>
+        <div class="ins-sec"><h3>Activity by month <span class="act ins-note">messages per month · hover a bar for the platform split</span></h3>
+          <div class="chart-wrap" id="ins-chart-wrap"><div id="ins-chart-box"></div><div id="ins-tip" role="status"></div></div>
+          <div class="years" aria-label="Messages per year">${yearsRow}</div></div>
+        <div class="ins-sec"><h3>Platforms</h3>${plats}</div>
+        <div class="ins-grid">
+          <div class="ins-sec"><h3>Top contacts <span class="act ins-note">click to focus on the graph</span></h3>${contacts}</div>
+          <div class="ins-sec"><h3>Top conversations <span class="act ins-note">by messages</span></h3>${convs}</div>
+        </div>
+        <div class="ins-toast" id="ins-toast" role="status"></div>
+        ${d.owner && !d.owner.configured ? '<div class="ins-note">Your own accounts are counted as contacts because <code>config/identity_map.json</code> has no aliases. Add your handles there to exclude them.</div>' : ''}
+        <div class="ins-note">Counted from the local memory database (read-only), ${esc(d.cached ? 'cached' : `computed in ${(d.took_ms / 1000).toFixed(1)}s`)}. Nothing leaves this machine.</div>`;
+      wireChips(body);
+      body.querySelectorAll('.ritem').forEach(b => b.addEventListener('click', () => focusFromInsights(b.dataset.node)));
+      drawChart();
+    }
+
+    // Drawn at the box's real pixel width (no stretched text); redrawn when the window resizes.
+    function drawChart() {
+      const box = $('ins-chart-box');
+      if (!box || !S.ins.data) return;
+      const months = S.ins.data.activity.months;
+      box.innerHTML = activityChart(months, Math.max(260, Math.round(box.clientWidth)));
+      wireChart(months);
+    }
+    window.addEventListener('resize', () => { if (insightsOpen()) { clearTimeout(S.ins.rz); S.ins.rz = setTimeout(drawChart, 120); } });
+
+    function wireChips(body) {
+      body.querySelectorAll('.pchip').forEach(b => b.addEventListener('click', () => {
+        const p = b.dataset.p;
+        if (S.platforms.length) {
+          if (S.platforms.some(x => x.key === p)) togglePlatform(p);   // the graph's own filter: Insights follows via updateAskScope
+          return;
+        }
+        const all = new Set((S.ins.data && S.ins.data.available_platforms) || []);
+        const cur = S.ins.localPlats || new Set(all);
+        cur.has(p) ? cur.delete(p) : cur.add(p);
+        S.ins.localPlats = cur.size === all.size ? null : cur;
+        updateAskScope();
+        loadInsights(false);
+      }));
+    }
+
+    // Single-series bars (total messages per month). Platform identity lives in the tooltip and the
+    // labelled platform list, so the chart never depends on telling brand colours apart.
+    function activityChart(months, W) {
+      if (!months.length) return '<div class="ins-note">No dated messages.</div>';
+      const H = 190, L = 40, R = 8, T = 14, B = 22;
+      const n = months.length, bw = (W - L - R) / n, gap = Math.min(2, bw * 0.25);
+      const peak = Math.max(1, ...months.map(m => m.total));
+      const nice = (() => { const e = Math.pow(10, Math.floor(Math.log10(peak))); for (const m of [1, 2, 2.5, 5, 10]) if (m * e >= peak) return m * e; return 10 * e; })();
+      const y = v => T + (H - T - B) * (1 - v / nice);
+      const grid = [0.5, 1].map(f => `<line class="grid" x1="${L}" x2="${W - R}" y1="${y(nice * f)}" y2="${y(nice * f)}"/><text x="${L - 6}" y="${y(nice * f) + 3}" text-anchor="end">${esc(fmtCompact(nice * f))}</text>`).join('');
+      const peakIdx = months.findIndex(m => m.total === peak);
+      const cols = months.map((m, k) => {
+        const x = L + k * bw, h = Math.max(m.total ? 1.5 : 0, (H - T - B) * m.total / nice);
+        const r = Math.min(3, (bw - gap) / 2, h);
+        const bx = x + gap / 2, w = Math.max(0.8, bw - gap), top = H - B - h;
+        // Rounded data end, square at the baseline.
+        const path = h ? `M${bx},${H - B}V${top + r}Q${bx},${top} ${bx + r},${top}H${bx + w - r}Q${bx + w},${top} ${bx + w},${top + r}V${H - B}Z` : '';
+        return `<g class="col" data-k="${k}"><rect class="hit" x="${x}" y="${T}" width="${bw}" height="${H - T}"/>${path ? `<path class="bar" d="${path}"/>` : ''}</g>`;
+      }).join('');
+      // Year ticks at each January; the first month is labelled only when its January tick is far enough away.
+      const firstJan = months.findIndex(m => m.month.endsWith('-01'));
+      const every = Math.max(1, Math.ceil(34 / (bw * 12)));   // skip years when there is no room for every label
+      const ticks = months.map((m, k) => ((m.month.endsWith('-01') && (+m.month.slice(0, 4)) % every === 0) || (k === 0 && (firstJan < 0 || firstJan * bw > 40)))
+        ? `<text x="${L + k * bw + 1}" y="${H - 6}">${esc(m.month.slice(0, 4))}</text>` : '').join('');
+      const pk = months[peakIdx];
+      const px = L + peakIdx * bw + bw / 2, anchor = px > W * 0.8 ? 'end' : px < W * 0.2 ? 'start' : 'middle';
+      const peakLabel = `<text class="peak" x="${px}" y="${Math.max(10, y(pk.total) - 5)}" text-anchor="${anchor}">peak ${esc(monthLabel(pk.month))} · ${esc(fmtN(pk.total))}</text>`;
+      return `<svg id="ins-chart" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" role="img" aria-label="Messages per month from ${esc(monthLabel(months[0].month))} to ${esc(monthLabel(months[n - 1].month))}, peak ${esc(fmtN(pk.total))} in ${esc(monthLabel(pk.month))}">
+        ${grid}<line class="base" x1="${L}" x2="${W - R}" y1="${H - B}" y2="${H - B}"/>${cols}${ticks}${peakLabel}</svg>`;
+    }
+
+    function wireChart(months) {
+      const svg = $('ins-chart');
+      if (!svg) return;
+      svg.querySelectorAll('.col').forEach(g => {
+        g.addEventListener('pointerenter', () => showInsTip(months[+g.dataset.k], g));
+        g.addEventListener('pointerleave', hideInsTip);
+      });
+    }
+
+    function showInsTip(m, g) {
+      const tip = $('ins-tip'), wrap = $('ins-chart-wrap');
+      if (!tip || !wrap) return;
+      svgCols().forEach(c => c.classList.toggle('on', c === g));
+      const rows = Object.entries(m.platforms).sort((a, b) => b[1] - a[1])
+        .map(([p, v]) => `<div class="row"><i style="background:${esc(pcolor(p))}"></i><span>${esc(platformName(p))}</span><span>${esc(fmtN(v))}</span></div>`).join('');
+      tip.innerHTML = `<b>${esc(monthLabel(m.month))}</b> · ${esc(fmtN(m.total))} message${m.total === 1 ? '' : 's'}${rows}`;
+      const wr = wrap.getBoundingClientRect(), gr = g.getBoundingClientRect();
+      const x = clamp(gr.left - wr.left + gr.width / 2 - tip.offsetWidth / 2, 4, wr.width - tip.offsetWidth - 4);
+      tip.style.transform = `translate(${x}px, 6px)`;
+      tip.classList.add('show');
+    }
+
+    const svgCols = () => [...document.querySelectorAll('#ins-chart .col')];
+    function hideInsTip() {
+      const tip = $('ins-tip');
+      if (tip) tip.classList.remove('show');
+      svgCols().forEach(c => c.classList.remove('on'));
+    }
+
+    // Contact / conversation → the matching graph node, selected and framed in the workspace.
+    function focusFromInsights(id) {
+      const toast = msg => { const t = $('ins-toast'); if (t) t.textContent = msg; };
+      if (S.graphState !== 'ready') { toast('The graph isn’t available, so this can’t be shown on it.'); return; }
+      const n = S.byId.get(id);
+      if (!n) { toast('That one isn’t in the exported graph yet (the graph files are older than the database).'); return; }
+      closeInsights();
+      selectNode(n.i, { fly: true });
+    }
+
     Object.assign(window, { semanticSearch, resetSemantic, resetAll, askSarthink });
     checkSemanticHealth();
 
     // ─── Static wiring ────────────────────────────────────────────────────────────
     $('btn-reset').addEventListener('click', resetAll);
+    $('btn-explore').addEventListener('click', () => setView('graph'));
+    $('home-explore').addEventListener('click', () => setView('graph'));
+    $('btn-home').addEventListener('click', () => setView('home'));
+    $('btn-insights').addEventListener('click', () => (insightsOpen() ? closeInsights() : openInsights()));
+    $('home-insights').addEventListener('click', openInsights);
+    $('ins-close').addEventListener('click', closeInsights);
+    $('omni').addEventListener('submit', e => { e.preventDefault(); submitOmni(); });
+    $('omni-q').addEventListener('keydown', e => {
+      if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); submitOmni(); }
+    });
+    $('omni-q').addEventListener('input', autosizeOmni);
+    document.querySelectorAll('.omode').forEach(b => b.addEventListener('click', () => setOmniMode(b.dataset.omode, true)));
+    document.querySelector('.omodes').addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        setOmniMode(S.omniMode === 'ask' ? 'search' : 'ask');
+        $(`omode-${S.omniMode}`).focus();
+      }
+    });
+    // Memory Home makes room for results while the results panel is showing.
+    new MutationObserver(() => document.body.classList.toggle('has-results', !$('sem-panel').hidden))
+      .observe($('sem-panel'), { attributes: true, attributeFilter: ['hidden'] });
+    setOmniMode('ask');
+    setView('home');   // places the results panel inside Memory Home until the workspace opens
     $('btn-help').addEventListener('click', openHelp);
     $('help-close').addEventListener('click', closeHelp);
     $('help-backdrop').addEventListener('click', e => { if (e.target === $('help-backdrop')) closeHelp(); });
@@ -2814,7 +3578,7 @@
       const go = document.createElement('button');
       go.className = 'btn';
       go.textContent = 'Continue without graph (memory search only)';
-      go.onclick = () => { L.style.display = 'none'; $('sem-q').focus(); };
+      go.onclick = () => { L.style.display = 'none'; graphUnavailable(err); $('omni-q').focus(); };
       acts.append(retry, go);
     }
 
@@ -2823,7 +3587,7 @@
     // ─── Boot ─────────────────────────────────────────────────────────────────────
     async function boot() {
       if (typeof Papa === 'undefined') throw new GraphError('lib', 'Could not load the CSV parser (PapaParse from unpkg.com). Check the network connection and refresh.');
-      lbar(8, 'Loading nodes…');
+      lbar(8, 'Loading graph…');
       const [nodesCsv, edgesCsv] = await Promise.all([fetchCSV(NODES_URL, 'nodes'), fetchCSV(EDGES_URL, 'edges')]);
       lbar(45, 'Building graph…');
       if (!nodesCsv.fields.includes('id')) throw new GraphError('missing', 'cosmograph_nodes.csv has no "id" column, so it is not a graph export.');
@@ -2842,7 +3606,13 @@
       if (S.layoutNote) console.warn('[sarthink]', S.layoutNote);
       if (g.dropped) console.warn(`[sarthink] ${g.dropped} edge(s) reference unknown nodes and were skipped.`);
 
-      lbar(70, 'Initializing WebGL…');
+      lbar(70, 'Drawing graph…');
+      try {
+        THREE = await import('three');
+        ({ OrbitControls } = await import('three/addons/controls/OrbitControls.js'));
+      } catch (e) {
+        throw new GraphError('lib', 'Could not load the 3D engine (three.js from unpkg.com). Check the network connection and refresh.');
+      }
       initThree();
       buildScene();
       buildLegend();
@@ -2852,18 +3622,20 @@
 
       if (S.sem.results.length) applySemanticHighlight(true);  // a search finished before the graph loaded
 
+      S.graphState = 'ready';
+      document.body.dataset.graph = 'ready';
+      homeStatus('hs-graph', 'ok', `Graph · ${fmtN(S.nodes.length)} people & conversations`);
+      syncViewButtons();
+      // A shared #node= link (or ?view=graph) opens straight into the workspace.
       const start = hashNode(), sn = start && S.byId.get(start);
       if (sn) selectNode(sn.i, { fly: true, keepHash: true });
-
-      lbar(100, 'Ready');
-      $('loading').classList.add('fade');
-      setTimeout(() => { $('loading').style.display = 'none'; }, 650);
+      else if (new URLSearchParams(location.search).get('view') === 'graph') setView('graph');
       requestAnimationFrame(renderLoop);
     }
 
     boot().catch(err => {
       console.error('[sarthink]', err);
-      showFatal(err instanceof GraphError ? err : new GraphError('internal', `Something went wrong while drawing the graph: ${err.message}`));
+      graphUnavailable(err instanceof GraphError ? err : new GraphError('internal', `Something went wrong while drawing the graph: ${err.message}`));
     });
   </script>
 </body>

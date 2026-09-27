@@ -7,7 +7,10 @@
 //
 // Set SARTHINK_E2E_SEMANTIC=1 to also run a real memory search (loads the embedding model on CPU).
 // Error/fallback states are exercised by rewriting the CSV responses in the browser; nothing on
-// disk is modified.
+// disk is modified. Memory Home, Ask/search and Insights answers are stubbed with synthetic text, and
+// no check prints archive-derived text (only counts, ids and booleans).
+//
+// The page opens on Memory Home; the graph flows below enter the workspace first (ready()).
 import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
@@ -32,13 +35,20 @@ async function open(browser, { url = BASE, viewport = { width: 1440, height: 900
   const page = await browser.newPage({ viewport });
   page.errors = [];
   page.on('pageerror', e => page.errors.push(e.message));
-  if (route) await route(page);
+  if (route) {
+    await route(page);
+    // Stubbed routes still in flight must not outlive the page.
+    const close = page.close.bind(page);
+    page.close = async opts => { await page.unrouteAll({ behavior: 'ignoreErrors' }).catch(() => {}); return close(opts); };
+  }
   await page.goto(url);
   return page;
 }
 
-async function ready(page) {
-  await page.waitForFunction(() => window.__sarthink && window.__sarthink.pGeo && document.getElementById('loading').style.display === 'none', null, { timeout: 30000 });
+// Waits for the graph; by default then opens the graph workspace (the page starts on Memory Home).
+async function ready(page, { view = 'graph' } = {}) {
+  await page.waitForFunction(() => window.__sarthink && window.__sarthink.pGeo && document.body.dataset.graph === 'ready', null, { timeout: 30000 });
+  if (view === 'graph' && await page.evaluate(() => document.body.dataset.view !== 'graph')) await page.click('#btn-explore');
   await settle(page);
 }
 
@@ -198,7 +208,7 @@ async function mainFlow(browser) {
     const side = document.getElementById('sidebar').getBoundingClientRect();
     const pts = {
       centre: [innerWidth / 2, innerHeight / 2],
-      topStripBetweenBrandAndButtons: [innerWidth * 0.62, 28],
+      topStripBetweenStatsAndCommandBar: [(document.getElementById('stats').getBoundingClientRect().right + document.getElementById('omni').getBoundingClientRect().left) / 2, 28],
       rightEdgeNoPanels: [innerWidth - 30, innerHeight / 2],
       belowSidebar: [side.left + 20, Math.min(innerHeight - 20, side.bottom + 30)],
       besideHint: [innerWidth * 0.2, innerHeight - 20],
@@ -206,6 +216,9 @@ async function mainFlow(browser) {
     const out = {};
     for (const [k, [x, y]] of Object.entries(pts)) out[k] = at(x, y) === canvas;
     out.insideSidebar = document.getElementById('sidebar').contains(at(side.left + 30, side.top + 20));
+    const cmd = document.getElementById('omni').getBoundingClientRect();
+    out.commandBarInTopbar = document.getElementById('omni').contains(at(cmd.left + cmd.width / 2, cmd.top + cmd.height / 2));
+    out.homeCardGone = !document.getElementById('home').contains(at(innerWidth / 2, innerHeight * 0.3));
     return out;
   });
   for (const [k, v] of Object.entries(hitTest)) check(`pointer hit-test: ${k}`, v);
@@ -270,7 +283,7 @@ async function mainFlow(browser) {
   st = await state(page);
   const tip = await page.evaluate(() => ({ show: document.getElementById('tooltip').classList.contains('show'), text: document.getElementById('tooltip').textContent }));
   check('hover picks the node under the cursor', st.hover === node.i, `hover=${st.hover} want=${node.i}`);
-  check('hover shows a tooltip with platform and connections', tip.show && /connection/.test(tip.text), tip.text.replace(/\s+/g, ' ').trim().slice(0, 80));
+  check('hover shows a tooltip with platform and connections', tip.show && /connection/.test(tip.text), `${tip.text.length} chars`);
   const cursor = await page.evaluate(() => getComputedStyle(document.querySelector('#stage canvas')).cursor);
   check('pointer cursor over a node', cursor === 'pointer', cursor);
 
@@ -291,7 +304,7 @@ async function mainFlow(browser) {
   });
   check('unrelated nodes are dimmed, not hidden', dims.dimmed === dims.others && dims.hidden === 0, JSON.stringify(dims));
   const details = await page.evaluate(() => document.getElementById('details').innerText);
-  check('details show connections, messages and dates', /CONNECTIONS/i.test(details) && /MESSAGES/i.test(details) && /FIRST ACTIVE/i.test(details), details.slice(0, 120).replace(/\s+/g, ' '));
+  check('details show connections, messages and dates', /CONNECTIONS/i.test(details) && /MESSAGES/i.test(details) && /FIRST ACTIVE/i.test(details));
   st = await state(page);
   check('selection is written to the URL hash', st.hash.startsWith('#node='), st.hash);
   await shot(page, '02_selected');
@@ -327,7 +340,7 @@ async function mainFlow(browser) {
   await page.waitForFunction(i => window.__sarthink.selected === i, threadIdx);
   await page.waitForFunction(() => { const c = document.getElementById('d-ctx'); return c && !/Loading/.test(c.innerText); }, null, { timeout: 15000 });
   const ctx = await page.evaluate(() => document.getElementById('d-ctx').innerText);
-  check('thread details show conversation context or an honest reason', /indexed chunk|no chunks|needs the local API|isn’t available/.test(ctx), ctx.slice(0, 80).replace(/\s+/g, ' '));
+  check('thread details show conversation context or an honest reason', /indexed chunk|no chunks|needs the local API|isn’t available/.test(ctx));
 
   // Click on empty space deselects.
   await settle(page);
@@ -580,13 +593,13 @@ async function askFlow(browser) {
   // Tabs: search stays the default and keeps working; Ask is one click away.
   check('memory search is the default tab', await page.isVisible('#sem-q') && !(await page.isVisible('#ask-q')));
   await page.click('#tab-ask');
-  check('Ask tab shows the question box, chips and scope', await page.isVisible('#ask-q') && (await page.$$('.ask-chip')).length >= 3
+  check('Ask tab shows the question box, chips and scope', await page.isVisible('#ask-q') && (await page.$$('#ask-chips .ask-chip')).length >= 3
     && /all platforms · all time/.test(await page.textContent('#ask-scope')));
 
   // Chip → request; loading state while it runs.
-  await page.click('.ask-chip >> nth=0');
+  await page.click('#ask-chips .ask-chip >> nth=0');
   const loading = await page.waitForFunction(() => document.querySelector('#sem-list .ask-loading') && document.getElementById('ask-go').disabled
-    && document.querySelector('.ask-chip').disabled, null, { timeout: 2000 }).then(() => true, () => false);
+    && document.querySelector('#ask-chips .ask-chip').disabled, null, { timeout: 2000 }).then(() => true, () => false);
   check('ask shows a loading state and disables the button', loading);
   await page.waitForSelector('#sem-list .ask-brief', { timeout: 10000 });
   await settle(page);
@@ -734,15 +747,16 @@ async function dataStates(browser) {
 
   // Missing CSV
   let page = await open(browser, { route: p => p.route('**/cosmograph_nodes.csv', r => r.fulfill({ status: 404, body: 'nope' })) });
-  await page.waitForFunction(() => /missing/.test(document.getElementById('lmsg').innerText));
-  const msg = await page.textContent('#lmsg');
-  check('missing CSV shows an error with the pipeline commands', /export_cosmograph/.test(msg) && /compute_layout/.test(msg));
-  check('missing CSV offers memory search only', await page.isVisible('text=Continue without graph'));
+  await page.waitForFunction(() => document.body.dataset.graph === 'error');
+  const msg = await page.textContent('#graph-note');
+  check('missing CSV: Memory Home explains with the pipeline commands', /missing/.test(msg) && /export_cosmograph/.test(msg) && /compute_layout/.test(msg));
+  check('missing CSV: no blocking overlay, question box usable', await page.isVisible('#home') && await page.isVisible('#omni-q') && !(await page.isVisible('#loading')));
+  check('missing CSV: Explore graph disabled, status says unavailable', await page.isDisabled('#home-explore') && /unavailable/i.test(await page.textContent('#hs-graph')));
   await page.close();
 
   // Empty CSV
   page = await open(browser, { route: withCsv(t => t.split('\n')[0] + '\n') });
-  await page.waitForFunction(() => /empty/.test(document.getElementById('lmsg').innerText));
+  await page.waitForFunction(() => /empty/.test(document.getElementById('graph-note').innerText));
   check('empty export shows an empty state', true);
   await page.close();
 
@@ -825,6 +839,410 @@ async function responsive(browser) {
   }
 }
 
+// ─── Memory Home, Insights and arrow keys (all API answers synthetic) ─────────────
+const EVIL = '<img src=x onerror="window.__xss=1">';
+
+// Thread nodes (ids only) the stubs can cite, read from the page's own graph.
+function graphThreads(page, n = 2) {
+  return page.evaluate(n => window.__sarthink.nodes.filter(x => x.kind === 'thread' && x.links.length >= 2).slice(0, n).map(x => x.id), n);
+}
+
+async function stubAsk(p, calls) {
+  await p.route('**/api/ask', async r => {
+    const body = JSON.parse(r.request().postData());
+    calls.push({ kind: 'ask', ...body });
+    await new Promise(res => setTimeout(res, 300));
+    const ids = await graphThreads(p).catch(() => []);
+    const src = (k, id) => ({ rank: k + 1, node_id: id || null, title: `Synthetic thread ${k + 1} ${EVIL}`, platform: k ? 'claude' : 'reddit',
+      date_start: `2024-0${k + 1}-02T09:00:00+00:00`, date_end: null, similarity: 0.7 - k / 10, snippet: `synthetic sourdough note ${k} ${EVIL}`,
+      text: 'Synthetic full text about sourdough.', people: [], relevant: true, matched_terms: ['sourdough'] });
+    const sources = [src(0, ids[0]), src(1, ids[1])];
+    await r.fulfill({ json: {
+      question: body.question, answer: `Found 2 memories that mention “sourdough”. ${EVIL}`, confidence: 'medium',
+      summary_points: [`Jan 2024 · Reddit: “sourdough” ${EVIL}`], timeline: sources.map((s, k) => ({ date: s.date_start, label: s.title, node_id: s.node_id, platform: s.platform, source: k + 1 })),
+      sources, notes: [], evidence: { retrieved: 5, considered: 4, relevant: 2, terms: ['sourdough'] }, filters: {}, model: 'm', took_ms: 21,
+    } });
+  });
+  await p.route('**/api/search', async r => {
+    const body = JSON.parse(r.request().postData());
+    calls.push({ kind: 'search', ...body });
+    const ids = await graphThreads(p).catch(() => []);
+    const results = ids.map((id, k) => ({ rank: k + 1, similarity: 0.6, distance: 0.4, start_time: '2025-01-01T00:00:00+00:00', end_time: null, platform: 'reddit',
+      title: `Synthetic result ${k + 1}`, channel_id: id.slice(2), node_id: id, people: [], summary: null, snippet: `about ${body.query}`, text: `about ${body.query}` }));
+    await r.fulfill({ json: { query: body.query, table: 'topics', model: 'm', count: results.length, took_ms: 9, results } });
+  });
+}
+
+// A synthetic /api/insights answer whose contacts/conversations point at real node ids (so focus works).
+async function fakeInsights(p, url, { empty = false } = {}) {
+  const q = new URL(url).searchParams;
+  const ids = await p.evaluate(() => {
+    const S = window.__sarthink;
+    if (!S.nodes.length) return { users: ['U_999999'], threads: ['T_999999'] };
+    return { users: S.nodes.filter(n => n.kind === 'user').slice(0, 3).map(n => n.id), threads: S.nodes.filter(n => n.kind === 'thread').slice(0, 3).map(n => n.id) };
+  });
+  const months = [];
+  for (let y = 2023; y <= 2024; y++) for (let m = 1; m <= 12; m++) {
+    const reddit = (y - 2022) * 10 + m, insta = m % 3 ? 4 : 0;
+    months.push({ month: `${y}-${String(m).padStart(2, '0')}`, total: reddit + insta, platforms: insta ? { reddit, instagram: insta } : { reddit } });
+  }
+  const total = months.reduce((a, m) => a + m.total, 0);
+  const plats = q.get('platforms') ? q.get('platforms').split(',') : null;
+  if (empty) {
+    return { empty: true, filters: { platforms: plats, date_from: q.get('date_from'), date_to: q.get('date_to') }, totals: { messages: 0, threads: 0, people: 0, platforms: 0 },
+      first_date: null, latest_date: null, platforms: [], available_platforms: ['instagram', 'reddit'], activity: { months: [], years: [] },
+      top_contacts: [], top_conversations: [], owner: { configured: true, excluded_accounts: 2 }, took_ms: 3, cached: false };
+  }
+  return {
+    empty: false, filters: { platforms: plats, date_from: q.get('date_from'), date_to: q.get('date_to') },
+    totals: { messages: total, threads: 12, people: 3, platforms: 2 }, first_date: '2023-01-03T10:00:00+00:00', latest_date: '2024-12-20T10:00:00+00:00',
+    platforms: [
+      { platform: 'reddit', messages: total - 64, threads: 9, people: 2, first_date: '2023-01-03T10:00:00+00:00', last_date: '2024-12-20T10:00:00+00:00', share: 0.9 },
+      { platform: 'instagram', messages: 64, threads: 3, people: 1, first_date: '2023-01-05T10:00:00+00:00', last_date: '2024-11-02T10:00:00+00:00', share: 0.1 },
+    ],
+    available_platforms: ['instagram', 'reddit'],
+    activity: { months, years: [{ year: 2023, total: 200, platforms: {} }, { year: 2024, total: total - 200, platforms: {} }] },
+    top_contacts: ids.users.map((id, k) => ({ node_id: id, label: k ? `Synthetic Friend ${k}` : `Synthetic ${EVIL}`, platform: 'reddit', messages: 90 - k * 10, threads: 2,
+      first_date: '2023-02-01T00:00:00+00:00', last_date: '2024-02-01T00:00:00+00:00' })),
+    top_conversations: ids.threads.map((id, k) => ({ node_id: id, title: `Synthetic conversation ${k + 1} ${EVIL}`, platform: 'reddit', messages: 300 - k * 50, people: 3,
+      first_date: '2023-03-01T00:00:00+00:00', last_date: '2024-03-01T00:00:00+00:00' })),
+    owner: { configured: true, excluded_accounts: 2 }, took_ms: 12, cached: false,
+  };
+}
+
+async function homeFlow(browser) {
+  const calls = [];
+  const page = await open(browser, { route: p => stubAsk(p, calls) });
+  await ready(page, { view: 'home' });
+  await shot(page, '20_home');
+
+  // Opening state: Memory Home in front, graph behind, workspace panels out of the way.
+  const open0 = await page.evaluate(() => ({
+    view: document.body.dataset.view, askMode: document.getElementById('omode-ask').getAttribute('aria-selected') === 'true',
+    chips: document.querySelectorAll('#home-chips .ask-chip').length, sidebar: getComputedStyle(document.getElementById('sidebar')).visibility,
+    status: document.getElementById('home-status').innerText,
+  }));
+  check('opens on Memory Home with Ask as the default', open0.view === 'home' && open0.askMode && await page.isVisible('#omni-q'));
+  check('Memory Home shows sample prompts and a status line', open0.chips >= 3 && /Graph/.test(open0.status) && /Memory index|API/.test(open0.status), `${open0.chips} chips`);
+  check('graph workspace panels are hidden on Memory Home', open0.sidebar === 'hidden' && !(await page.isVisible('#sem-q')) && !(await page.isVisible('#find-q')));
+  const drawn = await page.waitForFunction(() => getComputedStyle(document.getElementById('stage')).opacity === '1', null, { timeout: 3000 }).then(() => true, () => false);
+  check('graph is drawn behind Memory Home', drawn && await page.evaluate(() => window.__sarthink.visibleNodes > 0));
+
+  // The graph stays interactive outside the card.
+  const outside = await page.evaluate(() => {
+    const h = document.getElementById('home').getBoundingClientRect(), canvas = document.querySelector('#stage canvas');
+    const pts = [[40, innerHeight - 40], [innerWidth - 40, innerHeight / 2], [h.left + 20, h.bottom + 30]];
+    return { canvas: pts.every(([x, y]) => document.elementFromPoint(x, y) === canvas), card: document.getElementById('home').contains(document.elementFromPoint(h.left + 30, h.top + 30)) };
+  });
+  check('pointer: canvas outside the Home card, card inside it', outside.canvas && outside.card);
+  let b = await state(page);
+  await page.mouse.move(80, 820);
+  await page.mouse.down();
+  for (let k = 1; k <= 8; k++) await page.mouse.move(80 + k * 20, 820 - k * 4);
+  await page.mouse.up();
+  await page.waitForTimeout(400);
+  let a = await state(page);
+  check('orbit works on Memory Home (outside the card)', dist(b.cam, a.cam) > 1);
+  b = a;
+  await page.mouse.move(120, 800);
+  for (let k = 0; k < 4; k++) { await page.mouse.wheel(0, -200); await page.waitForTimeout(40); }
+  await page.waitForTimeout(500);
+  a = await state(page);
+  check('wheel zoom works on Memory Home', dist(a.cam, a.target) < dist(b.cam, b.target) * 0.97);
+
+  // Ask from a sample chip: the brief renders inside Memory Home, escaped.
+  await page.click('#home-chips .ask-chip >> nth=0');
+  await page.waitForSelector('#home .ask-brief', { timeout: 10000 });
+  const brief = await page.evaluate(() => ({
+    inHome: document.getElementById('home').contains(document.getElementById('sem-panel')), cls: document.body.classList.contains('has-results'),
+    cards: document.querySelectorAll('#home #sem-list .sr').length, imgs: document.querySelectorAll('#home img, #sem-list img').length, xss: window.__xss === 1,
+    answer: document.querySelector('.ask-answer').innerText,
+  }));
+  check('Ask from Memory Home renders the brief in place', brief.inHome && brief.cls && brief.cards === 2 && calls.at(-1).kind === 'ask');
+  check('Memory Home: archive text is escaped', brief.imgs === 0 && !brief.xss && brief.answer.includes('<img src=x'));
+  check('Ask stays on Memory Home until a source is chosen', (await state(page)).selected === -1 && await page.evaluate(() => document.body.dataset.view === 'home'));
+  await shot(page, '21_home_ask');
+
+  // Switch to Find memories: placeholder, chips and endpoint change.
+  await page.click('#omode-search');
+  const mode = await page.evaluate(() => ({ sel: document.getElementById('omode-search').getAttribute('aria-selected'), ph: document.getElementById('omni-q').placeholder, go: document.getElementById('omni-go').textContent }));
+  check('Find memories mode switches the box', mode.sel === 'true' && /memory/i.test(mode.ph) && mode.go === 'Search');
+  await page.fill('#omni-q', 'synthetic cameras');
+  await page.press('#omni-q', 'Enter');
+  await page.waitForFunction(() => /Synthetic result/.test(document.getElementById('sem-list').innerText), null, { timeout: 10000 });
+  check('Find memories runs a semantic search', calls.at(-1).kind === 'search' && calls.at(-1).query === 'synthetic cameras');
+  check('sidebar search box stays in sync', await page.inputValue('#sem-q') === 'synthetic cameras');
+  await page.keyboard.press('ArrowLeft');   // focus is in the textarea: must not move anything
+  await page.click('#omode-ask');
+
+  // Ask again, then click a cited source → graph workspace focused on its thread.
+  await page.fill('#omni-q', 'sourdough?');
+  await page.press('#omni-q', 'Enter');
+  await page.waitForSelector('#home .ask-brief', { timeout: 10000 });
+  await page.waitForFunction(() => !document.getElementById('omni-go').disabled);
+  const want = await page.evaluate(() => window.__sarthink.sem.results[0].node_id);
+  await page.click('#home #sem-list .sr >> nth=0');
+  await settle(page);
+  let st = await state(page);
+  const after = await page.evaluate(() => ({ view: document.body.dataset.view, panelInRight: document.getElementById('rightcol').contains(document.getElementById('sem-panel')),
+    omniInTop: document.getElementById('topbar').contains(document.getElementById('omni')) }));
+  check('cited source opens the graph workspace', after.view === 'graph' && after.panelInRight && after.omniInTop);
+  check('cited source selects and highlights its thread', st.selected >= 0 && await page.evaluate(() => window.__sarthink.nodes[window.__sarthink.selected].id) === want && st.semSet >= 2);
+  const framed = await selectionInFreeArea(page);
+  check('cited source is framed clear of the panels', framed.ok, `${framed.bad}/${framed.n} outside`);
+  await shot(page, '22_source_on_graph');
+
+  // Command bar in the workspace.
+  await page.fill('#omni-q', 'sourdough again');
+  await page.press('#omni-q', 'Enter');
+  await page.waitForFunction(() => !document.getElementById('omni-go').disabled && document.querySelector('#rightcol .ask-brief'), null, { timeout: 10000 });
+  check('command bar asks from the graph workspace', calls.at(-1).question === 'sourdough again' && await page.evaluate(() => document.body.dataset.view === 'graph'));
+  check('graph clicks still work with the command bar', (await state(page)).focusEdges > 0);
+
+  // G toggles back to Home (results follow), and again to the graph.
+  await page.click('#btn-help'); await page.click('#help-close');
+  await page.evaluate(() => document.activeElement.blur());
+  await page.keyboard.press('g');
+  await page.waitForTimeout(500);
+  check('G returns to Memory Home with the results', await page.evaluate(() => document.body.dataset.view === 'home' && document.getElementById('home').contains(document.getElementById('sem-panel'))));
+  await page.keyboard.press('g');
+  await settle(page);
+  check('G opens the workspace again, keeping the selection', await page.evaluate(() => document.body.dataset.view === 'graph') && (await state(page)).selected >= 0);
+  await page.keyboard.press('Escape');
+  await settle(page);
+  st = await state(page);
+  check('Esc in the workspace still resets everything', st.selected === -1 && st.semSet === 0 && dist(st.cam, st.home) < 1);
+  check('no page errors in the Memory Home flow', page.errors.length === 0, page.errors.join(' | '));
+  await page.close();
+
+  // Explore graph from a fresh page: smooth hand-over to a fully framed workspace.
+  const p2 = await open(browser);
+  await ready(p2, { view: 'home' });
+  await p2.click('#home-explore');
+  await p2.waitForFunction(() => getComputedStyle(document.getElementById('sidebar')).visibility === 'visible' && getComputedStyle(document.getElementById('home')).visibility === 'hidden', null, { timeout: 3000 });
+  await settle(p2);
+  const offscreen = await p2.evaluate(() => {
+    const S = window.__sarthink, cam = S.camera; cam.updateMatrixWorld();
+    const p = cam.projectionMatrix.elements, v = cam.matrixWorldInverse.elements, side = document.getElementById('sidebar').getBoundingClientRect();
+    let out = 0;
+    for (const n of S.nodes) {
+      const mv = [0, 1, 2, 3].map(r => v[r] * n.x + v[4 + r] * n.y + v[8 + r] * n.z + v[12 + r]);
+      const c = [0, 1, 2, 3].map(r => p[r] * mv[0] + p[4 + r] * mv[1] + p[8 + r] * mv[2] + p[12 + r] * mv[3]);
+      const x = (c[0] / c[3] + 1) / 2 * innerWidth;
+      if (c[3] <= 0 || x < side.right - 2 || Math.abs(c[0] / c[3]) > 1 || Math.abs(c[1] / c[3]) > 1) out++;
+    }
+    return out;
+  });
+  check('Explore graph: workspace opens with the whole graph framed beside the sidebar', offscreen === 0, `${offscreen} nodes hidden`);
+  check('Explore graph: no auto-rotation in the workspace', await p2.evaluate(() => !window.__sarthink.controls.autoRotate));
+  check('no page errors after Explore graph', p2.errors.length === 0, p2.errors.join(' | '));
+  await p2.close();
+}
+
+async function arrowKeys(browser) {
+  const page = await open(browser);
+  await ready(page);
+  const target = await isolatedNode(page);
+  await page.mouse.click(Math.round(await page.evaluate(() => innerWidth)) - 420, 860);   // focus the canvas (empty space)
+  const sp = async () => screenOf(page, target.i);
+  for (const [key, axis, sign] of [['ArrowRight', 'x', 1], ['ArrowLeft', 'x', -1], ['ArrowUp', 'y', -1], ['ArrowDown', 'y', 1]]) {
+    const b = await sp();
+    for (let k = 0; k < 3; k++) await page.keyboard.press(key);
+    await page.waitForTimeout(300);
+    const a = await sp();
+    const moved = (a[axis] - b[axis]) * sign, other = Math.abs(axis === 'x' ? a.y - b.y : a.x - b.x);
+    check(`${key} moves the graph ${key.slice(5).toLowerCase()}`, moved > 20 && other < moved * 0.25, `${moved.toFixed(0)}px along, ${other.toFixed(0)}px across`);
+  }
+  let b = await state(page);
+  await page.keyboard.press('Shift+ArrowLeft');
+  await page.keyboard.press('Shift+ArrowLeft');
+  await page.waitForTimeout(300);
+  let a = await state(page);
+  check('Shift+arrow orbits around the target', dist(a.cam, b.cam) > 1 && dist(a.target, b.target) < 1e-6);
+  // Arrows keep their normal meaning in inputs and tab strips.
+  await settle(page);
+  b = await state(page);
+  await page.focus('#find-q');
+  await page.keyboard.press('ArrowRight');
+  await page.keyboard.press('ArrowDown');
+  await page.focus('#tab-search');
+  await page.keyboard.press('ArrowRight');
+  a = await state(page);
+  check('arrows in inputs and tabs do not move the graph', dist(a.cam, b.cam) < 1e-3 && dist(a.target, b.target) < 1e-3, `moved ${dist(a.cam, b.cam).toExponential(1)}`);
+  check('arrows still switch the memory tabs', await page.evaluate(() => document.getElementById('tab-ask').getAttribute('aria-selected') === 'true'));
+  check('no page errors with arrow keys', page.errors.length === 0, page.errors.join(' | '));
+  await page.close();
+}
+
+async function insightsFlow(browser) {
+  const reqs = [];
+  let mode = 'ok';
+  const page = await open(browser, {
+    route: p => p.route('**/api/insights**', async r => {
+      reqs.push(r.request().url());
+      if (mode === 'offline') return r.abort();
+      if (mode === 'db') return r.fulfill({ status: 503, json: { error: { code: 'database_unavailable', message: 'Memory database not found: x.db.' } } });
+      await new Promise(res => setTimeout(res, 250));
+      await r.fulfill({ json: await fakeInsights(p, r.request().url(), { empty: mode === 'empty' }) });
+    }),
+  });
+  await ready(page, { view: 'home' });
+
+  await page.click('#home-insights');
+  await page.waitForSelector('#ins-chart', { timeout: 10000 });
+  await page.waitForFunction(() => getComputedStyle(document.getElementById('home')).visibility === 'hidden', null, { timeout: 3000 }).catch(() => {});
+  await shot(page, '30_insights_home');
+  const r = await page.evaluate(() => ({
+    cards: document.querySelectorAll('#insights .card').length, first: document.querySelector('#insights .card .v').innerText,
+    bars: document.querySelectorAll('#ins-chart .col').length, plats: document.querySelectorAll('#insights .prow').length,
+    contacts: document.querySelectorAll('#insights .ritem').length, imgs: document.querySelectorAll('#insights img').length, xss: window.__xss === 1,
+    homeHidden: getComputedStyle(document.getElementById('home')).visibility === 'hidden', scope: document.getElementById('ins-scope').innerText,
+    text: document.getElementById('ins-body').innerText,
+  }));
+  check('Insights opens from Memory Home with stat cards', r.cards === 5 && /\d/.test(r.first) && r.homeHidden, JSON.stringify({ cards: r.cards }));
+  check('Insights draws one SVG bar column per month', r.bars === 24);
+  check('Insights lists platforms, contacts and conversations', r.plats === 2 && r.contacts === 6 && /excluding you/.test(r.text));
+  check('Insights escapes archive strings', r.imgs === 0 && !r.xss && r.text.includes('<img src=x'));
+  check('Insights request is unfiltered by default', !new URL(reqs[0]).search && /All platforms · all time/.test(r.scope), reqs[0]);
+
+  // Hover tooltip with the platform split.
+  const col = page.locator('#ins-chart .col').nth(1);
+  await col.hover();
+  const tip = await page.evaluate(() => ({ show: document.getElementById('ins-tip').classList.contains('show'), text: document.getElementById('ins-tip').innerText }));
+  check('chart hover shows month, total and platform split', tip.show && /Feb 2023/.test(tip.text) && /Reddit/.test(tip.text) && /Instagram/.test(tip.text), tip.text.replace(/\s+/g, ' '));
+
+  // Contact → graph workspace, node selected.
+  const contactId = await page.getAttribute('#insights .ritem >> nth=1', 'data-node');
+  await page.click('#insights .ritem >> nth=1');
+  await settle(page);
+  let st = await state(page);
+  check('clicking a contact closes Insights and focuses it on the graph',
+    await page.evaluate(() => document.getElementById('insights').hidden && document.body.dataset.view === 'graph')
+    && await page.evaluate(() => window.__sarthink.nodes[window.__sarthink.selected].id) === contactId);
+
+  // Filters in the workspace flow into the request.
+  await page.keyboard.press('Escape');
+  await settle(page);
+  const plats = await page.evaluate(() => window.__sarthink.platforms.map(p => p.key));
+  await page.click(`#plat-list .frow[data-p="${plats[0]}"]`);
+  const hasTime = await page.evaluate(() => !!window.__sarthink.time);
+  if (hasTime) await page.click('#tl-presets button[data-m="12"]');
+  await page.evaluate(() => document.activeElement.blur());
+  await page.keyboard.press('i');
+  await page.waitForFunction(() => !document.getElementById('insights').hidden && document.querySelector('#ins-chart'));
+  await page.waitForTimeout(400);
+  let q = new URL(reqs.at(-1)).searchParams;
+  check('Insights respects the sidebar platform filter', q.get('platforms') && !q.get('platforms').split(',').includes(plats[0]), q.get('platforms'));
+  if (hasTime) check('Insights respects the timeline range', q.get('date_from') && q.get('date_to') && q.get('date_from') < q.get('date_to'));
+  check('Insights scope line shows the filters', /Clear filters/.test(await page.textContent('#ins-scope')));
+  const sideVisible = await page.evaluate(() => {
+    const i = document.getElementById('insights').getBoundingClientRect(), s = document.getElementById('sidebar').getBoundingClientRect();
+    return i.left >= s.right;
+  });
+  check('in the workspace Insights sits beside the sidebar', sideVisible);
+  await shot(page, '31_insights_graph');
+
+  // Changing a filter while Insights is open refetches.
+  const n0 = reqs.length;
+  await page.click(`#plat-list .frow[data-p="${plats[0]}"]`);
+  await page.waitForFunction(n => window.__reqsDone || true, n0);
+  await page.waitForTimeout(700);
+  q = new URL(reqs.at(-1)).searchParams;
+  check('toggling a platform with Insights open refetches', reqs.length > n0 && !q.get('platforms'), q.get('platforms') || '(all)');
+
+  // Empty, database-unavailable and offline states.
+  mode = 'empty';
+  await page.click('#insights .pchip >> nth=0');
+  await page.waitForFunction(() => /No memories match/.test(document.getElementById('ins-body').innerText), null, { timeout: 5000 });
+  check('Insights empty state offers to clear filters', await page.isVisible('#ins-act'));
+  mode = 'db';
+  await page.click('#ins-act');
+  await page.waitForFunction(() => /database isn’t available/.test(document.getElementById('ins-body').innerText), null, { timeout: 5000 });
+  check('Insights database-unavailable state', true);
+  mode = 'offline';
+  await page.click('#ins-act');
+  await page.waitForFunction(() => /offline/.test(document.getElementById('ins-body').innerText), null, { timeout: 5000 });
+  check('Insights API-offline state shows the start command', /start_sarthink/.test(await page.textContent('#ins-body')));
+  mode = 'ok';
+  await page.click('#ins-act');
+  await page.waitForSelector('#ins-chart', { timeout: 5000 });
+  check('Retry recovers Insights', true);
+  await page.keyboard.press('Escape');
+  check('Esc closes Insights first (workspace kept)', await page.evaluate(() => document.getElementById('insights').hidden && document.body.dataset.view === 'graph'));
+  check('no page errors in the Insights flow', page.errors.length === 0, page.errors.join(' | '));
+  await page.close();
+
+  // Loading state is visible while the request runs.
+  const slow = await open(browser, { route: p => p.route('**/api/insights**', async r => { await new Promise(res => setTimeout(res, 1500)); await r.fulfill({ json: await fakeInsights(p, r.request().url()) }); }) });
+  await ready(slow, { view: 'home' });
+  await slow.click('#home-insights');
+  check('Insights shows a loading skeleton', await slow.waitForSelector('#insights .skel', { timeout: 1000 }).then(() => true, () => false));
+  await slow.close();
+}
+
+async function homeWithoutGraph(browser) {
+  const calls = [];
+  const page = await open(browser, { route: async p => {
+    await p.route('**/cosmograph_edges.csv', r => r.fulfill({ status: 404, body: 'nope' }));
+    await stubAsk(p, calls);
+    await p.route('**/api/insights**', async r => r.fulfill({ json: await fakeInsights(p, r.request().url()) }));
+  } });
+  await page.waitForFunction(() => document.body.dataset.graph === 'error');
+  await page.fill('#omni-q', 'sourdough?');
+  await page.press('#omni-q', 'Enter');
+  await page.waitForSelector('#home .ask-brief', { timeout: 10000 });
+  check('no graph: Ask still answers on Memory Home', calls.length === 1);
+  await page.click('#home #sem-list .sr >> nth=0');
+  check('no graph: a source expands in place instead of opening the graph', await page.evaluate(() => document.body.dataset.view === 'home' && document.querySelector('#sem-list .sr.expanded') !== null));
+  await page.keyboard.press('g');
+  check('no graph: G stays on Memory Home', await page.evaluate(() => document.body.dataset.view === 'home'));
+  await page.click('#home-insights');
+  await page.waitForSelector('#ins-chart', { timeout: 10000 });
+  await page.click('#insights .ritem >> nth=0');
+  check('no graph: Insights explains it cannot focus the graph', /graph isn’t available/.test(await page.textContent('#ins-toast')));
+  await page.click('#insights .pchip >> nth=0');
+  await page.waitForTimeout(400);
+  check('no graph: Insights platform chips still filter', await page.evaluate(() => document.querySelector('#insights .pchip').getAttribute('aria-pressed') === 'false'));
+  await shot(page, '32_no_graph');
+  check('no page errors without the graph', page.errors.length === 0, page.errors.join(' | '));
+  await page.close();
+}
+
+async function homeResponsive(browser) {
+  for (const vp of [{ width: 1440, height: 900 }, { width: 1024, height: 700 }, { width: 390, height: 844 }]) {
+    const page = await open(browser, { viewport: vp, route: p => p.route('**/api/insights**', async r => r.fulfill({ json: await fakeInsights(p, r.request().url()) })) });
+    await ready(page, { view: 'home' });
+    const fit = await page.evaluate(() => {
+      const h = document.getElementById('home').getBoundingClientRect(), go = document.getElementById('omni-go').getBoundingClientRect();
+      const tb = [...document.querySelectorAll('#tbtns .btn')].filter(b => b.offsetParent).map(b => b.getBoundingClientRect());
+      return { docW: document.documentElement.scrollWidth <= innerWidth, card: h.left >= 0 && h.right <= innerWidth && h.bottom <= innerHeight + 1,
+        go: go.right <= h.right && go.bottom <= innerHeight, buttons: tb.every(r => r.right <= innerWidth && r.left >= 0), overlap: tb.some(r => r.bottom > h.top) };
+    });
+    check(`${vp.width}x${vp.height}: Memory Home fits, no horizontal scroll`, fit.docW && fit.card && fit.go && fit.buttons && !fit.overlap, JSON.stringify(fit));
+    await page.click('#home-insights');
+    await page.waitForSelector('#ins-chart');
+    const ins = await page.evaluate(() => {
+      const i = document.getElementById('insights').getBoundingClientRect();
+      return { docW: document.documentElement.scrollWidth <= innerWidth, box: i.left >= 0 && i.right <= innerWidth + 1 && i.bottom <= innerHeight + 1,
+        cards: [...document.querySelectorAll('#insights .card')].every(c => c.getBoundingClientRect().right <= i.right) };
+    });
+    check(`${vp.width}x${vp.height}: Insights fits`, ins.docW && ins.box && ins.cards, JSON.stringify(ins));
+    await shot(page, `33_insights_${vp.width}`);
+    await page.keyboard.press('Escape');
+    if (vp.width >= 1024) {
+      await page.click('#home-explore');
+      await settle(page);
+      const ws = await page.evaluate(() => {
+        const o = document.getElementById('omni').getBoundingClientRect(), s = document.getElementById('sidebar').getBoundingClientRect();
+        const btns = [...document.querySelectorAll('#tbtns .btn')].filter(b => b.offsetParent).map(b => b.getBoundingClientRect());
+        return { docW: document.documentElement.scrollWidth <= innerWidth, bar: o.width >= 200 && o.bottom <= s.top, clash: btns.some(b => b.left < o.right && b.right > o.left) };
+      });
+      check(`${vp.width}x${vp.height}: command bar fits the workspace top bar`, ws.docW && ws.bar && !ws.clash, JSON.stringify(ws));
+    }
+    await page.close();
+  }
+}
+
 async function realSemantic(browser) {
   const page = await open(browser);
   await ready(page);
@@ -849,16 +1267,13 @@ async function realSemantic(browser) {
   await page.close();
 }
 
+// SARTHINK_E2E_ONLY=homeFlow,insightsFlow runs just those flows.
+const ONLY = (process.env.SARTHINK_E2E_ONLY || '').split(',').filter(Boolean);
+const FLOWS = { mainFlow: async b => (await mainFlow(b)).close(), semanticFlow, askFlow, apiStates, dataStates, responsive,
+  homeFlow, arrowKeys, insightsFlow, homeWithoutGraph, homeResponsive, ...(REAL_SEMANTIC ? { realSemantic } : {}) };
 const browser = await chromium.launch({ args: ['--use-gl=swiftshader', '--enable-webgl', '--ignore-gpu-blocklist'] });
 try {
-  const page = await mainFlow(browser);
-  await page.close();
-  await semanticFlow(browser);
-  await askFlow(browser);
-  await apiStates(browser);
-  await dataStates(browser);
-  await responsive(browser);
-  if (REAL_SEMANTIC) await realSemantic(browser);
+  for (const [name, flow] of Object.entries(FLOWS)) if (!ONLY.length || ONLY.includes(name)) await flow(browser);
 } catch (e) {
   check('e2e run completed', false, e.stack || e.message);
 } finally {

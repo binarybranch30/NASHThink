@@ -9,8 +9,13 @@ platform or title read from one. Nothing is paraphrased or inferred, so the brie
 never claims a feeling, event or relationship the archive doesn't show.
 """
 import datetime as dt
+import os
 import re
+import sys
 from collections import Counter
+
+sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "semantic"))
+import hinglish  # noqa: E402  (shared Hinglish vocabulary: filler, spelling variants, topic equivalents)
 
 UTC = dt.timezone.utc
 
@@ -18,6 +23,10 @@ UTC = dt.timezone.utc
 # unrelated questions. A source only counts as evidence when all of these hold.
 MIN_SIMILARITY = 0.35        # cosine similarity (1 - distance)
 MIN_SIMILARITY_NO_TERMS = 0.45  # when the question has no content words to check against
+# A chunk whose support comes from the *other* language (an English question answered by "neend", a Hinglish
+# one by "sleep") scores low on similarity even when on topic (~0.2-0.4 on the real index), so it needs a
+# lower floor. It still has to mention the topic word, have real content and meet the term rule below.
+MIN_SIMILARITY_CROSS = 0.2
 MIN_BODY_CHARS = 40          # message text, excluding the Platform/Title/... header
 QUOTE_CHARS = 200
 TITLE_CHARS = 70
@@ -153,11 +162,61 @@ def term_key(term):
 
 
 def content_terms(question):
+    """The question's topic words. Hinglish filler and negations ("hai", "mujhe", "nahi") are skipped and
+    Hinglish spellings are normalised (padhaai -> padhai); English words are kept as typed."""
+    raw = WORD_RE.findall(question.lower())
+    hi = hinglish.looks_hinglish(raw)
     seen = []
-    for w in WORD_RE.findall(question.lower()):
+    for w in raw:
+        if hinglish.is_filler(w, hi):
+            continue
+        w = hinglish.normalize(w)
         if len(w) > 2 and w not in STOPWORDS and w not in FILLER and not w.isdigit() and w not in MONTHS and w not in seen:
             seen.append(w)
     return seen
+
+
+class TermMatcher:
+    """Decides which question terms a piece of text mentions.
+
+    A term is mentioned when a text word starts with its key (existing English behaviour: stressed ~ stressful),
+    when a text word is the same Hinglish word in another spelling (nind ~ neend), or when a text word is the
+    same topic in the other language (neend ~ sleeping). Topic words from hinglish.CONCEPTS list their forms
+    explicitly, so they match whole words only (exam no longer matches "example", pain no longer "painting").
+    Negations and filler in the text never count, and nothing in the text is changed.
+    """
+
+    def __init__(self, terms):
+        self.terms = list(terms)
+        self.keys = [term_key(t) for t in self.terms]
+        self.equiv = []   # per term: {normalised word: 'same' | 'cross'}
+        for t in self.terms:
+            concept, lang = hinglish.concept_of(t)
+            eq = {}
+            if concept:
+                for l in ("en", "hi"):
+                    for w in hinglish.surface_forms(concept, l):
+                        eq[hinglish.normalize(w)] = "same" if l == lang else "cross"
+            self.equiv.append(eq)
+
+    def match(self, words):
+        """-> (matched question terms, display words, uses_cross) for a set of lowercase text words."""
+        norm = {hinglish.normalize(w) for w in words}
+        matched, shown, cross_only = [], [], False
+        for t, k, eq in zip(self.terms, self.keys, self.equiv):
+            if not eq and any(w.startswith(k) for w in norm):
+                matched.append(t)
+                shown.append(t)
+                continue
+            hits = sorted(w for w in norm if w in eq)
+            if hits:
+                matched.append(t)
+                shown.append(t if t in hits else hits[0])
+                cross_only = cross_only or all(eq[w] == "cross" for w in hits)
+        return matched, shown, cross_only
+
+    def count(self, words):
+        return len(self.match(words)[0])
 
 
 def words_of(text):
@@ -201,31 +260,67 @@ def clip(text, limit):
     return cut.rstrip(" ,;:") + "…"
 
 
-def best_quote(messages, keys):
-    """The sentence that mentions the most question terms (ties: a readable length, then the earliest)."""
+NEGATION_CONTEXT_WORDS = 4   # words kept after a negation so its verb stays attached ("neend nahi aati thi")
+
+
+def safe_clip(text, limit, hard_max=None):
+    """clip() that never drops a negation ("nahi", "not", "never" ...) from the kept part of a sentence.
+
+    If the cut would leave out a negation, the quote is extended to include it plus a few words after it,
+    up to `hard_max` characters. Returns None when even that isn't possible, so callers pick another quote
+    instead of showing one whose meaning could be reversed.
+    """
+    flat = re.sub(r"\s+", " ", text or "").strip()
+    if len(flat) <= limit:
+        return flat
+    hard_max = hard_max or limit * 2
+    kept = clip(flat, limit)
+    kept_len = len(kept.rstrip("…"))
+    toks = list(WORD_RE.finditer(flat))
+    negs = [i for i, m in enumerate(toks) if m.start() >= kept_len and hinglish.is_negation(m.group(0))]
+    if not negs:
+        return kept
+    last = negs[-1]
+    end_tok = toks[min(len(toks) - 1, last + NEGATION_CONTEXT_WORDS)]
+    end = end_tok.end()
+    if end > hard_max:
+        return None
+    return flat if end >= len(flat) else flat[:end].rstrip(" ,;:") + "…"
+
+
+def best_quote(messages, keys, matcher=None):
+    """The sentence that mentions the most question terms (ties: a readable length, then the earliest).
+
+    With a TermMatcher, spelling variants and other-language topic words count as mentions too. A sentence
+    that can't be shortened without losing a negation is skipped (see safe_clip).
+    """
     best, best_score = None, None
     for mi, msg in enumerate(messages):
         for si, sentence in enumerate(SENTENCE_SPLIT_RE.split(msg["content"] or "")):
             sentence = URL_RE.sub("", sentence).strip(" -*>•\t")
             words = WORD_RE.findall(sentence.lower())
-            hits = sum(1 for k in keys if any(w.startswith(k) for w in words))
+            hits = matcher.count(words) if matcher else sum(1 for k in keys if any(w.startswith(k) for w in words))
             if len(words) < (3 if hits else 5):
                 continue
             score = (hits, 1 if 6 <= len(words) <= 40 else 0, -mi, -si)
             if best_score is None or score > best_score:
-                best, best_score = {"text": clip(sentence, QUOTE_CHARS), "author": msg["author"], "ts": msg["ts"], "hits": hits}, score
+                text = safe_clip(sentence, QUOTE_CHARS)
+                if text is None:
+                    continue
+                best, best_score = {"text": text, "author": msg["author"], "ts": msg["ts"], "hits": hits}, score
     return best
 
 
 # ─── Evidence ─────────────────────────────────────────────────────────────────
 
-def assess(result, terms, keys):
+def assess(result, terms, keys, matcher=None):
     """Adds the evidence fields build_brief needs to one /api/search-style result."""
+    matcher = matcher or TermMatcher(terms)
     text = result.get("text") or ""
     messages = parse_messages(text)
     body = " ".join(m["content"] for m in messages).strip()
     words = words_of(body) | words_of(result.get("title"))
-    matched = [t for t, k in zip(terms, keys) if mentions(words, k)]
+    matched, shown, cross = matcher.match(words)
     stamps = [m["ts"] for m in messages if m["ts"]]
     start = min(stamps) if stamps else parse_time(result.get("start_time"))
     end = max(stamps) if stamps else (parse_time(result.get("end_time")) or start)
@@ -235,7 +330,8 @@ def assess(result, terms, keys):
         # Short questions need one of their words; longer ones at least half, so "quantum lattice gauge
         # theory" isn't answered by a chunk that only says "theory".
         needed = 1 if len(terms) <= 2 else (len(terms) + 1) // 2
-        relevant = sim >= MIN_SIMILARITY and substantive and len(matched) >= needed
+        floor = MIN_SIMILARITY_CROSS if cross else MIN_SIMILARITY
+        relevant = sim >= floor and substantive and len(matched) >= needed
     else:
         relevant = sim >= MIN_SIMILARITY_NO_TERMS and substantive
     coverage = len(matched) / len(terms) if terms else 0.0
@@ -246,8 +342,8 @@ def assess(result, terms, keys):
         "_words": words_of(body),
         "_start": start,
         "_end": end,
-        "_quote": best_quote(messages, keys),
-        "matched_terms": matched,
+        "_quote": best_quote(messages, keys, matcher),
+        "matched_terms": shown,
         "relevant": relevant,
         "_coverage": coverage,
         "_score": sim + 0.2 * coverage - (0.2 if not substantive else 0.0),
@@ -332,6 +428,12 @@ def to_source(rank, it):
     }
 
 
+def timeline_label(it):
+    """Title, or else the quote, shortened without dropping a negation (else the untitled marker)."""
+    text = it.get("title") or (it["_quote"] or {}).get("text") or "(untitled)"
+    return safe_clip(text, TITLE_CHARS, hard_max=TITLE_CHARS * 3) or "(untitled)"
+
+
 def summary_points(relevant):
     """One point per (month, platform), chronological, each quoting its best source."""
     groups = {}
@@ -365,7 +467,8 @@ def build_brief(question, results, limit=8, platforms=None, date_from=None, date
     notes = list(notes or [])
     terms = content_terms(question)
     keys = [term_key(t) for t in terms]
-    items = [assess(r, terms, keys) for r in results]
+    matcher = TermMatcher(terms)
+    items = [assess(r, terms, keys, matcher) for r in results]
 
     # Belt and braces: the prefilter already narrowed the search, this checks the chunks' own message dates.
     wanted = set(platforms or [])
@@ -439,7 +542,7 @@ def build_brief(question, results, limit=8, platforms=None, date_from=None, date
 
     timeline_items = shown_relevant or chosen
     timeline = [
-        {"date": iso(it["_start"]), "label": clip(it.get("title") or (it["_quote"] or {}).get("text") or "(untitled)", TITLE_CHARS),
+        {"date": iso(it["_start"]), "label": timeline_label(it),
          "node_id": it.get("node_id"), "platform": it.get("platform"), "source": chosen.index(it) + 1}
         for it in sorted((it for it in timeline_items if it["_start"]), key=lambda x: x["_start"])
     ][:MAX_TIMELINE]

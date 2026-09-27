@@ -23,6 +23,35 @@ The project is structured into three main layers, with all logic centralized in 
 6.  **Visualization** (`sarthink_graph.html`): A high-performance 3D memory graph rendered via Three.js.
 7.  **Local API** (`scripts/api/server.py`): A FastAPI server that serves the graph and answers semantic memory searches against the local LanceDB index.
 
+## Local-first privacy model
+- **Everything runs on this machine.** Parsing, the SQLite memory database, embeddings (CPU), semantic search, Ask Sarthink and Insights are all local. No archive text, prompt, query or retrieved memory is sent to a hosted API or LLM service. (The only optional exception is `scripts/semantic/summarizer.py`, which calls a hosted LLM and is not needed.)
+- **Nothing is exposed publicly.** The API binds to `127.0.0.1` only; reach it from a laptop through an SSH tunnel (below), never by binding `0.0.0.0`.
+- **Private data never enters git.** `archive/`, `incoming/`, `processed_data/` (database, index, graph CSVs, logs), `config/identity_map.json`, `.venv/`, `.cache/`, local models (`models/`, `*.gguf`) and tools (`.tools/`) are gitignored.
+- **Read-only where it can be.** The graph export and `/api/insights` open the database read-only; the UI escapes every archive-derived string before inserting it into the page.
+- **Ask Sarthink needs no LLM.** Answers are evidence-first quotes and counts (see below). An optional local Llama server can be tried separately (`docs/local_llm.md`); nothing depends on it.
+
+## Run the demo
+
+```bash
+scripts/start_sarthink.sh     # starts the API + UI on http://127.0.0.1:8000/ (nohup, logs to processed_data/api.log); no-op if already healthy
+scripts/status_sarthink.sh    # API health, URL, semantic index, memory DB, optional local Llama (127.0.0.1:8081/8082) — read-only
+scripts/stop_sarthink.sh      # stops only Sarthink's API process (scripts/api/server.py on port 8000)
+```
+From a laptop, forward the port over SSH and open `http://127.0.0.1:8000/` locally:
+```bash
+ssh -N -L 8000:127.0.0.1:8000 naitik@185.2.102.128
+```
+
+**90-second demo flow**
+1. **Memory Home** (0–15s): the page opens on a focused question box above the slowly drifting memory graph. Point out the status line (index ready, graph size, "runs on this machine").
+2. **Ask** (15–35s): click a sample question, e.g. *How has my interest in photography changed?* The brief appears in place: answer, confidence, key points, timeline and cited sources.
+3. **Cited source → graph** (35–50s): click a source card. The page glides into the graph workspace, selects that conversation, lights up its participants and links, and shows its indexed context in the details panel.
+4. **Graph exploration** (50–65s): drag to orbit, scroll to zoom, arrow keys to move, click a person to jump to their threads. The command bar in the top bar keeps Ask / Find memories one keystroke away.
+5. **Timeline & filters** (65–75s): toggle a platform, press *12 mo* on the timeline; the graph and the next answer follow the scope.
+6. **Insights** (75–90s): press `I`. Stat cards, monthly activity (hover a bar), platform breakdown, top contacts and conversations, all for the current filters; click a contact to focus it on the graph.
+
+> **Multi-user note (future work, not implemented):** Sarthink is single-user today: one archive, one database, one index, one owner persona, and no login. Serving several people would need separate per-user workspaces (archives, SQLite DB, LanceDB index, graph files, identity map), per-user API instances or strict per-request scoping, and real authentication and access control. Don't point it at more than one person's data.
+
 ## Getting Started
 
 ### 1. Prerequisites
@@ -130,7 +159,7 @@ python3 scripts/utils/compute_layout.py      # adds layout_x, layout_y, layout_z
 Nodes are people (`U_<id>`) and threads (`T_<id>`); an edge means that person wrote in that thread. Besides `id, label, group, size, color`, nodes carry `platform, kind (user|thread), messages, first_ts, last_ts, title` and edges carry `weight, first_ts, last_ts` (epoch seconds, UTC), which drive the graph's details panel and timeline filter. Older exports without these columns still load; the timeline then explains how to enable it.
 
 ### E. Visualizing + Memory Search
-`scripts/api/server.py` is a local FastAPI app that serves the 3D graph **and** a semantic search API over the LanceDB index. It binds to `127.0.0.1` only; queries are embedded on your CPU and nothing leaves the machine.
+`scripts/api/server.py` is a local FastAPI app that serves the UI (Memory Home, the 3D graph and Insights) **and** a semantic search API over the LanceDB index. It binds to `127.0.0.1` only; queries are embedded on your CPU and nothing leaves the machine. `scripts/start_sarthink.sh` / `status_sarthink.sh` / `stop_sarthink.sh` wrap it for demos (see *Run the demo* above).
 
 One-time install into the existing venv:
 ```bash
@@ -141,12 +170,17 @@ Start it (after the embedding index from step C.3 has finished):
 ```bash
 HF_HUB_OFFLINE=1 .venv/bin/python scripts/api/server.py
 ```
-Then open `http://127.0.0.1:8000/`. Options: `--table topics_multilingual_pilot` searches another table, `--port`, `--db`.
+Then open `http://127.0.0.1:8000/`. Options: `--table topics_multilingual_pilot` searches another table, `--port`, `--db`, `--memory-db` (SQLite for Insights).
+
+**Memory Home** is the opening screen: a question box with **Ask Sarthink** (default) and **Find memories** (plain semantic search) modes, sample prompts, and a short status line. The graph keeps drifting behind it and stays interactive outside the card (drag, zoom, click a node to open it). Answers and results appear in the card; clicking a cited source or result opens the **graph workspace** focused on that conversation. **Explore graph** (or `G`) opens the workspace directly; there the same box sits in the top bar as a command bar, results move to the right-hand panel, and `G` / **Home** goes back. If the graph CSVs are missing, Memory Home says so (with the commands to build them) and Ask, search and Insights keep working. Links with `#node=T_12` or `?view=graph` open straight into the workspace.
+
+**Insights** (`I`, or the button in Memory Home / the top bar) summarises the memory database for the current platform toggles and timeline range: message, conversation, people and platform totals, first and latest memory, messages per month (hover for the per-platform split) and per year, a per-platform breakdown with date ranges, and the top contacts and conversations (click one to focus it on the graph). Your own accounts, as listed in `config/identity_map.json`, are excluded from contacts and people counts.
 
 **Using the graph** (press `?` in the page for the same list):
 - **Left-drag** orbits, **right-drag** or **Shift/Ctrl-drag** pans, **scroll** zooms toward the cursor. Dragging never moves nodes; any drag cancels a running camera flight.
 - **Hover** a node for its name, platform, connections and active months. **Click** selects it: the node, every direct neighbour and the links between them stay bright (drawn on top), everything else is dimmed, not hidden. **Double-click** (or `F`) flies the camera to it. Click empty space to deselect.
 - The **details panel** shows type, platform, connections, messages, first/last activity, the linked people or threads (click one to jump to it), and for threads the indexed **conversation context** from `/api/thread`. The selection is kept in the URL (`#node=T_12`), so a refresh or a shared local link reopens it.
+- **Arrow keys** move the graph in the pressed direction (hold to keep moving); **Shift + arrows** orbit. They only act on the graph when you're not typing or in a list/tab strip.
 - **Find node** (`/`) matches names and thread titles, highlights all matches, and `↑ ↓ Enter` selects one.
 - **Platforms** and **Node types** in the sidebar are toggle filters (colour = platform, filled dot = person, ring = thread; **only** isolates one platform). The **Timeline** histogram shows active threads per month; drag its handles or use the 3/12-month presets to hide threads outside the range and people with no messages in it.
 - The top bar shows node/edge/platform totals, what the filters currently show, and the selection.
@@ -173,6 +207,8 @@ How the answer is made (`scripts/api/memory_brief.py`, deterministic, no languag
 4. The answer states how many memories matched, on which platforms and over which months, then quotes the strongest sentence verbatim with its author, date and platform (for "how has … changed" questions: the earliest and the latest). Key points quote one sentence per month and platform.
 5. Confidence is **high** with at least 3 supporting sources, 2 of which cover every content word; **medium** with fewer or partial support (the answer says so); **low** when nothing qualifies, in which case the answer says the evidence is weak and the closest chunks are shown as leads.
 
+**Hinglish.** The embedding model understands Hindi in Devanagari but matches romanised Hindi mostly by style ("yaar", "hai", "nahi") rather than topic, so `scripts/semantic/hinglish.py` adds a small hand-curated vocabulary used by both search and Ask: Hinglish filler and negations are ignored when judging relevance, common spellings are normalised (nhi/nai → nahi, padhaai → padhai, nind → neend), and a limited set of topic words is matched across languages (sleep ↔ neend, study ↔ padhai, exam ↔ pariksha, stress ↔ tension, worry ↔ chinta/pareshan, …). When a question names such a topic, a second search with the same query vector is limited (a query-time `LIKE` prefilter, no index) to chunks containing the topic's words in the other language or other spellings, and its hits are interleaved into the normal ranking from position 4 on; results say `matched_via` / `expansion_terms`. Generic words (dost, ghar, paisa) are never expanded. Cross-language evidence needs similarity ≥ 0.2 instead of 0.35, and quotes are never shortened in a way that drops a negation ("neend nahi aati" stays whole). Questions without such a topic are searched exactly as before.
+
 This is **evidence-based synthesis, not a generative LLM**: every sentence is a verbatim quote, a count, a date, a platform or a title from a returned source, so it never invents an event, feeling, relationship or date, but it also doesn't interpret or summarise in its own words, can quote a sentence out of context, and depends on the words you use. Read the sources. Everything runs on this machine: no hosted APIs, no LLM service, no browser-side calls other than to the local server, no model downloads.
 
 If the index is still being built, the sidebar says so and the API answers `503 index_unavailable`; the server picks the table up automatically once it exists, no restart needed. If the page can't reach the API it shows the command to start it.
@@ -183,6 +219,7 @@ curl http://127.0.0.1:8000/api/health
 curl -X POST http://127.0.0.1:8000/api/search -H 'Content-Type: application/json' \
   -d '{"query": "college ke baare mein stress", "limit": 10}'
 curl http://127.0.0.1:8000/api/thread/T_12      # indexed chunks of one thread (no model load)
+curl 'http://127.0.0.1:8000/api/insights?platforms=reddit,instagram&date_from=2025-01-01&date_to=2025-12-31'   # read-only aggregates
 curl -X POST http://127.0.0.1:8000/api/ask -H 'Content-Type: application/json' \
   -d '{"question": "How has my interest in photography changed?", "limit": 8, "platforms": ["reddit", "instagram"], "date_from": "2025-01-01", "date_to": "2026-09-30"}'
 ```
@@ -191,12 +228,16 @@ curl -X POST http://127.0.0.1:8000/api/ask -H 'Content-Type: application/json' \
 
 The graph alone still works from any static server (`python3 -m http.server 8080`, then `http://localhost:8080/sarthink_graph.html`); memory search then needs the API running and `?api=http://127.0.0.1:8000` appended to the URL.
 
+`/api/insights` (GET, read-only) takes optional `platforms` (comma-separated or repeated), `date_from` / `date_to` (ISO dates or datetimes; a plain `date_to` includes that day) and `top` (1–50, default 10). It returns `{empty, filters, totals: {messages, threads, people, platforms}, first_date, latest_date, platforms: [{platform, messages, threads, people, first_date, last_date, share}], available_platforms, activity: {months: [{month, total, platforms}], years: [...]}, top_contacts: [{node_id, label, platform, messages, threads, first_date, last_date}], top_conversations: [{node_id, title, platform, messages, people, first_date, last_date}], owner: {configured, excluded_accounts}, took_ms, cached}`. `node_id`s are graph node ids (`U_<id>`, `T_<id>`). The database is opened read-only; results are cached until the database file changes (the first unfiltered call is warmed at server start). A missing database answers `503 database_unavailable`.
+
 `/api/thread/T_<id>` returns `{node_id, channel_id, count, first_time, last_time, chunks: [...]}` with up to 8 chunks (oldest first; `start_time, end_time, platform, title, people, snippet, text`). It only filters the index, so it answers instantly even before the first search has loaded the model.
 
 Tests (fake model, table and a throwaway SQLite DB; no index, model or real data needed):
 ```bash
 .venv/bin/python scripts/tests/test_api.py
 .venv/bin/python scripts/tests/test_ask.py      # Ask Sarthink: grounding, weak evidence, filters, errors, model reuse
+.venv/bin/python scripts/tests/test_insights.py # /api/insights: shape, filters, empty state, owner exclusion, read-only, errors
+.venv/bin/python scripts/tests/test_hinglish.py # Hinglish vocabulary, expanded retrieval on a temp LanceDB table, Ask evidence, negation-safe quotes
 python3 scripts/tests/test_graph_pipeline.py
 ```
 Browser end-to-end test of the graph against your real CSVs (needs the server running and Playwright, which is not a project dependency):
@@ -205,4 +246,5 @@ HF_HUB_OFFLINE=1 .venv/bin/python scripts/api/server.py --port 8765 &
 npm install --prefix /tmp/pw playwright && npx --prefix /tmp/pw playwright install chromium   # Node 18: playwright@1.49.1
 NODE_PATH=/tmp/pw/node_modules node scripts/tests/graph_ui_e2e.mjs http://127.0.0.1:8765/
 ```
-It checks layout fidelity, orbit/pan/zoom, hover, selection and its links, filters, timeline, find, reset/Esc, refresh, memory search and Ask Sarthink (with stubbed, synthetic API answers: rendering, HTML escaping, filters, timeline/source focus, index-building retry), API-offline/index-unavailable states and layout fallbacks (by rewriting responses in the browser, never on disk). `SARTHINK_E2E_SEMANTIC=1` adds a real memory search.
+`SARTHINK_E2E_ONLY=homeFlow,insightsFlow` runs selected flows. If Chromium can't start for missing system libraries and you have no sudo, `apt-get download` the listed packages, unpack them with `dpkg-deb -x` into a scratch directory and set `LD_LIBRARY_PATH` plus `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1`.
+It checks Memory Home (opening state, Ask / Find memories, results in place, cited source → graph, command bar, `G`, Explore graph framing, graph interaction outside the card, working without the graph), Insights (cards, SVG chart and hover, filters flowing into the request, contact → graph focus, loading/empty/offline/error states, escaping), arrow-key movement, responsive layouts from 390px phones to 1440px laptops, and the older graph checks: layout fidelity, orbit/pan/zoom, hover, selection and its links, filters, timeline, find, reset/Esc, refresh, memory search and Ask Sarthink (with stubbed, synthetic API answers: rendering, HTML escaping, filters, timeline/source focus, index-building retry), API-offline/index-unavailable states and layout fallbacks (by rewriting responses in the browser, never on disk). `SARTHINK_E2E_SEMANTIC=1` adds a real memory search.
