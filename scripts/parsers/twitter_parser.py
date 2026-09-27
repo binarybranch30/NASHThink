@@ -41,20 +41,21 @@ def parse_twitter_timestamp(ts_str):
 
 def strip_js_wrapper(filepath):
     """Twitter archive files are JavaScript assignments like `window.YTD.tweets.part0 = [...]`.
-    We strip the assignment prefix by finding the first '[' and parsing from there.
-    This is safe for all Twitter archive files because the array always begins the value."""
+    We strip the assignment prefix by finding the first '[' and parsing from there, and drop a trailing
+    ';' if the file ends the statement with one. The array always begins the value."""
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             content = f.read()
             idx = content.find('[')
             if idx != -1:
-                return json.loads(content[idx:])
+                return json.loads(content[idx:].rstrip().rstrip(';'))
     except Exception as e:
         logging.error(f"Failed to read {filepath}: {e}")
     return []
 
 def load_account_identity():
-    """Read the archive owner's username, display name, and permanent numeric ID from account.js."""
+    """Read the archive owner's username, display name, and permanent numeric ID from account.js.
+    None when no readable account.js exists: the owner is never guessed."""
     search_path = os.path.join(REPO_ROOT, "**", "account.js")
     for filepath in glob.glob(search_path, recursive=True):
         try:
@@ -69,8 +70,7 @@ def load_account_identity():
                     return username, display if display else username, id_str
         except Exception as e:
             logging.warning(f"Could not parse account.js at {filepath}: {e}")
-    logging.warning("account.js not found. Falling back to hardcoded identity.")
-    return "sidhant_sarthak", "Sarthak Sidhant", "1437031675557335043"
+    return None
 
 def load_twitter_id_map():
     """
@@ -294,7 +294,7 @@ def insert_parent_chain(
             raw_ts      = archive_tweet.get('created_at', '')
             utc_epoch   = parse_twitter_timestamp(raw_ts)
             content     = archive_tweet.get('full_text', '')
-            thread_raw  = archive_tweet.get('conversation_id_str', node_id)
+            thread_raw  = archive_tweet.get('conversation_id_str') or thread_root(node_id, archive_index)
             thread_db_id = db.get_or_create_thread(PLATFORM, thread_raw, f"Tweet Thread {thread_raw}")
             author_db_id = db.get_or_create_user(PLATFORM, owner_id, owner_display)
 
@@ -438,7 +438,7 @@ def process_tweets(
                 )
 
             # Thread grouping
-            thread_raw   = tweet.get('conversation_id_str', raw_id)
+            thread_raw   = tweet.get('conversation_id_str') or thread_root(raw_id, archive_index)
             thread_title = f"Tweet Thread {thread_raw}"
             thread_db_id = db.get_or_create_thread(PLATFORM, thread_raw, thread_title)
 
@@ -464,6 +464,19 @@ def process_tweets(
             if counters['msgs'] % 1000 == 0:
                 db.commit()
                 logging.info(f"  {counters['msgs']} messages processed...")
+
+def thread_root(raw_id, archive_index):
+    """Archives don't carry conversation_id_str: walk the reply chain through the owner's own archived tweets
+    and use the first tweet reached (or the outside tweet it replies to), so a reply chain is one thread."""
+    seen = set()
+    node = raw_id
+    while node not in seen:
+        seen.add(node)
+        parent = (archive_index.get(node) or {}).get('in_reply_to_status_id_str')
+        if not parent:
+            return node
+        node = parent
+    return node
 
 # ─── DM ingestion ─────────────────────────────────────────────────────────────
 
@@ -515,7 +528,8 @@ def process_dms(
                     # twitter_name_map: id_str -> display_name (from twitter_users.db)
                     # id_to_handle:     id_str -> screen_name  (reverse of id_map)
                     author_id      = sender_raw
-                    author_display = twitter_name_map.get(sender_raw) or f"[User {sender_raw}]"
+                    author_display = (twitter_name_map.get(sender_raw)
+                                      or (f"@{id_to_handle[sender_raw]}" if sender_raw in id_to_handle else f"[User {sender_raw}]"))
                     author_handle  = id_to_handle.get(sender_raw, sender_raw)
 
                 author_db_id = db.get_or_create_user(PLATFORM, author_id, author_display)
@@ -553,6 +567,12 @@ def process_twitter():
         os.remove(jsonl_path)
         logging.info(f"Cleared old {JSONL_OUTPUT} for fresh reparse.")
 
+    identity = load_account_identity()
+    if identity is None:
+        logging.error("No readable account.js found, so the archive owner is unknown. Nothing was changed.")
+        sys.exit(1)
+    owner_username, owner_display, owner_id = identity
+
     db           = SarthinkMemoryLayer()
     # Purge all twitter rows from the DB so ghost nodes with wrong labels
     # don't survive from a previous run.
@@ -564,8 +584,6 @@ def process_twitter():
     twitter_id_map, twitter_name_map, id_to_handle = load_twitter_id_map()
     context_dict  = load_twitter_context()
     archive_index = load_archive_index()
-
-    owner_username, owner_display, owner_id = load_account_identity()
 
     process_tweets(
         db, context_dict, archive_index,

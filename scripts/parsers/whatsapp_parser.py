@@ -121,6 +121,12 @@ def iter_chat_files(archive_dir):
                     yield chat_name_from_path(path), text.splitlines()
 
 
+def chat_kind(records, ego_names):
+    """'Group' when more than one other person wrote in the chat, else 'DM'."""
+    others = {s.lower() for s, _ in (split_sender(body) for _, body in records) if s and s.lower() not in ego_names}
+    return 'Group' if len(others) > 1 else 'DM'
+
+
 def slugify(name):
     return re.sub(r'[^a-z0-9]+', '_', name.lower()).strip('_') or 'chat'
 
@@ -144,7 +150,7 @@ def process_whatsapp():
         chats += 1
         order = detect_date_order([(int(g[0]), int(g[1])) for g, _ in records])
         slug = slugify(chat_name)
-        thread_title = f"DM {chat_name}"
+        thread_title = f"{chat_kind(records, ego_names)} {chat_name}"
         thread_db_id = db.get_or_create_thread(PLATFORM, slug, thread_title)
         logging.info(f"Parsing: {chat_name} ({len(records)} lines, date order {order})")
 

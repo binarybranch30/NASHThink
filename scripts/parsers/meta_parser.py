@@ -261,7 +261,7 @@ def process_meta_zip(db, zip_path, platform, counters, ego_aliases, master_perso
         for cf in comment_files:
             try:
                 data  = json.loads(z.read(cf))
-                items = data if isinstance(data, list) else data.get('comments_v2', [])
+                items = data if isinstance(data, list) else (data.get('comments_v2') or data.get('comments_media_comments') or [])
 
                 for idx, c in enumerate(items):
                     if isinstance(c, dict) and 'string_map_data' in c:

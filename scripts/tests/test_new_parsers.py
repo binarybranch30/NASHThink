@@ -15,6 +15,7 @@ import whatsapp_parser as wa
 import chatgpt_parser as gpt
 import claude_parser as cl
 import google_parser as gg
+import twitter_parser as tw
 
 
 class WhatsAppTests(unittest.TestCase):
@@ -52,6 +53,13 @@ class WhatsAppTests(unittest.TestCase):
         self.assertEqual(wa.split_sender("Messages and calls are end-to-end encrypted.")[0], None)
         self.assertEqual(wa.clean_content("<Media omitted>"), "[Media]")
         self.assertEqual(wa.clean_content("This message was deleted"), "")
+
+    def test_group_or_dm_title(self):
+        dm = wa.split_messages(["1/2/24, 9:00 PM - Aarav: hi", "1/2/24, 9:01 PM - Rohan: yo"])
+        group = wa.split_messages(["1/2/24, 9:00 PM - Aarav: hi", "1/2/24, 9:01 PM - Rohan: yo",
+                                   "1/2/24, 9:02 PM - Meera: hey", "1/2/24, 9:03 PM - Rohan added Kabir"])
+        self.assertEqual(wa.chat_kind(dm, {"aarav"}), "DM")
+        self.assertEqual(wa.chat_kind(group, {"aarav"}), "Group")
 
     def test_chat_name(self):
         self.assertEqual(wa.chat_name_from_path("/x/WhatsApp Chat with Alice.txt"), "Alice")
@@ -110,6 +118,66 @@ class GoogleTests(unittest.TestCase):
 
     def test_youtube_text(self):
         self.assertEqual(gg.decode_youtube_text('{"text":"nice "},{"text":"video"}'), "nice video")
+
+
+class TwitterTests(unittest.TestCase):
+    def write(self, name, text):
+        import tempfile
+        d = tempfile.mkdtemp()
+        path = os.path.join(d, name)
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(text)
+        return d, path
+
+    def test_js_wrapper_with_and_without_semicolon(self):
+        for tail in ("]", "];", "];\n"):
+            _, path = self.write("tweets.js", 'window.YTD.tweets.part0 = [\n  {"tweet": {"id_str": "1"}}\n' + tail)
+            self.assertEqual(tw.strip_js_wrapper(path), [{"tweet": {"id_str": "1"}}], repr(tail))
+
+    def test_reply_chains_share_a_thread(self):
+        index = {"3": {"in_reply_to_status_id_str": "2"}, "2": {"in_reply_to_status_id_str": "1"}, "1": {},
+                 "5": {"in_reply_to_status_id_str": "999"}, "7": {"in_reply_to_status_id_str": "7"}}
+        self.assertEqual([tw.thread_root(t, index) for t in ("1", "2", "3")], ["1", "1", "1"])
+        self.assertEqual(tw.thread_root("5", index), "999", "a reply to an outside tweet groups under that tweet")
+        self.assertEqual(tw.thread_root("7", index), "7", "a self-loop terminates")
+
+    def test_owner_is_never_guessed(self):
+        import tempfile
+        root, saved = tempfile.mkdtemp(), tw.REPO_ROOT
+        try:
+            tw.REPO_ROOT = root
+            self.assertIsNone(tw.load_account_identity())
+            with open(os.path.join(root, "account.js"), "w") as f:
+                f.write('window.YTD.account.part0 = [{"account": {"accountId": "9", "username": "demo", "accountDisplayName": "Demo"}}];')
+            self.assertEqual(tw.load_account_identity(), ("demo", "Demo", "9"))
+        finally:
+            tw.REPO_ROOT = saved
+
+
+class GoogleActivityTests(unittest.TestCase):
+    def test_gemini_folder_names(self):
+        import json
+        import tempfile
+
+        class Ingest:
+            def __init__(self):
+                self.added = []
+
+            def user(self, *a, **k):
+                return "u"
+
+            def add(self, key, *a):
+                self.added.append(key)
+                return key
+
+        for folder in ("Gemini Apps", "Gemini"):
+            root = tempfile.mkdtemp()
+            os.makedirs(os.path.join(root, "My Activity", folder))
+            with open(os.path.join(root, "My Activity", folder, "MyActivity.json"), "w") as f:
+                json.dump([{"title": "Prompted something", "time": "2025-01-01T10:00:00.000Z"}], f)
+            ing = Ingest()
+            gg.ingest_activity(ing, root)
+            self.assertEqual(len(ing.added), 1, folder)
 
 
 if __name__ == "__main__":

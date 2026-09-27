@@ -33,6 +33,7 @@ MAX_EMAIL_CHARS = 4000
 ACTIVITY_PRODUCTS = {
     'Search':      ('Searches', None),
     'Gemini Apps': ('Gemini', 'Gemini'),
+    'Gemini':      ('Gemini', 'Gemini'),   # the same product, as some exports name the folder
 }
 
 # ─── Generic helpers ──────────────────────────────────────────────────────────
@@ -296,6 +297,8 @@ def ingest_youtube_comments(ingest, takeout_dir):
 def ingest_activity(ingest, takeout_dir):
     for folder, (title_prefix, assistant) in ACTIVITY_PRODUCTS.items():
         path = os.path.join(takeout_dir, 'My Activity', folder, 'MyActivity.json')
+        if folder == 'Gemini' and os.path.exists(os.path.join(takeout_dir, 'My Activity', 'Gemini Apps', 'MyActivity.json')):
+            continue   # both folders present: read 'Gemini Apps' only
         if not os.path.exists(path):
             if os.path.exists(os.path.join(os.path.dirname(path), 'MyActivity.html')):
                 logging.warning(f"{folder}: only HTML activity found — re-export My Activity in JSON format.")
