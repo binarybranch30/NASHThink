@@ -130,9 +130,10 @@ class VocabularyTests(unittest.TestCase):
         self.assertTrue({"study", "stress", "padhaai"} <= set(both.terms))
 
     def test_expansion_is_conservative(self):
-        for q in ("which camera lens should I buy", "feeling lonely and missing friends", "yaar kya haal hai",
-                  "mujhe nahi pata", "love my home and money"):
+        for q in ("which camera lens should I buy", "feeling bored and missing friends", "yaar kya haal hai",
+                  "mujhe nahi pata", "love my home"):
             self.assertFalse(hinglish.Expansion(q), q)
+        self.assertIn("akela", hinglish.Expansion("feeling lonely").terms, "loneliness is a listed topic now")
         self.assertEqual(hinglish.Expansion("yaar mujhe neend nahi aati").concepts, [("sleep", "neend", "hi")])
 
     def test_expansion_found_needs_whole_words(self):
@@ -280,7 +281,7 @@ class AskTests(unittest.TestCase):
         brief = mb.build_brief("yaar mujhe neend nahi aati", results)
         self.assertEqual(brief["evidence"]["relevant"], 0, "sharing yaar/mujhe/nahi is not evidence")
         self.assertEqual(brief["confidence"], "low")
-        self.assertIn("weak", brief["answer"])
+        self.assertIn("No relevant info found", brief["answer"])
 
     def test_unrelated_substring_is_not_evidence(self):
         brief = mb.build_brief("exam stress", [as_result(TRAP, 0.5)])
@@ -381,6 +382,128 @@ class SafeClipTests(unittest.TestCase):
         if "neend" in quote:
             self.assertIn("nahi", quote)
 
+
+
+# ─── Shorthand, spelling tolerance and the lexical channel ────────────────────
+HI_FIGHT = chat(40, "discord", 1, [("Me", "kal ghar pe bahut ladaai hui mummy papa ke beech"),
+                                   ("Ana", "arre yaar, phir se jhagda? tu theek hai?")], "DM Ana")
+HI_FIGHT_VARIANT = chat(41, "discord", 2, [("Me", "unki ladayi dekh ke mera mood kharab ho gaya h"),
+                                           ("Ana", "bhai chill kar")], "DM Ana 2")
+HI_HOME_ONLY = chat(42, "discord", 3, [("Me", "ghar pe aaj pizza bana, sab khush the"),
+                                       ("Ana", "wah party ho gayi fir")], "DM Ana 3")
+JEE_TITLE = chat(43, "reddit", 4, [("Me", "kal ka match dekha kya, kya jeet thi bhai"),
+                                   ("Kay", "haan yaar last over mein jeet gaye")], "r/JEENEETards (Thread 1)")
+JEE_BODY = chat(44, "reddit", 5, [("Me", "jee ki tayyari ab serious karni padegi"),
+                                  ("Kay", "haan taiyari abhi se shuru kar")], "r/JEENEETards (Thread 2)")
+LEX_ROWS = [HI_FIGHT, HI_FIGHT_VARIANT, HI_HOME_ONLY, JEE_TITLE, JEE_BODY, *HI_CHATTER]
+
+
+class ShorthandTests(unittest.TestCase):
+    def test_chat_shorthand_normalises_in_hinglish_only(self):
+        self.assertEqual(hinglish.normalize("ni"), "nahi")
+        self.assertEqual(hinglish.normalize("h"), "hai")
+        self.assertEqual(hinglish.normalize("clg"), "college")
+        self.assertTrue(hinglish.is_negation("ni"), "'ni' is a negation, so quotes never drop it")
+        self.assertTrue(hinglish.is_filler("h", True))
+        self.assertFalse(hinglish.is_filler("m", False), "single letters are only shorthand in Hinglish text")
+
+    def test_looks_hinglish(self):
+        for q in ("jee ki tayyari", "exam ki tension", "akela feel hota hai", "paise ki problem"):
+            self.assertTrue(hinglish.looks_hinglish(hinglish.words(q)), q)
+        for q in ("main reason for the tab crash", "tension headache and the flu", "which camera lens should I buy"):
+            self.assertFalse(hinglish.looks_hinglish(hinglish.words(q)), q)
+
+    def test_skeleton_joins_spellings(self):
+        for group in (("ladai", "ladaai", "ladayi", "laddai"), ("tayyari", "taiyari", "tayari", "taiyaari"),
+                      ("padhai", "padhaai", "padai"), ("neend", "nind", "neendh")):
+            self.assertEqual(len({hinglish.skeleton(w) for w in group}), 1, group)
+        self.assertNotEqual(hinglish.skeleton("ladai"), hinglish.skeleton("ladki"))
+
+    def test_word_pattern_is_whole_word_and_safe(self):
+        rx = hinglish.whole_word_regex([hinglish.word_pattern("ladai")])
+        for w in ("ladai", "ladaai", "ladayi", "LADAI"):
+            self.assertTrue(rx.search(f"kal {w} hui"), w)
+        for w in ("ladki", "xladai", "ladaix"):
+            self.assertFalse(rx.search(f"kal {w} hui"), f"{w}: a different word, or ladai inside another word")
+        akela = hinglish.whole_word_regex([hinglish.word_pattern("akela")])
+        self.assertTrue(all(akela.search(w) for w in ("akela", "akele", "akeli")), "inflections")
+        jee = hinglish.whole_word_regex([hinglish.word_pattern("jee")])
+        self.assertTrue(jee.search("JEE mains"))
+        self.assertFalse(any(jee.search(w) for w in ("jeet", "jeena", "jeeneetards")), "short words match exactly")
+        college = hinglish.whole_word_regex([hinglish.word_pattern("college")])
+        self.assertTrue(college.search("kal clg nahi gaya"), "listed variants are part of the pattern")
+        for w in ("ladai", "tayyari", "college", "jee"):
+            self.assertRegex(hinglish.word_pattern(w), r"^[a-z()?:+|\[\]{},0-9]+$", "only letters and regex syntax")
+
+    def test_expansion_covers_unlisted_words_and_skips_generic_ones(self):
+        e = hinglish.Expansion("jee ki tayyari")
+        self.assertEqual([c for c, _, _ in e.concepts], ["prep"])
+        self.assertEqual([n for n, _ in e.patterns], ["jee"], "an unlisted Hinglish word still gets a pattern")
+        fight = hinglish.Expansion("ghar pe kya ladai hui")
+        self.assertEqual(fight.patterns, [], "ghar is generic; the question is about the fight")
+        dost = hinglish.Expansion("dost se baat nahi hui")
+        self.assertEqual([n for n, _ in dost.patterns], ["dost"], "a generic word is used when it is all there is")
+        self.assertIn("regexp_like(text,", dost.filter_expression())
+        self.assertEqual(dost.found("mera dost aaya"), ["dost"])
+        self.assertEqual(hinglish.Expansion("akela feel hota hai").patterns, [], "'feel' is scaffolding, not a topic")
+
+
+@unittest.skipUnless(HAVE_LANCEDB, "lancedb not installed")
+class LexicalRetrievalTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.TemporaryDirectory()
+        qs = ["ghar pe kya ladai hui", "jee ki tayyari", "dost se baat nahi hui"]
+        cls.model = BagOfWords([r["text"] for r in LEX_ROWS] + qs)
+        data = [{**r, "vector": cls.model.encode(r["text"])} for r in LEX_ROWS]
+        cls.table = lancedb.connect(cls.tmp.name).create_table("topics", data=data)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def test_regex_prefilter_runs_in_lancedb(self):
+        exp = hinglish.Expansion("ghar pe kya ladai hui")
+        rows = self.table.search().where(exp.filter_expression()).limit(50).to_list()
+        self.assertEqual({r["channel_id"] for r in rows}, {"40", "41"}, "both spellings, and not the pizza chat")
+
+    def test_every_spelling_of_the_topic_is_found(self):
+        got = search.search_expanded(self.table, self.model, "ghar pe kya ladai hui", 6)
+        ids = [r["channel_id"] for r in got]
+        self.assertIn("40", ids)
+        self.assertIn("41", ids, "ladayi is found for a question about ladai")
+        via = {r["channel_id"]: r["expansion_terms"] for r in got}
+        self.assertTrue({"ladaai", "jhagda"} & set(via["40"]) or via["40"])
+
+    def test_title_alone_is_not_evidence(self):
+        results = [as_result(JEE_TITLE, 0.7, 1), as_result(JEE_BODY, 0.6, 2)]
+        brief = mb.build_brief("jee ki tayyari", results)
+        rel = {s["title"]: s["relevant"] for s in brief["sources"]}
+        self.assertFalse(rel["r/JEENEETards (Thread 1)"], "'jee' in the subreddit name and 'jeet' in the text don't count")
+        self.assertTrue(rel["r/JEENEETards (Thread 2)"])
+
+    def test_generic_word_alone_is_not_evidence(self):
+        brief = mb.build_brief("ghar pe kya ladai hui", [as_result(HI_HOME_ONLY, 0.8, 1), as_result(HI_FIGHT_VARIANT, 0.6, 2)])
+        rel = {s["title"]: s["relevant"] for s in brief["sources"]}
+        self.assertFalse(rel["DM Ana 3"], "only 'ghar' matches: it doesn't answer a question about a fight")
+        self.assertTrue(rel["DM Ana 2"], "'ladayi' is the same word as 'ladai'")
+
+
+class RelevanceFixTests(unittest.TestCase):
+    def test_negations_are_never_topics(self):
+        self.assertEqual(mb.content_terms("I couldn't sleep"), ["sleep"])
+        self.assertEqual(mb.content_terms("mujhe neend ni aati"), ["neend"])
+        self.assertEqual(mb.content_terms("akela feel hota hai"), ["akela"])
+
+    def test_long_chunk_shows_the_matching_lines(self):
+        filler = "\n".join(f"[2024-03-01 09:{k:02d}:00] Dev: kuch bhi random baat {k} yaar" for k in range(60))
+        row = chat(50, "discord", 1, [("Me", "placeholder")], "DM Dev long")
+        row["text"] = filler + "\n[2024-03-01 10:30:00] Me: kal raat phir neend nahi aayi yaar\n" + filler
+        brief = mb.build_brief("mujhe neend nahi aati", [as_result(row, 0.6)])
+        text = brief["sources"][0]["text"]
+        self.assertLessEqual(len(text), mb.SOURCE_TEXT_CHARS)
+        self.assertIn("neend nahi aayi", text, "the matching line is kept even though it is past the first 2000 chars")
+        self.assertIn(mb.GAP, text)
 
 if __name__ == "__main__":
     unittest.main()

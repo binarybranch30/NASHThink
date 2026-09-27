@@ -13,9 +13,17 @@ Pick how Ask answers with the selector next to the **Ask** button:
 | **Quick** | Llama 3.2 3B Instruct | 8082 | about 1 min (≈30 s reading, then ~8 tok/s) | follows the rules less reliably |
 | **Evidence only** | none | — | instant | the deterministic brief with quotes and counts |
 
-The evidence (sources, timeline, map highlight) always appears at once. The written answer streams in above it
-while it's being generated. When the evidence is weak (low confidence), no model runs, because it would only
-be guessing.
+While the model reads the evidence, Ask shows a loading screen with its steps (searching, checking the evidence,
+reading N sources) and a timer; the map highlight appears at once. The written answer then streams in on top, and
+everything it rests on (confidence, evidence summary, timeline, source cards) is folded into a **Sources (n)**
+dropdown below it. **Stop** on the loading screen cancels the model and shows the evidence summary instead.
+
+**No relevant info found.** Ask says so plainly, and the sources become **Closest matches** (leads, not evidence), when:
+- the evidence is weak (low confidence): no model runs, because it would only be guessing;
+- the model decides the sources don't answer the question: it is told to reply exactly `NO_RELEVANT_INFO`, and the
+  server holds back the first tokens until they can't be that reply, so it never shows up as text;
+- the finished answer isn't grounded: it cites no source, or most of its quotes (at least 2 checked) aren't in the
+  sources it cites. What the model wrote is still available, folded, under *Show what … wrote anyway*.
 
 ## Start and stop
 
@@ -67,11 +75,15 @@ llama.cpp), adding `"-ngl", "99"` to `extra_args` offloads the model; with the t
 
 - Only sources that Ask judged to be **evidence** are sent, numbered with the same `[n]` the UI shows. For long
   conversations, the lines that mention the question's words are kept first, with their neighbouring lines,
-  in their original order.
+  in their original order. The prompt is sized with the server's own tokenizer (`POST /tokenize`) to the
+  profile's `prompt_tokens` (Best 2,000, Quick 1,400): excerpts shrink first, then the lowest-ranked sources
+  are dropped. This matters for Hinglish, which takes about twice as many tokens per character as English.
+- Answers are always in English. Each claim carries a short exact quote. Quotes are checked against the cited
+  source, and the UI underlines any that weren't found. Hinglish sources come with a shorthand glossary, and
+  heavy content (suicide or self-harm) must be quoted exactly, never reworded. See `docs/hinglish.md`.
 - The system prompt names your persona and handles from `config/identity_map.json` so the model can tell
   your messages from other people's. It is told to use only the sources, to cite `[n]` after each claim, to say
-  when the sources don't answer the question, never to invent events, feelings, relationships or dates, and
-  to answer in the question's language.
+  when the sources don't answer the question, and never to invent events, feelings, relationships or dates.
 - Citations to numbers that aren't evidence sources are removed. The UI escapes the text and turns `[n]` into
   a button that selects that source on the map.
 - It is still a language model, so it can misread a conversation. The answer says it was drafted by a local
@@ -86,8 +98,8 @@ llama.cpp), adding `"-ngl", "99"` to `extra_args` offloads the model; with the t
 | `brief` | exactly the `/api/ask` response (sent first, within seconds) |
 | `status` | `{stage: "reading" \| "writing", elapsed_s, sources, profile}` every ~5 s until the first token |
 | `token` | `{text}` |
-| `done` | `{text, cited, profile, model, tokens, prompt_tokens, took_ms}`; `text` has cleaned citations |
-| `skipped` | `{code: "weak_evidence", message}` when the evidence is too weak to write from |
+| `done` | `{text, grounded, ungrounded_reason, cited, quotes: [{text, ok, source}], unverified, profile, model, tokens, prompt_tokens, took_ms}`; `text` has cleaned citations; `grounded: false` with `ungrounded_reason` `no_citations` \| `unverified_quotes` \| `model_unsure` means the page shows "No relevant info found" |
+| `skipped` | `{code: "no_relevant_info", message}` when the evidence is too weak to write from, or the model replied `NO_RELEVANT_INFO` |
 | `error` | `{code: llm_offline \| llm_loading \| llm_failed \| llm_superseded, message}` |
 
 Retrieval errors (for example `index_unavailable`) come back as ordinary JSON errors, as with `/api/ask`.

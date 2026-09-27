@@ -34,6 +34,7 @@ DEFAULT_PROFILES = {
         "batch_threads": 3,
         "max_sources": 5,
         "source_chars": 700,
+        "prompt_tokens": 1400,   # measured with the server's /tokenize; Hinglish takes ~2 chars/token, English ~3.5
         "max_tokens": 350,
         "temperature": 0.3,
         "extra_args": [],
@@ -50,6 +51,7 @@ DEFAULT_PROFILES = {
         "batch_threads": 3,
         "max_sources": 8,
         "source_chars": 1200,
+        "prompt_tokens": 2000,   # ~4 min of prompt reading at ~9 tok/s on this CPU
         "max_tokens": 600,
         "temperature": 0.3,
         # 8-bit KV cache: about half the memory of f16 with no visible quality loss; RAM is shared on this host.

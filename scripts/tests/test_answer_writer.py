@@ -41,9 +41,12 @@ def sse_body(pieces, model="fake-llama", timings=None):
 class FakeLlama:
     """Records chat requests; answers health probes and streams `pieces` (or fails with `status`)."""
 
-    def __init__(self, pieces=("You baked ", "sourdough [1], ", "then a loaf [3][9]."), status=200, offline=False):
+    def __init__(self, pieces=("You baked ", "sourdough [1], ", "then a loaf [3][9]."), status=200, offline=False,
+                 chars_per_token=3):
         self.pieces, self.status, self.offline = pieces, status, offline
+        self.chars_per_token = chars_per_token   # None: no /tokenize endpoint (older server)
         self.requests = []
+        self.tokenized = []
 
     def __call__(self, request):
         if self.offline:
@@ -52,6 +55,12 @@ class FakeLlama:
             return httpx.Response(200 if self.status == 200 else self.status, json={"status": "ok"})
         if request.url.path == "/v1/models":
             return httpx.Response(200, json={"data": [{"id": f"fake-{request.url.port}"}]})
+        if request.url.path == "/tokenize":
+            if self.chars_per_token is None:
+                return httpx.Response(404, json={"error": "not found"})
+            content = json.loads(request.content)["content"]
+            self.tokenized.append(len(content))
+            return httpx.Response(200, json={"tokens": list(range(int(len(content) / self.chars_per_token)))})
         self.requests.append(json.loads(request.content))
         if self.status != 200:
             return httpx.Response(self.status, json={"error": {"message": "Loading model"}})
@@ -103,8 +112,39 @@ class PromptTests(unittest.TestCase):
         self.assertIn(aw.GAP, user)
         for block in user.split("\n\n")[1:6]:
             self.assertLessEqual(len(block.split("\n", 1)[1]), profile["source_chars"] + 5)
-        est_tokens = sum(len(m["content"]) for m in messages) / aw.CHARS_PER_TOKEN
+        est_tokens = sum(len(m["content"]) for m in messages) / aw.CHARS_PER_TOKEN_EN
+        self.assertLess(est_tokens, profile["prompt_tokens"] * 1.2)
         self.assertLess(est_tokens + profile["max_tokens"], profile["ctx"])
+
+    def test_english_answers_and_quotes_are_required(self):
+        brief = {"confidence": "high", "evidence": {"terms": ["sourdough"]}, "sources": [src(1, "tester: sourdough starter")]}
+        system, user = (m["content"] for m in aw.build_messages("mujhe sourdough ke baare mein batao", brief, PROFILES["best"], OWNER)[0])
+        self.assertIn("Always write in English", system)
+        self.assertIn("exact quote", system)
+        self.assertIn("Answer in English", user)
+        self.assertNotIn("language of the question", system)
+
+    def test_glossary_only_for_hinglish_sources(self):
+        en = {"confidence": "high", "evidence": {"terms": []}, "sources": [src(1, "tester: my sourdough starter smells great")]}
+        hi = {"confidence": "high", "evidence": {"terms": []}, "sources": [src(1, "tester: yaar neend nahi aa rha h\nother: kyu bhai kya hua")]}
+        self.assertNotIn("shorthand", aw.build_messages("q", en, PROFILES["quick"], OWNER)[0][0]["content"])
+        system = aw.build_messages("q", hi, PROFILES["quick"], OWNER)[0][0]["content"]
+        self.assertIn("ni / nhi / nahi / na = not", system)
+        self.assertIn("never drop it", system)
+
+    def test_heavy_content_gets_strict_quoting(self):
+        heavy = {"confidence": "high", "evidence": {"terms": []},
+                 "sources": [src(1, "tester: synthetic example line, sab bekaar lag raha, mar jaana chahta hu")]}
+        joke = {"confidence": "high", "evidence": {"terms": []}, "sources": [src(1, "tester: mar gaya yaar hasi se, too funny")]}
+        self.assertIn("Never soften it", aw.build_messages("q", heavy, PROFILES["best"], OWNER)[0][0]["content"])
+        self.assertNotIn("Never soften it", aw.build_messages("q", joke, PROFILES["best"], OWNER)[0][0]["content"])
+
+    def test_hinglish_estimate_is_tighter(self):
+        hi_text = "\n".join(f"tester: yaar kal raat bhi neend nahi aayi {k} bas phone chalata raha h" for k in range(80))
+        en_text = "\n".join(f"tester: I slept badly again last night {k} and kept scrolling my phone" for k in range(80))
+        mk = lambda t: {"confidence": "high", "evidence": {"terms": []}, "sources": [src(k, t) for k in range(1, 6)]}
+        self.assertLess(aw.default_source_chars("q", mk(hi_text), PROFILES["quick"]),
+                        aw.default_source_chars("q", mk(en_text), PROFILES["quick"]))
 
     def test_single_huge_line_is_cut(self):
         out = aw.excerpt("x" * 5000, ["sourdough"], 300)
@@ -117,12 +157,73 @@ class PromptTests(unittest.TestCase):
         self.assertTrue(aw.should_write({"confidence": "medium", "sources": [src(1, "a")]}))
 
 
+class FitTests(unittest.TestCase):
+    def brief(self):
+        text = "\n".join(f"[2024-01-10 09:{k:02d}:00] tester: yaar sourdough ka starter phir se fail ho gaya {k} 😭" for k in range(60))
+        return {"confidence": "high", "evidence": {"terms": ["sourdough"]}, "sources": [src(k, text) for k in range(1, 9)]}
+
+    def test_prompt_is_shrunk_until_the_tokenizer_says_it_fits(self):
+        llama = FakeLlama(chars_per_token=1.6)   # harsher than real Hinglish (~2): the first guess is too big
+        profile = PROFILES["best"]
+        messages, allowed, n, counted = asyncio.run(aw.fit_messages("sourdough?", self.brief(), profile, OWNER,
+                                                                    httpx.MockTransport(llama)))
+        self.assertTrue(counted)
+        self.assertLessEqual(n, profile["prompt_tokens"])
+        self.assertGreater(len(llama.tokenized), 1, "it re-measured after shrinking")
+        self.assertTrue(allowed and allowed == list(range(1, len(allowed) + 1)), "only the lowest-ranked sources are dropped")
+        self.assertIn("sourdough", messages[1]["content"])
+
+    def test_estimate_when_the_server_cannot_count(self):
+        messages, _, n, counted = asyncio.run(aw.fit_messages("sourdough?", self.brief(), PROFILES["quick"], OWNER,
+                                                              httpx.MockTransport(FakeLlama(chars_per_token=None))))
+        self.assertFalse(counted)
+        self.assertLess(n, PROFILES["quick"]["prompt_tokens"] * 1.25)
+
+
+class QuoteTests(unittest.TestCase):
+    SOURCES = [{"rank": 1, "text": "[2025-01-01 09:00:00] tester: abe neend nahi aa rha na"},
+               {"rank": 2, "text": "[2025-01-02 09:00:00] other: kal exam hai, padh le"}]
+
+    def test_quotes_are_checked_against_the_cited_source(self):
+        text = ('You couldn\'t sleep ("neend nhi aa rha") [1]. Your friend said "kal exam hai" [1]. '
+                'Also “kal exam hai” [2], “totally made up words” [2] and “ok” [1]. Not cited: "padh le".')
+        got = {(q["text"], q["source"]): q["ok"] for q in aw.verify_quotes(text, self.SOURCES)}
+        self.assertTrue(got[("neend nhi aa rha", 1)], "spelling variants of the same words count as exact")
+        self.assertFalse(got[("kal exam hai", 1)], "a real quote cited to the wrong source is flagged")
+        self.assertTrue(got[("kal exam hai", 2)])
+        self.assertFalse(got[("totally made up words", 2)])
+        self.assertTrue(got[("padh le", None)], "uncited quotes may come from any evidence source")
+        self.assertNotIn(("ok", 1), got, "one-word quotes are not checked")
+
+    def test_quotes_with_ellipsis(self):
+        got = aw.verify_quotes('"abe neend … aa rha na" [1]', self.SOURCES)
+        self.assertEqual([q["ok"] for q in got], [True])
+
+
 class CitationTests(unittest.TestCase):
     def test_sanitize(self):
         self.assertEqual(aw.sanitize_citations("You asked, [1]. Also [2, 9] and [3; 1] ok [7].", [1, 2, 3]),
                          "You asked [1]. Also [2] and [3][1] ok.")
         self.assertEqual(aw.cited("a [2] b [1][2] c [3, 1]"), [1, 2, 3])
         self.assertEqual(aw.sanitize_citations("No sources here.", []), "No sources here.")
+
+
+class NoInfoTests(unittest.TestCase):
+    def test_sentinel_is_recognised(self):
+        for reply in ("NO_RELEVANT_INFO", "  **NO_RELEVANT_INFO**", "No relevant info", "no-relevant-info."):
+            self.assertTrue(aw.says_no_info(reply), reply)
+        self.assertFalse(aw.says_no_info("No, you never said that [1]."))
+        self.assertTrue(aw.may_become_no_info("  NO_REL"))
+        self.assertFalse(aw.may_become_no_info("You baked"))
+        self.assertFalse(aw.may_become_no_info("No, you"))
+
+    def test_ungrounded_answers(self):
+        ok = [{"text": "a b", "ok": True}]
+        self.assertIsNone(aw.ungrounded_reason("You baked sourdough [1].", ok))
+        self.assertEqual(aw.ungrounded_reason("You baked sourdough.", ok), "no_citations")
+        bad = [{"text": "a b", "ok": False}, {"text": "c d", "ok": False}, {"text": "e f", "ok": True}]
+        self.assertEqual(aw.ungrounded_reason("You said \"a b\" [1].", bad), "unverified_quotes")
+        self.assertEqual(aw.ungrounded_reason("You baked [1]. NO_RELEVANT_INFO", ok), "model_unsure")
 
 
 class StreamingTests(unittest.TestCase):
@@ -224,7 +325,10 @@ class StreamApiTests(ApiTestCase):
         done = events[-1][1]
         self.assertEqual(done["text"], "You baked sourdough [1], then a loaf [3].")   # [9] isn't a source
         self.assertEqual(done["cited"], [1, 3])
+        self.assertEqual((done["grounded"], done["ungrounded_reason"]), (True, None))
         self.assertEqual(done["profile"], "quick")
+        self.assertEqual((done["quotes"], done["unverified"]), ([], 0))
+        self.assertTrue(done["prompt_tokens"])
         self.assertEqual(done["model"], "fake-llama")
         # the model saw the question, the evidence and the owner, and nothing marked as a mere lead
         req = llama.requests[0]
@@ -259,8 +363,25 @@ class StreamApiTests(ApiTestCase):
         llama = FakeLlama()
         _, events = self.ask(self.stream_client(llama), question="What did I say about quantum chromodynamics?")
         self.assertEqual(events[0][1]["confidence"], "low")
-        self.assertEqual(events[-1][0], "skipped")
+        self.assertEqual(events[-1], ("skipped", {"code": "no_relevant_info", "message": aw.NO_INFO_MESSAGE}))
         self.assertEqual(llama.requests, [])
+
+    def test_model_says_no_relevant_info(self):
+        for pieces in (("NO_", "RELEVANT", "_INFO"), ("  **No relevant", " info**",), ("NO_REL",)):
+            _, events = self.ask(self.stream_client(FakeLlama(pieces=pieces)), profile="quick")
+            kinds = [k for k, _ in events]
+            self.assertNotIn("token", kinds, "the sentinel never reaches the page")
+            self.assertEqual(events[-1], ("skipped", {"code": "no_relevant_info", "message": aw.NO_INFO_MESSAGE}))
+
+    def test_answer_starting_like_the_sentinel_still_streams(self):
+        _, events = self.ask(self.stream_client(FakeLlama(pieces=("No", ", you ", "baked sourdough [1]."))), profile="quick")
+        self.assertEqual("".join(d["text"] for k, d in events if k == "token"), "No, you baked sourdough [1].")
+        self.assertTrue(events[-1][1]["grounded"])
+
+    def test_uncited_answer_is_not_grounded(self):
+        _, events = self.ask(self.stream_client(FakeLlama(pieces=("You probably ", "like bread."))), profile="quick")
+        done = events[-1][1]
+        self.assertEqual((events[-1][0], done["grounded"], done["ungrounded_reason"]), ("done", False, "no_citations"))
 
     def test_html_in_tokens_is_passed_as_text(self):
         _, events = self.ask(self.stream_client(FakeLlama(pieces=("<img src=x onerror=alert(1)> [1]",))))

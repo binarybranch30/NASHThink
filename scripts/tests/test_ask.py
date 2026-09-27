@@ -123,13 +123,13 @@ class AskApiTests(ApiTestCase):
     def test_no_results(self):
         body = self.ask(self.client(FakeTable([]))).json()
         self.assertEqual(body["confidence"], "low")
-        self.assertIn("couldn't find", body["answer"])
+        self.assertIn("No relevant info found", body["answer"])
         self.assertEqual((body["sources"], body["summary_points"], body["timeline"]), ([], [], []))
 
     def test_weak_evidence_is_low_and_shows_closest(self):
         body = self.ask(self.client(FakeTable(NOISE)), question="What did I say about sourdough baking?").json()
         self.assertEqual(body["confidence"], "low")
-        self.assertIn("evidence is weak", body["answer"])
+        self.assertIn("No relevant info found", body["answer"])
         self.assertIn("“sourdough”", body["answer"])
         self.assertEqual(body["summary_points"], [])
         self.assertTrue(body["sources"], "closest sources are still shown as leads")

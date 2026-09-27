@@ -32,6 +32,8 @@ QUOTE_CHARS = 200
 TITLE_CHARS = 70
 SOURCE_TEXT_CHARS = 2000
 MAX_SCAN_CHARS = 20000       # sentence extraction reads at most this much of a chunk
+CONTEXT_LINES = 2            # lines kept on each side of a line that mentions the question's words
+GAP = "…"
 MAX_POINTS = 5
 MAX_TIMELINE = 12
 
@@ -168,12 +170,17 @@ def content_terms(question):
     hi = hinglish.looks_hinglish(raw)
     seen = []
     for w in raw:
-        if hinglish.is_filler(w, hi):
+        # Negations ("couldn't", "nahi") and scaffolding ("feel") say how, not what: never topic words.
+        if hinglish.is_filler(w, hi) or hinglish.is_negation(w) or w in hinglish.SCAFFOLD_EN:
             continue
         w = hinglish.normalize(w)
         if len(w) > 2 and w not in STOPWORDS and w not in FILLER and not w.isdigit() and w not in MONTHS and w not in seen:
             seen.append(w)
     return seen
+
+
+def question_is_hinglish(question):
+    return hinglish.looks_hinglish(WORD_RE.findall((question or "").lower()))
 
 
 class TermMatcher:
@@ -183,12 +190,19 @@ class TermMatcher:
     when a text word is the same Hinglish word in another spelling (nind ~ neend), or when a text word is the
     same topic in the other language (neend ~ sleeping). Topic words from hinglish.CONCEPTS list their forms
     explicitly, so they match whole words only (exam no longer matches "example", pain no longer "painting").
+    In a Hinglish question, other words match through hinglish.word_pattern (ladai ~ ladaai ~ ladayi), and
+    words of three letters or fewer (jee) must match exactly, so "jee" is not "jeet" or "jeeneetards".
     Negations and filler in the text never count, and nothing in the text is changed.
     """
 
-    def __init__(self, terms):
+    def __init__(self, terms, hinglish_question=False):
         self.terms = list(terms)
         self.keys = [term_key(t) for t in self.terms]
+        self.generic = [bool((c := hinglish.concept_of(t)[0]) and not hinglish.CONCEPTS[c]["expand"]) for t in self.terms]
+        self.patterns = []   # per term: compiled full-word pattern for loose Hinglish spellings, or None
+        for t in self.terms:
+            p = hinglish.word_pattern(t) if hinglish_question and not hinglish.concept_of(t)[0] else None
+            self.patterns.append(re.compile(rf"(?:{p})", re.I) if p else None)
         self.equiv = []   # per term: {normalised word: 'same' | 'cross'}
         for t in self.terms:
             concept, lang = hinglish.concept_of(t)
@@ -199,12 +213,20 @@ class TermMatcher:
                         eq[hinglish.normalize(w)] = "same" if l == lang else "cross"
             self.equiv.append(eq)
 
-    def match(self, words):
-        """-> (matched question terms, display words, uses_cross) for a set of lowercase text words."""
+    def match(self, words, prefix=True):
+        """-> (matched question terms, display words, uses_cross) for a set of lowercase text words.
+        prefix=False (thread titles) accepts whole words only: "jee" never matches "r/JEENEETards"."""
         norm = {hinglish.normalize(w) for w in words}
         matched, shown, cross_only = [], [], False
-        for t, k, eq in zip(self.terms, self.keys, self.equiv):
-            if not eq and any(w.startswith(k) for w in norm):
+        for t, k, eq, pat in zip(self.terms, self.keys, self.equiv, self.patterns):
+            if pat is not None:
+                hits = sorted(w for w in norm if pat.fullmatch(w))
+                if hits:
+                    matched.append(t)
+                    shown.append(t if t in hits else hits[0])
+                continue
+            exact = t in norm or t + "s" in norm   # short words (jee, car) and titles: the word itself, or its plural
+            if not eq and (exact if (not prefix or len(t) <= 3) else any(w.startswith(k) for w in norm)):
                 matched.append(t)
                 shown.append(t)
                 continue
@@ -217,6 +239,11 @@ class TermMatcher:
 
     def count(self, words):
         return len(self.match(words)[0])
+
+    def specific(self, matched):
+        """True when `matched` includes a specific term, or the question has none (only ghar, dost, problem)."""
+        wanted = [t for t, g in zip(self.terms, self.generic) if not g]
+        return not wanted or any(t in matched for t in wanted)
 
 
 def words_of(text):
@@ -319,8 +346,16 @@ def assess(result, terms, keys, matcher=None):
     text = result.get("text") or ""
     messages = parse_messages(text)
     body = " ".join(m["content"] for m in messages).strip()
-    words = words_of(body) | words_of(result.get("title"))
-    matched, shown, cross = matcher.match(words)
+    matched, shown, cross = matcher.match(words_of(body))
+    t_matched, t_shown, t_cross = matcher.match(words_of(result.get("title")), prefix=False)
+    for t, w in zip(t_matched, t_shown):
+        if t not in matched:
+            matched.append(t)
+            shown.append(w)
+            cross = cross or t_cross
+    matched_order = {t: k for k, t in enumerate(matcher.terms)}
+    pairs = sorted(zip(matched, shown), key=lambda p: matched_order.get(p[0], 99))
+    matched, shown = [p[0] for p in pairs], [p[1] for p in pairs]
     stamps = [m["ts"] for m in messages if m["ts"]]
     start = min(stamps) if stamps else parse_time(result.get("start_time"))
     end = max(stamps) if stamps else (parse_time(result.get("end_time")) or start)
@@ -331,7 +366,8 @@ def assess(result, terms, keys, matcher=None):
         # theory" isn't answered by a chunk that only says "theory".
         needed = 1 if len(terms) <= 2 else (len(terms) + 1) // 2
         floor = MIN_SIMILARITY_CROSS if cross else MIN_SIMILARITY
-        relevant = sim >= floor and substantive and len(matched) >= needed
+        # A generic word alone (ghar, dost, problem) doesn't answer "ghar pe kya ladai hui".
+        relevant = sim >= floor and substantive and len(matched) >= needed and matcher.specific(matched)
     else:
         relevant = sim >= MIN_SIMILARITY_NO_TERMS and substantive
     coverage = len(matched) / len(terms) if terms else 0.0
@@ -409,9 +445,49 @@ def cite(it):
     return ", ".join(bits)
 
 
-def to_source(rank, it):
+def focus_lines(text, is_hit, budget):
+    """Up to `budget` chars of `text`: the lines for which is_hit(line) is true and their neighbours first,
+    then the rest from the top, all in their original order with "…" marking gaps. Long chats often mention
+    the topic far below their first lines, so a plain prefix would cut the evidence off."""
+    lines = [l.rstrip() for l in (text or "").splitlines() if l.strip()]
+    if not lines:
+        return ""
+    if sum(len(l) + 1 for l in lines) <= budget:
+        return "\n".join(lines)
+    hits = [i for i, l in enumerate(lines) if is_hit(l)]
+    order = []
+    for i in hits:   # the hit first, then its neighbours, so the budget keeps the most relevant lines
+        order.append(i)
+        for d in range(1, CONTEXT_LINES + 1):
+            order.extend(j for j in (i - d, i + d) if 0 <= j < len(lines))
+    order.extend(range(len(lines)))
+    keep, used = set(), 0
+    for i in order:
+        if i in keep:
+            continue
+        line = lines[i]
+        if used + len(line) + 1 > budget:
+            if not keep:   # a single huge line: cut it
+                return line[:budget - 1].rstrip() + GAP
+            continue
+        keep.add(i)
+        used += len(line) + 1
+    out, prev = [], -1
+    for i in sorted(keep):
+        if prev >= 0 and i != prev + 1:
+            out.append(GAP)
+        out.append(lines[i])
+        prev = i
+    return "\n".join(out)
+
+
+def to_source(rank, it, matcher=None):
     q = it["_quote"]
     text = it.get("text") or ""
+    if len(text) > SOURCE_TEXT_CHARS and matcher is not None and it["matched_terms"]:
+        # The part of the chunk that mentions the question's words, not just its first lines.
+        text = focus_lines(text[:MAX_SCAN_CHARS], lambda line: matcher.count(WORD_RE.findall(line.lower())) > 0,
+                           SOURCE_TEXT_CHARS)
     return {
         "rank": rank,
         "node_id": it.get("node_id"),
@@ -467,7 +543,7 @@ def build_brief(question, results, limit=8, platforms=None, date_from=None, date
     notes = list(notes or [])
     terms = content_terms(question)
     keys = [term_key(t) for t in terms]
-    matcher = TermMatcher(terms)
+    matcher = TermMatcher(terms, question_is_hinglish(question))
     items = [assess(r, terms, keys, matcher) for r in results]
 
     # Belt and braces: the prefilter already narrowed the search, this checks the chunks' own message dates.
@@ -486,21 +562,21 @@ def build_brief(question, results, limit=8, platforms=None, date_from=None, date
     relevant = [it for it in items if it["relevant"]]
     others = [it for it in items if not it["relevant"]]
     chosen = (relevant + others)[:limit]
-    sources = [to_source(k, it) for k, it in enumerate(chosen, start=1)]
+    sources = [to_source(k, it, matcher) for k, it in enumerate(chosen, start=1)]
     shown_relevant = [it for it in chosen if it["relevant"]]
     scope = scope_phrase(platforms, date_from, date_to)
     terms_txt = join_words([f"“{t}”" for t in terms], "or")
 
     if not items:
         confidence = "low"
-        answer = (f"I couldn't find anything in the indexed memories{scope} that matches this question. "
+        answer = (f"No relevant info found in your memories{scope} for this question. "
                   "Try different wording, widen the date range or enable more platforms.")
         points = []
     elif not relevant:
         confidence = "low"
-        answer = f"The evidence is weak: none of the closest memories{scope} clearly address this question"
+        answer = f"No relevant info found in your memories{scope}: none of the closest matches clearly address this question"
         answer += f" (none of them mention {terms_txt})." if terms else "."
-        answer += " The nearest matches are listed below as leads only — they may be unrelated."
+        answer += " They are listed under Closest matches as leads only — they may be unrelated."
         points = []
     else:
         full = sum(1 for it in relevant if it["_coverage"] >= 0.999)
