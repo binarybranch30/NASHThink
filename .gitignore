@@ -7,6 +7,7 @@ incoming/
 processed_data/
 config/identity_map.json
 config/llm_profiles.json
+config/workspaces.json
 .env
 .env.*
 !.env.example

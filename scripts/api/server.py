@@ -49,6 +49,7 @@ import llm_config  # noqa: E402
 import people  # noqa: E402
 import memory_brief  # noqa: E402
 import search  # noqa: E402
+import workspaces  # noqa: E402
 from embedding_config import LANCEDB_PATH  # noqa: E402
 
 DEFAULT_HOST = "127.0.0.1"
@@ -273,11 +274,11 @@ class SearchService:
     the index starts answering as soon as the table appears, without a restart.
     """
 
-    def __init__(self, db_path=LANCEDB_PATH, table_name=search.DEFAULT_TABLE, model_loader=None):
+    def __init__(self, db_path=LANCEDB_PATH, table_name=search.DEFAULT_TABLE, model_loader=None, lock=None):
         self.db_path = str(db_path)
         self.table_name = table_name
         self.model_loader = model_loader or search.load_model
-        self._lock = threading.Lock()        # model loading + encoding
+        self._lock = lock or threading.Lock()   # model loading + encoding (shared when workspaces share a model)
         self._index_lock = threading.Lock()  # opening the table; never held while a model loads
         self._index = None  # (table, meta)
         self._models = {}
@@ -373,16 +374,29 @@ def parse_date_param(name, value, end=False):
         raise ApiError(422, "invalid_request", f"{name}: must be an ISO date (YYYY-MM-DD) or datetime")
 
 
+class UnlockRequest(BaseModel):
+    workspace: str = Field(..., min_length=1, max_length=40)
+    password: str = Field("", max_length=200)
+
+
 def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insights_service=None, people_service=None,
-               llm_profiles=None, llm_transport=None):
-    service = service or SearchService()
-    insights_service = insights_service or insights.InsightsService()
-    people_service = people_service or people.PeopleService(insights_service.db_path, insights_service.identity_map)
+               llm_profiles=None, llm_transport=None, spaces=None):
+    """`spaces`: a workspaces.WorkspaceSet. Without it the server has one workspace built from the other arguments."""
+    if spaces is None:
+        service = service or SearchService()
+        insights_service = insights_service or insights.InsightsService()
+        people_service = people_service or people.PeopleService(insights_service.db_path, insights_service.identity_map)
+        only = workspaces.Workspace("default", None, service, insights_service, people_service, Path(graph_dir))
+        spaces = workspaces.WorkspaceSet({"default": only}, "default")
+
+    def ws_of(request):
+        return spaces.for_token(request.cookies.get(workspaces.COOKIE))
     llm_profiles = llm_profiles if llm_profiles is not None else llm_config.load_profiles()
     llm_status = answer_writer.LlmStatus(llm_profiles, transport=llm_transport)
     llm_active = {}   # profile -> asyncio.Event of the answer being written (-np 1: a newer question replaces it)
     app = FastAPI(title="Sarthink local search", version="1.0", docs_url="/api/docs", openapi_url="/api/openapi.json")
-    app.state.search_service = service
+    app.state.spaces = spaces
+    app.state.search_service = spaces.spaces[spaces.default].search
 
     # Lets the graph be opened from another local server (e.g. python3 -m http.server 8080).
     app.add_middleware(
@@ -406,9 +420,42 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
         return JSONResponse(status_code=422, content=error_body("invalid_request", f"{field}: {message}" if field else message))
 
     @app.get("/api/health")
-    def health():
-        return {"status": "ok", "index": service.status(), "memory_db": {"available": insights_service.available()},
-                "llm": llm_status.status()}
+    def health(request: Request):
+        ws = ws_of(request)
+        return {"status": "ok", "index": ws.search.status(), "memory_db": {"available": ws.insights.available()},
+                "llm": llm_status.status(), "workspace": {"id": ws.id, "label": ws.label}}
+
+    # ── Workspaces: the default for everyone; others after their password (see workspaces.py) ──
+    def workspace_response(ws, token=None, clear=False):
+        resp = JSONResponse(spaces.describe(ws), headers={"Cache-Control": "no-store"})
+        if token:
+            resp.set_cookie(workspaces.COOKIE, token, max_age=spaces.ttl_s, httponly=True, samesite="strict", path="/")
+        elif clear:
+            resp.delete_cookie(workspaces.COOKIE, path="/")
+        return resp
+
+    @app.get("/api/workspace")
+    def get_workspace(request: Request):
+        return workspace_response(ws_of(request))
+
+    @app.post("/api/workspace/unlock")
+    def unlock_workspace(req: UnlockRequest):
+        if req.workspace not in spaces.spaces:
+            raise ApiError(404, "not_found", "No such workspace.")
+        try:
+            ok = spaces.unlock(req.workspace, req.password)
+        except workspaces.TooManyAttempts as e:
+            raise ApiError(429, "too_many_attempts", str(e))
+        if not ok:
+            raise ApiError(401, "wrong_password", "Wrong password.")
+        ws = spaces.spaces[req.workspace]
+        if ws.id == spaces.default:
+            return workspace_response(ws, clear=True)
+        return workspace_response(ws, token=spaces.issue(ws.id))
+
+    @app.post("/api/workspace/lock")
+    def lock_workspace():
+        return workspace_response(spaces.spaces[spaces.default], clear=True)
 
     @app.get("/api/llm")
     def llm():
@@ -416,8 +463,9 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
 
     # Sync handler: FastAPI runs it in a worker thread, so a slow CPU encode doesn't block the event loop.
     @app.post("/api/search", response_model=SearchResponse)
-    def run_search(req: SearchRequest):
+    def run_search(req: SearchRequest, request: Request):
         started = time.perf_counter()
+        service = ws_of(request).search
         meta, results = service.search(req.query, req.limit)
         return {
             "query": req.query,
@@ -428,7 +476,7 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
             "results": results,
         }
 
-    def run_ask(req):
+    def run_ask(req, service):
         started = time.perf_counter()
         try:
             plan = memory_brief.plan_query(req.question, req.date_from, req.date_to)
@@ -454,9 +502,9 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
         }
 
     @app.post("/api/ask", response_model=AskResponse)
-    def ask(req: AskRequest):
+    def ask(req: AskRequest, request: Request):
         """Evidence-first answer: retrieve with the shared model, then summarise deterministically."""
-        return run_ask(req)
+        return run_ask(req, ws_of(request).search)
 
     @app.post("/api/ask/stream")
     async def ask_stream(req: AskStreamRequest, request: Request):
@@ -464,14 +512,15 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
 
         Retrieval errors are ordinary JSON errors (same codes as /api/ask); once streaming, problems with the
         model arrive as an `error` event and the brief stays usable."""
-        brief = await run_in_threadpool(run_ask, req)
+        ws = ws_of(request)
+        brief = await run_in_threadpool(run_ask, req, ws.search)
         profile = llm_profiles[req.profile]
         previous = llm_active.get(req.profile)
         if previous is not None:
             previous.set()
         cancelled = asyncio.Event()
         llm_active[req.profile] = cancelled
-        owner = insights_service.owner()
+        owner = ws.insights.owner()
 
         async def events():
             try:
@@ -487,11 +536,11 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
                                  headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
 
     @app.get("/api/thread/{node_id}", response_model=ThreadContextResponse)
-    def thread_context(node_id: str):
+    def thread_context(node_id: str, request: Request):
         m = THREAD_NODE_RE.match(node_id)
         if not m:
             raise ApiError(422, "invalid_request", "node_id must look like T_<number> (a conversation thread)")
-        chunks = service.thread_context(m.group(1))
+        chunks = ws_of(request).search.thread_context(m.group(1))
         return {
             "node_id": node_id,
             "channel_id": m.group(1),
@@ -502,7 +551,7 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
         }
 
     @app.get("/api/insights")
-    def get_insights(platforms: Optional[List[str]] = Query(None), date_from: Optional[str] = None,
+    def get_insights(request: Request, platforms: Optional[List[str]] = Query(None), date_from: Optional[str] = None,
                      date_to: Optional[str] = None, top: int = Query(insights.DEFAULT_TOP, ge=1, le=insights.MAX_TOP)):
         """Read-only aggregates over the memory database. A plain date_to includes that whole day."""
         plats = parse_platforms(platforms)
@@ -511,7 +560,7 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
         if start and end and start >= end:
             raise ApiError(422, "invalid_request", "date_from must be before date_to")
         try:
-            return insights_service.insights(plats, start, end, top)
+            return ws_of(request).insights.insights(plats, start, end, top)
         except insights.InsightsUnavailable as e:
             raise ApiError(503, "database_unavailable", str(e))
 
@@ -534,25 +583,25 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
         return plats, start, end
 
     @app.get("/api/person/{node_id}")
-    def person_profile(node_id: str, platforms: Optional[List[str]] = Query(None), date_from: Optional[str] = None,
+    def person_profile(node_id: str, request: Request, platforms: Optional[List[str]] = Query(None), date_from: Optional[str] = None,
                        date_to: Optional[str] = None):
         """Profile of one person node: counts (all-time and filtered), activity, notable conversations, cited brief."""
         plats, start, end = person_filters(platforms, date_from, date_to)
-        return person_call(people_service.profile, node_id, plats, start, end)
+        return person_call(ws_of(request).people.profile, node_id, plats, start, end)
 
     @app.get("/api/person/{node_id}/conversations")
-    def person_conversations(node_id: str, platforms: Optional[List[str]] = Query(None), date_from: Optional[str] = None,
+    def person_conversations(node_id: str, request: Request, platforms: Optional[List[str]] = Query(None), date_from: Optional[str] = None,
                              date_to: Optional[str] = None, offset: int = Query(0, ge=0, le=1_000_000),
                              limit: int = Query(people.PAGE_DEFAULT, ge=1, le=people.PAGE_MAX)):
         plats, start, end = person_filters(platforms, date_from, date_to)
-        return person_call(people_service.conversations, node_id, plats, start, end, offset, limit)
+        return person_call(ws_of(request).people.conversations, node_id, plats, start, end, offset, limit)
 
     @app.get("/api/person/{node_id}/messages")
-    def person_messages(node_id: str, thread: Optional[str] = Query(None, max_length=24), cursor: Optional[str] = Query(None, max_length=200),
+    def person_messages(node_id: str, request: Request, thread: Optional[str] = Query(None, max_length=24), cursor: Optional[str] = Query(None, max_length=200),
                         platforms: Optional[List[str]] = Query(None), date_from: Optional[str] = None, date_to: Optional[str] = None,
                         limit: int = Query(people.PAGE_DEFAULT, ge=1, le=people.PAGE_MAX)):
         plats, start, end = person_filters(platforms, date_from, date_to)
-        return person_call(people_service.messages, node_id, thread, plats, start, end, cursor, limit)
+        return person_call(ws_of(request).people.messages, node_id, thread, plats, start, end, cursor, limit)
 
     @app.get("/", include_in_schema=False)
     @app.get("/sarthink_graph.html", include_in_schema=False)
@@ -562,8 +611,8 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
         return FileResponse(graph_html, media_type="text/html")
 
     @app.get("/processed_data/graph/{name}", include_in_schema=False)
-    def graph_data(name: str):
-        path = Path(graph_dir) / name
+    def graph_data(name: str, request: Request):
+        path = Path(ws_of(request).graph_dir) / name
         if name not in GRAPH_FILES or not path.is_file():
             raise HTTPException(404, f"{name} not found. Run scripts/utils/export_cosmograph.py, then scripts/utils/compute_layout.py")
         # no-cache: a regenerated graph shows up on the next page refresh.
@@ -579,6 +628,19 @@ def _quietly(fn):
         pass
 
 
+def build_spaces(config, table=search.DEFAULT_TABLE):
+    """A WorkspaceSet from config/workspaces.json: one set of services per data folder, one shared embedding model."""
+    loader, lock = workspaces.shared_model_loader(search.load_model), threading.Lock()
+    spaces = {}
+    for wid, cfg in config["workspaces"].items():
+        paths = workspaces.workspace_paths(cfg["root"])
+        ins = insights.InsightsService(paths["memory_db"], paths["identity_map"])
+        spaces[wid] = workspaces.Workspace(
+            wid, cfg.get("label") or wid, SearchService(paths["lancedb"], table, model_loader=loader, lock=lock),
+            ins, people.PeopleService(ins.db_path, ins.identity_map), paths["graph_dir"], cfg.get("password"))
+    return workspaces.WorkspaceSet(spaces, config["default"])
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="Serve the Sarthink graph UI and local semantic search API.")
     parser.add_argument("--host", default=DEFAULT_HOST, help=f"Bind address (default {DEFAULT_HOST}; keep it local)")
@@ -590,8 +652,20 @@ def main(argv=None):
 
     import uvicorn
 
-    ins = insights.InsightsService(args.memory_db)
-    app = create_app(SearchService(args.db, args.table), insights_service=ins)
+    try:
+        config = workspaces.load_config(workspaces.default_config_path(REPO_ROOT))
+    except workspaces.ConfigError as e:
+        print(f"Sarthink: invalid workspaces config: {e}", file=sys.stderr)
+        return 2
+    if config:
+        spaces = build_spaces(config, args.table)
+        app = create_app(spaces=spaces)
+        ins = spaces.spaces[spaces.default].insights
+        names = ", ".join(f"{w.id}{' (default)' if w.id == spaces.default else ''}" for w in spaces.spaces.values())
+        print(f"Sarthink: workspaces {names}", file=sys.stderr)
+    else:
+        ins = insights.InsightsService(args.memory_db)
+        app = create_app(SearchService(args.db, args.table), insights_service=ins)
     # Warm the unfiltered insights in the background so the first Insights view opens instantly.
     threading.Thread(target=lambda: _quietly(ins.insights), daemon=True).start()
     print(f"Sarthink: http://{args.host}:{args.port}/  (searching table '{args.table}')", file=sys.stderr)

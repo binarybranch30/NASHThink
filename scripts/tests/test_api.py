@@ -359,6 +359,7 @@ class HelperTests(unittest.TestCase):
     def test_main_passes_args_to_uvicorn_without_loading_model(self):
         fake_uvicorn = SimpleNamespace(run=mock.Mock())
         with mock.patch.dict(sys.modules, {"uvicorn": fake_uvicorn}), mock.patch.object(search, "load_model") as lm, \
+                mock.patch.dict(os.environ, {"SARTHINK_WORKSPACES": "/nonexistent/workspaces.json"}), \
                 redirect_stderr(io.StringIO()):
             server.main(["--port", "8123", "--table", "topics_multilingual_pilot"])
         app = fake_uvicorn.run.call_args.args[0]
