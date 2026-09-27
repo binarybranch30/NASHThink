@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Report the local Sarthink API's health, its URL, the semantic index and whether an optional local
-# Llama (llama.cpp) server answers. Read-only: starts, stops and changes nothing.
+# Report the local Sarthink API's health, its URL, the semantic index and whether the optional local
+# Llama (llama.cpp) servers that write Ask answers are running. Read-only: starts, stops and changes nothing.
 set -uo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PORT="${SARTHINK_PORT:-8000}"
 PIDFILE="${SARTHINK_PIDFILE:-$ROOT/processed_data/api.pid}"
-LLAMA_PORTS="${SARTHINK_LLAMA_PORTS:-8081 8082}"
+LLAMA_PORTS="${SARTHINK_LLAMA_PORTS:-8082 8083}"   # quick, best (scripts/llm.sh); 8081 belongs to another user
 URL="http://127.0.0.1:$PORT"
 
 echo "Sarthink status"
@@ -43,9 +43,9 @@ for lp in $LLAMA_PORTS; do
   lh="$(curl -sf -m 2 "http://127.0.0.1:$lp/health" 2>/dev/null || true)"
   if printf '%s' "$lh" | grep -q '"status":"ok"'; then
     model="$(curl -sf -m 2 "http://127.0.0.1:$lp/v1/models" 2>/dev/null | python3 -c 'import json,sys; d=json.load(sys.stdin); print(", ".join(m.get("id","?") for m in d.get("data",[])))' 2>/dev/null || true)"
-    echo "  Local Llama: available at 127.0.0.1:$lp ${model:+($model)} — optional, not used by Ask"
+    echo "  Local Llama: running at 127.0.0.1:$lp ${model:+($model)} — writes Ask answers"
   else
-    echo "  Local Llama: not available at 127.0.0.1:$lp (optional)"
+    echo "  Local Llama: not running at 127.0.0.1:$lp (optional; scripts/llm.sh start quick|best)"
   fi
 done
 exit 0

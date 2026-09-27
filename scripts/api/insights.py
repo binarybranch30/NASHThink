@@ -114,6 +114,10 @@ class InsightsService:
     def available(self):
         return self.db_path.is_file()
 
+    def owner(self):
+        """(master persona, alias set) of the archive's owner."""
+        return self._identity()
+
     def _connect(self):
         if not self.db_path.is_file():
             raise InsightsUnavailable(f"Memory database not found: {self.db_path.name}. Run the parsers to build it.")

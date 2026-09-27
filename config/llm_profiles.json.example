@@ -1,0 +1,12 @@
+{
+  "best": {
+    "extra_args": ["-fa", "on", "-ctk", "q8_0", "-ctv", "q8_0", "-ngl", "99"],
+    "threads": 4,
+    "ctx": 8192,
+    "max_sources": 8,
+    "source_chars": 1500
+  },
+  "quick": {
+    "extra_args": ["-ngl", "99"]
+  }
+}

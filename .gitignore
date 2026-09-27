@@ -6,6 +6,7 @@ archive/*
 incoming/
 processed_data/
 config/identity_map.json
+config/llm_profiles.json
 .env
 .env.*
 !.env.example

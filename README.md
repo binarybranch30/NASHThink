@@ -28,13 +28,14 @@ The project is structured into three main layers, with all logic centralized in 
 - **Nothing is exposed publicly.** The API binds to `127.0.0.1` only; reach it from a laptop through an SSH tunnel (below), never by binding `0.0.0.0`.
 - **Private data never enters git.** `archive/`, `incoming/`, `processed_data/` (database, index, graph CSVs, logs), `config/identity_map.json`, `.venv/`, `.cache/`, local models (`models/`, `*.gguf`) and tools (`.tools/`) are gitignored.
 - **Read-only where it can be.** The graph export and `/api/insights` open the database read-only; the UI escapes every archive-derived string before inserting it into the page.
-- **Ask Sarthink needs no LLM.** Answers are evidence-first quotes and counts (see below). An optional local Llama server can be tried separately (`docs/local_llm.md`); nothing depends on it.
+- **Ask Sarthink needs no LLM, and any LLM it uses is local.** Evidence is always found and graded without a language model (quotes and counts, see below). Optionally, a local Llama (Llama 3.1 8B or 3.2 3B via llama.cpp on `127.0.0.1`) turns that evidence into a written answer with citations (`docs/local_llm.md`); nothing else depends on it.
 
 ## Run the demo
 
 ```bash
 scripts/start_sarthink.sh     # starts the API + UI on http://127.0.0.1:8000/ (nohup, logs to processed_data/api.log); no-op if already healthy
-scripts/status_sarthink.sh    # API health, URL, semantic index, memory DB, optional local Llama (127.0.0.1:8081/8082) — read-only
+scripts/status_sarthink.sh    # API health, URL, semantic index, memory DB, local Llama answer writers (127.0.0.1:8082/8083) — read-only
+scripts/llm.sh start best     # optional: Llama 3.1 8B writes Ask answers (slow on CPU); "start quick" for Llama 3.2 3B
 scripts/stop_sarthink.sh      # stops only Sarthink's API process (scripts/api/server.py on port 8000)
 ```
 From a laptop, forward the port over SSH and open `http://127.0.0.1:8000/` locally:
@@ -244,7 +245,16 @@ Type a question in the box (**Ask** is the default; or click a sample prompt on 
 
 The right panel shows a short **answer**, a **confidence** level (high / medium / low), **key points**, a small chronological **timeline** and the **source cards**. Sources and their threads are highlighted on the graph; clicking a source card or a timeline entry selects and frames its thread exactly like a memory-search result. The question is limited to the platforms switched on in the sidebar and the timeline range (the scope line under the box shows what will be sent). Cards marked *closest match only* were retrieved but are not used as evidence.
 
-How the answer is made (`scripts/api/memory_brief.py`, deterministic, no language model):
+**Written answers (optional, local Llama).** The selector next to **Ask** chooses how the answer is written:
+**Best** (Llama 3.1 8B, about 4 minutes on this CPU), **Quick** (Llama 3.2 3B, about a minute) or **Evidence only**
+(instant, the deterministic brief below). With a model chosen and running (`scripts/llm.sh start best`), the evidence
+appears at once and a written answer streams in above it: a few short paragraphs in the question's language,
+with `[n]` citations you can click to select that source on the map. The deterministic summary folds under
+*Evidence summary*. The model sees only the question and the sources judged to be evidence, is told not to add
+anything that isn't in them, and doesn't run at all when the evidence is weak. It is still a language model, so check
+the cited sources. Setup, models, timings and the `/api/ask/stream` event format are in `docs/local_llm.md`.
+
+How the evidence brief is made (`scripts/api/memory_brief.py`, deterministic, no language model):
 1. The question is embedded by the same already-loaded model as memory search, and the 60 nearest chunks are retrieved from `topics`, with the platform/date filters applied inside LanceDB before ranking. A month or year in the question (*around August 2026*, *in 2025*) becomes a date window when you haven't set one (±1 month for "around"), and is removed from the embedded text.
 2. Each chunk is checked against the question: it counts as **evidence** only if it is similar enough, has real content (tiny "ok"/"lol" chunks score high on similarity but are never used), and mentions the question's content words (question scaffolding like *what*, *discuss*, *changed*, *working* is ignored; longer questions need at least half of their words). Dates come from the message timestamps inside the chunk.
 3. Chunks repeating one another (overlapping session windows, crossposts) are merged, keeping the best one.
@@ -253,7 +263,7 @@ How the answer is made (`scripts/api/memory_brief.py`, deterministic, no languag
 
 **Hinglish.** The embedding model understands Hindi in Devanagari but matches romanised Hindi mostly by style ("yaar", "hai", "nahi") rather than topic, so `scripts/semantic/hinglish.py` adds a small hand-curated vocabulary used by both search and Ask: Hinglish filler and negations are ignored when judging relevance, common spellings are normalised (nhi/nai → nahi, padhaai → padhai, nind → neend), and a limited set of topic words is matched across languages (sleep ↔ neend, study ↔ padhai, exam ↔ pariksha, stress ↔ tension, worry ↔ chinta/pareshan, …). When a question names such a topic, a second search with the same query vector is limited (a query-time `LIKE` prefilter, no index) to chunks containing the topic's words in the other language or other spellings, and its hits are interleaved into the normal ranking from position 4 on; results say `matched_via` / `expansion_terms`. Generic words (dost, ghar, paisa) are never expanded. Cross-language evidence needs similarity ≥ 0.2 instead of 0.35, and quotes are never shortened in a way that drops a negation ("neend nahi aati" stays whole). Questions without such a topic are searched exactly as before.
 
-This is **evidence-based synthesis, not a generative LLM**: every sentence is a verbatim quote, a count, a date, a platform or a title from a returned source, so it never invents an event, feeling, relationship or date, but it also doesn't interpret or summarise in its own words, can quote a sentence out of context, and depends on the words you use. Read the sources. Everything runs on this machine: no hosted APIs, no LLM service, no browser-side calls other than to the local server, no model downloads.
+The evidence brief itself is **evidence-based synthesis, not a generative LLM**: every sentence is a verbatim quote, a count, a date, a platform or a title from a returned source, so it never invents an event, feeling, relationship or date, but it also doesn't interpret or summarise in its own words, can quote a sentence out of context, and depends on the words you use. Read the sources. Everything runs on this machine: no hosted APIs, no hosted LLM service, no browser-side calls other than to the local server, no model downloads at query time.
 
 If the index is still being built, the status line says so and the API answers `503 index_unavailable`; the server picks the table up automatically once it exists, no restart needed. If the page can't reach the API it shows the command to start it.
 
@@ -285,6 +295,7 @@ Tests (fake model, table and a throwaway SQLite DB; no index, model or real data
 ```bash
 .venv/bin/python scripts/tests/test_api.py
 .venv/bin/python scripts/tests/test_ask.py      # Ask Sarthink: grounding, weak evidence, filters, errors, model reuse
+.venv/bin/python scripts/tests/test_answer_writer.py   # written answers: prompt, citations, streaming, offline/loading model (fake llama.cpp)
 .venv/bin/python scripts/tests/test_insights.py # /api/insights: shape, filters, empty state, owner exclusion, read-only, errors
 .venv/bin/python scripts/tests/test_people.py   # person profiles: counts, dates, filters, identity boundaries, sparse history, paging, links
 .venv/bin/python scripts/tests/test_hinglish.py # Hinglish vocabulary, expanded retrieval on a temp LanceDB table, Ask evidence, negation-safe quotes

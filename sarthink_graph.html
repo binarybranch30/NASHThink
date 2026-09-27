@@ -529,6 +529,31 @@
     .ask-conf.high .meter i, .ask-conf.medium .meter i:nth-child(-n+2), .ask-conf.low .meter i:first-child { background: currentColor; }
     .ask-conf .ev { color: var(--dim); letter-spacing: .06em; text-transform: none; font-size: .62rem; }
     .ask-answer { font-size: .76rem; line-height: 1.55; color: #fff; word-break: break-word; }
+    /* Written answer (POST /api/ask/stream): a local Llama's prose over the evidence, with [n] citations */
+    .ask-written { display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(79, 142, 255, .35); background: rgba(79, 142, 255, .07); }
+    .aw-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); }
+    .aw-head .aw-by { color: #cfe0ff; }
+    .aw-state { letter-spacing: .04em; text-transform: none; font-size: .62rem; display: inline-flex; align-items: center; gap: 6px; }
+    .aw-state.busy::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--acc); animation: pulse 1s ease-in-out infinite; }
+    .aw-text { font-size: .8rem; line-height: 1.6; color: #fff; word-break: break-word; }
+    .aw-text:empty { display: none; }
+    .aw-text p { margin: 0 0 8px; }
+    .aw-text p:last-child, .aw-text ul:last-child { margin-bottom: 0; }
+    .aw-text ul { margin: 0 0 8px; padding-left: 18px; }
+    .aw-text li { margin-bottom: 3px; }
+    .aw-text.streaming > :last-child::after { content: '▍'; color: var(--acc); animation: pulse 1s ease-in-out infinite; }
+    .aw-text .cite { font: inherit; font-size: .6rem; line-height: 1; vertical-align: super; margin: 0 1px; padding: 1px 4px; border-radius: 4px; cursor: pointer;
+      border: 1px solid rgba(79, 142, 255, .5); background: rgba(79, 142, 255, .16); color: #cfe0ff; }
+    .aw-text .cite:hover, .aw-text .cite:focus-visible { background: rgba(79, 142, 255, .4); color: #fff; }
+    .aw-note { font-size: .66rem; line-height: 1.5; color: var(--dim); }
+    .aw-note.warn { color: var(--warn); }
+    .aw-note code { font-size: .62rem; color: var(--mid); background: rgba(255, 255, 255, .06); padding: 1px 5px; border-radius: 3px; }
+    .ask-evsum > summary { cursor: pointer; font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin-bottom: 5px; }
+    .ask-evsum > summary:hover { color: #fff; }
+    #omni-writer { flex: 0 0 auto; align-self: center; max-width: 150px; font: inherit; font-size: .72rem; color: var(--mid); cursor: pointer;
+      background: rgba(255, 255, 255, .06); border: 1px solid var(--bdr); border-radius: 8px; padding: 6px 4px; }
+    #omni-writer option { background: #151822; color: #fff; }
+    #omni[data-mode="search"] #omni-writer { display: none; }
     .ask-h { font-size: .58rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); margin-bottom: 5px; }
     .ask-points { list-style: none; display: flex; flex-direction: column; gap: 5px; }
     .ask-points li { position: relative; padding-left: 11px; font-size: .68rem; line-height: 1.45; color: rgba(255, 255, 255, .74); word-break: break-word; }
@@ -957,6 +982,7 @@
     #topbar .omode { padding: 3px 8px; font-size: .64rem; }
     #topbar .orow { flex: 1; min-width: 0; padding: 2px 3px 2px 10px; border-radius: 0 8px 8px 0; height: 32px; align-items: center; background: var(--gb); backdrop-filter: blur(18px); }
     #topbar #omni-q { font-size: .78rem; padding: 0; height: 20px; line-height: 20px; white-space: nowrap; overflow: hidden; }
+    #topbar #omni-writer { font-size: .62rem; padding: 1px 2px; height: 24px; max-width: 92px; margin-right: 4px; border-radius: 6px; }
     #topbar #omni-go { padding: 3px 11px; font-size: .7rem; border-radius: 6px; }
     #topbar .omode .long { display: none; }
 
@@ -1236,6 +1262,11 @@
         <div class="orow">
           <textarea id="omni-q" rows="1" maxlength="500" autocomplete="off" spellcheck="false" aria-label="Question for Ask Sarthink"
             placeholder="Ask anything about your memories…"></textarea>
+          <select id="omni-writer" aria-label="How to answer" title="How Ask answers: a local Llama writes it (Best, Quick) or quotes only (Evidence)">
+            <option value="best">Best</option>
+            <option value="quick">Quick</option>
+            <option value="evidence">Evidence only</option>
+          </select>
           <button id="omni-go" class="btn primary" type="submit">Ask</button>
         </div>
       </form>
@@ -3310,6 +3341,7 @@
       const q = (typeof query === 'string' ? query : $('omni-q').value).trim();
       if (!q) { $('omni-q').focus(); return; }
 
+      stopWriting();
       const seq = ++S.sem.seq;
       S.sem.mode = 'search';
       askBusy(false);
@@ -3361,6 +3393,7 @@
 
     function resetSemantic({ refresh = true } = {}) {
       const hadResult = S.sem.active >= 0;
+      stopWriting();
       S.sem.seq++;  // drop any in-flight response
       S.sem.results = [];
       S.sem.query = '';
@@ -3467,6 +3500,244 @@
       if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     }
 
+    // ─── Written answers (POST /api/ask/stream): a local Llama turns the evidence into prose ───
+    // The stream's first event is the same brief /api/ask returns, rendered as usual; the model's text then
+    // streams into a block above it. [n] in the text cites source n. Everything the model says is escaped.
+    const WRITER_KEY = 'sarthink.writer';
+    const WRITERS = ['best', 'quick', 'evidence'];
+    S.llm = { profiles: {}, order: ['best', 'quick'], choice: null, checked: false };
+    try { const v = localStorage.getItem(WRITER_KEY); if (WRITERS.includes(v)) S.llm.choice = v; } catch (_) { /* storage blocked */ }
+
+    function writerChoice() {
+      if (S.llm.choice) return S.llm.choice;
+      const live = S.llm.order.find(p => (S.llm.profiles[p] || {}).state === 'online');
+      return live || (S.llm.checked ? 'evidence' : 'best');
+    }
+
+    function syncWriterPicker() {
+      const sel = $('omni-writer');
+      const tips = ['How Ask answers:'];
+      for (const o of sel.options) {
+        const p = S.llm.profiles[o.value];
+        if (!p) continue;
+        const off = p.state !== 'online' ? (p.state === 'loading' ? ' (loading)' : ' (off)') : '';
+        o.textContent = `${p.label} · ${String(p.model_name).split(' ').pop()}${off}`;   // "Best · 8B"
+        tips.push(`${p.label}: ${p.description}${off ? ` — not running (${p.start})` : ''}`);
+      }
+      tips.push('Evidence only: instant quotes and counts, no model');
+      sel.title = tips.join('\n');
+      sel.value = writerChoice();
+    }
+
+    async function refreshLlm() {
+      try {
+        const d = await apiFetch('/api/llm', { timeout: 4000 });
+        S.llm.profiles = d.profiles || {};
+        S.llm.order = d.order || S.llm.order;
+      } catch (_) {
+        S.llm.profiles = {};   // an older server without /api/llm: evidence only
+      }
+      S.llm.checked = true;
+      syncWriterPicker();
+    }
+
+    function stopWriting() {
+      const w = S.sem.writer;
+      S.sem.writer = null;
+      if (!w) return;
+      clearInterval(w.tick);
+      try { w.ctl.abort(); } catch (_) { /* already closed */ }
+    }
+
+    const mmss = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+    // Escaped text -> paragraphs, "- " lists and **bold**; [n] -> a button that selects source n.
+    function writtenHtml(text, nSources) {
+      const inline = t => esc(t)
+        .replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>')
+        .replace(/\[(\d{1,3})\]/g, (m, n) => (+n >= 1 && +n <= nSources)
+          ? `<button type="button" class="cite" data-k="${+n - 1}" title="Source ${+n}">${+n}</button>` : '');
+      return text.trim().split(/\n\s*\n/).map(block => {
+        const lines = block.split('\n').filter(l => l.trim());
+        if (lines.length && lines.every(l => /^\s*[-*•]\s+/.test(l))) {
+          return `<ul>${lines.map(l => `<li>${inline(l.replace(/^\s*[-*•]\s+/, ''))}</li>`).join('')}</ul>`;
+        }
+        return `<p>${lines.map(l => /^\s*[-*•]\s+/.test(l) ? '• ' + inline(l.replace(/^\s*[-*•]\s+/, '')) : inline(l)).join('<br>')}</p>`;
+      }).join('');
+    }
+
+    // Opens the stream and resolves with the brief (the first event); the rest is read by writeAnswer().
+    async function askStream(body) {
+      const ctl = new AbortController();
+      const timer = setTimeout(() => ctl.abort(), SEM_TIMEOUT_MS);   // retrieval only; writing has no client timeout
+      let r;
+      try {
+        r = await fetch(API_BASE + '/api/ask/stream', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: ctl.signal,
+        });
+      } catch (e) {
+        clearTimeout(timer);
+        const err = new Error(e.name === 'AbortError' ? 'The app server took too long to answer.' : 'The app server is offline.');
+        err.code = e.name === 'AbortError' ? 'timeout' : 'offline';
+        throw err;
+      }
+      if (!r.ok || !(r.headers.get('content-type') || '').startsWith('text/event-stream')) {
+        clearTimeout(timer);
+        let b = null;
+        try { b = await r.json(); } catch (_) { /* not JSON */ }
+        const e = b && b.error;
+        const err = new Error(e ? e.message : `HTTP ${r.status}`);
+        err.code = e ? e.code : (r.status === 404 || r.status === 501 ? 'offline' : 'http_error');
+        throw err;
+      }
+      const reader = r.body.getReader();
+      const dec = new TextDecoder();
+      let buf = '';
+      async function* events() {
+        for (;;) {
+          let k;
+          while ((k = buf.indexOf('\n\n')) >= 0) {
+            const block = buf.slice(0, k);
+            buf = buf.slice(k + 2);
+            let ev = 'message', data = '';
+            for (const line of block.split('\n')) {
+              if (line.startsWith('event: ')) ev = line.slice(7);
+              else if (line.startsWith('data: ')) data += line.slice(6);
+            }
+            try { yield [ev, JSON.parse(data)]; } catch (_) { /* malformed event */ }
+          }
+          const { value, done } = await reader.read();
+          if (done) return;
+          buf += dec.decode(value, { stream: true });
+        }
+      }
+      const it = events();
+      let first;
+      try {
+        first = await it.next();
+      } catch (e) {
+        const err = new Error(e.name === 'AbortError' ? 'The app server took too long to answer.' : 'The answer stream broke off.');
+        err.code = e.name === 'AbortError' ? 'timeout' : 'http_error';
+        throw err;
+      } finally {
+        clearTimeout(timer);
+      }
+      if (first.done || first.value[0] !== 'brief') {
+        const err = new Error('The app server sent an unexpected answer.');
+        err.code = 'http_error';
+        throw err;
+      }
+      return { brief: first.value[1], events: it, ctl };
+    }
+
+    // The written-answer block at the top of the brief; the evidence summary folds under it.
+    function writerBlock(profile) {
+      const brief = document.querySelector('#sem-list .ask-brief');
+      if (!brief) return null;
+      const p = S.llm.profiles[profile] || {};
+      const box = document.createElement('div');
+      box.className = 'ask-written';
+      box.innerHTML = `<div class="aw-head"><span class="aw-by">${esc(p.model_name ? `Written by ${p.model_name}` : 'Written answer')} · on this device</span>
+        <span class="aw-state" aria-live="polite"></span></div><div class="aw-text"></div><div class="aw-note" hidden></div>`;
+      const ans = brief.querySelector('.ask-answer');
+      const fold = document.createElement('details');
+      fold.className = 'ask-evsum';
+      fold.innerHTML = '<summary>Evidence summary</summary>';
+      ans.before(fold);
+      fold.append(ans);
+      fold.before(box);
+      box.querySelector('.aw-text').addEventListener('click', e => {
+        const b = e.target.closest('.cite');
+        if (b) focusAskSource(+b.dataset.k);
+      });
+      return { box, fold, state: box.querySelector('.aw-state'), text: box.querySelector('.aw-text'), note: box.querySelector('.aw-note') };
+    }
+
+    function writerNote(ui, html, warn = true) {
+      ui.note.innerHTML = html;
+      ui.note.className = 'aw-note' + (warn ? ' warn' : '');
+      ui.note.hidden = false;
+    }
+
+    // Shown instead of a stream when the chosen model isn't running.
+    function writerOffline(profile) {
+      const ui = writerBlock(profile);
+      if (!ui) return;
+      const p = S.llm.profiles[profile] || { label: profile, start: `scripts/llm.sh start ${profile}` };
+      ui.state.textContent = '';
+      ui.fold.open = true;
+      writerNote(ui, `The ${esc(p.label)} model isn’t running, so here is the evidence summary. Start it with <code>${esc(p.start)}</code>, or pick another answer style.`);
+    }
+
+    async function writeAnswer(stream, seq, profile, nSources) {
+      const ui = writerBlock(profile);
+      if (!ui) return;
+      const p = S.llm.profiles[profile] || {};
+      const started = performance.now();
+      const w = { ctl: stream.ctl, tick: 0, stage: 'reading', sources: 0 };
+      S.sem.writer = w;
+      let text = '', frame = 0, finished = false;
+      const live = () => seq === S.sem.seq && S.sem.writer === w;
+      const paint = () => { frame = 0; ui.text.innerHTML = writtenHtml(text, nSources); };
+      const tickState = () => {
+        const t = mmss((performance.now() - started) / 1000);
+        ui.state.className = 'aw-state busy';
+        ui.state.textContent = w.stage === 'reading' ? `Reading ${w.sources || ''} source${w.sources === 1 ? '' : 's'} · ${t}`.replace('  ', ' ') : `Writing · ${t}`;
+      };
+      w.tick = setInterval(tickState, 1000);
+      tickState();
+      semStatus('busy', `${esc(p.model_name || 'The local model')} is writing an answer… the evidence is below.`);
+      try {
+        for await (const [ev, d] of stream.events) {
+          if (!live()) return;
+          if (ev === 'status') {
+            w.sources = d.sources || w.sources;
+            tickState();
+          } else if (ev === 'token') {
+            if (w.stage === 'reading') { w.stage = 'writing'; ui.text.classList.add('streaming'); }
+            text += d.text;
+            if (!frame) frame = requestAnimationFrame(paint);
+          } else if (ev === 'done') {
+            finished = true;
+            text = d.text;
+            paint();
+            ui.state.className = 'aw-state';
+            ui.state.textContent = `Done in ${mmss((performance.now() - started) / 1000)}`;
+            writerNote(ui, 'Drafted by a local model from the sources below — click a number to check it.', false);
+            semStatus('ok', `Answer written by ${esc(p.model_name || 'the local model')} in ${mmss(d.took_ms / 1000)}`);
+          } else if (ev === 'skipped') {
+            finished = true;
+            ui.state.textContent = '';
+            ui.fold.open = true;
+            writerNote(ui, esc(d.message), false);
+            semStatus('ok', 'Evidence too weak for a written answer');
+          } else if (ev === 'error') {
+            finished = true;
+            ui.state.textContent = '';
+            ui.fold.open = true;
+            const cmd = d.code === 'llm_offline' ? (p.start || `scripts/llm.sh start ${profile}`) : '';
+            writerNote(ui, `${esc(d.message.replace(/ Start it with:.*$/, ''))}${cmd ? ` Start it with <code>${esc(cmd)}</code>.` : ''} The evidence summary is below.`);
+            semStatus('warn', 'Written answer unavailable — showing the evidence');
+          }
+        }
+        if (!finished && live()) {
+          ui.state.textContent = '';
+          ui.fold.open = true;
+          writerNote(ui, 'The answer stopped early (the connection closed).');
+        }
+      } catch (e) {
+        if (!live()) return;
+        ui.state.textContent = '';
+        ui.fold.open = true;
+        writerNote(ui, 'The answer stopped early (the connection to the app server broke).');
+      } finally {
+        if (frame) cancelAnimationFrame(frame);
+        if (S.sem.writer === w) { clearInterval(w.tick); S.sem.writer = null; }
+        ui.text.classList.remove('streaming');
+        if (ui.text.innerHTML === '' && text) paint();
+      }
+    }
+
     function askError(html, sub) {
       S.sem.results = [];
       clearSemanticHighlight();
@@ -3486,6 +3757,7 @@
         return;
       }
 
+      stopWriting();
       const seq = ++S.sem.seq;
       S.sem.mode = 'ask';
       semBusy(false);
@@ -3499,13 +3771,25 @@
       $('sem-list').innerHTML = '<div class="ask-loading"><i></i>Retrieving memories and checking the evidence…</div>';
 
       try {
-        const data = await apiFetch('/api/ask', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ question: q, limit: ASK_LIMIT, ...filters }),
-          timeout: SEM_TIMEOUT_MS,
-        });
-        if (seq !== S.sem.seq) return;  // a newer search/ask or a reset superseded this one
+        await refreshLlm();
+        if (seq !== S.sem.seq) return;
+        const writer = writerChoice();
+        const wp = S.llm.profiles[writer];
+        const useModel = writer !== 'evidence' && wp && wp.state !== 'offline';
+        const body = { question: q, limit: ASK_LIMIT, ...filters };
+        let stream = null, data;
+        if (useModel) {
+          stream = await askStream({ ...body, profile: writer });
+          data = stream.brief;
+        } else {
+          data = await apiFetch('/api/ask', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+            timeout: SEM_TIMEOUT_MS,
+          });
+        }
+        if (seq !== S.sem.seq) { if (stream) stream.ctl.abort(); return; }  // a newer search/ask or a reset superseded this one
         S.sem.loadedOnce = true;
         S.sem.query = data.question;
         S.sem.results = data.sources.map(askSourceAsResult);
@@ -3515,6 +3799,8 @@
         semStatus('ok', `${esc(CONF_TEXT[data.confidence] || 'Answered')} · ${n} source${n === 1 ? '' : 's'} in ${(data.took_ms / 1000).toFixed(1)}s`);
         if (S.pGeo) applySemanticHighlight(true);
         else if (n) $('sem-sub').textContent = 'Map not available';
+        if (stream) writeAnswer(stream, seq, writer, n);
+        else if (writer !== 'evidence' && wp) writerOffline(writer);
       } catch (e) {
         if (seq !== S.sem.seq) return;
         const retry = '<br><button type="button" class="btn sm" id="ask-retry">Retry</button>';
@@ -3598,6 +3884,7 @@
 
     function setOmniMode(mode, focus = false) {
       S.omniMode = mode;
+      $('omni').dataset.mode = mode;
       document.querySelectorAll('.omode').forEach(b => {
         const on = b.dataset.omode === mode;
         b.setAttribute('aria-selected', String(on));
@@ -3931,6 +4218,12 @@
     });
     $('omni-q').addEventListener('input', autosizeOmni);
     document.querySelectorAll('.omode').forEach(b => b.addEventListener('click', () => setOmniMode(b.dataset.omode, true)));
+    $('omni-writer').addEventListener('change', e => {
+      S.llm.choice = e.target.value;
+      try { localStorage.setItem(WRITER_KEY, S.llm.choice); } catch (_) { /* storage blocked */ }
+    });
+    $('omni-writer').addEventListener('focus', refreshLlm);
+    refreshLlm();
     document.querySelector('.omodes').addEventListener('keydown', e => {
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
         e.preventDefault();

@@ -35,14 +35,22 @@ async function open(browser, { url = BASE, viewport = { width: 1440, height: 900
   const page = await browser.newPage({ viewport });
   page.errors = [];
   page.on('pageerror', e => page.errors.push(e.message));
-  if (route) {
-    await route(page);
-    // Stubbed routes still in flight must not outlive the page.
-    const close = page.close.bind(page);
-    page.close = async opts => { await page.unrouteAll({ behavior: 'ignoreErrors' }).catch(() => {}); return close(opts); };
-  }
+  // No local Llama by default, so Ask uses plain /api/ask (which the flows stub) and never a real model.
+  // A flow's own /api/llm route is registered later and wins.
+  await page.route('**/api/llm', r => r.fulfill({ json: llmStatus({}) }));
+  if (route) await route(page);
+  // Stubbed routes still in flight must not outlive the page.
+  const close = page.close.bind(page);
+  page.close = async opts => { await page.unrouteAll({ behavior: 'ignoreErrors' }).catch(() => {}); return close(opts); };
   await page.goto(url);
   return page;
+}
+
+// A synthetic GET /api/llm: `states` maps profile -> online | loading | offline (default offline).
+function llmStatus(states) {
+  const p = (name, label, model) => ({ label, model_name: model, description: model, model_file: true,
+    start: `scripts/llm.sh start ${name}`, state: states[name] || 'offline' });
+  return { profiles: { quick: p('quick', 'Quick', 'Llama 3.2 3B'), best: p('best', 'Best', 'Llama 3.1 8B') }, order: ['best', 'quick'] };
 }
 
 // Waits for the graph; by default then opens the graph workspace (the page starts on Memory Home).
@@ -1499,10 +1507,108 @@ async function realSemantic(browser) {
   await page.close();
 }
 
+// Written answers (POST /api/ask/stream, stubbed with synthetic SSE): the answer-style picker, streamed prose
+// above the evidence, [n] citations selecting sources, escaping, offline/error/weak-evidence fallbacks, the
+// remembered choice, and that nothing reaches a real model.
+async function writerFlow(browser) {
+  const calls = [];
+  let mode = 'ok';
+  const sse = events => events.map(([e, d]) => `event: ${e}\ndata: ${JSON.stringify(d)}\n\n`).join('');
+  const page = await open(browser, {
+    route: async p => {
+      await stubAsk(p, calls);
+      await p.route('**/api/llm', r => r.fulfill({ json: llmStatus({ best: 'online' }) }));
+      await p.route('**/api/ask/stream', async r => {
+        const body = JSON.parse(r.request().postData());
+        calls.push({ kind: 'stream', ...body });
+        const ids = await graphThreads(p).catch(() => []);
+        const src = (k, id) => ({ rank: k + 1, node_id: id || null, title: `Synthetic thread ${k + 1}`, platform: 'reddit',
+          date_start: `2024-0${k + 1}-02T09:00:00+00:00`, date_end: null, similarity: 0.7, snippet: 'synthetic sourdough note',
+          text: 'Synthetic full text about sourdough.', people: [], relevant: true, matched_terms: ['sourdough'] });
+        const sources = [src(0, ids[0]), src(1, ids[1])];
+        const brief = { question: body.question, answer: 'Found 2 memories that mention “sourdough”.', confidence: mode === 'weak' ? 'low' : 'medium',
+          summary_points: [], timeline: [], sources, notes: [], evidence: { retrieved: 5, considered: 4, relevant: 2, terms: ['sourdough'] },
+          filters: {}, model: 'm', took_ms: 21 };
+        const tail = mode === 'error' ? [['error', { code: 'llm_offline', message: "The Best model isn't running. Start it with: scripts/llm.sh start best" }]]
+          : mode === 'weak' ? [['skipped', { code: 'weak_evidence', message: 'The evidence is too weak to write an answer from.' }]]
+          : [['token', { text: 'You started a **sourdough** starter [1]. ' }], ['token', { text: `Then you proofed it ${EVIL} [2][7].\n\n- a bullet [1]` }],
+             ['done', { text: `You started a **sourdough** starter [1]. Then you proofed it ${EVIL} [2][7].\n\n- a bullet [1]`, cited: [1, 2], profile: body.profile, model: 'x', took_ms: 1200 }]];
+        await r.fulfill({ headers: { 'content-type': 'text/event-stream' },
+          body: sse([['brief', brief], ['status', { stage: 'reading', elapsed_s: 0, sources: 2, profile: body.profile }], ...tail]) });
+      });
+    },
+  });
+  await ready(page, { view: 'home' });
+  await page.waitForFunction(() => window.__sarthink.llm.checked, null, { timeout: 5000 });
+  const pick = await page.evaluate(() => ({ v: document.getElementById('omni-writer').value,
+    opts: [...document.getElementById('omni-writer').options].map(o => o.textContent) }));
+  check('answer picker defaults to Best when it is running and marks others off',
+    pick.v === 'best' && /^Best · 8B$/.test(pick.opts[0]) && /\(off\)/.test(pick.opts[1]), JSON.stringify(pick));
+
+  const ask = async q => {
+    await page.fill('#omni-q', q);
+    await page.press('#omni-q', 'Enter');
+    await page.waitForSelector('#sem-list .ask-brief', { timeout: 10000 });
+  };
+  await ask('What did I say about sourdough?');
+  await page.waitForFunction(() => /Done/.test((document.querySelector('.aw-state') || {}).textContent || ''), null, { timeout: 10000 });
+  let r = await page.evaluate(() => ({
+    written: !!document.querySelector('.ask-written'), paras: document.querySelectorAll('.aw-text p').length,
+    bullets: document.querySelectorAll('.aw-text li').length, bold: document.querySelectorAll('.aw-text strong').length,
+    cites: [...document.querySelectorAll('.aw-text .cite')].map(b => b.textContent).join(','),
+    text: document.querySelector('.aw-text').innerText, imgs: document.querySelectorAll('#sem-list img').length, xss: window.__xss === 1,
+    folded: !document.querySelector('.ask-evsum').open, evidence: !!document.querySelector('.ask-evsum .ask-answer'),
+    note: document.querySelector('.aw-note').innerText, by: document.querySelector('.aw-by').innerText,
+    cards: document.querySelectorAll('#sem-list .sr').length,
+  }));
+  const stream = calls.filter(c => c.kind === 'stream');
+  check('Best streams a written answer via /api/ask/stream', stream.length === 1 && stream[0].profile === 'best' && !calls.some(c => c.kind === 'ask'), JSON.stringify(calls));
+  check('written answer renders paragraphs, a list, bold and citations above the sources',
+    r.written && r.paras === 1 && r.bullets === 1 && r.bold === 1 && r.cites === '1,2,1' && r.cards === 2 && /Llama 3\.1 8B/i.test(r.by), JSON.stringify(r));
+  check('model text is escaped and out-of-range citations are dropped', r.imgs === 0 && !r.xss && /<img src=x/.test(r.text) && !/\[7\]|7/.test(r.cites));
+  check('evidence summary folds under the written answer', r.folded && r.evidence && /local model/.test(r.note));
+  await page.click('.aw-text .cite >> nth=1');
+  await settle(page);
+  check('clicking a citation selects that source', await page.evaluate(() => window.__sarthink.sem.active === 1));
+  check('the Ask button is usable while/after writing', !(await page.isDisabled('#omni-go')));
+  await shot(page, '30_written_answer');
+
+  mode = 'error';
+  await ask('What did I say about sourdough again?');
+  await page.waitForFunction(() => !document.querySelector('.aw-note').hidden, null, { timeout: 10000 });
+  r = await page.evaluate(() => ({ note: document.querySelector('.aw-note').innerText, open: document.querySelector('.ask-evsum').open,
+    code: document.querySelector('.aw-note code') && document.querySelector('.aw-note code').textContent }));
+  check('a model error keeps the evidence and says how to start the model', r.open && r.code === 'scripts/llm.sh start best' && /isn’t running|isn't running/.test(r.note), JSON.stringify(r));
+
+  mode = 'weak';
+  await ask('Something with weak evidence?');
+  await page.waitForFunction(() => !document.querySelector('.aw-note').hidden, null, { timeout: 10000 });
+  r = await page.evaluate(() => ({ note: document.querySelector('.aw-note').innerText, text: document.querySelector('.aw-text').innerText, open: document.querySelector('.ask-evsum').open }));
+  check('weak evidence skips writing and shows the evidence', r.open && !r.text && /too weak/.test(r.note), JSON.stringify(r));
+
+  await page.selectOption('#omni-writer', 'quick');
+  const before = calls.length;
+  await ask('Quick but offline?');
+  await page.waitForSelector('.ask-written .aw-note:not([hidden])', { timeout: 10000 });
+  r = await page.evaluate(() => ({ note: document.querySelector('.aw-note').innerText, code: (document.querySelector('.aw-note code') || {}).textContent }));
+  const newCalls = calls.slice(before).map(c => c.kind).join(',');
+  check('an offline model falls back to /api/ask with a start hint', newCalls === 'ask' && r.code === 'scripts/llm.sh start quick', `${newCalls} ${JSON.stringify(r)}`);
+
+  await page.selectOption('#omni-writer', 'evidence');
+  await ask('Evidence only please?');
+  check('Evidence only shows no written block', !(await page.$('.ask-written')) && calls[calls.length - 1].kind === 'ask');
+  await page.reload();
+  await page.waitForFunction(() => window.__sarthink.llm.checked, null, { timeout: 10000 });
+  check('the answer style is remembered', await page.inputValue('#omni-writer') === 'evidence');
+  await page.selectOption('#omni-writer', 'best');   // leave the stored choice as it was for later flows
+  check('no page errors in the written-answer flow', !page.errors.length, page.errors.join(' | '));
+  await page.close();
+}
+
 // SARTHINK_E2E_ONLY=homeFlow,insightsFlow runs just those flows.
 const ONLY = (process.env.SARTHINK_E2E_ONLY || '').split(',').filter(Boolean);
 const FLOWS = { mainFlow: async b => (await mainFlow(b)).close(), semanticFlow, askFlow, apiStates, dataStates, responsive,
-  homeFlow, arrowKeys, insightsFlow, homeWithoutGraph, homeResponsive, personFlow, ...(REAL_SEMANTIC ? { realSemantic } : {}) };
+  homeFlow, arrowKeys, insightsFlow, homeWithoutGraph, homeResponsive, personFlow, writerFlow, ...(REAL_SEMANTIC ? { realSemantic } : {}) };
 const browser = await chromium.launch({ args: ['--use-gl=swiftshader', '--enable-webgl', '--ignore-gpu-blocklist'] });
 try {
   for (const [name, flow] of Object.entries(FLOWS)) if (!ONLY.length || ONLY.includes(name)) await flow(browser);

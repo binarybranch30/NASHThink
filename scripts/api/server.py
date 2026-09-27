@@ -13,6 +13,9 @@ Endpoints:
     POST /api/search          {"query": "...", "limit": 10} -> structured results
     POST /api/ask             {"question": "...", "limit": 8, "platforms": [...], "date_from": ..., "date_to": ...}
                               -> evidence-first memory brief (deterministic; see memory_brief.py)
+    POST /api/ask/stream      same body + "profile": "quick"|"best" -> text/event-stream: the brief, then an answer
+                              written by a local Llama over the evidence (see answer_writer.py, scripts/llm.sh)
+    GET  /api/llm             which local Llama profiles are running
     GET  /api/thread/T_<id>   indexed conversation chunks of one graph thread (no model load)
     GET  /api/person/U_<id>   "Your history with X": counts, activity, cited brief (read-only SQLite, no model load);
                               /conversations?offset&limit and /messages?thread&cursor&limit page the full history
@@ -21,6 +24,7 @@ Endpoints:
     GET  /processed_data/graph/cosmograph_{nodes,edges}.csv   graph data for the UI
 """
 import argparse
+import asyncio
 import os
 import re
 import sys
@@ -31,14 +35,17 @@ from typing import List, Optional
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.concurrency import run_in_threadpool
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from pydantic import BaseModel, Field, field_validator
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = Path(os.path.dirname(os.path.dirname(SCRIPT_DIR)))
 sys.path.append(str(REPO_ROOT / "scripts" / "semantic"))
 
+import answer_writer  # noqa: E402
 import insights  # noqa: E402
+import llm_config  # noqa: E402
 import people  # noqa: E402
 import memory_brief  # noqa: E402
 import search  # noqa: E402
@@ -121,6 +128,18 @@ class AskRequest(BaseModel):
         except ValueError:
             raise ValueError("must be an ISO date (YYYY-MM-DD) or datetime")
         return v.strip()
+
+
+class AskStreamRequest(AskRequest):
+    profile: str = Field("best", max_length=20)
+
+    @field_validator("profile")
+    @classmethod
+    def profile_known(cls, v):
+        v = v.strip().lower()
+        if v not in llm_config.DEFAULT_PROFILES:
+            raise ValueError(f"must be one of: {', '.join(llm_config.DEFAULT_PROFILES)}")
+        return v
 
 
 class AskSource(BaseModel):
@@ -354,10 +373,14 @@ def parse_date_param(name, value, end=False):
         raise ApiError(422, "invalid_request", f"{name}: must be an ISO date (YYYY-MM-DD) or datetime")
 
 
-def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insights_service=None, people_service=None):
+def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insights_service=None, people_service=None,
+               llm_profiles=None, llm_transport=None):
     service = service or SearchService()
     insights_service = insights_service or insights.InsightsService()
     people_service = people_service or people.PeopleService(insights_service.db_path, insights_service.identity_map)
+    llm_profiles = llm_profiles if llm_profiles is not None else llm_config.load_profiles()
+    llm_status = answer_writer.LlmStatus(llm_profiles, transport=llm_transport)
+    llm_active = {}   # profile -> asyncio.Event of the answer being written (-np 1: a newer question replaces it)
     app = FastAPI(title="Sarthink local search", version="1.0", docs_url="/api/docs", openapi_url="/api/openapi.json")
     app.state.search_service = service
 
@@ -384,7 +407,12 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
 
     @app.get("/api/health")
     def health():
-        return {"status": "ok", "index": service.status(), "memory_db": {"available": insights_service.available()}}
+        return {"status": "ok", "index": service.status(), "memory_db": {"available": insights_service.available()},
+                "llm": llm_status.status()}
+
+    @app.get("/api/llm")
+    def llm():
+        return {"profiles": llm_status.status(), "order": list(llm_config.PROFILE_ORDER)}
 
     # Sync handler: FastAPI runs it in a worker thread, so a slow CPU encode doesn't block the event loop.
     @app.post("/api/search", response_model=SearchResponse)
@@ -400,9 +428,7 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
             "results": results,
         }
 
-    @app.post("/api/ask", response_model=AskResponse)
-    def ask(req: AskRequest):
-        """Evidence-first answer: retrieve with the shared model, then summarise deterministically."""
+    def run_ask(req):
         started = time.perf_counter()
         try:
             plan = memory_brief.plan_query(req.question, req.date_from, req.date_to)
@@ -426,6 +452,39 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
             "model": meta["model"],
             "took_ms": int((time.perf_counter() - started) * 1000),
         }
+
+    @app.post("/api/ask", response_model=AskResponse)
+    def ask(req: AskRequest):
+        """Evidence-first answer: retrieve with the shared model, then summarise deterministically."""
+        return run_ask(req)
+
+    @app.post("/api/ask/stream")
+    async def ask_stream(req: AskStreamRequest, request: Request):
+        """The /api/ask brief as the first event, then a local Llama's answer written from its evidence.
+
+        Retrieval errors are ordinary JSON errors (same codes as /api/ask); once streaming, problems with the
+        model arrive as an `error` event and the brief stays usable."""
+        brief = await run_in_threadpool(run_ask, req)
+        profile = llm_profiles[req.profile]
+        previous = llm_active.get(req.profile)
+        if previous is not None:
+            previous.set()
+        cancelled = asyncio.Event()
+        llm_active[req.profile] = cancelled
+        owner = insights_service.owner()
+
+        async def events():
+            try:
+                yield answer_writer.sse("brief", AskResponse(**brief).model_dump())
+                async for chunk in answer_writer.answer_events(req.question, brief, profile, owner,
+                                                               request.is_disconnected, cancelled, llm_transport):
+                    yield chunk
+            finally:
+                if llm_active.get(req.profile) is cancelled:
+                    del llm_active[req.profile]
+
+        return StreamingResponse(events(), media_type="text/event-stream",
+                                 headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
 
     @app.get("/api/thread/{node_id}", response_model=ThreadContextResponse)
     def thread_context(node_id: str):
