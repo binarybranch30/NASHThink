@@ -600,7 +600,7 @@
     .scroll { overflow-y: auto; overscroll-behavior: contain; min-height: 0; }
 
     /* Details */
-    #details { flex: 0 1 auto; max-height: 62vh; }
+    #details { flex: 0 1 auto; max-height: calc(100vh - var(--top-h) - var(--gap)); }
     #details:has(~ #sem-panel:not([hidden])) { max-height: 50vh; }
 
     .chip {
@@ -1044,6 +1044,95 @@
     @keyframes shimmer { to { background-position: -200% 0; } }
     #insights.busy #ins-body > :not(.ins-state) { opacity: .55; transition: opacity .2s; }
 
+    /* ── Calmer chrome ─────────────────────────────────────────────────── */
+    .btn.icon { width: 30px; padding: 5px 0; text-align: center; font-size: .8rem; }
+    .linkbtn.big { font-size: .78rem; padding: 4px 0; }
+    #home-foot { gap: 18px; }
+    #filters { padding: 0; }
+    .fsum {
+      display: flex; align-items: center; gap: 8px; cursor: pointer; list-style: none; user-select: none;
+      font-size: .6rem; letter-spacing: .2em; color: var(--dim); font-weight: 600; text-transform: uppercase; padding: 2px 0;
+    }
+    .fsum::-webkit-details-marker { display: none; }
+    .fsum:hover { color: #fff; }
+    .fchev { margin-left: auto; transition: transform .2s; font-size: .7rem; }
+    #filters[open] .fchev { transform: rotate(180deg); }
+    .fbadge { letter-spacing: .02em; text-transform: none; font-weight: 500; color: #cfe0ff; background: rgba(79, 142, 255, .18); border-radius: 8px; padding: 1px 7px; font-size: .62rem; }
+    .fsec { margin-top: 12px; }
+    .sem-scope { font-size: .6rem; color: var(--dim); margin-top: 2px; }
+    #sem-status { font-size: .62rem; color: var(--dim); padding: 6px 12px 8px; border-top: 1px solid var(--bdr); min-height: 0; margin: 0; }
+    #sem-status:empty, #sem-status.quiet { display: none; }
+    #hint.gone { opacity: 0; visibility: hidden; transition: opacity .6s ease, visibility 0s linear .6s; }
+    #hint .linkbtn { font-size: .66rem; }
+
+    /* ── Person profile ("Your history with …") ───────────────────────── */
+    .pf { display: flex; flex-direction: column; gap: 14px; }
+    .pf-scope { font-size: .62rem; color: var(--dim); display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    .pf-scope .tag { color: #cfe0ff; background: rgba(79, 142, 255, .14); border-radius: 8px; padding: 1px 7px; }
+    .pf-brief { border: 1px solid rgba(79, 142, 255, .28); background: rgba(79, 142, 255, .07); border-radius: 10px; padding: 11px 12px; }
+    .pf-brief h3 { font-size: .82rem; font-weight: 600; color: #fff; margin-bottom: 6px; }
+    .pf-brief p { font-size: .74rem; line-height: 1.55; color: rgba(255, 255, 255, .82); }
+    .pf-brief p + p { margin-top: 5px; }
+    .pf-brief.sparse { border-color: var(--bdr2); background: rgba(255, 255, 255, .03); }
+    .pf-brief .flag { display: inline-block; font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; color: var(--warn); border: 1px solid rgba(245, 194, 107, .45); border-radius: 4px; padding: 0 5px; margin-bottom: 6px; }
+    .cite {
+      display: inline-flex; align-items: center; justify-content: center; min-width: 16px; height: 15px; padding: 0 4px; margin-left: 2px;
+      font-size: .58rem; font-weight: 600; color: #cfe0ff; background: rgba(79, 142, 255, .22); border: none; border-radius: 4px;
+      cursor: pointer; vertical-align: 1px; font-variant-numeric: tabular-nums;
+    }
+    .cite:hover, .cite:focus-visible { background: rgba(79, 142, 255, .45); color: #fff; }
+    .pf-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .pf-stats div { min-width: 0; }
+    .pf-stats .k { font-size: .56rem; letter-spacing: .12em; color: var(--dim); text-transform: uppercase; }
+    .pf-stats .v { font-size: .86rem; color: #fff; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pf-stats .v small { font-size: .6rem; color: var(--dim); }
+    .pf-h { font-size: .58rem; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); font-weight: 600; margin-bottom: 6px; display: flex; gap: 8px; align-items: baseline; }
+    .pf-h .act { margin-left: auto; letter-spacing: 0; text-transform: none; font-weight: 400; }
+    .pf-spark { display: block; width: 100%; height: 40px; }
+    .pf-spark rect { fill: var(--acc); }
+    .pf-spark-l { display: flex; justify-content: space-between; font-size: .6rem; color: var(--dim); margin-top: 2px; font-variant-numeric: tabular-nums; }
+    .pf-topics { display: flex; flex-wrap: wrap; gap: 5px; }
+    .pf-topic { font-size: .66rem; color: var(--mid); background: rgba(255, 255, 255, .04); border: 1px solid var(--bdr); border-radius: 10px; padding: 2px 8px; cursor: pointer; }
+    .pf-topic:hover { color: #fff; border-color: var(--bdr2); }
+    .pf-topic small { color: var(--dim); margin-left: 3px; }
+    .pf-list { display: flex; flex-direction: column; gap: 2px; }
+    .pf-item {
+      display: grid; grid-template-columns: 20px 1fr auto; gap: 8px; align-items: center; width: 100%; padding: 6px 7px; border-radius: 7px;
+      background: none; border: 1px solid transparent; color: var(--mid); text-align: left; cursor: pointer; font-size: .72rem;
+    }
+    .pf-item:hover, .pf-item:focus-visible { background: rgba(255, 255, 255, .06); color: #fff; }
+    .pf-item .n { font-size: .6rem; color: var(--dim); text-align: center; font-variant-numeric: tabular-nums; }
+    .pf-item b { display: block; font-weight: 500; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .pf-item small { display: flex; gap: 5px; align-items: center; font-size: .62rem; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pf-item small i { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .pf-item .c { font-size: .66rem; color: var(--mid); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .pf-tag { font-size: .54rem; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); border: 1px solid var(--bdr2); border-radius: 3px; padding: 0 4px; }
+    .pf-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pf-back { align-self: flex-start; background: none; border: none; color: var(--acc); font-size: .72rem; cursor: pointer; padding: 0; }
+    .pf-back:hover { text-decoration: underline; }
+    .pf-note { font-size: .64rem; color: var(--dim); line-height: 1.5; }
+    .pf-note.warn { color: var(--warn); }
+    .pf-people { display: flex; flex-wrap: wrap; gap: 5px; }
+    .pf-person { font-size: .66rem; color: var(--mid); background: none; border: 1px solid var(--bdr); border-radius: 10px; padding: 2px 8px; cursor: pointer; }
+    .pf-person:hover { color: #fff; border-color: var(--bdr2); }
+    .pf-more summary { font-size: .64rem; color: var(--dim); cursor: pointer; }
+    .pf-more summary:hover { color: #fff; }
+    .pf-more[open] summary { margin-bottom: 6px; }
+    .pf-day { font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin: 10px 0 4px; }
+    .pf-day:first-child { margin-top: 0; }
+    .pm { padding: 7px 9px; border: 1px solid var(--bdr); border-radius: 8px; background: rgba(255, 255, 255, .02); }
+    .pm + .pm { margin-top: 5px; }
+    .pm.you { background: rgba(79, 142, 255, .06); border-color: rgba(79, 142, 255, .2); }
+    .pm-h { display: flex; gap: 6px; align-items: baseline; font-size: .62rem; color: var(--dim); }
+    .pm-h b { color: #fff; font-weight: 600; font-size: .66rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40%; }
+    .pm-h span { white-space: nowrap; }
+    .pm-h .th { margin-left: auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 55%; background: none; border: none; color: var(--acc); font-size: .6rem; cursor: pointer; padding: 0; }
+    .pm-t { font-size: .72rem; line-height: 1.5; color: rgba(255, 255, 255, .8); margin-top: 3px; white-space: pre-wrap; word-break: break-word; }
+    .pm-t.clamp { display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical; overflow: hidden; }
+    .pf-loadmore { width: 100%; margin-top: 8px; }
+    .skel-line { height: 12px; border-radius: 6px; background: linear-gradient(90deg, rgba(255,255,255,.03), rgba(255,255,255,.08), rgba(255,255,255,.03)); background-size: 200% 100%; animation: shimmer 1.2s linear infinite; }
+    .skel-line + .skel-line { margin-top: 8px; }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; }
     }
@@ -1113,11 +1202,11 @@
     <div class="brand">SARTHINK <em>·</em> MEMORY</div>
     <div id="stats" class="panel fade-layer" aria-live="polite"></div>
     <div id="tbtns">
-      <button id="btn-explore" class="btn" type="button" title="Open the graph workspace (G)">Explore graph<kbd>G</kbd></button>
-      <button id="btn-home" class="btn fade-layer" type="button" title="Back to Memory Home (G)">Home<kbd>G</kbd></button>
-      <button id="btn-insights" class="btn" type="button" title="Activity insights (I)" aria-controls="insights" aria-expanded="false">Insights<kbd>I</kbd></button>
-      <button id="btn-help" class="btn" type="button" title="Controls & shortcuts (?)" aria-haspopup="dialog">Help<kbd>?</kbd></button>
-      <button id="btn-reset" class="btn fade-layer" type="button" title="Restore the full graph view (Esc)">Reset<kbd>Esc</kbd></button>
+      <button id="btn-explore" class="btn" type="button" title="Open the memory map (G)">Memory map</button>
+      <button id="btn-home" class="btn fade-layer" type="button" title="Back to Home (G)">Home</button>
+      <button id="btn-insights" class="btn" type="button" title="Activity insights (I)" aria-controls="insights" aria-expanded="false">Insights</button>
+      <button id="btn-reset" class="btn fade-layer icon" type="button" title="Reset the view and filters (Esc)" aria-label="Reset view">↺</button>
+      <button id="btn-help" class="btn icon" type="button" title="Help and keyboard shortcuts (?)" aria-haspopup="dialog" aria-label="Help">?</button>
     </div>
   </header>
 
@@ -1125,7 +1214,7 @@
   <main id="home" class="panel" aria-labelledby="home-h">
     <div class="h-kicker">SARTHINK <em>·</em> MEMORY HOME</div>
     <h1 id="home-h">Ask your <span class="grad">second brain</span></h1>
-    <p class="h-sub">Answers and memories from your own conversation archives, with the sources that back them, searched privately on this machine.</p>
+    <p class="h-sub">Ask a question about your conversations. Every answer shows the messages it comes from.</p>
     <div id="home-slot">
       <form id="omni" role="search" aria-label="Ask or search your memories">
         <div class="omodes" role="tablist" aria-label="Question mode">
@@ -1142,15 +1231,14 @@
     <div id="home-chips" class="hchips" aria-label="Sample prompts"></div>
     <div id="home-results"></div>
     <div id="home-foot">
-      <button id="home-explore" class="btn primary" type="button">Explore graph →</button>
-      <button id="home-insights" class="btn" type="button">Insights</button>
-      <span class="grow"></span>
+      <button id="home-explore" class="linkbtn big" type="button">Explore the memory map →</button>
+      <button id="home-insights" class="linkbtn big" type="button">See insights</button>
     </div>
     <div id="graph-note" hidden role="status"></div>
     <div id="home-status" aria-live="polite">
       <span class="hs busy" id="hs-api"><i></i>Connecting…</span>
-      <span class="hs busy" id="hs-graph"><i></i>Loading graph…</span>
-      <span class="hs"><i style="background:var(--acc)"></i>Private · runs on this machine</span>
+      <span class="hs busy" id="hs-graph"><i></i>Loading map…</span>
+      <span class="hs"><i style="background:var(--acc)"></i>Private · stays on this device</span>
     </div>
   </main>
 
@@ -1169,56 +1257,30 @@
   <!-- Sidebar -->
   <aside id="sidebar" class="panel fade-layer" aria-label="Graph controls">
     <section class="sec">
-      <label class="plbl" for="find-q">Find node <span class="act"><button id="side-toggle" class="linkbtn" type="button" style="display:none" aria-expanded="true">Collapse</button></span></label>
-      <input id="find-q" class="inp" type="search" placeholder="Name or thread title…  ( / )" autocomplete="off"
+      <label class="plbl" for="find-q">Find a person or conversation <span class="act"><button id="side-toggle" class="linkbtn" type="button" style="display:none" aria-expanded="true">Collapse</button></span></label>
+      <input id="find-q" class="inp" type="search" placeholder="Name or title…" autocomplete="off"
         aria-controls="find-list" aria-describedby="find-note">
-      <div id="find-list" role="listbox" aria-label="Matching nodes"></div>
+      <div id="find-list" role="listbox" aria-label="Matching people and conversations"></div>
       <div id="find-note" class="find-note"></div>
     </section>
 
-    <section class="sec" aria-labelledby="plat-lbl">
-      <div class="plbl" id="plat-lbl">Platforms <span class="act"><button id="plat-all" class="linkbtn" type="button">Show all</button></span></div>
-      <div id="plat-list"></div>
-    </section>
+    <details class="sec" id="filters">
+      <summary class="fsum"><span>Filters</span><span id="filter-badge" class="fbadge" hidden></span><span class="fchev" aria-hidden="true">▾</span></summary>
+      <section class="fsec" aria-labelledby="plat-lbl">
+        <div class="plbl" id="plat-lbl">Platforms <span class="act"><button id="plat-all" class="linkbtn" type="button">Show all</button></span></div>
+        <div id="plat-list"></div>
+      </section>
 
-    <section class="sec" aria-labelledby="kind-lbl">
-      <div class="plbl" id="kind-lbl">Node types</div>
-      <div id="kind-list"></div>
-    </section>
+      <section class="fsec" aria-labelledby="kind-lbl">
+        <div class="plbl" id="kind-lbl">Show</div>
+        <div id="kind-list"></div>
+      </section>
 
-    <section class="sec" aria-labelledby="tl-title">
-      <div class="plbl" id="tl-title">Timeline <span class="act"><button id="tl-clear" class="linkbtn" type="button" disabled>All time</button></span></div>
-      <div id="timeline"></div>
-    </section>
-
-    <section class="sec" aria-label="Memory">
-      <div class="mtabs" role="tablist" aria-label="Memory mode">
-        <button class="mtab" type="button" role="tab" id="tab-search" data-mode="search" aria-selected="true" aria-controls="mode-search">Memory search</button>
-        <button class="mtab" type="button" role="tab" id="tab-ask" data-mode="ask" aria-selected="false" aria-controls="mode-ask" tabindex="-1">Ask Sarthink</button>
-      </div>
-      <div id="mode-search" role="tabpanel" aria-labelledby="tab-search">
-        <form id="sem-form" onsubmit="event.preventDefault(); semanticSearch();">
-          <input id="sem-q" class="inp" type="text" placeholder="What did I talk about…" autocomplete="off" maxlength="500" aria-label="Memory search">
-          <button id="sem-go" class="btn" type="submit">Go</button>
-        </form>
-      </div>
-      <div id="mode-ask" role="tabpanel" aria-labelledby="tab-ask" hidden>
-        <form id="ask-form" onsubmit="event.preventDefault(); askSarthink();">
-          <textarea id="ask-q" class="inp" rows="2" maxlength="500" placeholder="Ask about your memories…  (Enter to ask)" aria-label="Question for Ask Sarthink"></textarea>
-          <div id="ask-row">
-            <span id="ask-scope" title="Set by the platform toggles and the timeline above">Scope: all platforms · all time</span>
-            <button id="ask-go" class="btn primary" type="submit">Ask</button>
-          </div>
-        </form>
-        <div id="ask-chips" aria-label="Sample questions">
-          <button type="button" class="ask-chip">What was I stressed about during college?</button>
-          <button type="button" class="ask-chip">How has my interest in photography changed?</button>
-          <button type="button" class="ask-chip">What did I discuss about Python?</button>
-          <button type="button" class="ask-chip">What was I working on around August 2026?</button>
-        </div>
-      </div>
-      <div id="sem-status" aria-live="polite"><span class="dot"></span>Checking search API…</div>
-    </section>
+      <section class="fsec" aria-labelledby="tl-title">
+        <div class="plbl" id="tl-title">Time range <span class="act"><button id="tl-clear" class="linkbtn" type="button" disabled>All time</button></span></div>
+        <div id="timeline"></div>
+      </section>
+    </details>
   </aside>
 
   <!-- Right column: selected node details + memory search results -->
@@ -1239,17 +1301,19 @@
         <div class="ttl">
           <div id="sem-title">Results</div>
           <div id="sem-sub"></div>
+          <div id="sem-scope" class="sem-scope"></div>
         </div>
         <button class="btn sm" type="button" onclick="resetSemantic()" title="Clear memory search results and highlights">Clear</button>
       </div>
       <div id="sem-list" class="scroll"></div>
       <div class="to-graph">Click a source to open it on the graph.</div>
+      <div id="sem-status" aria-live="polite"><span class="dot"></span></div>
     </section>
   </div>
 
   <div id="hint" class="panel fade-layer">
     <span><b>Drag</b> orbit</span><span><b>Right-drag</b> / <b>Shift-drag</b> pan</span><span><b>Scroll</b> zoom</span>
-    <span class="opt"><b>Click</b> select · <b>Double-click</b> focus</span><span class="opt"><b>Arrows</b> move</span><span><b>Esc</b> reset</span>
+    <span class="opt"><b>Click</b> select · <b>Double-click</b> focus</span><span class="opt"><b>Arrows</b> move</span><button type="button" class="linkbtn" id="hint-close" aria-label="Hide these tips">Got it</button><span><b>Esc</b> reset</span>
   </div>
 
   <div id="empty-state" class="panel" hidden role="status">
@@ -1259,35 +1323,33 @@
 
   <div id="help-backdrop" hidden>
     <div id="help" class="panel" role="dialog" aria-modal="true" aria-labelledby="help-h" tabindex="-1">
-      <h2 id="help-h">CONTROLS</h2>
+      <h2 id="help-h">HOW IT WORKS</h2>
+      <h3>Ask and find</h3>
+      <p>Type a question in the box and press Enter. <b>Ask</b> answers with quotes from your own messages and lists the conversations they come from; <b>Find</b> shows the closest memories. Click any source to open it on the memory map. Everything runs on this device.</p>
+      <h3>People</h3>
+      <p>Click a person (a filled dot) to see <b>Your history with them</b>: a short summary built only from counts, dates and conversation titles, with numbered links to the conversations it is based on. <b>View conversations</b> and <b>Show full history</b> load the messages in pages when you want them; <b>Back</b> returns to the profile.</p>
+      <h3>The memory map</h3>
+      <p>Colour is the platform. Filled dots are <b>people</b>; rings are <b>conversations</b>. A line means that person wrote in that conversation. <b>Filters</b> in the left panel limit platforms and the time range; Ask, Insights and profiles follow them.</p>
       <h3>Mouse</h3>
       <table>
-        <tr><td>Left-drag</td><td>Orbit around the focus point</td></tr>
-        <tr><td>Right-drag · Shift/Ctrl + drag</td><td>Pan</td></tr>
-        <tr><td>Scroll · pinch</td><td>Zoom toward the cursor</td></tr>
-        <tr><td>Hover a node</td><td>Name, platform, connections</td></tr>
-        <tr><td>Click a node</td><td>Select it: neighbours and links stay bright, the rest dims</td></tr>
-        <tr><td>Double-click a node</td><td>Select and fly the camera to it</td></tr>
-        <tr><td>Click empty space</td><td>Deselect</td></tr>
+        <tr><td>Drag</td><td>Rotate the map</td></tr>
+        <tr><td>Right-drag · Shift + drag</td><td>Move the map</td></tr>
+        <tr><td>Scroll · pinch</td><td>Zoom</td></tr>
+        <tr><td>Click</td><td>Open a person or conversation; click empty space to close it</td></tr>
+        <tr><td>Double-click</td><td>Open and fly to it</td></tr>
       </table>
-      <h3>Keyboard</h3>
+      <h3>Keyboard shortcuts (optional)</h3>
       <table>
-        <tr><td><span class="kbd">G</span></td><td>Switch between Memory Home and the graph workspace</td></tr>
+        <tr><td><span class="kbd">G</span></td><td>Switch between Home and the memory map</td></tr>
         <tr><td><span class="kbd">I</span></td><td>Open / close Insights</td></tr>
-        <tr><td><span class="kbd">/</span></td><td>Find a node by name or title (in Memory Home: focus the question box)</td></tr>
-        <tr><td><span class="kbd">↑</span> <span class="kbd">↓</span> <span class="kbd">Enter</span></td><td>Pick a find result</td></tr>
-        <tr><td><span class="kbd">F</span></td><td>Fly to the selected node</td></tr>
-        <tr><td><span class="kbd">←</span> <span class="kbd">→</span> <span class="kbd">↑</span> <span class="kbd">↓</span></td><td>Move the graph in that direction (hold to keep moving)</td></tr>
-        <tr><td><span class="kbd">Shift</span> + arrows</td><td>Orbit (rotate) the graph</td></tr>
-        <tr><td><span class="kbd">Esc</span></td><td>Close this dialog or Insights, otherwise reset to the full graph</td></tr>
+        <tr><td><span class="kbd">/</span></td><td>Jump to the search box</td></tr>
+        <tr><td><span class="kbd">↑</span> <span class="kbd">↓</span> <span class="kbd">Enter</span></td><td>Pick a search match</td></tr>
+        <tr><td><span class="kbd">←</span> <span class="kbd">→</span> <span class="kbd">↑</span> <span class="kbd">↓</span></td><td>Move the map (Shift: rotate)</td></tr>
+        <tr><td><span class="kbd">F</span></td><td>Fly to the selected person or conversation</td></tr>
+        <tr><td><span class="kbd">Esc</span></td><td>Close this dialog or Insights, otherwise reset the view</td></tr>
         <tr><td><span class="kbd">?</span></td><td>Show / hide this help</td></tr>
       </table>
-      <h3>Memory Home</h3>
-      <p>Ask a question (or switch to <b>Find memories</b> for plain semantic search). Answers come with their sources; click a source to open its conversation on the graph. <b>Explore graph</b> opens the full workspace, where the same box stays in the top bar. <b>Insights</b> summarises your activity and follows the platform and timeline filters.</p>
-      <h3>Reading the graph</h3>
-      <p>Colour is the platform. Filled dots are <b>people</b>; rings are <b>threads</b> (conversations, chats, posts). A line means that person wrote in that thread. Toggle platforms and node types in the sidebar, and narrow the timeline to the months you care about.</p>
-      <p style="margin-top:8px">Memory search runs locally against your index and highlights the matching threads and their participants. Everything stays on this machine.</p>
-      <p style="margin-top:8px"><b>Ask Sarthink</b> answers a question with a short brief built only from quotes of the retrieved memories, with a confidence level, a timeline and the sources. It respects the platform toggles and the timeline range. No language model writes the answer, so it never adds facts the sources don't show.</p>
+      <p style="margin-top:10px">Ask never uses a language model: every sentence is a quote, a count, a date or a title from your sources, so it can’t invent facts — but read the sources before drawing conclusions.</p>
       <div class="foot"><button class="btn primary" type="button" id="help-close">Got it</button></div>
     </div>
   </div>
@@ -1328,7 +1390,7 @@
       twitter: 'Twitter / X', reddit: 'Reddit', instagram: 'Instagram', discord: 'Discord', facebook: 'Facebook',
       whatsapp: 'WhatsApp', google: 'Google', chatgpt: 'ChatGPT', claude: 'Claude',
     };
-    const KIND_NAMES = { user: 'People', thread: 'Threads' };
+    const KIND_NAMES = { user: 'People', thread: 'Conversations' };
     const SUBTYPE_NAMES = {
       user: 'Person', public_thread: 'Public thread', chat: 'Chat', dm_group: 'DM / group chat',
       comment_thread: 'Comment thread', email_thread: 'Email thread', group_chat: 'Group chat', tweet_thread: 'Tweet thread',
@@ -1339,7 +1401,7 @@
     const EDGE_ALPHA_DIM = 0.035;
     const EDGE_ALPHA_HIT = 0.5;      // edges between two highlighted (search) nodes
     const MAX_RESTING_EDGES = 60000; // above this, edges are only drawn for the selection
-    const MAX_LABELS = 24;
+    const MAX_LABELS = 14;
     const LINK_LIST_PAGE = 40;
     const FIND_LIMIT = 8;
 
@@ -2053,7 +2115,7 @@
       const when = Number.isFinite(n.first) ? ` · ${fmtMonth(n.first)}${fmtMonth(n.last) !== fmtMonth(n.first) ? ' – ' + fmtMonth(n.last) : ''}` : '';
       tip.innerHTML = `<div class="tt-l">${esc(truncate(n.kind === 'thread' ? n.title : n.label, 90))}</div>
         <div class="tt-m"><span class="dot" style="background:${esc(PLATFORM_COLORS[n.platform] || n.hex)}"></span>${esc(platformName(n.platform))} · ${esc(SUBTYPE_NAMES[n.subtype] || n.subtype)}<br>
-        ${fmtN(n.links.length)} connection${n.links.length === 1 ? '' : 's'} · ${fmtN(n.msgs)} message${n.msgs === 1 ? '' : 's'}${esc(when)}</div>`;
+        ${n.kind === 'user' ? `${fmtN(n.links.length)} conversation${n.links.length === 1 ? '' : 's'}` : `${fmtN(n.links.length)} ${n.links.length === 1 ? 'person' : 'people'}`} · ${fmtN(n.msgs)} message${n.msgs === 1 ? '' : 's'}${esc(when)}</div>`;
       placeTooltip();
       tip.classList.add('show');
       updateLabels(true);
@@ -2159,37 +2221,338 @@
       $('d-title').textContent = n.kind === 'thread' ? n.title : n.label;
 
       const nb = neighbours(i).sort((a, b) => b.e.w - a.e.w || (S.nodes[a.j].label < S.nodes[b.j].label ? -1 : 1));
+      if (n.kind === 'user') { renderPerson(i, nb); return; }
       const hidden = nb.filter(o => !S.nodeVis[o.j]).length;
       const when = Number.isFinite(n.first) ? fmtDate(n.first) : '—';
       const until = Number.isFinite(n.last) ? fmtDate(n.last) : '—';
-      const linkWord = n.kind === 'thread' ? 'People in this thread' : 'Threads';
+      const linkWord = 'People in this conversation';
 
-      let html = `<div class="kv">
-          <div><div class="k">Connections</div><div class="v">${fmtN(nb.length)}</div></div>
+      // Opened from a person's profile: a way back, and their messages in this conversation.
+      const bp = S.back && S.back.personIdx >= 0 && S.back.personIdx !== i && nb.some(o => o.j === S.back.personIdx) ? S.nodes[S.back.personIdx] : null;
+      let html = bp ? `<div class="dactions"><button type="button" class="pf-back" id="d-back">‹ Back to ${esc(bp.label)}</button>
+          <button type="button" class="linkbtn" id="d-withp">Messages with ${esc(bp.label)} here</button></div>` : '';
+      html += `<div class="kv">
+          <div><div class="k">People</div><div class="v">${fmtN(nb.length)}</div></div>
           <div><div class="k">Messages</div><div class="v">${fmtN(n.msgs)}</div></div>
-          <div><div class="k">First active</div><div class="v">${esc(when)}</div></div>
-          <div><div class="k">Last active</div><div class="v">${esc(until)}</div></div>
+          <div><div class="k">Started</div><div class="v">${esc(when)}</div></div>
+          <div><div class="k">Last message</div><div class="v">${esc(until)}</div></div>
         </div>`;
       const why = semanticWhy(i);
       if (why) html += `<div class="why">${why}</div>`;
-      if (!S.nodeVis[i]) html += `<div class="note warn">This node is outside the current filters; it stays visible while selected.</div>`;
+      if (!S.nodeVis[i]) html += `<div class="note warn">This is outside the current filters; it stays visible while selected.</div>`;
 
       html += `<div class="dsec"><div class="plbl">${esc(linkWord)} · ${fmtN(nb.length)}${hidden ? ` <span class="act" style="letter-spacing:0;text-transform:none">${fmtN(hidden)} outside filters</span>` : ''}</div>
         <div class="nlist" id="d-links"></div></div>`;
       if (n.kind === 'thread') {
-        html += `<div class="dsec"><div class="plbl">Conversation context</div><div id="d-ctx"><div class="note">Loading…</div></div></div>`;
+        html += `<div class="dsec"><div class="plbl">Excerpts</div><div id="d-ctx"><div class="note">Loading…</div></div></div>`;
       }
       html += `<div class="dactions">
-          <button class="btn sm" type="button" id="d-focus">Focus camera <kbd>F</kbd></button>
+          <button class="btn sm" type="button" id="d-focus" title="Center the map on this (F)">Center on map</button>
           ${n.kind === 'thread' ? '<button class="btn sm" type="button" id="d-related">Find related memories</button>' : ''}
         </div>`;
       $('d-body').innerHTML = html;
       $('d-body').scrollTop = 0;
       renderLinkList(nb, LINK_LIST_PAGE);
       $('d-focus').onclick = () => flyToNodes([i, ...nb.map(o => o.j)]);
-      if ($('d-related')) $('d-related').onclick = () => { setMemoryMode('search', false); $('sem-q').value = truncate(n.title, 300); semanticSearch(); };
+      if (bp) {
+        $('d-back').onclick = () => { S.person.view = 'profile'; selectNode(bp.i, { fly: true }); };
+        $('d-withp').onclick = () => {
+          Object.assign(S.person, { idx: bp.i, view: 'thread', thread: { node_id: n.id, title: n.title } });
+          selectNode(bp.i, { fly: false });
+        };
+      }
+      if ($('d-related')) $('d-related').onclick = () => { setOmniMode('search'); $('omni-q').value = truncate(n.title, 300); semanticSearch($('omni-q').value); };
       $('details').hidden = false;
       if (n.kind === 'thread') loadThreadContext(n);
+    }
+
+    // ─── Person profile ("Your history with …", GET /api/person/…) ───────────────
+    // Leads with a short cited brief and a few numbers from the local database. The full message history
+    // loads only when asked for, one page at a time. Every archive string is escaped; nothing is inferred
+    // beyond counts, dates and conversation titles (the server builds the brief the same way).
+    const PERSON_PAGE = 30, CONV_PAGE = 20;
+    S.person = { idx: -1, seq: 0, view: 'profile', data: null, cache: new Map(), timer: 0, thread: null, nb: [] };
+    S.back = null;   // {personIdx}: conversations opened from a profile offer the way back
+
+    function personQuery(extra = {}) {
+      const f = askFilters(), qs = new URLSearchParams();
+      if (f.platforms && f.platforms.length) qs.set('platforms', f.platforms.join(','));
+      if (f.date_from) qs.set('date_from', f.date_from);
+      if (f.date_to) qs.set('date_to', f.date_to);
+      for (const [k, v] of Object.entries(extra)) if (v != null) qs.set(k, v);
+      const q = qs.toString();
+      return q ? '?' + q : '';
+    }
+
+    const dayLong = iso => { if (!iso) return 'Undated'; const d = new Date(iso); return `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`; };
+    const timeOf = iso => (iso ? new Date(iso).toISOString().slice(11, 16) + ' UTC' : '');
+    const monthOfIso = iso => (iso ? `${MONTHS[+iso.slice(5, 7) - 1]} ${iso.slice(0, 4)}` : '—');
+
+    function renderPerson(i, nb) {
+      const n = S.nodes[i];
+      if (S.person.idx !== i) { S.person.idx = i; S.person.view = 'profile'; S.person.thread = null; }
+      S.person.nb = nb;
+      S.back = { personIdx: i };
+      const pc = PLATFORM_COLORS[n.platform] || n.hex;
+      $('d-chip').innerHTML = `<span class="dot" style="background:${esc(pc)}"></span>${esc(platformName(n.platform))} · Person`;
+      $('d-title').textContent = n.label;
+      $('details').hidden = false;
+      showPersonView();
+    }
+
+    function showPersonView() {
+      const v = S.person.view;
+      if (v === 'conversations') return showConversations(true);
+      if (v === 'history') return showHistory(true);
+      if (v === 'thread') return showThread(S.person.thread, true);
+      return loadProfile();
+    }
+
+    function personShell(inner) {
+      $('d-body').innerHTML = inner;
+      $('d-body').scrollTop = 0;
+    }
+
+    function personError(e, what) {
+      const msg = e.code === 'offline' ? `${what} needs the local app server. Start it with <code>${esc(SERVER_CMD)}</code>.`
+        : e.code === 'database_unavailable' ? 'The memory database isn’t available, so there is no history to show.'
+          : e.code === 'not_found' ? 'This person isn’t in the memory database (the map may be newer than the database).'
+            : `Could not load ${what.toLowerCase()}: ${esc(e.message)}`;
+      return `<div class="note warn">${msg}</div>`;
+    }
+
+    async function loadProfile() {
+      const i = S.person.idx, n = S.nodes[i];
+      const f = askFilters();
+      if (f.platforms && !f.platforms.length) {
+        personShell(`<div class="pf"><div class="note">Every platform is switched off in Filters, so there is nothing to show for ${esc(n.label)}.</div>${personLinks()}</div>`);
+        wireLinks();
+        return;
+      }
+      const url = `/api/person/${encodeURIComponent(n.id)}${personQuery()}`;
+      const seq = ++S.person.seq;
+      const cached = S.person.cache.get(url);
+      if (cached) { renderProfile(cached); return; }
+      personShell(`<div class="pf" aria-busy="true"><div class="pf-brief"><div class="skel-line" style="width:55%"></div><div class="skel-line"></div><div class="skel-line" style="width:80%"></div></div>
+        <div class="skel-line" style="height:40px"></div></div>`);
+      try {
+        const d = await apiFetch(url, { timeout: 30000 });
+        if (seq !== S.person.seq || S.selected !== i) return;
+        S.person.cache.set(url, d);
+        if (S.person.cache.size > 40) S.person.cache.delete(S.person.cache.keys().next().value);
+        renderProfile(d);
+      } catch (e) {
+        if (seq !== S.person.seq || S.selected !== i) return;
+        personShell(`<div class="pf">${personError(e, 'This profile')}
+          <div class="pf-stats"><div><div class="k">Conversations</div><div class="v">${fmtN(n.links.length)}</div></div>
+          <div><div class="k">Messages</div><div class="v">${fmtN(n.msgs)}</div></div>
+          <div><div class="k">Active</div><div class="v">${esc(Number.isFinite(n.first) ? fmtMonth(n.first) : '—')}</div></div></div>${personLinks()}</div>`);
+        wireLinks();
+      }
+    }
+
+    function citeHtml(list) {
+      return list.map(k => `<button type="button" class="cite" data-src="${esc(k)}" title="Open cited conversation ${esc(k)}" aria-label="Source ${esc(k)}">${esc(k)}</button>`).join('');
+    }
+
+    function sparkline(activity) {
+      if (!activity.length) return '';
+      // Continuous months from the first to the last active month.
+      const keys = [], have = new Map(activity.map(a => [a.month, a.messages]));
+      let [y, m] = activity[0].month.split('-').map(Number);
+      const [ly, lm] = activity[activity.length - 1].month.split('-').map(Number);
+      while ((y < ly || (y === ly && m <= lm)) && keys.length < 600) { keys.push(`${y}-${String(m).padStart(2, '0')}`); if (++m > 12) { m = 1; y++; } }
+      const peak = Math.max(1, ...activity.map(a => a.messages));
+      const bars = keys.map((k, x) => {
+        const v = have.get(k) || 0, h = v ? Math.max(1.5, 36 * v / peak) : 0;
+        return h ? `<rect x="${x + 0.1}" y="${40 - h}" width="0.8" height="${h}"><title>${esc(monthOfIso(k))}: ${fmtN(v)} message${v === 1 ? '' : 's'}</title></rect>` : '';
+      }).join('');
+      return `<div><div class="pf-h">Their activity by month</div>
+        <svg class="pf-spark" viewBox="0 0 ${keys.length} 40" preserveAspectRatio="none" role="img" aria-label="Their messages per month from ${esc(monthOfIso(keys[0]))} to ${esc(monthOfIso(keys[keys.length - 1]))}">${bars}</svg>
+        <div class="pf-spark-l"><span>${esc(monthOfIso(keys[0]))}</span><span>${esc(monthOfIso(keys[keys.length - 1]))}</span></div></div>`;
+    }
+
+    function convItem(c, k, numbered = true) {
+      const pc = PLATFORM_COLORS[c.platform] || '#9aa0b4';
+      const span = monthOfIso(c.first_date) === monthOfIso(c.latest_date) ? monthOfIso(c.first_date) : `${monthOfIso(c.first_date)} – ${monthOfIso(c.latest_date)}`;
+      const counts = c.your_messages && c.shared ? `${fmtN(c.their_messages)} · you ${fmtN(c.your_messages)}` : `${fmtN(c.their_messages)} msg${c.their_messages === 1 ? '' : 's'}`;
+      return `<button type="button" class="pf-item" data-node="${esc(c.node_id)}" data-title="${esc(c.title)}" title="Open this conversation">
+          <span class="n">${numbered ? esc(k) : ''}</span>
+          <span style="min-width:0"><b>${esc(c.title)}</b><small><i style="background:${esc(pc)}"></i>${esc(platformName(c.platform))} · ${esc(span)}${c.large ? ` · <span class="pf-tag">large thread · ${fmtN(c.people)} people</span>` : ''}</small></span>
+          <span class="c">${esc(counts)}</span></button>`;
+    }
+
+    function personLinks() {
+      const nb = S.person.nb || [];
+      return `<details class="pf-more"><summary>Links on the map (${fmtN(nb.length)})</summary><div class="nlist" id="d-links"></div></details>`;
+    }
+
+    function wireLinks() {
+      const nb = S.person.nb || [];
+      renderLinkList(nb, LINK_LIST_PAGE);
+    }
+
+    function renderProfile(d) {
+      S.person.data = d;
+      const i = S.person.idx, n = S.nodes[i];
+      const st = d.stats, you = d.kind === 'you';
+      const scope = d.scope.filtered
+        ? `<span class="tag">Filtered</span>${esc(filterLabel() || 'Current filters')} · all time: ${fmtN(d.lifetime.their_messages)} message${d.lifetime.their_messages === 1 ? '' : 's'} in ${fmtN(d.lifetime.conversations)} conversation${d.lifetime.conversations === 1 ? '' : 's'}`
+        : 'All time';
+      const sentences = d.brief.sentences.map(s => `<p>${esc(s.text)}${citeHtml(s.sources)}</p>`).join('');
+      const notable = d.sources.filter(s => s.notable), cited = d.sources.filter(s => !s.notable);
+      const stat = (k, v, sub = '') => `<div><div class="k">${esc(k)}</div><div class="v">${v}${sub ? ` <small>${esc(sub)}</small>` : ''}</div></div>`;
+      const stats = you
+        ? [stat('Conversations', fmtN(st.conversations)), stat('Messages', fmtN(st.their_messages)), stat('Accounts', fmtN(d.accounts.length)),
+          stat('First', esc(monthOfIso(st.first_date))), stat('Latest', esc(monthOfIso(st.latest_date))), stat('Platforms', esc(st.platforms.map(platformName).join(', ') || '—'))]
+        : [stat('Conversations', fmtN(st.conversations)), stat('Their messages', fmtN(st.their_messages)), stat('Your replies', fmtN(st.your_messages)),
+          stat('First', esc(monthOfIso(st.first_date))), stat('Latest', esc(monthOfIso(st.latest_date))), stat('Platforms', esc(st.platforms.map(platformName).join(', ') || '—'))];
+      const topics = d.topics.length ? `<div><div class="pf-h">Recurring words <span class="act pf-note">from their messages</span></div><div class="pf-topics">${d.topics.map(t =>
+        `<button type="button" class="pf-topic" data-src="${esc(t.sources[0] || '')}" title="${esc(t.mentions)} mentions in ${esc(t.conversations)} conversation${t.conversations === 1 ? '' : 's'} over ${esc(t.months)} month${t.months === 1 ? '' : 's'}">${esc(t.word)}<small>${t.conversations >= 2 ? `${fmtN(t.conversations)} conv.` : `${fmtN(t.months)} mo.`}</small></button>`).join('')}</div></div>` : '';
+      const same = d.same_name_elsewhere.length
+        ? `<div class="pf-note">Another account with this name exists on ${esc(d.same_name_elsewhere.map(x => platformName(x.platform)).join(', '))}. It isn’t merged, because only accounts mapped in your identity settings are combined.
+            ${d.same_name_elsewhere.filter(x => S.byId.get(x.node_id)).map(x => `<button type="button" class="linkbtn" data-person="${esc(x.node_id)}">Open the ${esc(platformName(x.platform))} account</button>`).join(' ')}</div>` : '';
+      const related = d.related.filter(r => S.byId.get(r.node_id));
+      const relatedHtml = related.length ? `<div><div class="pf-h">Also in these conversations</div><div class="pf-people">${related.map(r =>
+        `<button type="button" class="pf-person" data-person="${esc(r.node_id)}" title="${esc(r.shared_conversations)} shared conversation${r.shared_conversations === 1 ? '' : 's'}">${esc(r.label)}</button>`).join('')}</div></div>` : '';
+      personShell(`<div class="pf">
+          <div class="pf-scope">${scope}</div>
+          <div class="pf-brief${d.brief.sparse ? ' sparse' : ''}">
+            ${d.kind === 'automated' ? '<span class="flag">Automated or deleted account</span>' : ''}
+            <h3>${you ? 'Your own activity' : `Your history with ${esc(d.label)}`}</h3>${sentences}</div>
+          <div class="pf-stats">${stats.join('')}</div>
+          ${sparkline(d.activity)}
+          ${topics}
+          ${notable.length ? `<div><div class="pf-h">${you ? 'Your busiest conversations' : 'Notable conversations'}</div><div class="pf-list">${notable.map((c, k) => convItem(c, k + 1)).join('')}</div></div>` : ''}
+          ${cited.length ? `<div><div class="pf-h">Also cited</div><div class="pf-list">${cited.map((c, k) => convItem(c, notable.length + k + 1)).join('')}</div></div>` : ''}
+          ${same}
+          ${relatedHtml}
+          <div class="pf-actions">
+            <button type="button" class="btn sm primary" id="pf-convs">View conversations (${fmtN(st.conversations)})</button>
+            <button type="button" class="btn sm" id="pf-history">Show full history</button>
+            <button type="button" class="btn sm" id="d-focus" title="Center the map on this person (F)">Center on map</button>
+          </div>
+          ${personLinks()}
+        </div>`);
+      const body = $('d-body');
+      body.querySelectorAll('.cite, .pf-topic').forEach(b => b.addEventListener('click', () => openSource(+b.dataset.src)));
+      body.querySelectorAll('.pf-item').forEach(b => b.addEventListener('click', () => openConversation(b.dataset.node, b.dataset.title)));
+      body.querySelectorAll('[data-person]').forEach(b => b.addEventListener('click', () => { const m = S.byId.get(b.dataset.person); if (m) selectNode(m.i, { fly: true }); }));
+      $('pf-convs').onclick = () => { S.person.view = 'conversations'; showConversations(true); };
+      $('pf-history').onclick = () => { S.person.view = 'history'; showHistory(true); };
+      $('d-focus').onclick = () => flyToNodes([i, ...(S.person.nb || []).map(o => o.j)]);
+      wireLinks();
+    }
+
+    function openSource(k) {
+      const d = S.person.data, src = d && d.sources[k - 1];
+      if (src) openConversation(src.node_id, src.title);
+    }
+
+    // A conversation from the profile: on the map when it's there (with a way back), else its messages here.
+    function openConversation(nodeId, title) {
+      const t = S.byId.get(nodeId);
+      if (t) { S.back = { personIdx: S.person.idx }; selectNode(t.i, { fly: true }); return; }
+      S.person.view = 'thread';
+      showThread({ node_id: nodeId, title }, true);
+    }
+
+    const backHtml = () => `<button type="button" class="pf-back" id="pf-back">‹ Back to ${esc(S.nodes[S.person.idx].label)}</button>`;
+    function wireBack() { $('pf-back').onclick = () => { S.person.view = 'profile'; loadProfile(); }; }
+
+    async function showConversations(reset) {
+      const n = S.nodes[S.person.idx];
+      const st = S.person.convs = reset ? { offset: 0, items: [], total: null, seq: ++S.person.seq } : S.person.convs;
+      if (reset) personShell(`<div class="pf">${backHtml()}<div class="pf-h">Conversations with ${esc(n.label)} <span class="act pf-note" id="pf-count"></span></div><div class="pf-list" id="pf-clist"><div class="skel-line"></div><div class="skel-line"></div></div><div id="pf-cmore"></div></div>`);
+      wireBack();
+      try {
+        const d = await apiFetch(`/api/person/${encodeURIComponent(n.id)}/conversations${personQuery({ offset: st.offset, limit: CONV_PAGE })}`, { timeout: 30000 });
+        if (st.seq !== S.person.seq || S.person.view !== 'conversations') return;
+        st.items.push(...d.items); st.total = d.total; st.offset = d.next_offset;
+        $('pf-count').textContent = `${fmtN(d.total)} · latest first`;
+        $('pf-clist').innerHTML = st.items.length ? st.items.map((c, k) => convItem(c, k + 1)).join('') : '<div class="note">No conversations in the current filters.</div>';
+        $('pf-clist').querySelectorAll('.pf-item').forEach(b => b.addEventListener('click', () => { S.person.view = 'thread'; showThread({ node_id: b.dataset.node, title: b.dataset.title }, true); }));
+        $('pf-cmore').innerHTML = d.next_offset != null ? `<button type="button" class="btn sm pf-loadmore" id="pf-cnext">Show ${fmtN(Math.min(CONV_PAGE, d.total - st.items.length))} more</button>` : '';
+        if ($('pf-cnext')) $('pf-cnext').onclick = () => showConversations(false);
+      } catch (e) {
+        if (st.seq === S.person.seq) $('pf-clist').innerHTML = personError(e, 'The conversation list');
+      }
+    }
+
+    function messagesHtml(items, showThread) {
+      let day = null;
+      return items.map(m => {
+        const d = dayLong(m.date);
+        const head = d !== day ? `<div class="pf-day">${esc(d)}</div>` : '';
+        day = d;
+        const t = m.text || '';
+        const long = t.length > 420 || t.split('\n').length > 6;
+        return `${head}<div class="pm${m.author === 'you' ? ' you' : ''}">
+            <div class="pm-h"><b>${esc(m.author_label)}</b><span>${esc(timeOf(m.date))}</span>${showThread ? `<button type="button" class="th" data-node="${esc(m.node_id)}" data-title="${esc(m.thread_title)}" title="${esc(m.thread_title)}">${esc(m.thread_title)}</button>` : ''}</div>
+            <div class="pm-t${long ? ' clamp' : ''}">${esc(t)}${m.clipped ? ' …' : ''}</div>
+            ${long ? '<button type="button" class="linkbtn pm-more">Show more</button>' : ''}
+            ${m.clipped ? '<div class="pf-note">Very long message: the start is shown here; the full text stays in your archive.</div>' : ''}</div>`;
+      }).join('');
+    }
+
+    function wireMessages(box) {
+      box.querySelectorAll('.pm-more').forEach(b => b.onclick = () => {
+        const t = b.previousElementSibling, open = t.classList.toggle('clamp');
+        b.textContent = open ? 'Show more' : 'Show less';
+      });
+      box.querySelectorAll('.th').forEach(b => b.onclick = () => { S.person.view = 'thread'; showThread({ node_id: b.dataset.node, title: b.dataset.title }, true); });
+    }
+
+    // Paged messages (newest first): the whole history with this person, or one conversation of it.
+    async function loadMessages(st, box, extra, showThreadLink) {
+      const n = S.nodes[S.person.idx];
+      try {
+        const d = await apiFetch(`/api/person/${encodeURIComponent(n.id)}/messages${personQuery({ ...extra, cursor: st.cursor, limit: PERSON_PAGE })}`, { timeout: 30000 });
+        if (st.seq !== S.person.seq) return;
+        if (d.total != null) { st.total = d.total; $('pf-count').textContent = `${fmtN(d.total)} message${d.total === 1 ? '' : 's'} · newest first`; }
+        st.items.push(...d.messages);
+        st.cursor = d.next_cursor;
+        box.innerHTML = st.items.length ? messagesHtml(st.items, showThreadLink) : '<div class="note">No messages in the current filters.</div>';
+        wireMessages(box);
+        $('pf-mmore').innerHTML = d.next_cursor ? `<button type="button" class="btn sm pf-loadmore" id="pf-mnext">Load older messages</button>` : (st.items.length ? '<div class="pf-note" style="text-align:center;margin-top:8px">That’s the beginning.</div>' : '');
+        if ($('pf-mnext')) $('pf-mnext').onclick = () => { $('pf-mnext').disabled = true; loadMessages(st, box, extra, showThreadLink); };
+      } catch (e) {
+        if (st.seq === S.person.seq) box.innerHTML = personError(e, 'The message history');
+      }
+    }
+
+    function showHistory(reset) {
+      const n = S.nodes[S.person.idx];
+      const st = S.person.hist = { cursor: null, items: [], total: null, seq: ++S.person.seq };
+      personShell(`<div class="pf">${backHtml()}
+          <div class="pf-h">Full history with ${esc(n.label)} <span class="act pf-note" id="pf-count"></span></div>
+          <div class="pf-note">Their messages, plus yours in small conversations with them (up to 12 people). Shown in pages; nothing is left out of your archive.</div>
+          <div id="pf-msgs"><div class="skel-line"></div><div class="skel-line"></div><div class="skel-line" style="width:70%"></div></div><div id="pf-mmore"></div></div>`);
+      wireBack();
+      loadMessages(st, $('pf-msgs'), {}, true);
+    }
+
+    function showThread(t, reset) {
+      if (!t) return showHistory(true);
+      S.person.thread = t;
+      const n = S.nodes[S.person.idx];
+      const onMap = S.byId.get(t.node_id);
+      const st = S.person.tmsgs = { cursor: null, items: [], total: null, seq: ++S.person.seq };
+      personShell(`<div class="pf">${backHtml()}
+          <div><div class="pf-h">Conversation <span class="act pf-note" id="pf-count"></span></div><div style="font-size:.84rem;color:#fff;font-weight:600;line-height:1.3">${esc(t.title || '(untitled)')}</div></div>
+          <div class="pf-actions">${onMap ? '<button type="button" class="btn sm" id="pf-onmap">Show on map</button>' : '<span class="pf-note">Not on the current map.</span>'}</div>
+          <div class="pf-note">Messages from ${esc(n.label)}${S.person.data && S.person.data.kind === 'you' ? '' : ' and you'} in this conversation, newest first.</div>
+          <div id="pf-msgs"><div class="skel-line"></div><div class="skel-line"></div></div><div id="pf-mmore"></div></div>`);
+      wireBack();
+      if ($('pf-onmap')) $('pf-onmap').onclick = () => openConversation(t.node_id, t.title);
+      loadMessages(st, $('pf-msgs'), { thread: t.node_id }, false);
+    }
+
+    function schedulePersonRefresh() {
+      clearTimeout(S.person.timer);
+      S.person.timer = setTimeout(() => {
+        if (S.selected >= 0 && S.selected === S.person.idx && !$('details').hidden && S.nodes[S.selected].kind === 'user') showPersonView();
+      }, 300);
     }
 
     function renderLinkList(nb, limit) {
@@ -2216,11 +2579,11 @@
         const el = box();
         if (!el) return;
         if (!data.count) {
-          el.innerHTML = '<div class="note">This thread has no chunks in the memory index.</div>';
+          el.innerHTML = '<div class="note">No excerpts of this conversation are searchable yet.</div>';
           return;
         }
         const terms = S.sem.results.length ? queryTerms($('sem-title').dataset.q || '') : [];
-        el.innerHTML = `<div class="note" style="margin-bottom:6px">${fmtN(data.count)} indexed chunk${data.count === 1 ? '' : 's'} · ${esc(fmtDay(data.first_time))}${data.last_time && fmtDay(data.last_time) !== fmtDay(data.first_time) ? ' → ' + esc(fmtDay(data.last_time)) : ''}${data.count > data.chunks.length ? ` · showing first ${data.chunks.length}` : ''}</div>` +
+        el.innerHTML = `<div class="note" style="margin-bottom:6px">${fmtN(data.count)} excerpt${data.count === 1 ? '' : 's'} · ${esc(fmtDay(data.first_time))}${data.last_time && fmtDay(data.last_time) !== fmtDay(data.first_time) ? ' → ' + esc(fmtDay(data.last_time)) : ''}${data.count > data.chunks.length ? ` · showing first ${data.chunks.length}` : ''}</div>` +
           data.chunks.map((c, k) => `<div class="ctx">
             <div class="ctx-top"><span>${esc(fmtDay(c.start_time))}</span><span class="pp">${esc((c.people || []).slice(0, 5).join(', '))}</span></div>
             <div class="ctx-snip clamp" data-k="${k}">${highlight(c.snippet, terms)}</div>
@@ -2237,9 +2600,9 @@
       } catch (e) {
         const el = box();
         if (!el) return;
-        const msg = e.code === 'offline' ? 'Conversation context needs the local API. Start it with <code>' + esc(SERVER_CMD) + '</code>.'
-          : e.code === 'index_unavailable' ? 'The memory index isn’t available yet, so there is no conversation context to show.'
-            : 'Could not load conversation context: ' + esc(e.message);
+        const msg = e.code === 'offline' ? 'Excerpts need the local app server. Start it with <code>' + esc(SERVER_CMD) + '</code>.'
+          : e.code === 'index_unavailable' ? 'Your memories are still being prepared, so there are no excerpts yet.'
+            : 'Could not load excerpts: ' + esc(e.message);
         el.innerHTML = `<div class="note ${e.code === 'offline' ? '' : 'warn'}">${msg}</div>`;
       }
     }
@@ -2313,7 +2676,7 @@
       const kc = { user: 0, thread: 0 };
       S.nodes.forEach(n => kc[n.kind]++);
       $('kind-list').innerHTML = ['user', 'thread'].map(k => `<button type="button" class="frow" aria-pressed="true" data-k="${k}">
-          ${swatch('#c8cbe0', k)}<span class="nm">${KIND_NAMES[k]}${k === 'user' ? ' · filled' : ' · ring'}</span><span class="ct" data-kct="${k}">${fmtN(kc[k])}</span></button>`).join('');
+          ${swatch('#c8cbe0', k)}<span class="nm">${KIND_NAMES[k]}</span><span class="ct" data-kct="${k}">${fmtN(kc[k])}</span></button>`).join('');
       $('kind-list').querySelectorAll('.frow').forEach(b => b.addEventListener('click', () => toggleKind(b.dataset.k)));
       $('plat-all').onclick = () => { S.filter.platforms = new Set(S.platforms.map(p => p.key)); syncLegend(); refreshVisuals(); };
     }
@@ -2452,20 +2815,16 @@
     function updateStats() {
       const N = S.nodes.length, E = S.edges.length;
       const parts = [
-        `<span class="st"><b>${fmtN(N)}</b> nodes</span>`, '<span class="sep">·</span>',
-        `<span class="st"><b>${fmtN(E)}</b> edges</span>`, '<span class="sep">·</span>',
+        `<span class="st"><b>${fmtN(S.nodes.filter(n => n.kind === 'user').length)}</b> people</span>`, '<span class="sep">·</span>',
+        `<span class="st"><b>${fmtN(S.nodes.filter(n => n.kind === 'thread').length)}</b> conversations</span>`, '<span class="sep">·</span>',
         `<span class="st opt"><b>${S.platforms.length}</b> platform${S.platforms.length === 1 ? '' : 's'}</span>`,
       ];
       if (S.visibleNodes !== N || S.visibleEdges !== E) {
         parts.push('<span class="sep">|</span>', `<span class="st">showing <b>${fmtN(S.visibleNodes)}</b> · <b>${fmtN(S.visibleEdges)}</b></span>`);
       }
       if (S.find.q) parts.push('<span class="sep">|</span>', `<span class="st">${fmtN(S.find.matches.length)} found</span>`);
-      if (S.sem.set) parts.push('<span class="sep">|</span>', `<span class="st">${fmtN(S.sem.set.size)} memory hits</span>`);
-      if (S.selected >= 0) {
-        const n = S.nodes[S.selected];
-        parts.push('<span class="sep">|</span>', `<span class="st sel" title="${esc(n.title)}">selected: <b>${esc(truncate(n.label, 36))}</b> · ${fmtN(n.links.length)} link${n.links.length === 1 ? '' : 's'}</span>`);
-      }
-      if (S.layoutNote) parts.push('<span class="sep">|</span>', `<span class="st warn" title="${esc(S.layoutNote)}">layout fallback</span>`);
+      if (S.sem.set) parts.push('<span class="sep">|</span>', `<span class="st">${fmtN(S.sem.set.size)} highlighted</span>`);
+      if (S.layoutNote) parts.push('<span class="sep">|</span>', `<span class="st warn" title="${esc(S.layoutNote)}">approximate layout</span>`);
       $('stats').innerHTML = parts.join('');
     }
 
@@ -2546,6 +2905,8 @@
     // Restores the original full view: no selection, search, memory highlights or filters; camera home.
     function resetAll() {
       S.selected = -1;
+      S.back = null;
+      S.person.idx = -1;
       S.ctx.seq++;
       $('details').hidden = true;
       $('find-q').value = '';
@@ -2680,11 +3041,14 @@
       S.sem.results.forEach((r, k) => {
         const m = r._nodes;
         if (!m) return;
-        if (m.thread === i) hits.push(`${S.sem.mode === 'ask' ? 'Ask Sarthink source' : 'Memory result'} #${r.rank} for “${esc(S.sem.query)}” (similarity ${esc(r.similarity ?? '—')})${r._shared.length ? ` · shares: ${esc(r._shared.join(', '))}` : ' · matched by meaning, no shared keywords'}`);
-        else if (m.people.includes(i)) hits.push(`Took part in memory result #${r.rank}: ${esc(truncate(r.title || '(untitled)', 60))}`);
+        if (m.thread === i) hits.push(`${S.sem.mode === 'ask' ? 'Source' : 'Search result'} #${r.rank} for “${esc(S.sem.query)}” (${esc(matchWord(r.similarity))})${r._shared.length ? ` · mentions ${esc(r._shared.join(', '))}` : ' · similar in meaning'}`);
+        else if (m.people.includes(i)) hits.push(`Took part in result #${r.rank}: ${esc(truncate(r.title || '(untitled)', 60))}`);
       });
       return hits.slice(0, 3).join('<br>');
     }
+
+    // A plain word for how close a result is (the number itself stays in the tooltip).
+    const matchWord = sim => (sim == null ? 'match' : sim >= 0.6 ? 'strong match' : sim >= 0.45 ? 'good match' : 'loose match');
 
     function semStatus(kind, html) {
       const el = $('sem-status');
@@ -2692,11 +3056,7 @@
       el.innerHTML = `<span class="dot"></span>${html}`;
     }
 
-    function semBusy(on) {
-      $('sem-go').disabled = on;
-      $('sem-go').textContent = on ? '…' : 'Go';
-      syncOmniBusy();
-    }
+    function semBusy(on) { S.sem.busySearch = on; syncOmniBusy(); }
 
     async function apiFetch(path, opts = {}) {
       const ctl = new AbortController();
@@ -2705,7 +3065,7 @@
       try {
         r = await fetch(API_BASE + path, { ...opts, signal: ctl.signal });
       } catch (e) {
-        const err = new Error(e.name === 'AbortError' ? 'The search API timed out.' : 'Search API is not reachable.');
+        const err = new Error(e.name === 'AbortError' ? 'The app server took too long to answer.' : 'The app server is offline.');
         err.code = e.name === 'AbortError' ? 'timeout' : 'offline';
         throw err;
       } finally {
@@ -2723,7 +3083,7 @@
     }
 
     function offlineHint() {
-      return `Search API offline. Start it with <code>${esc(SERVER_CMD)}</code> and open <code>http://127.0.0.1:8000/</code>`;
+      return `The local app server is offline. Start it with <code>${esc(SERVER_CMD)}</code> and open <code>http://127.0.0.1:8000/</code>`;
     }
 
     async function checkSemanticHealth() {
@@ -2734,17 +3094,16 @@
         S.sem.ready = !!ix.available;
         S.memoryDb = !!(h.memory_db && h.memory_db.available);
         if (ix.available) {
-          const rows = ix.rows ? `${Number(ix.rows).toLocaleString()} chunks · ` : '';
-          semStatus('ok', `Ready · ${esc(rows)}table <code>${esc(ix.table)}</code>`);
-          homeStatus('hs-api', 'ok', ix.rows ? `Memory index ready · ${fmtN(ix.rows)} passages` : 'Memory index ready');
+          semStatus('quiet', 'Ready');
+          homeStatus('hs-api', 'ok', 'Ready to answer');
           return;
         }
-        semStatus('warn', `Index <code>${esc(ix.table)}</code> not available yet — it may still be building. ${esc(ix.reason || '')}`);
-        homeStatus('hs-api', 'warn', 'Memory index still building — answers appear once it’s ready');
+        semStatus('warn', 'Your memories are still being prepared — search and Ask work once that finishes.');
+        homeStatus('hs-api', 'warn', 'Still preparing your memories — answers appear once ready');
       } catch (e) {
         S.sem.ready = false;
         semStatus('err', e.code === 'offline' ? offlineHint() : esc(e.message));
-        homeStatus('hs-api', 'err', e.code === 'offline' ? `Local API offline · start it with <code>${esc(SERVER_CMD)}</code>` : 'Local API error', true);
+        homeStatus('hs-api', 'err', e.code === 'offline' ? `App server offline · start it with <code>${esc(SERVER_CMD)}</code>` : 'App server error', true);
       }
       // Keep polling so the UI flips to "Ready" once the embedding job finishes or the server starts.
       S.sem.healthTimer = setTimeout(checkSemanticHealth, HEALTH_RETRY_MS);
@@ -2787,8 +3146,8 @@
       });
       const onGraph = threads.length;
       $('sem-sub').textContent = onGraph === S.sem.results.length
-        ? `${onGraph} ON GRAPH`
-        : `${onGraph} OF ${S.sem.results.length} ON GRAPH`;
+        ? `${onGraph} on the map`
+        : `${onGraph} of ${S.sem.results.length} on the map`;
       if (!S.sem.set.size) S.sem.set = null;  // nothing to highlight: don't dim the graph
       refreshVisuals();
       if (S.selected >= 0) renderDetails();
@@ -2833,12 +3192,12 @@
       const people = (r.people || []).slice(0, 6).join(', ') + ((r.people || []).length > 6 ? ` +${r.people.length - 6}` : '');
       const pc = PLATFORM_COLORS[r.platform] || '#9aa0b4';
       return `<div class="sr ${cls}" role="button" tabindex="0" data-k="${k}" aria-label="Result ${esc(r.rank)}: ${esc(r.title || 'untitled')}">
-          <div class="sr-top"><span class="sr-rank">#${esc(r.rank)}</span><span class="sr-plat"><i style="background:${esc(pc)}"></i>${esc(r.platform || 'unknown')}</span><span class="sr-date">${esc(when)}</span></div>
-          <div class="sr-bar" title="similarity ${esc(r.similarity)}"><i style="width:${pct}%"></i></div>
+          <div class="sr-top"><span class="sr-rank">#${esc(r.rank)}</span><span class="sr-plat"><i style="background:${esc(pc)}"></i>${esc(platformName(r.platform))}</span><span class="sr-date">${esc(when)}</span></div>
+          <div class="sr-bar" title="${esc(matchWord(r.similarity))} (${esc(r.similarity)})"><i style="width:${pct}%"></i></div>
           <div class="sr-title">${esc(r.title || '(untitled)')}</div>
           ${people ? `<div class="sr-people">${esc(people)}</div>` : ''}
           <div class="sr-snip">${highlight(r.snippet, terms)}</div>
-          <div class="sr-why"><span class="badge">…</span>similarity ${esc(r.similarity ?? '—')} · ${whyHtml}</div>
+          <div class="sr-why"><span class="badge">…</span>${esc(matchWord(r.similarity))} · ${whyHtml}</div>
         </div>`;
     }
 
@@ -2883,18 +3242,18 @@
       }
     }
 
-    async function semanticSearch() {
-      const q = $('sem-q').value.trim();
-      if (!q) { $('sem-q').focus(); return; }
+    async function semanticSearch(query) {
+      const q = (typeof query === 'string' ? query : $('omni-q').value).trim();
+      if (!q) { $('omni-q').focus(); return; }
 
       const seq = ++S.sem.seq;
       S.sem.mode = 'search';
       askBusy(false);
       semBusy(true);
-      semStatus('busy', S.sem.loadedOnce ? 'Searching…' : 'Searching… the first query loads the embedding model and can take a while on CPU.');
+      semStatus('busy', S.sem.loadedOnce ? 'Searching…' : 'Searching… the first search after a start takes a little longer.');
       $('sem-panel').hidden = false;
       $('sem-title').textContent = `“${q}”`;
-      $('sem-sub').textContent = 'SEARCHING…';
+      $('sem-sub').textContent = 'Searching…';
       $('sem-list').innerHTML = '';
 
       try {
@@ -2910,19 +3269,19 @@
         S.sem.results = data.results;
         S.sem.active = -1;
         renderSemanticResults(data);
-        semStatus('ok', `${data.count} result${data.count === 1 ? '' : 's'} in ${(data.took_ms / 1000).toFixed(1)}s · <code>${esc(data.table)}</code>`);
+        semStatus('quiet', `${data.count} result${data.count === 1 ? '' : 's'}`);
         if (S.pGeo) applySemanticHighlight(true);
-        else if (data.results.length) $('sem-sub').textContent = 'GRAPH NOT LOADED';
+        else if (data.results.length) $('sem-sub').textContent = 'Map not available';
       } catch (e) {
         if (seq !== S.sem.seq) return;
         S.sem.results = [];
         clearSemanticHighlight();
         const msg = {
-          index_unavailable: 'The search index isn’t available yet — the embedding job may still be running.',
-          offline: 'Search API offline.',
+          index_unavailable: 'Your memories are still being prepared. Try again once that finishes.',
+          offline: 'The app server is offline.',
           timeout: 'Search timed out.',
         }[e.code] || 'Search failed.';
-        $('sem-sub').textContent = e.code === 'index_unavailable' ? 'INDEX UNAVAILABLE' : 'ERROR';
+        $('sem-sub').textContent = e.code === 'index_unavailable' ? 'Still preparing' : 'Something went wrong';
         $('sem-list').innerHTML = `<div class="sem-empty">${esc(msg)}${e.code === 'offline' ? `<br>Start it with <code>${esc(SERVER_CMD)}</code>` : ''}</div>`;
         if (e.code === 'offline') semStatus('err', offlineHint());
         else if (e.code === 'index_unavailable') semStatus('warn', esc(e.message.split('\n')[0]));
@@ -2945,8 +3304,6 @@
       semBusy(false);
       askBusy(false);
       S.sem.mode = 'search';
-      $('sem-q').value = '';
-      $('ask-q').value = '';
       $('omni-q').value = '';
       autosizeOmni();
       $('sem-list').innerHTML = '';
@@ -2961,24 +3318,7 @@
     const ASK_LIMIT = 8;
     const CONF_TEXT = { high: 'High confidence', medium: 'Medium confidence', low: 'Low confidence' };
 
-    function setMemoryMode(mode, focus = true) {
-      document.querySelectorAll('.mtab').forEach(b => {
-        const on = b.dataset.mode === mode;
-        b.setAttribute('aria-selected', String(on));
-        b.tabIndex = on ? 0 : -1;
-      });
-      $('mode-search').hidden = mode !== 'search';
-      $('mode-ask').hidden = mode !== 'ask';
-      if (mode === 'ask') updateAskScope();
-      if (focus) $(mode === 'ask' ? 'ask-q' : 'sem-q').focus();
-    }
-
-    function askBusy(on) {
-      $('ask-go').disabled = on;
-      $('ask-go').textContent = on ? '…' : 'Ask';
-      document.querySelectorAll('.ask-chip').forEach(b => { b.disabled = on; });
-      syncOmniBusy();
-    }
+    function askBusy(on) { S.sem.busyAsk = on; syncOmniBusy(); }
 
     // The sidebar's platform toggles and timeline range as /api/ask filters (omitted when unconstrained).
     function askFilters() {
@@ -2992,14 +3332,24 @@
       return f;
     }
 
-    function updateAskScope() {
-      const el = $('ask-scope');
-      if (!el) return;
+    // Plain description of the active filters ("Reddit · Jan 2025 – Dec 2025"), or null when there are none.
+    function filterLabel() {
       const f = askFilters();
-      const plat = !f.platforms ? 'all platforms' : f.platforms.length ? f.platforms.map(platformName).join(', ') : 'no platforms';
+      if (!f.platforms && !f.date_from) return null;
+      const plat = !f.platforms ? 'All platforms' : f.platforms.length ? f.platforms.map(platformName).join(', ') : 'No platforms';
       const time = f.date_from ? `${fmtMonth(S.time.months[S.time.i0])} – ${fmtMonth(S.time.months[S.time.i1])}` : 'all time';
-      el.textContent = `Scope: ${plat} · ${time}`;
+      return `${plat} · ${time}`;
+    }
+
+    // Filters changed: scope lines, the Filters badge, and any open Insights / person profile follow.
+    function updateAskScope() {
+      const label = filterLabel();
+      $('sem-scope').textContent = label ? `Filtered: ${label}` : '';
+      const active = (S.platforms.length && S.filter.platforms.size < S.platforms.length ? 1 : 0) + (timeActive() ? 1 : 0) + (S.filter.kinds.size < 2 ? 1 : 0);
+      $('filter-badge').hidden = !active;
+      $('filter-badge').textContent = active ? `${active} on` : '';
       scheduleInsights();
+      schedulePersonRefresh();
     }
 
     function askSourceAsResult(s) {
@@ -3063,13 +3413,12 @@
     }
 
     async function askSarthink(question) {
-      if (typeof question === 'string') $('ask-q').value = question;
-      const q = $('ask-q').value.trim();
-      if (!q) { $('ask-q').focus(); return; }
+      const q = (typeof question === 'string' ? question : $('omni-q').value).trim();
+      if (!q) { $('omni-q').focus(); return; }
       const filters = askFilters();
       $('sem-title').textContent = q;
       if (filters.platforms && !filters.platforms.length) {
-        askError('Every platform is hidden in the sidebar. Turn at least one back on to ask.', 'NO PLATFORMS');
+        askError('Every platform is switched off in Filters. Turn at least one back on to ask.', 'No platforms selected');
         return;
       }
 
@@ -3077,12 +3426,12 @@
       S.sem.mode = 'ask';
       semBusy(false);
       askBusy(true);
-      semStatus('busy', S.sem.loadedOnce ? 'Reading your memories…' : 'Reading your memories… the first question loads the embedding model and can take a while on CPU.');
+      semStatus('busy', S.sem.loadedOnce ? 'Reading your memories…' : 'Reading your memories… the first question after a start takes a little longer.');
       S.sem.results = [];
       clearSemanticHighlight();
       if (S.selected >= 0) renderDetails();
       $('sem-panel').hidden = false;
-      $('sem-sub').textContent = 'ASKING…';
+      $('sem-sub').textContent = 'Asking…';
       $('sem-list').innerHTML = '<div class="ask-loading"><i></i>Retrieving memories and checking the evidence…</div>';
 
       try {
@@ -3101,21 +3450,21 @@
         const n = data.sources.length;
         semStatus('ok', `${esc(CONF_TEXT[data.confidence] || 'Answered')} · ${n} source${n === 1 ? '' : 's'} in ${(data.took_ms / 1000).toFixed(1)}s`);
         if (S.pGeo) applySemanticHighlight(true);
-        else if (n) $('sem-sub').textContent = 'GRAPH NOT LOADED';
+        else if (n) $('sem-sub').textContent = 'Map not available';
       } catch (e) {
         if (seq !== S.sem.seq) return;
         const retry = '<br><button type="button" class="btn sm" id="ask-retry">Retry</button>';
         if (e.code === 'index_unavailable') {
-          askError(`The memory index is still building (or hasn’t been created yet). Your question is kept — retry once the embedding job finishes.${retry}`, 'INDEX STILL BUILDING');
+          askError(`Your memories are still being prepared. Your question is kept — retry once that finishes.${retry}`, 'Still preparing');
           semStatus('warn', esc(e.message.split('\n')[0]));
         } else if (e.code === 'offline') {
-          askError(`Search API offline.<br>Start it with <code>${esc(SERVER_CMD)}</code>${retry}`, 'ERROR');
+          askError(`The app server is offline.<br>Start it with <code>${esc(SERVER_CMD)}</code>${retry}`, 'Something went wrong');
           semStatus('err', offlineHint());
         } else if (e.code === 'invalid_request') {
-          askError(esc(e.message), 'INVALID QUESTION');
+          askError(esc(e.message), 'Please rephrase');
           semStatus('err', esc(e.message));
         } else {
-          askError(`${esc(e.code === 'timeout' ? 'Ask timed out. The first question can be slow while the model loads.' : `Ask failed: ${e.message}`)}${retry}`, 'ERROR');
+          askError(`${esc(e.code === 'timeout' ? 'That took too long. The first question after a start can be slow — try again.' : `Ask failed: ${e.message}`)}${retry}`, 'Something went wrong');
           semStatus('err', esc(e.message));
         }
         const rb = $('ask-retry');
@@ -3199,20 +3548,19 @@
     }
 
     function syncOmniBusy() {
-      const busy = $('ask-go').disabled && S.sem.mode === 'ask' || $('sem-go').disabled && S.sem.mode === 'search';
+      const busy = !!(S.sem.busyAsk || S.sem.busySearch);
       const b = $('omni-go');
       b.disabled = busy;
       b.textContent = busy ? '…' : (S.omniMode === 'ask' ? 'Ask' : 'Search');
       document.querySelectorAll('#home-chips .ask-chip').forEach(c => { c.disabled = busy; });
     }
 
-    // Runs the existing Ask / search flows, keeping the sidebar's boxes in sync with the omni box.
+    // The one question box: Ask (default) or Find memories.
     function submitOmni() {
       const q = $('omni-q').value.trim();
       if (!q) { $('omni-q').focus(); return; }
-      setMemoryMode(S.omniMode, false);
       if (S.omniMode === 'ask') askSarthink(q);
-      else { $('sem-q').value = q; semanticSearch(); }
+      else semanticSearch(q);
     }
 
     function autosizeOmni() {
@@ -3238,11 +3586,11 @@
       S.graphState = 'error';
       document.body.dataset.graph = 'error';
       setView('home');
-      homeStatus('hs-graph', 'warn', 'Graph unavailable');
+      homeStatus('hs-graph', 'warn', 'Memory map unavailable');
       const cmds = (err.kind === 'missing' || err.kind === 'empty')
         ? `<br>Generate the graph files, then refresh: <code>${esc(PIPELINE_CMDS[0])}</code> then <code>${esc(PIPELINE_CMDS[1])}</code>`
         : err.kind === 'network' ? `<br>Start the local server with <code>${esc(SERVER_CMD)}</code> and open <code>http://127.0.0.1:8000/</code>` : '';
-      $('graph-note').innerHTML = `Graph unavailable: ${esc(err.message)}${cmds}<br>Ask, memory search and Insights still work.`;
+      $('graph-note').innerHTML = `The memory map isn’t available: ${esc(err.message)}${cmds}<br>Ask, memory search and Insights still work.`;
       $('graph-note').hidden = false;
       syncViewButtons();
     }
@@ -3538,14 +3886,10 @@
     $('empty-reset').addEventListener('click', () => { resetFilters(); refreshVisuals(); });
     $('find-q').addEventListener('input', e => runFind(e.target.value));
     $('find-q').addEventListener('keydown', onFindKey);
-    document.querySelectorAll('.mtab').forEach(b => b.addEventListener('click', () => setMemoryMode(b.dataset.mode)));
-    document.querySelector('.mtabs').addEventListener('keydown', e => {
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); setMemoryMode($('mode-ask').hidden ? 'ask' : 'search'); $(!$('mode-ask').hidden ? 'tab-ask' : 'tab-search').focus(); }
-    });
-    $('ask-q').addEventListener('keydown', e => {
-      if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); askSarthink(); }
-    });
-    document.querySelectorAll('.ask-chip').forEach(b => b.addEventListener('click', () => askSarthink(b.textContent.trim())));
+    // Tips at the bottom fade away after a while or on request; Help keeps the full list.
+    const hideHint = () => $('hint').classList.add('gone');
+    $('hint-close').addEventListener('click', hideHint);
+    setTimeout(hideHint, 20000);
     $('side-toggle').addEventListener('click', () => {
       const c = $('sidebar').classList.toggle('collapsed');
       $('side-toggle').textContent = c ? 'Expand' : 'Collapse';
@@ -3624,7 +3968,7 @@
 
       S.graphState = 'ready';
       document.body.dataset.graph = 'ready';
-      homeStatus('hs-graph', 'ok', `Graph · ${fmtN(S.nodes.length)} people & conversations`);
+      homeStatus('hs-graph', 'ok', 'Memory map ready');
       syncViewButtons();
       // A shared #node= link (or ?view=graph) opens straight into the workspace.
       const start = hashNode(), sn = start && S.byId.get(start);

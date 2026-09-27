@@ -285,7 +285,7 @@ class AskPageTests(unittest.TestCase):
     def test_graph_html_wires_ask(self):
         from pathlib import Path
         html = Path(REPO_ROOT, "sarthink_graph.html").read_text(encoding="utf-8")
-        for needle in ("'/api/ask'", 'id="ask-q"', 'id="ask-go"', "askSarthink", 'data-mode="ask"', 'data-mode="search"',
+        for needle in ("'/api/ask'", 'id="omni-q"', 'id="omni-go"', "askSarthink", 'data-omode="ask"', 'data-omode="search"',
                        "ask-chip", "ask-conf", "ask-timeline"):
             self.assertIn(needle, html)
         # Archive text only ever reaches the DOM through esc()/highlight().

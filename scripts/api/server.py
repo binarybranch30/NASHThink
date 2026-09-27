@@ -14,6 +14,8 @@ Endpoints:
     POST /api/ask             {"question": "...", "limit": 8, "platforms": [...], "date_from": ..., "date_to": ...}
                               -> evidence-first memory brief (deterministic; see memory_brief.py)
     GET  /api/thread/T_<id>   indexed conversation chunks of one graph thread (no model load)
+    GET  /api/person/U_<id>   "Your history with X": counts, activity, cited brief (read-only SQLite, no model load);
+                              /conversations?offset&limit and /messages?thread&cursor&limit page the full history
     GET  /api/insights        read-only activity aggregates from the SQLite memory DB (see insights.py);
                               optional ?platforms=a,b&date_from=...&date_to=...&top=10
     GET  /processed_data/graph/cosmograph_{nodes,edges}.csv   graph data for the UI
@@ -37,6 +39,7 @@ REPO_ROOT = Path(os.path.dirname(os.path.dirname(SCRIPT_DIR)))
 sys.path.append(str(REPO_ROOT / "scripts" / "semantic"))
 
 import insights  # noqa: E402
+import people  # noqa: E402
 import memory_brief  # noqa: E402
 import search  # noqa: E402
 from embedding_config import LANCEDB_PATH  # noqa: E402
@@ -351,9 +354,10 @@ def parse_date_param(name, value, end=False):
         raise ApiError(422, "invalid_request", f"{name}: must be an ISO date (YYYY-MM-DD) or datetime")
 
 
-def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insights_service=None):
+def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insights_service=None, people_service=None):
     service = service or SearchService()
     insights_service = insights_service or insights.InsightsService()
+    people_service = people_service or people.PeopleService(insights_service.db_path, insights_service.identity_map)
     app = FastAPI(title="Sarthink local search", version="1.0", docs_url="/api/docs", openapi_url="/api/openapi.json")
     app.state.search_service = service
 
@@ -451,6 +455,45 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
             return insights_service.insights(plats, start, end, top)
         except insights.InsightsUnavailable as e:
             raise ApiError(503, "database_unavailable", str(e))
+
+    def person_call(fn, *args, **kwargs):
+        try:
+            return fn(*args, **kwargs)
+        except people.BadRequest as e:
+            raise ApiError(422, "invalid_request", str(e))
+        except people.PersonNotFound as e:
+            raise ApiError(404, "not_found", str(e))
+        except people.PeopleUnavailable as e:
+            raise ApiError(503, "database_unavailable", str(e))
+
+    def person_filters(platforms, date_from, date_to):
+        plats = parse_platforms(platforms)
+        start = parse_date_param("date_from", date_from)
+        end = parse_date_param("date_to", date_to, end=True)
+        if start and end and start >= end:
+            raise ApiError(422, "invalid_request", "date_from must be before date_to")
+        return plats, start, end
+
+    @app.get("/api/person/{node_id}")
+    def person_profile(node_id: str, platforms: Optional[List[str]] = Query(None), date_from: Optional[str] = None,
+                       date_to: Optional[str] = None):
+        """Profile of one person node: counts (all-time and filtered), activity, notable conversations, cited brief."""
+        plats, start, end = person_filters(platforms, date_from, date_to)
+        return person_call(people_service.profile, node_id, plats, start, end)
+
+    @app.get("/api/person/{node_id}/conversations")
+    def person_conversations(node_id: str, platforms: Optional[List[str]] = Query(None), date_from: Optional[str] = None,
+                             date_to: Optional[str] = None, offset: int = Query(0, ge=0, le=1_000_000),
+                             limit: int = Query(people.PAGE_DEFAULT, ge=1, le=people.PAGE_MAX)):
+        plats, start, end = person_filters(platforms, date_from, date_to)
+        return person_call(people_service.conversations, node_id, plats, start, end, offset, limit)
+
+    @app.get("/api/person/{node_id}/messages")
+    def person_messages(node_id: str, thread: Optional[str] = Query(None, max_length=24), cursor: Optional[str] = Query(None, max_length=200),
+                        platforms: Optional[List[str]] = Query(None), date_from: Optional[str] = None, date_to: Optional[str] = None,
+                        limit: int = Query(people.PAGE_DEFAULT, ge=1, le=people.PAGE_MAX)):
+        plats, start, end = person_filters(platforms, date_from, date_to)
+        return person_call(people_service.messages, node_id, thread, plats, start, end, cursor, limit)
 
     @app.get("/", include_in_schema=False)
     @app.get("/sarthink_graph.html", include_in_schema=False)

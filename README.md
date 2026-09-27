@@ -43,12 +43,12 @@ ssh -N -L 8000:127.0.0.1:8000 naitik@185.2.102.128
 ```
 
 **90-second demo flow**
-1. **Memory Home** (0–15s): the page opens on a focused question box above the slowly drifting memory graph. Point out the status line (index ready, graph size, "runs on this machine").
-2. **Ask** (15–35s): click a sample question, e.g. *How has my interest in photography changed?* The brief appears in place: answer, confidence, key points, timeline and cited sources.
-3. **Cited source → graph** (35–50s): click a source card. The page glides into the graph workspace, selects that conversation, lights up its participants and links, and shows its indexed context in the details panel.
-4. **Graph exploration** (50–65s): drag to orbit, scroll to zoom, arrow keys to move, click a person to jump to their threads. The command bar in the top bar keeps Ask / Find memories one keystroke away.
-5. **Timeline & filters** (65–75s): toggle a platform, press *12 mo* on the timeline; the graph and the next answer follow the scope.
-6. **Insights** (75–90s): press `I`. Stat cards, monthly activity (hover a bar), platform breakdown, top contacts and conversations, all for the current filters; click a contact to focus it on the graph.
+1. **Home** (0–10s): the page opens on one question box above the slowly drifting memory map. Everything else is a quiet link: *Explore the memory map*, *See insights*.
+2. **Ask** (10–30s): click a sample question, e.g. *How has my interest in photography changed?* The answer appears in place with a confidence level, key points, a timeline and the sources it quotes.
+3. **Cited source → map** (30–40s): click a source. The page glides into the memory map with that conversation selected and its people lit up.
+4. **Your history with a person** (40–65s): click one of those people. The profile leads with a short cited brief (“wrote 90 messages in 3 conversations… you both wrote in…”), a few numbers, a month-by-month strip and notable conversations. Click a citation number to jump to that conversation, then **‹ Back to …**. Open **Show full history** to page through the actual messages, newest first.
+5. **Filters** (65–75s): open **Filters**, switch a platform off or pick *12 mo*; the map, the profile (now labelled *Filtered*, with all-time counts alongside) and the next answer follow.
+6. **Insights** (75–90s): press `I` for totals, monthly activity, platform breakdown, and top contacts and conversations; click a contact to open their profile.
 
 > **Multi-user note (future work, not implemented):** Sarthink is single-user today: one archive, one database, one index, one owner persona, and no login. Serving several people would need separate per-user workspaces (archives, SQLite DB, LanceDB index, graph files, identity map), per-user API instances or strict per-request scoping, and real authentication and access control. Don't point it at more than one person's data.
 
@@ -172,30 +172,37 @@ HF_HUB_OFFLINE=1 .venv/bin/python scripts/api/server.py
 ```
 Then open `http://127.0.0.1:8000/`. Options: `--table topics_multilingual_pilot` searches another table, `--port`, `--db`, `--memory-db` (SQLite for Insights).
 
-**Memory Home** is the opening screen: a question box with **Ask Sarthink** (default) and **Find memories** (plain semantic search) modes, sample prompts, and a short status line. The graph keeps drifting behind it and stays interactive outside the card (drag, zoom, click a node to open it). Answers and results appear in the card; clicking a cited source or result opens the **graph workspace** focused on that conversation. **Explore graph** (or `G`) opens the workspace directly; there the same box sits in the top bar as a command bar, results move to the right-hand panel, and `G` / **Home** goes back. If the graph CSVs are missing, Memory Home says so (with the commands to build them) and Ask, search and Insights keep working. Links with `#node=T_12` or `?view=graph` open straight into the workspace.
+**Home** is the opening screen: one question box with **Ask** (default) and **Find** (plain semantic search) modes, sample prompts, and a one-line status. The memory map keeps drifting behind it and stays interactive outside the card (drag, zoom, click a node to open it). Answers and results appear in the card; clicking a cited source or result opens the **memory map** focused on that conversation. **Explore the memory map** (or `G`) opens it directly; there the same box sits in the top bar (it is the only place to ask or search), results move to the right-hand panel, and `G` / **Home** goes back. If the graph CSVs are missing, Memory Home says so (with the commands to build them) and Ask, search and Insights keep working. Links with `#node=T_12` or `?view=graph` open straight into the workspace.
 
 **Insights** (`I`, or the button in Memory Home / the top bar) summarises the memory database for the current platform toggles and timeline range: message, conversation, people and platform totals, first and latest memory, messages per month (hover for the per-platform split) and per year, a per-platform breakdown with date ranges, and the top contacts and conversations (click one to focus it on the graph). Your own accounts, as listed in `config/identity_map.json`, are excluded from contacts and people counts.
 
-**Using the graph** (press `?` in the page for the same list):
+**Your history with a person.** Clicking a person (a filled dot) opens a profile instead of a list of every link. It is built by `GET /api/person/U_<id>` from the SQLite database only (read-only, no embedding model), and shows:
+- a short **brief** whose sentences are counts, dates and conversation titles, each with numbered citations; click a number to open that conversation on the map, where **‹ Back to …** returns to the profile. Sparse histories say *There isn’t enough history to summarize*; automated or deleted accounts are flagged; nothing about feelings or relationships is inferred;
+- conversations, their messages, your replies, first and latest message, platforms; a month-by-month strip; **recurring words** (in at least two conversations, or in three different months of one long chat); up to five **notable conversations** — back-and-forth ones first, large public threads (over 12 people) last so one huge thread can't dominate; and other people from the same small conversations;
+- **View conversations** (20 at a time, latest first) and **Show full history** (30 messages at a time, newest first, grouped by day, with *Load older*). Your own messages are included only for small conversations (up to 12 people). Very long messages are shortened on screen only; the database keeps everything;
+- with Filters on, the numbers follow them and the profile says *Filtered*, with the all-time counts next to it.
+Accounts are never merged by name: if another platform has an account with the same name, the profile says so and links to it separately. Only your own accounts, as mapped in `config/identity_map.json`, are combined (clicking yourself shows *Your own activity*).
+
+**Using the map** (press `?` in the page for the same list, including the optional keyboard shortcuts):
 - **Left-drag** orbits, **right-drag** or **Shift/Ctrl-drag** pans, **scroll** zooms toward the cursor. Dragging never moves nodes; any drag cancels a running camera flight.
 - **Hover** a node for its name, platform, connections and active months. **Click** selects it: the node, every direct neighbour and the links between them stay bright (drawn on top), everything else is dimmed, not hidden. **Double-click** (or `F`) flies the camera to it. Click empty space to deselect.
-- The **details panel** shows type, platform, connections, messages, first/last activity, the linked people or threads (click one to jump to it), and for threads the indexed **conversation context** from `/api/thread`. The selection is kept in the URL (`#node=T_12`), so a refresh or a shared local link reopens it.
+- For a conversation, the **details panel** shows its people, messages, first and last message, and searchable **excerpts** from `/api/thread`; for a person, the profile above. The selection is kept in the URL (`#node=T_12`), so a refresh or a shared local link reopens it.
 - **Arrow keys** move the graph in the pressed direction (hold to keep moving); **Shift + arrows** orbit. They only act on the graph when you're not typing or in a list/tab strip.
-- **Find node** (`/`) matches names and thread titles, highlights all matches, and `↑ ↓ Enter` selects one.
-- **Platforms** and **Node types** in the sidebar are toggle filters (colour = platform, filled dot = person, ring = thread; **only** isolates one platform). The **Timeline** histogram shows active threads per month; drag its handles or use the 3/12-month presets to hide threads outside the range and people with no messages in it.
-- The top bar shows node/edge/platform totals, what the filters currently show, and the selection.
-- **Reset** (or `Esc`) restores the original full view: clears the selection, find, memory search and filters, and flies the camera home.
-- If a node has missing or invalid `layout_*` values it is placed near its platform; if the whole layout is missing or collapsed to one point, a deterministic fallback layout is drawn and the top bar says `layout fallback`.
+- **Find a person or conversation** (`/`) matches names and titles, highlights all matches, and `↑ ↓ Enter` selects one.
+- **Filters** (folded by default; a badge shows how many are on): **Platforms** (**only** isolates one), **Show** people and/or conversations, and **Time range** — a histogram of active conversations per month with handles and 3/12-month presets.
+- The top bar shows how many people and conversations there are and what the filters currently show. The bottom tips fade after a while (*Got it* hides them).
+- **↺ Reset** (or `Esc`) restores the original full view: clears the selection, find, search results and filters, and flies the camera home.
+- If a node has missing or invalid `layout_*` values it is placed near its platform; if the whole layout is missing or collapsed to one point, a deterministic fallback layout is drawn and the top bar says `approximate layout`.
 
-In the graph sidebar, type into **MEMORY SEARCH** and press Enter:
-- Results appear in a panel on the right (platform, date, people, similarity bar, snippet with the query words marked, and why it matched: shared words or "matched by meaning").
+Switch the question box to **Find**, type and press Enter:
+- Results appear in a panel on the right (platform, date, people, a match-strength bar and label, snippet with the query words marked, and why it matched: shared words, a Hinglish/English topic match, or "similar in meaning").
 - Matching conversation threads and their participants are highlighted on the graph and the camera flies to them; the rest of the graph is dimmed.
 - Click a result to select its thread (its links, details and full chunk text); the other results stay highlighted. Click again to unfocus. **Find related memories** in a thread's details runs a search with its title.
 - **Clear** in the results panel removes only the memory search; **Reset** / `Esc` resets everything.
 - The first query loads the embedding model, so it takes longer than the rest.
 
 #### Ask Sarthink (evidence-first memory Q&A)
-Switch the sidebar's memory box to **ASK SARTHINK**, type a question (or click a sample chip) and press Enter (Shift+Enter for a new line):
+Type a question in the box (**Ask** is the default; or click a sample prompt on Home) and press Enter (Shift+Enter for a new line):
 - *What was I stressed about during college?* · *How has my interest in photography changed?* · *What did I discuss about Python?* · *What was I working on around August 2026?*
 
 The right panel shows a short **answer**, a **confidence** level (high / medium / low), **key points**, a small chronological **timeline** and the **source cards**. Sources and their threads are highlighted on the graph; clicking a source card or a timeline entry selects and frames its thread exactly like a memory-search result. The question is limited to the platforms switched on in the sidebar and the timeline range (the scope line under the box shows what will be sent). Cards marked *closest match only* were retrieved but are not used as evidence.
@@ -211,7 +218,7 @@ How the answer is made (`scripts/api/memory_brief.py`, deterministic, no languag
 
 This is **evidence-based synthesis, not a generative LLM**: every sentence is a verbatim quote, a count, a date, a platform or a title from a returned source, so it never invents an event, feeling, relationship or date, but it also doesn't interpret or summarise in its own words, can quote a sentence out of context, and depends on the words you use. Read the sources. Everything runs on this machine: no hosted APIs, no LLM service, no browser-side calls other than to the local server, no model downloads.
 
-If the index is still being built, the sidebar says so and the API answers `503 index_unavailable`; the server picks the table up automatically once it exists, no restart needed. If the page can't reach the API it shows the command to start it.
+If the index is still being built, the status line says so and the API answers `503 index_unavailable`; the server picks the table up automatically once it exists, no restart needed. If the page can't reach the API it shows the command to start it.
 
 API (interactive docs at `/api/docs`):
 ```bash
@@ -220,6 +227,9 @@ curl -X POST http://127.0.0.1:8000/api/search -H 'Content-Type: application/json
   -d '{"query": "college ke baare mein stress", "limit": 10}'
 curl http://127.0.0.1:8000/api/thread/T_12      # indexed chunks of one thread (no model load)
 curl 'http://127.0.0.1:8000/api/insights?platforms=reddit,instagram&date_from=2025-01-01&date_to=2025-12-31'   # read-only aggregates
+curl http://127.0.0.1:8000/api/person/U_12                             # "Your history with …" profile (read-only)
+curl 'http://127.0.0.1:8000/api/person/U_12/conversations?offset=0&limit=20'
+curl 'http://127.0.0.1:8000/api/person/U_12/messages?limit=30'        # then &cursor=<next_cursor>; &thread=T_7 for one conversation
 curl -X POST http://127.0.0.1:8000/api/ask -H 'Content-Type: application/json' \
   -d '{"question": "How has my interest in photography changed?", "limit": 8, "platforms": ["reddit", "instagram"], "date_from": "2025-01-01", "date_to": "2026-09-30"}'
 ```
@@ -230,6 +240,8 @@ The graph alone still works from any static server (`python3 -m http.server 8080
 
 `/api/insights` (GET, read-only) takes optional `platforms` (comma-separated or repeated), `date_from` / `date_to` (ISO dates or datetimes; a plain `date_to` includes that day) and `top` (1–50, default 10). It returns `{empty, filters, totals: {messages, threads, people, platforms}, first_date, latest_date, platforms: [{platform, messages, threads, people, first_date, last_date, share}], available_platforms, activity: {months: [{month, total, platforms}], years: [...]}, top_contacts: [{node_id, label, platform, messages, threads, first_date, last_date}], top_conversations: [{node_id, title, platform, messages, people, first_date, last_date}], owner: {configured, excluded_accounts}, took_ms, cached}`. `node_id`s are graph node ids (`U_<id>`, `T_<id>`). The database is opened read-only; results are cached until the database file changes (the first unfiltered call is warmed at server start). A missing database answers `503 database_unavailable`.
 
+`/api/person/U_<id>` (GET, read-only SQLite, never loads the embedding model) takes the same optional `platforms`, `date_from`, `date_to` as Insights and returns `{node_id, label, kind: person|automated|you, platform, accounts, same_name_elsewhere, scope: {filtered, …}, lifetime: {conversations, shared_conversations, their_messages, your_messages, first_date, latest_date, platforms}, stats: {…same, within the filters}, activity: [{month, messages}], topics: [{word, conversations, months, mentions, sources}], sources: [{node_id, title, platform, their_messages, your_messages, people, large, shared, first_date, latest_date, notable}], brief: {sentences: [{text, sources}], sparse}, related, took_ms}`; `brief.sentences[].sources` and `topics[].sources` are 1-based indexes into `sources`. `/conversations` pages the person's conversations (`offset`, `limit` ≤ 100, latest first, `{total, next_offset, items}`); `/messages` pages their messages plus yours in small shared conversations (newest first, keyset `cursor`, `limit` ≤ 100, optional `thread=T_<id>`; `{total (first page only), next_cursor, messages: [{date, author: them|you, author_label, node_id, thread_title, platform, text, clipped}]}`). Errors: `invalid_request` 422, `not_found` 404, `database_unavailable` 503.
+
 `/api/thread/T_<id>` returns `{node_id, channel_id, count, first_time, last_time, chunks: [...]}` with up to 8 chunks (oldest first; `start_time, end_time, platform, title, people, snippet, text`). It only filters the index, so it answers instantly even before the first search has loaded the model.
 
 Tests (fake model, table and a throwaway SQLite DB; no index, model or real data needed):
@@ -237,6 +249,7 @@ Tests (fake model, table and a throwaway SQLite DB; no index, model or real data
 .venv/bin/python scripts/tests/test_api.py
 .venv/bin/python scripts/tests/test_ask.py      # Ask Sarthink: grounding, weak evidence, filters, errors, model reuse
 .venv/bin/python scripts/tests/test_insights.py # /api/insights: shape, filters, empty state, owner exclusion, read-only, errors
+.venv/bin/python scripts/tests/test_people.py   # person profiles: counts, dates, filters, identity boundaries, sparse history, paging, links
 .venv/bin/python scripts/tests/test_hinglish.py # Hinglish vocabulary, expanded retrieval on a temp LanceDB table, Ask evidence, negation-safe quotes
 python3 scripts/tests/test_graph_pipeline.py
 ```
@@ -247,4 +260,4 @@ npm install --prefix /tmp/pw playwright && npx --prefix /tmp/pw playwright insta
 NODE_PATH=/tmp/pw/node_modules node scripts/tests/graph_ui_e2e.mjs http://127.0.0.1:8765/
 ```
 `SARTHINK_E2E_ONLY=homeFlow,insightsFlow` runs selected flows. If Chromium can't start for missing system libraries and you have no sudo, `apt-get download` the listed packages, unpack them with `dpkg-deb -x` into a scratch directory and set `LD_LIBRARY_PATH` plus `PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS=1`.
-It checks Memory Home (opening state, Ask / Find memories, results in place, cited source → graph, command bar, `G`, Explore graph framing, graph interaction outside the card, working without the graph), Insights (cards, SVG chart and hover, filters flowing into the request, contact → graph focus, loading/empty/offline/error states, escaping), arrow-key movement, responsive layouts from 390px phones to 1440px laptops, and the older graph checks: layout fidelity, orbit/pan/zoom, hover, selection and its links, filters, timeline, find, reset/Esc, refresh, memory search and Ask Sarthink (with stubbed, synthetic API answers: rendering, HTML escaping, filters, timeline/source focus, index-building retry), API-offline/index-unavailable states and layout fallbacks (by rewriting responses in the browser, never on disk). `SARTHINK_E2E_SEMANTIC=1` adds a real memory search.
+It checks the person profile (cited brief, no message dump, citation → conversation → back, paged conversations and full history, filters, sparse/offline states, phone and laptop layouts, escaping, and one live profile from the local API), Memory Home (opening state, Ask / Find memories, results in place, cited source → graph, command bar, `G`, Explore graph framing, graph interaction outside the card, working without the graph), Insights (cards, SVG chart and hover, filters flowing into the request, contact → graph focus, loading/empty/offline/error states, escaping), arrow-key movement, responsive layouts from 390px phones to 1440px laptops, and the older graph checks: layout fidelity, orbit/pan/zoom, hover, selection and its links, filters, timeline, find, reset/Esc, refresh, memory search and Ask Sarthink (with stubbed, synthetic API answers: rendering, HTML escaping, filters, timeline/source focus, index-building retry), API-offline/index-unavailable states and layout fallbacks (by rewriting responses in the browser, never on disk). `SARTHINK_E2E_SEMANTIC=1` adds a real memory search.

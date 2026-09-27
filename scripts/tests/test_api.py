@@ -373,8 +373,8 @@ class GraphPageTests(unittest.TestCase):
 
     def test_graph_html_wires_semantic_search(self):
         html = Path(REPO_ROOT, "sarthink_graph.html").read_text(encoding="utf-8")
-        for needle in ("'/api/search'", "'/api/health'", "/api/thread/", 'id="sem-q"', 'id="sem-panel"', "resetSemantic()",
-                       "index_unavailable", "semanticSearch"):
+        for needle in ("'/api/search'", "'/api/health'", "/api/thread/", "/api/person/", 'id="omni-q"', 'id="sem-panel"',
+                       "resetSemantic()", "index_unavailable", "semanticSearch", 'data-omode="search"'):
             self.assertIn(needle, html)
 
 
