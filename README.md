@@ -14,6 +14,18 @@ Your chats hold your plans, deadlines, promises, decisions and memories, but the
 - 🗺️ **One memory across 9 apps:** WhatsApp, Instagram, Facebook, Discord, Reddit, X, Google (Gmail, Chat, YouTube), ChatGPT and Claude.
 - 🇮🇳 **Hinglish-aware:** understands chat shorthand and romanised Hindi.
 
+## Screenshots
+
+<p align="center"><img src="docs/screenshots/ask-answer.jpg" alt="An answer written by Llama 3.1 8B on this device, with numbered citations" width="900"><br>
+<sub>Ask: Llama 3.1 8B answers on this device, citing the exact messages</sub></p>
+
+| | |
+|---|---|
+| <img src="docs/screenshots/home.jpg" alt="NASH Think home with the question box above the memory map"><br><sub>Home: one question box above your memory map</sub> | <img src="docs/screenshots/sources.jpg" alt="Source cards and timeline behind an answer"><br><sub>The sources behind every answer, with a timeline</sub> |
+| <img src="docs/screenshots/memory-map.jpg" alt="Memory map with the cited email and its people highlighted"><br><sub>Memory map: the cited conversation and its people light up</sub> | <img src="docs/screenshots/person-profile.jpg" alt="Your history with Rohan: cited brief, activity by month and notable conversations"><br><sub>Your history with a person</sub> |
+
+<sub>All screenshots use the fictional sample archive; no real chats are shown.</sub>
+
 ## Features
 
 | Feature | What it does |
