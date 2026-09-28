@@ -7,6 +7,7 @@ import json
 import os
 import sys
 import unittest
+from unittest import mock
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
@@ -29,6 +30,10 @@ if HAVE_FASTAPI:
 
 OWNER = ("Tester Persona", {"tester", "Tester Persona", "tester persona", "12345", "me@example.com"})
 PROFILES = llm_config.load_profiles(path="/nonexistent")
+# Never read a real DeepSeek key in tests: tests that need one set it explicitly.
+os.environ.pop("DEEPSEEK_API_KEY", None)
+llm_config.SECRETS_PATH = "/nonexistent/.env"
+FAKE_KEY = "sk-test-not-a-real-key"
 
 
 def sse_body(pieces, model="fake-llama", timings=None):
@@ -408,22 +413,125 @@ class StreamApiTests(ApiTestCase):
 
     def test_llm_status(self):
         body = self.stream_client(FakeLlama()).get("/api/llm").json()
-        self.assertEqual(body["order"], ["best", "quick"])
+        self.assertEqual(body["order"], ["deepseek", "best", "quick", "deepseek_reasoner"])
+        self.assertEqual((body["profiles"]["deepseek"]["state"], body["profiles"]["deepseek"]["reason"]), ("offline", "no_key"))
         self.assertEqual(body["profiles"]["best"]["state"], "online")
         self.assertEqual(body["profiles"]["best"]["model"], "fake-8083")
         self.assertEqual(body["profiles"]["quick"]["start"], "scripts/llm.sh start quick")
         off = self.stream_client(FakeLlama(offline=True)).get("/api/health").json()["llm"]
         self.assertEqual({p["state"] for p in off.values()}, {"offline"})
 
+    # ── DeepSeek (hosted, OpenAI-compatible): a fake API on the same mock transport, dispatched by host ──
+    def deepseek_client(self, deep, key=FAKE_KEY):
+        llama = FakeLlama()
+        both = lambda req: deep(req) if req.url.host == "api.deepseek.com" else llama(req)   # noqa: E731
+        self.client(FakeTable(SOURDOUGH + NOISE))
+        service = server.SearchService(self.tmp_path / "no_such_lancedb", "topics", model_loader=self.loader)
+        ins = insights.InsightsService(self.tmp_path / "no.db", identity_map=OWNER)
+        app = server.create_app(service, graph_html=self.html, graph_dir=self.graph_dir, insights_service=ins,
+                                llm_profiles=llm_config.load_profiles(path="/nonexistent"), llm_transport=httpx.MockTransport(both))
+        if key:
+            self.enterContext(mock.patch.dict(os.environ, {"DEEPSEEK_API_KEY": key}))
+        return TestClient(app), llama
+
+    def test_deepseek_streams_with_the_key_and_no_local_calls(self):
+        deep = FakeDeepSeek()
+        c, llama = self.deepseek_client(deep)
+        r = c.post("/api/ask/stream", json={"question": "What did I say about sourdough baking?", "profile": "deepseek"})
+        events = parse_sse(r.text)
+        self.assertEqual(events[-1][0], "done", events[-1])
+        self.assertEqual(events[-1][1]["text"], "You baked sourdough [1].")
+        self.assertEqual("".join(d["text"] for k, d in events if k == "token"), "You baked sourdough [1].",
+                         "the reasoner's hidden thinking is never streamed as answer text")
+        req = deep.chats[0]
+        self.assertEqual((req["path"], req["auth"], req["body"]["model"]), ("/chat/completions", f"Bearer {FAKE_KEY}", "deepseek-chat"))
+        self.assertTrue(req["body"]["stream"])
+        self.assertNotIn("cache_prompt", req["body"])
+        self.assertIn("sourdough starter", req["body"]["messages"][1]["content"])
+        self.assertEqual((llama.requests, llama.tokenized), ([], []), "no local model or tokenizer involved")
+        self.assertNotIn(FAKE_KEY, r.text)
+
+    def test_deepseek_reasoner_uses_its_model(self):
+        deep = FakeDeepSeek()
+        c, _ = self.deepseek_client(deep)
+        c.post("/api/ask/stream", json={"question": "What did I say about sourdough baking?", "profile": "deepseek_reasoner"})
+        self.assertEqual(deep.chats[0]["body"]["model"], "deepseek-reasoner")
+
+    def test_deepseek_errors_are_plain_and_keyless(self):
+        c, _ = self.deepseek_client(FakeDeepSeek(status=401))
+        r = c.post("/api/ask/stream", json={"question": "What did I say about sourdough baking?", "profile": "deepseek"})
+        kind, err = parse_sse(r.text)[-1]
+        self.assertEqual((kind, err["code"]), ("error", "llm_no_key"))
+        self.assertIn("rejected the API key", err["message"])
+        self.assertNotIn(FAKE_KEY, r.text)
+        c, _ = self.deepseek_client(FakeDeepSeek(status=402))
+        err = parse_sse(c.post("/api/ask/stream", json={"question": "What did I say about sourdough baking?", "profile": "deepseek"}).text)[-1][1]
+        self.assertIn("no balance", err["message"])
+
+    def test_deepseek_without_a_key_never_calls_out(self):
+        deep = FakeDeepSeek()
+        c, _ = self.deepseek_client(deep, key=None)
+        err = parse_sse(c.post("/api/ask/stream", json={"question": "What did I say about sourdough baking?", "profile": "deepseek"}).text)[-1][1]
+        self.assertEqual(err["code"], "llm_no_key")
+        self.assertEqual((deep.chats, deep.model_checks), ([], 0))
+
+    def test_deepseek_status_checks_the_key_once(self):
+        deep = FakeDeepSeek()
+        c, _ = self.deepseek_client(deep)
+        p = c.get("/api/llm").json()["profiles"]
+        self.assertEqual((p["deepseek"]["state"], p["deepseek_reasoner"]["state"]), ("online", "online"))
+        self.assertTrue(p["deepseek"]["remote"])
+        self.assertEqual(deep.model_checks, 1, "both DeepSeek profiles share one key check")
+        self.assertNotIn(FAKE_KEY, json.dumps(p))
+        c, _ = self.deepseek_client(FakeDeepSeek(status=401))
+        self.assertEqual(c.get("/api/llm").json()["profiles"]["deepseek"]["reason"], "bad_key")
+
+
+class FakeDeepSeek:
+    """A stand-in for api.deepseek.com: GET /models (key check) and streaming POST /chat/completions, which first
+    streams some reasoning_content (as deepseek-reasoner does) and then the answer."""
+
+    def __init__(self, status=200, key=FAKE_KEY):
+        self.status, self.key = status, key
+        self.chats, self.model_checks = [], 0
+
+    def __call__(self, request):
+        auth = request.headers.get("authorization", "")
+        if self.status != 200 or auth != f"Bearer {self.key}":
+            return httpx.Response(self.status if self.status != 200 else 401, json={"error": {"message": "Authentication Fails"}})
+        if request.url.path == "/models":
+            self.model_checks += 1
+            return httpx.Response(200, json={"data": [{"id": "deepseek-chat"}, {"id": "deepseek-reasoner"}]})
+        self.chats.append({"path": request.url.path, "auth": auth, "body": json.loads(request.content)})
+        chunks = [{"model": "deepseek-chat", "choices": [{"delta": {"reasoning_content": "Let me think about sourdough."}}]},
+                  {"model": "deepseek-chat", "choices": [{"delta": {"content": "You baked "}}]},
+                  {"model": "deepseek-chat", "choices": [{"delta": {"content": "sourdough [1]."}}]},
+                  {"model": "deepseek-chat", "choices": [], "usage": {"prompt_tokens": 900, "completion_tokens": 8}}]
+        body = "".join(f"data: {json.dumps(c)}\n\n" for c in chunks) + "data: [DONE]\n\n"
+        return httpx.Response(200, content=body.encode(), headers={"Content-Type": "text/event-stream"})
+
 
 class ConfigTests(unittest.TestCase):
+    def test_api_key_from_env_or_env_file(self):
+        import tempfile
+        p = PROFILES["deepseek"]
+        with tempfile.NamedTemporaryFile("w", suffix=".env", delete=False) as f:
+            f.write('OTHER=1\nexport DEEPSEEK_API_KEY="sk-from-file"\n')
+        self.addCleanup(os.unlink, f.name)
+        self.assertEqual(llm_config.api_key(p, secrets_path=f.name), "sk-from-file")
+        self.assertIsNone(llm_config.api_key(p, secrets_path="/nonexistent/.env"))
+        with mock.patch.dict(os.environ, {"DEEPSEEK_API_KEY": "sk-from-env"}):
+            self.assertEqual(llm_config.api_key(p, secrets_path=f.name), "sk-from-env")
+        self.assertIsNone(llm_config.api_key(PROFILES["best"]))
+
     def test_overrides_and_loopback(self):
         import tempfile
         with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
             json.dump({"best": {"extra_args": ["-ngl", "99"], "port": 9999}, "nope": {"port": 1}}, f)
         self.addCleanup(os.unlink, f.name)
         p = llm_config.load_profiles(f.name)
-        self.assertEqual(set(p), {"quick", "best"})
+        self.assertEqual(set(p), {"quick", "best", "deepseek", "deepseek_reasoner"})
+        self.assertEqual(p["deepseek"]["url"], "https://api.deepseek.com")
         self.assertEqual(p["best"]["extra_args"], ["-ngl", "99"])
         self.assertEqual(p["best"]["url"], "http://127.0.0.1:9999")
         self.assertEqual(p["quick"]["url"], "http://127.0.0.1:8082")

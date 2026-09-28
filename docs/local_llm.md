@@ -25,6 +25,26 @@ dropdown below it. **Stop** on the loading screen cancels the model and shows th
 - the finished answer isn't grounded: it cites no source, or most of its quotes (at least 2 checked) aren't in the
   sources it cites. What the model wrote is still available, folded, under *Show what … wrote anyway*.
 
+## DeepSeek (online, optional)
+
+Two hosted answer styles use the same pipeline (evidence, prompt, streamed `[n]` citations, quote checks and
+"No relevant info found"), but over the internet: **DeepSeek Chat · Fast** (`deepseek-chat`, a few seconds; the
+default when its key works) and **DeepSeek Reasoner · Deep** (`deepseek-reasoner`, thinks first, often 20–60 s; its
+hidden reasoning is never shown). Choosing one sends the question and the retrieved excerpts to DeepSeek's API, in
+either workspace; the answer is labelled "online", and the home status line says so while one is selected.
+
+Setup: put the key in the repo's `.env` (gitignored), readable only by you. It is read on every use, so no restart:
+
+```bash
+nano /home/naitik/sarthink-changes/.env        # add a line: DEEPSEEK_API_KEY=sk-...
+chmod 600 /home/naitik/sarthink-changes/.env
+```
+
+`GET /api/llm` checks the key with DeepSeek's `GET /models` (no tokens used; one check shared by both profiles,
+cached a few seconds) and reports `online`, or `offline` with `reason` `no_key`, `bad_key`, `unreachable` or
+`http_<code>`. The key never appears in API responses, the page or logs. Errors from DeepSeek arrive as plain
+messages: a rejected key, no balance (402), rate limiting (429) or the service being busy (500/503).
+
 ## Start and stop
 
 ```bash

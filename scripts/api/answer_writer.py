@@ -9,6 +9,7 @@ Nothing leaves the machine: the only network calls are to the loopback llama.cpp
 """
 import asyncio
 import datetime as dt
+import hashlib
 import json
 import re
 import threading
@@ -161,7 +162,10 @@ def build_messages(question, brief, profile, owner=("", ()), today=None, source_
 
 
 async def count_tokens(profile, messages, transport=None):
-    """Exact prompt size from the llama.cpp server's own tokenizer (POST /tokenize); None if unavailable."""
+    """Exact prompt size from the llama.cpp server's own tokenizer (POST /tokenize); None if unavailable
+    (always for hosted models, which have no such endpoint: the size is estimated instead)."""
+    if llm_config.is_remote(profile):
+        return None
     content = "\n".join(m["content"] for m in messages)
     try:
         async with httpx.AsyncClient(base_url=profile["url"], timeout=10.0, transport=transport) as client:
@@ -282,16 +286,32 @@ async def stream_completion(profile, messages, transport=None):
     """Yields ("token", text) for each streamed delta, then ("usage", {...}) from the final chunk.
 
     Closing the generator closes the upstream request, which makes llama-server stop generating."""
+    remote = llm_config.is_remote(profile)
     body = {
         "messages": messages,
         "stream": True,
         "max_tokens": int(profile["max_tokens"]),
         "temperature": float(profile["temperature"]),
-        "cache_prompt": False,
     }
+    headers = {}
+    if remote:
+        key = llm_config.api_key(profile)
+        if not key:
+            raise LlmError("llm_no_key", f"{profile['model_name']} needs an API key: add {profile['api_key_env']}=... to the .env file.")
+        body["model"] = profile["api_model"]
+        body["stream_options"] = {"include_usage": True}
+        headers["Authorization"] = f"Bearer {key}"
+        path, timeout = "/chat/completions", httpx.Timeout(connect=10.0, read=float(profile.get("timeout_s", 90)), write=30.0, pool=10.0)
+    else:
+        body["cache_prompt"] = False
+        path, timeout = "/v1/chat/completions", UPSTREAM_TIMEOUT
+    name = profile["model_name"] if remote else f"The {profile['label']} model"
     try:
-        async with httpx.AsyncClient(base_url=profile["url"], timeout=UPSTREAM_TIMEOUT, transport=transport) as client:
-            async with client.stream("POST", "/v1/chat/completions", json=body) as r:
+        async with httpx.AsyncClient(base_url=profile["url"], timeout=timeout, transport=transport) as client:
+            async with client.stream("POST", path, json=body, headers=headers) as r:
+                if r.status_code != 200 and remote:
+                    detail = (await r.aread()).decode("utf-8", "replace")[:200]
+                    raise remote_error(profile, r.status_code, detail)
                 if r.status_code == 503:
                     raise LlmError("llm_loading", f"The {profile['label']} model is still loading. Try again in a moment.")
                 if r.status_code != 200:
@@ -320,11 +340,27 @@ async def stream_completion(profile, messages, transport=None):
                         usage["model"] = chunk["model"]
                 yield ("usage", usage)
     except httpx.ConnectError:
+        if remote:
+            raise LlmError("llm_offline", f"Couldn't reach {profile['provider']} (is this server online?).")
         raise LlmError("llm_offline", f"The {profile['label']} model isn't running. Start it with: scripts/llm.sh start {profile['name']}")
     except httpx.TimeoutException:
-        raise LlmError("llm_failed", f"The {profile['label']} model took too long to answer.")
+        raise LlmError("llm_failed", f"{name} took too long to answer.")
     except httpx.HTTPError as e:
-        raise LlmError("llm_failed", f"The {profile['label']} model failed: {type(e).__name__}: {e}")
+        raise LlmError("llm_failed", f"{name} failed: {type(e).__name__}")
+
+
+def remote_error(profile, status, detail):
+    """A hosted API's HTTP error as a plain message (DeepSeek's documented codes). The key is never included."""
+    who = profile["model_name"]
+    if status == 401:
+        return LlmError("llm_no_key", f"{profile['provider']} rejected the API key. Check {profile['api_key_env']} in the .env file.")
+    if status == 402:
+        return LlmError("llm_failed", f"The {profile['provider']} account has no balance left.")
+    if status == 429:
+        return LlmError("llm_failed", f"{profile['provider']} is rate-limiting requests. Try again in a moment.")
+    if status in (500, 503):
+        return LlmError("llm_failed", f"{profile['provider']} is busy or unavailable right now. Try again, or use a local model.")
+    return LlmError("llm_failed", f"{who} answered HTTP {status}: {detail[:120]}")
 
 
 class LlmStatus:
@@ -335,10 +371,14 @@ class LlmStatus:
         self.transport = transport
         self._lock = threading.Lock()
         self._cache = (0.0, None)
+        self._remote_lock = threading.Lock()
+        self._remote_inflight, self._remote_result = {}, {}
 
     def _probe(self, p):
+        if llm_config.is_remote(p):
+            return self._probe_remote(p)
         base = {"label": p["label"], "model_name": p["model_name"], "description": p["description"], "model_file": Path(p["model_path"]).is_file(),
-                "start": f"scripts/llm.sh start {p['name']}"}
+                "start": f"scripts/llm.sh start {p['name']}", "remote": False}
         try:
             with httpx.Client(base_url=p["url"], timeout=1.5, transport=self.transport) as c:
                 r = c.get("/health")
@@ -356,12 +396,55 @@ class LlmStatus:
         except httpx.HTTPError:
             return {**base, "state": "offline"}
 
+    def _probe_remote(self, p):
+        """Online when the API accepts the key (GET /models: no tokens used). The key itself is never returned."""
+        base = {"label": p["label"], "model_name": p["model_name"], "description": p["description"], "model_file": True,
+                "start": "", "remote": True, "provider": p["provider"]}
+        key = llm_config.api_key(p)
+        if not key:
+            return {**base, "state": "offline", "reason": "no_key"}
+        reason = self._remote_check(p["url"], key)
+        if reason:
+            return {**base, "state": "offline", "reason": reason}
+        return {**base, "state": "online", "model": p["api_model"]}
+
+    def _remote_check(self, url, key):
+        """None when GET /models accepts the key, else a reason. One request per (API, key) per status round."""
+        slot = (url, hashlib.sha256(key.encode()).hexdigest())
+        with self._remote_lock:
+            at, result = self._remote_result.get(slot, (0.0, None))
+            if time.monotonic() - at < STATUS_TTL_S:
+                return result
+            ev = self._remote_inflight.get(slot)
+            owner = ev is None
+            if owner:
+                ev = self._remote_inflight[slot] = threading.Event()
+        if not owner:
+            ev.wait(6)
+            return self._remote_result.get(slot, (0.0, "unreachable"))[1]
+        try:
+            with httpx.Client(base_url=url, timeout=3.0, transport=self.transport) as c:
+                r = c.get("/models", headers={"Authorization": f"Bearer {key}"})
+            result = None if r.status_code == 200 else ("bad_key" if r.status_code == 401 else f"http_{r.status_code}")
+        except httpx.HTTPError:
+            result = "unreachable"
+        with self._remote_lock:
+            self._remote_result[slot] = (time.monotonic(), result)
+            del self._remote_inflight[slot]
+        ev.set()
+        return result
+
     def status(self):
         with self._lock:
             at, value = self._cache
             if value is not None and time.monotonic() - at < STATUS_TTL_S:
                 return value
-            value = {name: self._probe(p) for name, p in self.profiles.items()}
+            # Probed in parallel (hosted APIs are a network round trip away); remote profiles sharing an API and key
+            # share one check.
+            from concurrent.futures import ThreadPoolExecutor
+            with ThreadPoolExecutor(max_workers=max(1, len(self.profiles))) as pool:
+                futures = {name: pool.submit(self._probe, p) for name, p in self.profiles.items()}
+                value = {name: f.result() for name, f in futures.items()}
             self._cache = (time.monotonic(), value)
             return value
 

@@ -1707,6 +1707,65 @@ async function writerFlow(browser) {
   await page.close();
 }
 
+// DeepSeek (hosted) answer styles, stubbed: the default when its key works, labelled as online wherever it
+// writes, and a clear message instead of a request when the key is missing.
+async function deepseekFlow(browser) {
+  let keyOk = true;
+  const calls = [];
+  const remote = (label, model, state, reason) => ({ label, model_name: model, description: model, model_file: true, start: '',
+    remote: true, provider: 'DeepSeek', state, ...(reason ? { reason } : {}) });
+  const page = await open(browser, { route: async p => {
+    await stubAsk(p, calls);
+    await p.route('**/api/llm', r => r.fulfill({ json: { order: ['deepseek', 'best', 'quick', 'deepseek_reasoner'], profiles: {
+      ...llmStatus({}).profiles,
+      deepseek: remote('Fast', 'DeepSeek Chat', keyOk ? 'online' : 'offline', keyOk ? null : 'no_key'),
+      deepseek_reasoner: remote('Deep', 'DeepSeek Reasoner', keyOk ? 'online' : 'offline', keyOk ? null : 'no_key') } } }));
+    await p.route('**/api/ask/stream', async r => {
+      const body = JSON.parse(r.request().postData());
+      calls.push({ kind: 'stream', ...body });
+      const ids = await graphThreads(p).catch(() => []);
+      const brief = { question: body.question, answer: 'Found 1 memory.', confidence: 'medium', summary_points: [], timeline: [], notes: [],
+        sources: [{ rank: 1, node_id: ids[0] || null, title: 'Synthetic thread 1', platform: 'reddit', date_start: '2024-01-02T09:00:00+00:00',
+          date_end: null, similarity: .7, snippet: 'synthetic', text: 'synthetic text', people: [], relevant: true, matched_terms: [] }],
+        evidence: { retrieved: 1, considered: 1, relevant: 1, terms: [] }, filters: {}, model: 'm', took_ms: 5 };
+      const ev = [['brief', brief], ['token', { text: 'You said so [1].' }],
+        ['done', { text: 'You said so [1].', grounded: true, cited: [1], quotes: [], unverified: 0, profile: body.profile, model: 'deepseek-chat', took_ms: 900 }]];
+      await r.fulfill({ headers: { 'content-type': 'text/event-stream' }, body: ev.map(([e, d]) => `event: ${e}\ndata: ${JSON.stringify(d)}\n\n`).join('') });
+    });
+  } });
+  await page.evaluate(() => { try { localStorage.removeItem('sarthink.writer'); } catch (_) {} });
+  await page.reload();
+  await ready(page, { view: 'home' });
+  await page.waitForFunction(() => window.__sarthink.llm.checked, null, { timeout: 10000 });
+  let r = await page.evaluate(() => ({ v: document.getElementById('omni-writer').value, opts: [...document.getElementById('omni-writer').options].map(o => o.textContent),
+    priv: document.getElementById('hs-private').innerText }));
+  check('DeepSeek Chat is the default answer style when its key works, and both DeepSeek models are offered',
+    r.v === 'deepseek' && r.opts[0] === 'DeepSeek Chat · Fast' && r.opts.includes('DeepSeek Reasoner · Deep') && r.opts.at(-1) === 'Evidence only', JSON.stringify(r));
+  check('the home status says answers are written online', /Answers by DeepSeek Chat · online/.test(r.priv), r.priv);
+  await page.fill('#omni-q', 'A DeepSeek question?');
+  await page.press('#omni-q', 'Enter');
+  await page.waitForFunction(() => /Done/.test((document.querySelector('.aw-state') || {}).textContent || ''), null, { timeout: 10000 });
+  r = await page.evaluate(() => document.querySelector('.aw-by').innerText);
+  check('a DeepSeek answer is labelled as written online', /DeepSeek Chat · online/i.test(r) && calls.at(-1).profile === 'deepseek', r);
+  keyOk = false;
+  await page.reload();
+  await ready(page, { view: 'home' });
+  await page.waitForFunction(() => window.__sarthink.llm.checked, null, { timeout: 10000 });
+  await page.selectOption('#omni-writer', 'deepseek');
+  r = await page.evaluate(() => [...document.getElementById('omni-writer').options].map(o => o.textContent));
+  check('without a key DeepSeek shows "(no key)"', r[0] === 'DeepSeek Chat · Fast (no key)', JSON.stringify(r));
+  const before = calls.length;
+  await page.fill('#omni-q', 'No key question?');
+  await page.press('#omni-q', 'Enter');
+  await page.waitForSelector('.ask-main > .aw-note', { timeout: 10000 });
+  r = await page.evaluate(() => document.querySelector('.ask-main > .aw-note').innerText);
+  check('asking without a key explains how to add it and never streams', /DEEPSEEK_API_KEY/.test(r) && /\.env/.test(r)
+    && calls.slice(before).every(c => c.kind !== 'stream'), r);
+  await page.selectOption('#omni-writer', 'best');
+  check('no page errors in the DeepSeek flow', !page.errors.length, page.errors.join(' | '));
+  await page.close();
+}
+
 // The corner workspace switch (stubbed /api/workspace*): quiet by default, a wrong password is refused, a right one
 // reloads the page; and the password never appears in the page itself.
 async function workspaceFlow(browser) {
@@ -1770,7 +1829,7 @@ async function workspaceFlow(browser) {
 // SARTHINK_E2E_ONLY=homeFlow,insightsFlow runs just those flows.
 const ONLY = (process.env.SARTHINK_E2E_ONLY || '').split(',').filter(Boolean);
 const FLOWS = { mainFlow: async b => (await mainFlow(b)).close(), semanticFlow, askFlow, apiStates, dataStates, responsive,
-  homeFlow, arrowKeys, insightsFlow, homeWithoutGraph, homeResponsive, personFlow, writerFlow, workspaceFlow, ...(REAL_SEMANTIC ? { realSemantic } : {}) };
+  homeFlow, arrowKeys, insightsFlow, homeWithoutGraph, homeResponsive, personFlow, writerFlow, deepseekFlow, workspaceFlow, ...(REAL_SEMANTIC ? { realSemantic } : {}) };
 const browser = await chromium.launch({ args: ['--use-gl=swiftshader', '--enable-webgl', '--ignore-gpu-blocklist'] });
 try {
   for (const [name, flow] of Object.entries(FLOWS)) if (!ONLY.length || ONLY.includes(name)) await flow(browser);

@@ -1353,9 +1353,7 @@
         <div class="orow">
           <textarea id="omni-q" rows="1" maxlength="500" autocomplete="off" spellcheck="false" aria-label="Question for Ask NASH Think"
             placeholder="Ask anything about your memories…"></textarea>
-          <select id="omni-writer" aria-label="How to answer" title="How Ask answers: a local Llama writes it (Best, Quick) or quotes only (Evidence)">
-            <option value="best">Best</option>
-            <option value="quick">Quick</option>
+          <select id="omni-writer" aria-label="How to answer" title="How Ask answers: a model writes it, or quotes only (Evidence)">
             <option value="evidence">Evidence only</option>
           </select>
           <button id="omni-go" class="btn primary" type="submit">Ask</button>
@@ -1372,7 +1370,7 @@
     <div id="home-status" aria-live="polite">
       <span class="hs busy" id="hs-api"><i></i>Connecting…</span>
       <span class="hs busy" id="hs-graph"><i></i>Loading map…</span>
-      <span class="hs"><i style="background:var(--acc)"></i>Private · stays on this device</span>
+      <span class="hs" id="hs-private"><i style="background:var(--acc)"></i>Private · stays on this device</span>
     </div>
   </main>
 
@@ -3932,9 +3930,11 @@
       L.el.querySelector('.al-title').textContent = `Preparing an answer with ${name}`;
       L.typical = typicalWait(profile);
       L.el.querySelector('.al-bar').hidden = !L.typical;
+      const p = S.llm.profiles[profile] || {};
+      const where = isRemote(p) ? `Sent to ${p.provider} to write.` : 'Runs on this device.';
       L.el.querySelector('.al-hint').textContent = L.typical
-        ? `Runs on this device. It usually starts writing after about ${mmss(L.typical / 1000)}.`
-        : 'Runs on this device. Longer questions can take a minute or two.';
+        ? `${where} It usually starts writing after about ${mmss(L.typical / 1000)}.`
+        : `${where} ${isRemote(p) ? (profile === 'deepseek_reasoner' ? 'It thinks first, often 20–60 s.' : 'Usually a few seconds.') : 'Longer questions can take a minute or two.'}`;
     }
 
     // How long each model usually takes to start writing here (this browser only; a convenience, not data).
@@ -4035,34 +4035,55 @@
     // The stream's first event is the same brief /api/ask returns, rendered as usual; the model's text then
     // streams into a block above it. [n] in the text cites source n. Everything the model says is escaped.
     const WRITER_KEY = 'sarthink.writer';
-    const WRITERS = ['best', 'quick', 'evidence'];
-    S.llm = { profiles: {}, order: ['best', 'quick'], choice: null, checked: false };
-    try { const v = localStorage.getItem(WRITER_KEY); if (WRITERS.includes(v)) S.llm.choice = v; } catch (_) { /* storage blocked */ }
+    S.llm = { profiles: {}, order: ['deepseek', 'best', 'quick', 'deepseek_reasoner'], choice: null, checked: false };
+    try { const v = localStorage.getItem(WRITER_KEY); if (/^[a-z_]{1,20}$/.test(v || '')) S.llm.choice = v; } catch (_) { /* storage blocked */ }
 
+    const isRemote = p => !!(p && p.remote);
+
+    // The stored choice while that answer style still exists; otherwise the first running model, else evidence.
     function writerChoice() {
-      if (S.llm.choice) return S.llm.choice;
+      const c = S.llm.choice;
+      if (c && (c === 'evidence' || S.llm.profiles[c] || !S.llm.checked)) return c;
       const live = S.llm.order.find(p => (S.llm.profiles[p] || {}).state === 'online');
       return live || (S.llm.checked ? 'evidence' : 'best');
     }
 
+    function offText(p) {
+      if (p.state === 'online') return '';
+      if (p.state === 'loading') return ' (loading)';
+      return p.reason === 'no_key' ? ' (no key)' : p.reason === 'bad_key' ? ' (key rejected)' : ' (off)';
+    }
+
     function syncWriterPicker() {
       const sel = $('omni-writer');
+      const names = S.llm.order.filter(n => S.llm.profiles[n]);
+      const want = [...names, 'evidence'];
+      if ([...sel.options].map(o => o.value).join() !== want.join()) {   // rebuild only when the set changes (it may be open)
+        sel.innerHTML = names.map(n => `<option value="${esc(n)}"></option>`).join('') + '<option value="evidence">Evidence only</option>';
+      }
       const tips = ['How Ask answers:'];
-      for (const o of sel.options) {
-        const p = S.llm.profiles[o.value];
-        if (!p) continue;
-        const off = p.state !== 'online' ? (p.state === 'loading' ? ' (loading)' : ' (off)') : '';
-        o.textContent = `${p.model_name} · ${p.label}${off}`;   // "Llama 3.1 8B · Best"
-        tips.push(`${p.label}: ${p.description}${off ? ` — not running (${p.start})` : ''}`);
+      for (const n of names) {
+        const p = S.llm.profiles[n], off = offText(p);
+        [...sel.options].find(o => o.value === n).textContent = `${p.model_name} · ${p.label}${off}`;   // "Llama 3.1 8B · Best"
+        tips.push(`${p.model_name}: ${p.description}${off ? ` —${off.replace(/[()]/g, '')}${p.start ? ` (${p.start})` : ''}` : ''}`);
       }
       tips.push('Evidence only: instant quotes and counts, no model');
       sel.title = tips.join('\n');
       sel.value = writerChoice();
+      syncPrivacyLine();
+    }
+
+    // The home status line says where answers are written: on this device, or by an online model.
+    function syncPrivacyLine() {
+      const el = $('hs-private'), p = S.llm.profiles[writerChoice()];
+      if (!el) return;
+      el.lastChild.textContent = isRemote(p) ? `Answers by ${p.model_name} · online` : 'Private · stays on this device';
+      el.title = isRemote(p) ? `Questions and the retrieved excerpts are sent to ${p.provider} to write the answer.` : 'Everything runs on this device.';
     }
 
     async function refreshLlm() {
       try {
-        const d = await apiFetch('/api/llm', { timeout: 4000 });
+        const d = await apiFetch('/api/llm', { timeout: 9000 });   // hosted models are checked over the network
         S.llm.profiles = d.profiles || {};
         S.llm.order = d.order || S.llm.order;
       } catch (_) {
@@ -4176,7 +4197,7 @@
       if (!main) return null;
       clearAskLoader();
       const p = S.llm.profiles[profile] || {};
-      main.innerHTML = `<div class="ask-written"><div class="aw-head"><span class="aw-by">${esc(p.model_name ? `Written by ${p.model_name}` : 'Written answer')} · on this device</span>
+      main.innerHTML = `<div class="ask-written"><div class="aw-head"><span class="aw-by">${esc(p.model_name ? `Written by ${p.model_name}` : 'Written answer')} · ${isRemote(p) ? 'online' : 'on this device'}</span>
         <span class="aw-state" aria-live="polite"></span></div><div class="aw-text"></div><div class="aw-note" hidden></div></div>`;
       const box = main.firstElementChild;
       box.querySelector('.aw-text').addEventListener('click', citeClick);
@@ -4215,6 +4236,13 @@
     // Shown instead of a stream when the chosen model isn't running.
     function writerOffline(profile) {
       const p = S.llm.profiles[profile] || { label: profile, start: `scripts/llm.sh start ${profile}` };
+      if (isRemote(p)) {
+        const why = p.reason === 'no_key' ? `has no API key yet (add <code>DEEPSEEK_API_KEY=…</code> to the <code>.env</code> file)`
+          : p.reason === 'bad_key' ? 'rejected the API key (check <code>DEEPSEEK_API_KEY</code> in the <code>.env</code> file)'
+          : 'can’t be reached right now';
+        askFallback(`${esc(p.model_name)} ${why}, so here is the evidence summary. Or pick another answer style.`);
+        return;
+      }
       askFallback(`The ${esc(p.label)} model isn’t running, so here is the evidence summary. Start it with <code>${esc(p.start)}</code>, or pick another answer style.`);
     }
 
@@ -4289,7 +4317,7 @@
             }
           } else if (ev === 'error') {
             finished = true;
-            const cmd = d.code === 'llm_offline' ? (p.start || `scripts/llm.sh start ${profile}`) : '';
+            const cmd = d.code === 'llm_offline' && !isRemote(p) ? (p.start || `scripts/llm.sh start ${profile}`) : '';
             askFallback(`${esc(d.message.replace(/ Start it with:.*$/, ''))}${cmd ? ` Start it with <code>${esc(cmd)}</code>.` : ''} Here is the evidence summary instead.`);
             semStatus('warn', 'Written answer unavailable — showing the evidence');
           }
@@ -4806,6 +4834,7 @@
     $('omni-writer').addEventListener('change', e => {
       S.llm.choice = e.target.value;
       try { localStorage.setItem(WRITER_KEY, S.llm.choice); } catch (_) { /* storage blocked */ }
+      syncPrivacyLine();
     });
     $('omni-writer').addEventListener('focus', refreshLlm);
     refreshLlm();

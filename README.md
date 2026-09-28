@@ -24,11 +24,11 @@ The project is structured into three main layers, with all logic centralized in 
 7.  **Local API** (`scripts/api/server.py`): A FastAPI server that serves the graph and answers semantic memory searches against the local LanceDB index.
 
 ## Local-first privacy model
-- **Everything runs on this machine.** Parsing, the SQLite memory database, embeddings (CPU), semantic search, Ask Sarthink and Insights are all local. No archive text, prompt, query or retrieved memory is sent to a hosted API or LLM service. (The only optional exception is `scripts/semantic/summarizer.py`, which calls a hosted LLM and is not needed.)
+- **Everything runs on this machine.** Parsing, the SQLite memory database, embeddings (CPU), semantic search, Ask Sarthink and Insights are all local. No archive text, prompt, query or retrieved memory is sent to a hosted API or LLM service, with two opt-in exceptions: the **DeepSeek** answer styles (chosen per question in the answer picker; the question and the retrieved excerpts go to DeepSeek's API, and the UI labels those answers "online"), and `scripts/semantic/summarizer.py`, which calls a hosted LLM and is not needed.
 - **Nothing is exposed publicly.** The API binds to `127.0.0.1` only; reach it from a laptop through an SSH tunnel (below), never by binding `0.0.0.0`.
 - **Private data never enters git.** `archive/`, `incoming/`, `processed_data/` (database, index, graph CSVs, logs), `config/identity_map.json`, `.venv/`, `.cache/`, local models (`models/`, `*.gguf`) and tools (`.tools/`) are gitignored.
 - **Read-only where it can be.** The graph export and `/api/insights` open the database read-only; the UI escapes every archive-derived string before inserting it into the page.
-- **Ask Sarthink needs no LLM, and any LLM it uses is local.** Evidence is always found and graded without a language model (quotes and counts, see below). Optionally, a local Llama (Llama 3.1 8B or 3.2 3B via llama.cpp on `127.0.0.1`) turns that evidence into a written answer with citations (`docs/local_llm.md`); nothing else depends on it.
+- **Ask Sarthink needs no LLM.** Evidence is always found and graded without a language model (quotes and counts, see below). Optionally, a model turns that evidence into a written answer with citations (`docs/local_llm.md`): a local Llama (Llama 3.1 8B or 3.2 3B via llama.cpp on `127.0.0.1`, nothing leaves the machine), or DeepSeek Chat / DeepSeek Reasoner over the internet (seconds instead of minutes; needs `DEEPSEEK_API_KEY` in the gitignored `.env`). Nothing else depends on it.
 
 ## Run the demo
 
