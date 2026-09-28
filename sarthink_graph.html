@@ -596,7 +596,7 @@
     .ask-none details > summary { cursor: pointer; }
     .ask-none details > summary:hover { color: #fff; }
     .ask-none .aw-text { font-size: .72rem; color: var(--mid); margin-top: 6px; }
-    #omni-writer { flex: 0 0 auto; align-self: center; max-width: 150px; font: inherit; font-size: .72rem; color: var(--mid); cursor: pointer;
+    #omni-writer { flex: 0 0 auto; align-self: center; max-width: 200px; font: inherit; font-size: .72rem; color: var(--mid); cursor: pointer;
       background: rgba(255, 255, 255, .06); border: 1px solid var(--bdr); border-radius: 8px; padding: 6px 4px; }
     #omni-writer option { background: #151822; color: #fff; }
     #omni[data-mode="search"] #omni-writer { display: none; }
@@ -4052,7 +4052,7 @@
         const p = S.llm.profiles[o.value];
         if (!p) continue;
         const off = p.state !== 'online' ? (p.state === 'loading' ? ' (loading)' : ' (off)') : '';
-        o.textContent = `${p.label} · ${String(p.model_name).split(' ').pop()}${off}`;   // "Best · 8B"
+        o.textContent = `${p.model_name} · ${p.label}${off}`;   // "Llama 3.1 8B · Best"
         tips.push(`${p.label}: ${p.description}${off ? ` — not running (${p.start})` : ''}`);
       }
       tips.push('Evidence only: instant quotes and counts, no model');

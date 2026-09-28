@@ -1560,7 +1560,7 @@ async function writerFlow(browser) {
   const pick = await page.evaluate(() => ({ v: document.getElementById('omni-writer').value,
     opts: [...document.getElementById('omni-writer').options].map(o => o.textContent) }));
   check('answer picker defaults to Best when it is running and marks others off',
-    pick.v === 'best' && /^Best · 8B$/.test(pick.opts[0]) && /\(off\)/.test(pick.opts[1]), JSON.stringify(pick));
+    pick.v === 'best' && /^Llama 3\.1 8B · Best$/.test(pick.opts[0]) && /^Llama 3\.2 3B · Quick \(off\)$/.test(pick.opts[1]), JSON.stringify(pick));
 
   const ask = async q => {
     await page.fill('#omni-q', q);
