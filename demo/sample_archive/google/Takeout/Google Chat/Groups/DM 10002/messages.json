@@ -1,0 +1,676 @@
+{
+  "messages": [
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, January 13, 2024 at 10:49:35 AM UTC",
+      "text": "suno, the funniest part of the Unicode filename was my comment saying this could never happen 🙌",
+      "message_id": "cf57c5ee-c5ab-5911-8634-04a8b8667e71"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Saturday, January 13, 2024 at 10:51:12 AM UTC",
+      "text": "Check: haan dekha, please keep that comment beside the Unicode filename fixture as a historical artefact",
+      "message_id": "f38d24a9-dbe4-5ff9-b908-0d2d6c3f6a7d",
+      "topic_id": "cf57c5ee-c5ab-5911-8634-04a8b8667e71"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, January 13, 2024 at 10:52:49 AM UTC",
+      "text": "samajh gaya, renamed the test to say what the Unicode filename actually does instead of claiming magic",
+      "message_id": "9c885521-aa19-526b-929e-decf614a120e",
+      "topic_id": "f38d24a9-dbe4-5ff9-b908-0d2d6c3f6a7d"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Saturday, January 13, 2024 at 10:54:26 AM UTC",
+      "text": "Check: done hai, good, future us can understand the Unicode filename without reading our minds",
+      "message_id": "8566420d-7b79-52bf-9bf5-e47b97e64b96",
+      "topic_id": "9c885521-aa19-526b-929e-decf614a120e"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, January 23, 2024 at 5:12:51 PM UTC",
+      "text": "I got stuck on date filter while looking at the minimal reproduction; midnight records land on the wrong day.",
+      "message_id": "f1e17fc4-08b6-5962-a29b-313da0feabb1"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Tuesday, January 23, 2024 at 5:14:28 PM UTC",
+      "text": "Check: for the date filter question from the minimal reproduction, make the timezone conversion explicit and compare the two versions.",
+      "message_id": "75474226-14fa-5c93-8ed5-7b86694dde03",
+      "topic_id": "f1e17fc4-08b6-5962-a29b-313da0feabb1"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, January 23, 2024 at 5:16:05 PM UTC",
+      "text": "The revised date filter for the minimal reproduction makes more sense — the midnight row stays in the intended day.",
+      "message_id": "ceb0cfb3-705b-50b1-85a0-69de1e24cb96",
+      "topic_id": "75474226-14fa-5c93-8ed5-7b86694dde03"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Tuesday, January 23, 2024 at 5:17:42 PM UTC",
+      "text": "Check: nice, put that boundary-date fixture beside the date filter notes for the minimal reproduction.",
+      "message_id": "e49cdcf3-e985-5b8c-9b7d-5cac1c225568",
+      "topic_id": "ceb0cfb3-705b-50b1-85a0-69de1e24cb96"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, January 29, 2024 at 4:48:53 PM UTC",
+      "text": "sorry, just noticed the renamed file review was on the revised page, not the latest copy",
+      "message_id": "b6067da9-bba0-503f-9b59-6786042a704e"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Monday, January 29, 2024 at 4:50:30 PM UTC",
+      "text": "Check: that explains why the renamed file looked different in the screen share in the evening",
+      "message_id": "a765d2d8-edff-50ce-b97c-f3a2762cfbc2",
+      "topic_id": "b6067da9-bba0-503f-9b59-6786042a704e"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, January 29, 2024 at 4:52:07 PM UTC",
+      "text": "moving the comment from the revised page to the current renamed file example now",
+      "message_id": "c0338613-81be-58b9-a034-bd3e94b680b0",
+      "topic_id": "a765d2d8-edff-50ce-b97c-f3a2762cfbc2"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Monday, January 29, 2024 at 4:53:44 PM UTC",
+      "text": "Check: leave a pointer in the revised page so the next reviewer can find the current renamed file notes",
+      "message_id": "da2a9f7a-e289-5c06-877c-c65a8ba9f701",
+      "topic_id": "c0338613-81be-58b9-a034-bd3e94b680b0"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Friday, April 19, 2024 at 12:35:11 PM UTC",
+      "text": "Check: pushed a small patch for the blank search, leaving the bigger change for later",
+      "message_id": "fe89a5f9-68be-5df3-97fa-76d63e8f922c"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, April 19, 2024 at 12:36:48 PM UTC",
+      "text": "can you put the blank search in the reproduction notes before the screen share after class?",
+      "message_id": "d334f7fc-6cf2-5080-9c0f-e4c09d2ddc7c",
+      "topic_id": "fe89a5f9-68be-5df3-97fa-76d63e8f922c"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Friday, April 19, 2024 at 12:38:25 PM UTC",
+      "text": "Check: done, the blank search notes include the input and the actual output ✅",
+      "message_id": "66835029-92cc-5d19-b4fb-3fa60b45745b",
+      "topic_id": "d334f7fc-6cf2-5080-9c0f-e4c09d2ddc7c"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, April 19, 2024 at 12:40:02 PM UTC",
+      "text": "okay, the blank search then",
+      "message_id": "fa786edd-8e1e-587d-941c-1d51341c8d0e",
+      "topic_id": "66835029-92cc-5d19-b4fb-3fa60b45745b"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Thursday, July 18, 2024 at 2:37:12 PM UTC",
+      "text": "sorry, just noticed the empty folder review was on the quieter version, not the latest copy",
+      "message_id": "529e48e5-fc71-5e70-aac5-3a69860ba38d"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Thursday, July 18, 2024 at 2:38:49 PM UTC",
+      "text": "Check: that explains why the empty folder looked different in the screen share tomorrow morning",
+      "message_id": "1d503c60-b462-5642-a4b3-2d4f7f2aec26",
+      "topic_id": "529e48e5-fc71-5e70-aac5-3a69860ba38d"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Thursday, July 18, 2024 at 2:40:26 PM UTC",
+      "text": "moving the comment from the quieter version to the current empty folder example now",
+      "message_id": "43f49c8a-29c5-513c-9244-50f601a0fe5a",
+      "topic_id": "1d503c60-b462-5642-a4b3-2d4f7f2aec26"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Thursday, July 18, 2024 at 2:42:03 PM UTC",
+      "text": "Check: leave a pointer in the quieter version so the next reviewer can find the current empty folder notes",
+      "message_id": "db8ef743-ce7e-5c02-bc43-984e2cbed154",
+      "topic_id": "43f49c8a-29c5-513c-9244-50f601a0fe5a"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, December 8, 2024 at 6:02:33 PM UTC",
+      "text": "Sorry, saw this late; on error banner from the offline sample, the raw exception is hard to understand.",
+      "message_id": "38eeda3a-5446-55e8-9b16-e7f493d1f725"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Sunday, December 8, 2024 at 6:04:10 PM UTC",
+      "text": "Check: with error banner in the offline sample, maybe show a useful action beside the error summary before changing anything else. 🤔",
+      "message_id": "8d18603f-f1de-5b21-9a7e-153e532126d3",
+      "topic_id": "38eeda3a-5446-55e8-9b16-e7f493d1f725"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, December 8, 2024 at 6:05:47 PM UTC",
+      "text": "Finished checking error banner in the offline sample and, yes, the banner explains what the user can try.",
+      "message_id": "a17a3e3c-8346-5cb6-a686-0c180ef09d17",
+      "topic_id": "8d18603f-f1de-5b21-9a7e-153e532126d3"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Sunday, December 8, 2024 at 6:07:24 PM UTC",
+      "text": "Check: for the next pass at the offline sample, leave the error-state screenshot with error banner.",
+      "message_id": "cb789a8d-3ff3-5e7f-a5a1-ac98123e263d",
+      "topic_id": "a17a3e3c-8346-5cb6-a686-0c180ef09d17"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Thursday, December 19, 2024 at 8:08:10 AM UTC",
+      "text": "Check: sorry, just noticed the renamed file review was on the test export, not the latest copy",
+      "message_id": "7c1e6e14-f79d-5634-810a-7cae2ea86e97"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Thursday, December 19, 2024 at 8:09:47 AM UTC",
+      "text": "that explains why the renamed file looked different in the screen share during the long break",
+      "message_id": "b70f0155-cd32-538c-bf7d-f1926d68be04",
+      "topic_id": "7c1e6e14-f79d-5634-810a-7cae2ea86e97"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Thursday, December 19, 2024 at 8:11:24 AM UTC",
+      "text": "Check: moving the comment from the test export to the current renamed file example now",
+      "message_id": "b23eefbb-f87f-5550-8939-0f39db364295",
+      "topic_id": "b70f0155-cd32-538c-bf7d-f1926d68be04"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Thursday, December 19, 2024 at 8:13:01 AM UTC",
+      "text": "leave a pointer in the test export so the next reviewer can find the current renamed file notes",
+      "message_id": "50282d05-878c-501c-ab15-c275f25d4cfc",
+      "topic_id": "b23eefbb-f87f-5550-8939-0f39db364295"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, April 7, 2025 at 12:12:03 PM UTC",
+      "text": "yaar, I can explain the missing parent verbally but my notes still look like a maze",
+      "message_id": "d742572f-2994-560b-9563-7bcc42df07f9"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Monday, April 7, 2025 at 12:13:40 PM UTC",
+      "text": "Check: haan, bring the tiny missing parent example to the corner tea stall before lunch 🙌",
+      "message_id": "0579a04d-eecd-5fcb-ba75-8d939e34457c",
+      "topic_id": "d742572f-2994-560b-9563-7bcc42df07f9"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, April 7, 2025 at 12:15:17 PM UTC",
+      "text": "achha, will do, the pink notebook has the missing parent sketch",
+      "message_id": "ccf39325-72c6-5a48-9b87-c2d95c91b4a6",
+      "topic_id": "0579a04d-eecd-5fcb-ba75-8d939e34457c"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Monday, April 7, 2025 at 12:16:54 PM UTC",
+      "text": "Check: theek h, right, before lunch 😅",
+      "message_id": "eb297205-3c3d-5f84-ba77-3630843ce92c",
+      "topic_id": "ccf39325-72c6-5a48-9b87-c2d95c91b4a6"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Friday, October 3, 2025 at 6:06:25 PM UTC",
+      "text": "Check: pushed a small patch for the offline start, leaving the bigger change for later 👍",
+      "message_id": "48bc7d0d-f170-5858-ae0b-d295d33840a5"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, October 3, 2025 at 6:08:02 PM UTC",
+      "text": "can you put the offline start in the reproduction notes before the screen share once the rain stops?",
+      "message_id": "4adb990b-f3ea-57cd-b62d-9e012a465942",
+      "topic_id": "48bc7d0d-f170-5858-ae0b-d295d33840a5"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Friday, October 3, 2025 at 6:09:39 PM UTC",
+      "text": "Check: done, the offline start notes include the input and the actual output ✅",
+      "message_id": "05126b8c-7289-54c2-a963-70a67fbdbfd7",
+      "topic_id": "4adb990b-f3ea-57cd-b62d-9e012a465942"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, October 3, 2025 at 6:11:16 PM UTC",
+      "text": "thanks, I will check the offline start against that input once the rain stops",
+      "message_id": "4d202f8d-708f-567a-bf00-2c68b57ab682",
+      "topic_id": "05126b8c-7289-54c2-a963-70a67fbdbfd7"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, December 5, 2025 at 3:01:01 AM UTC",
+      "text": "sorry, just noticed the blank search review was on the marked-up copy, not the latest copy",
+      "message_id": "477bdfc8-3106-50c0-9aaf-a36d6c37fcd4"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Friday, December 5, 2025 at 3:02:38 AM UTC",
+      "text": "Check: that explains why the blank search looked different in the screen share after the lab 🙂",
+      "message_id": "ef9218b7-9d22-580b-ad19-1698ff7844a2",
+      "topic_id": "477bdfc8-3106-50c0-9aaf-a36d6c37fcd4"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, December 5, 2025 at 3:04:15 AM UTC",
+      "text": "moving the comment from the marked-up copy to the current blank search example now",
+      "message_id": "db7b7e14-5587-5e5c-8491-1e9812b7f451",
+      "topic_id": "ef9218b7-9d22-580b-ad19-1698ff7844a2"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Friday, December 5, 2025 at 3:05:52 AM UTC",
+      "text": "Check: leave a pointer in the marked-up copy so the next reviewer can find the current blank search notes",
+      "message_id": "ca488063-6a77-590e-ab52-484054a378e3",
+      "topic_id": "db7b7e14-5587-5e5c-8491-1e9812b7f451"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Sunday, December 28, 2025 at 6:05:42 PM UTC",
+      "text": "Check: quick check on CSV writer in the import exercise: a comma splits one message into two columns.",
+      "message_id": "8414cbf3-3678-5730-9884-82d7dd55508c"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, December 28, 2025 at 6:07:19 PM UTC",
+      "text": "About CSV writer from the import exercise — let the CSV writer quote complete field values, then send the result.",
+      "message_id": "89d0f52c-53b0-5710-8039-7ac5447ae60b",
+      "topic_id": "8414cbf3-3678-5730-9884-82d7dd55508c"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Sunday, December 28, 2025 at 6:08:56 PM UTC",
+      "text": "Check: just compared CSV writer again in the import exercise; the comma remains inside one cell.",
+      "message_id": "6f7266c1-a77c-5eca-bfae-c61e5e9d4265",
+      "topic_id": "89d0f52c-53b0-5710-8039-7ac5447ae60b"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, December 28, 2025 at 6:10:33 PM UTC",
+      "text": "Could you attach the round-trip row to CSV writer in the notes for the import exercise?",
+      "message_id": "c60f028b-5c1e-5f76-8f47-83822feefa75",
+      "topic_id": "6f7266c1-a77c-5eca-bfae-c61e5e9d4265"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Wednesday, February 18, 2026 at 3:30:12 PM UTC",
+      "text": "Check: i can explain the blank search verbally but my notes still look like a maze",
+      "message_id": "03ff115b-27c2-57f5-83de-eec7624c0065"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Wednesday, February 18, 2026 at 3:31:49 PM UTC",
+      "text": "bring the tiny blank search example to the stair landing after class",
+      "message_id": "1eda6be9-d071-5b82-a3e1-1ab8ccb2607a",
+      "topic_id": "03ff115b-27c2-57f5-83de-eec7624c0065"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Wednesday, February 18, 2026 at 3:33:26 PM UTC",
+      "text": "Check: will do, the pink notebook has the blank search sketch",
+      "message_id": "43fd91bb-5d43-56ec-a29b-56621f8b9957",
+      "topic_id": "1eda6be9-d071-5b82-a3e1-1ab8ccb2607a"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Wednesday, February 18, 2026 at 3:35:03 PM UTC",
+      "text": "got it — after class",
+      "message_id": "1226c839-2016-59b7-905a-0f337a71c484",
+      "topic_id": "43fd91bb-5d43-56ec-a29b-56621f8b9957"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Thursday, April 9, 2026 at 3:05:28 PM UTC",
+      "text": "Check: the funniest part of the last page was my comment saying this could never happen",
+      "message_id": "6043ea53-7e4b-5fbf-9a9e-62080e9d2792"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Thursday, April 9, 2026 at 3:07:05 PM UTC",
+      "text": "please keep that comment beside the last page fixture as a historical artefact",
+      "message_id": "14952f92-e253-5caa-8dbb-41a15ca28d44",
+      "topic_id": "6043ea53-7e4b-5fbf-9a9e-62080e9d2792"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Thursday, April 9, 2026 at 3:08:42 PM UTC",
+      "text": "Check: renamed the test to say what the last page actually does instead of claiming magic",
+      "message_id": "9b3fde48-e8bc-5168-be24-dc4782251507",
+      "topic_id": "14952f92-e253-5caa-8dbb-41a15ca28d44"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Thursday, April 9, 2026 at 3:10:19 PM UTC",
+      "text": "good, future us can understand the last page without reading our minds",
+      "message_id": "3a1de729-8ce2-5ca4-9ae5-03e7186d9ca2",
+      "topic_id": "9b3fde48-e8bc-5168-be24-dc4782251507"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, May 12, 2026 at 2:35:10 PM UTC",
+      "text": "sorry, just noticed the duplicate row review was on the second sketch, not the latest copy",
+      "message_id": "25ae2601-424e-5dac-b913-2c3c66e6b1a6"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Tuesday, May 12, 2026 at 2:36:47 PM UTC",
+      "text": "Check: that explains why the duplicate row looked different in the screen share tomorrow morning",
+      "message_id": "302dcd5a-f959-5ea6-8847-03e179524963",
+      "topic_id": "25ae2601-424e-5dac-b913-2c3c66e6b1a6"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, May 12, 2026 at 2:38:24 PM UTC",
+      "text": "moving the comment from the second sketch to the current duplicate row example now",
+      "message_id": "4d0486ef-1606-5060-a02b-6f41e9b17605",
+      "topic_id": "302dcd5a-f959-5ea6-8847-03e179524963"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Tuesday, May 12, 2026 at 2:40:01 PM UTC",
+      "text": "Check: got it — tomorrow morning",
+      "message_id": "7c67fead-fa46-5be0-96c9-f92ce4bd3034",
+      "topic_id": "4d0486ef-1606-5060-a02b-6f41e9b17605"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, May 15, 2026 at 4:15:10 PM UTC",
+      "text": "😭🙌",
+      "message_id": "29f79327-8f1b-580d-a8ac-1d7a228ad763"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, June 1, 2026 at 3:14:48 PM UTC",
+      "text": "suno, I can explain the Unicode filename verbally but my notes still look like a maze",
+      "message_id": "780a848c-589c-5572-95ab-9a12f6edef43"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Monday, June 1, 2026 at 3:16:25 PM UTC",
+      "text": "Check: haan dekha, bring the tiny Unicode filename example to the canteen entrance after class",
+      "message_id": "2294ac99-d5df-5910-a185-50f2885222e8",
+      "topic_id": "780a848c-589c-5572-95ab-9a12f6edef43"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, June 1, 2026 at 3:18:02 PM UTC",
+      "text": "samajh gaya, will do, the green notebook has the Unicode filename sketch",
+      "message_id": "c9450cfb-19af-5228-bf9d-39403db236eb",
+      "topic_id": "2294ac99-d5df-5910-a185-50f2885222e8"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Monday, June 1, 2026 at 3:19:39 PM UTC",
+      "text": "Check: done hai, nice, one the Unicode filename diagram and then a break for ginger tea",
+      "message_id": "384ce82a-d25a-54ca-8a37-ae26d074add7",
+      "topic_id": "c9450cfb-19af-5228-bf9d-39403db236eb"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Thursday, June 4, 2026 at 4:57:21 AM UTC",
+      "text": "the funniest part of the slow request was my comment saying this could never happen",
+      "message_id": "962115a2-66d1-56d6-9a4b-dbae885fe0b0"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Thursday, June 4, 2026 at 4:58:58 AM UTC",
+      "text": "Check: please keep that comment beside the slow request fixture as a historical artefact",
+      "message_id": "4109d189-1d23-54ee-87fb-2cbc7d57fe2e",
+      "topic_id": "962115a2-66d1-56d6-9a4b-dbae885fe0b0"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Thursday, June 4, 2026 at 5:00:35 AM UTC",
+      "text": "renamed the test to say what the slow request actually does instead of claiming magic ✅",
+      "message_id": "7862587f-c271-5c67-bbad-4535a416af71",
+      "topic_id": "4109d189-1d23-54ee-87fb-2cbc7d57fe2e"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Thursday, June 4, 2026 at 5:02:12 AM UTC",
+      "text": "Check: good, future us can understand the slow request without reading our minds",
+      "message_id": "192dfabb-6bf0-5c78-93d0-317c682219d3",
+      "topic_id": "7862587f-c271-5c67-bbad-4535a416af71"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Friday, July 10, 2026 at 6:31:58 PM UTC",
+      "text": "Check: something odd in the keyboard-only pass: search box has a snag — a trailing space changes the result. 😭",
+      "message_id": "212d2231-5f48-572d-ae82-90d2f0b63335"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, July 10, 2026 at 6:33:35 PM UTC",
+      "text": "Try this on search box from the keyboard-only pass: trim the query at the input boundary. 😅",
+      "message_id": "8dd0ffb9-2c5c-5128-9bb5-28d21a3605c2",
+      "topic_id": "212d2231-5f48-572d-ae82-90d2f0b63335"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Friday, July 10, 2026 at 6:35:12 PM UTC",
+      "text": "Check: saving the revised search box from the keyboard-only pass, since the same query gives the same matches.",
+      "message_id": "ac3f16e5-6ee5-53c0-99bc-1287b7a684c2",
+      "topic_id": "8dd0ffb9-2c5c-5128-9bb5-28d21a3605c2"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, July 10, 2026 at 6:36:49 PM UTC",
+      "text": "send the query example?",
+      "message_id": "79692382-fbc8-5bca-b534-dc5258e7f156",
+      "topic_id": "ac3f16e5-6ee5-53c0-99bc-1287b7a684c2"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name": "Draft review",
+  "members": [
+    {
+      "name": "Aarav Mehta",
+      "email": "aarav.mehta.dev@gmail.com"
+    },
+    {
+      "name": "Meera Shah",
+      "email": "meera.shah@example.com"
+    },
+    {
+      "name": "Nisha Verma",
+      "email": "nisha.verma@example.com"
+    }
+  ]
+}

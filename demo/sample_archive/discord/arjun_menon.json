@@ -1,0 +1,1301 @@
+{
+  "guild": {
+    "id": "0",
+    "name": "Direct Messages"
+  },
+  "channel": {
+    "id": "901234567890123456",
+    "type": "DirectTextChat",
+    "name": "arjun-menon",
+    "topic": "Arjun Menon"
+  },
+  "messages": [
+    {
+      "id": "1208143900049408070",
+      "type": "Default",
+      "timestamp": "2024-02-16T20:12:32.000+00:00",
+      "content": "at the campus gate with the navy notebook, starting the revision bit now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1208144306896896071",
+      "type": "Reply",
+      "timestamp": "2024-02-16T20:14:09.000+00:00",
+      "content": "which part is first in that navy notebook today?",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1208143900049408070",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1208144713744384072",
+      "type": "Reply",
+      "timestamp": "2024-02-16T20:15:46.000+00:00",
+      "content": "one worked example first, then checking the mistakes beside the navy margin",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1208144306896896071",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1208145120591872073",
+      "type": "Reply",
+      "timestamp": "2024-02-16T20:17:23.000+00:00",
+      "content": "right, navy 😅",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1208144713744384072",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1223946175250432146",
+      "type": "Default",
+      "timestamp": "2024-03-31T10:45:08.000+00:00",
+      "content": "at the stair landing with the red notebook, starting the revision bit now",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1223946582097920147",
+      "type": "Reply",
+      "timestamp": "2024-03-31T10:46:45.000+00:00",
+      "content": "which part is first in that red notebook today?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1223946175250432146",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1223946988945408148",
+      "type": "Reply",
+      "timestamp": "2024-03-31T10:48:22.000+00:00",
+      "content": "one worked example first, then checking the mistakes beside the red margin",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1223946582097920147",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1223947395792896149",
+      "type": "Reply",
+      "timestamp": "2024-03-31T10:49:59.000+00:00",
+      "content": "sounds manageable, I will be near the stair landing at the weekend if you need the notes",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1223946988945408148",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1231650730016768178",
+      "type": "Default",
+      "timestamp": "2024-04-21T17:00:17.000+00:00",
+      "content": "done with the example in the darker version, going for nimbu paani now",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1231651136864256179",
+      "type": "Reply",
+      "timestamp": "2024-04-21T17:01:54.000+00:00",
+      "content": "did the confusing step in the darker version finally make sense?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1231650730016768178",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1231651543711744180",
+      "type": "Reply",
+      "timestamp": "2024-04-21T17:03:31.000+00:00",
+      "content": "yes, drawing it in the teal notebook helped more than rereading the darker version",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1231651136864256179",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1231651950559232181",
+      "type": "Reply",
+      "timestamp": "2024-04-21T17:05:08.000+00:00",
+      "content": "okay, the darker version then",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1231651543711744180",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1248137838592000190",
+      "type": "Default",
+      "timestamp": "2024-06-06T04:54:10.000+00:00",
+      "content": "ek chhota doubt, the practice paper ke OS scheduling table mein the waiting times do not match the timeline",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1248138245439488191",
+      "type": "Reply",
+      "timestamp": "2024-06-06T04:55:47.000+00:00",
+      "content": "the practice paper mein OS scheduling table par ek baar mark arrivals on a separate line first, dekhte h kya hota",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1248137838592000190",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1248138652286976192",
+      "type": "Reply",
+      "timestamp": "2024-06-06T04:57:24.000+00:00",
+      "content": "the practice paper wala OS scheduling table phir check kiya, ab the table agrees with the timeline",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1248138245439488191",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1248139059134464193",
+      "type": "Reply",
+      "timestamp": "2024-06-06T04:59:01.000+00:00",
+      "content": "worked timeline makes sense now",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1248138652286976192",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1252311410147328214",
+      "type": "Default",
+      "timestamp": "2024-06-17T17:18:27.000+00:00",
+      "content": "Something odd in the worked-example page: networking notes has a snag — two similar terms keep getting mixed up.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1252311816994816215",
+      "type": "Reply",
+      "timestamp": "2024-06-17T17:20:04.000+00:00",
+      "content": "With networking notes in the worked-example page, maybe write a tiny contrasting example for each before changing anything else.",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1252311410147328214",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1252312223842304216",
+      "type": "Reply",
+      "timestamp": "2024-06-17T17:21:41.000+00:00",
+      "content": "The revised networking notes for the worked-example page makes more sense — the distinction is clear in the example.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1252311816994816215",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1252312630689792217",
+      "type": "Reply",
+      "timestamp": "2024-06-17T17:23:18.000+00:00",
+      "content": "comparison card saved?",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1252312223842304216",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1342130677088256590",
+      "type": "Default",
+      "timestamp": "2025-02-20T13:48:09.000+00:00",
+      "content": "",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [
+        {
+          "id": "1342130677088256591",
+          "fileName": "shared_frame.png",
+          "url": "https://media.example/shared_frame.png"
+        }
+      ],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1355512029380608655",
+      "type": "Default",
+      "timestamp": "2025-03-29T12:00:52.000+00:00",
+      "content": "Nearly done with lab report for the error-log review, except the conclusion mentions a result missing from the table.",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1355512436228096656",
+      "type": "Reply",
+      "timestamp": "2025-03-29T12:02:29.000+00:00",
+      "content": "I checked the error-log review; for lab report, start by trying to check the conclusion against the recorded output.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1355512029380608655",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1355512843075584657",
+      "type": "Reply",
+      "timestamp": "2025-03-29T12:04:06.000+00:00",
+      "content": "The revised lab report for the error-log review makes more sense — each claim points to a visible result.",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1355512436228096656",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1355513249923072658",
+      "type": "Reply",
+      "timestamp": "2025-03-29T12:05:43.000+00:00",
+      "content": "That settles lab report for the error-log review; the corrected table is the useful bit to keep.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1355512843075584657",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1408152587206656928",
+      "type": "Default",
+      "timestamp": "2025-08-21T18:15:39.000+00:00",
+      "content": "bhai the class recap mein study plan dekhna, the first task is too vague to begin",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1408152994054144929",
+      "type": "Reply",
+      "timestamp": "2025-08-21T18:17:16.000+00:00",
+      "content": "haan the class recap wala study plan dekha; write the first question beside the topic, shayad clear ho",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1408152587206656928",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1408153400901632930",
+      "type": "Reply",
+      "timestamp": "2025-08-21T18:18:53.000+00:00",
+      "content": "achha, the class recap ke study plan ka scene clear hai: starting no longer requires another planning session",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1408152994054144929",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1408153807749120931",
+      "type": "Reply",
+      "timestamp": "2025-08-21T18:20:30.000+00:00",
+      "content": "keep the first-question note 👍",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1408153400901632930",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1427312721526785000",
+      "type": "Default",
+      "timestamp": "2025-10-13T15:11:11.000+00:00",
+      "content": "at the common-room door with the purple notebook, starting the revision bit now ✅",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1427313128374273001",
+      "type": "Reply",
+      "timestamp": "2025-10-13T15:12:48.000+00:00",
+      "content": "which part is first in that purple notebook today?",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1427312721526785000",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1427313535221761002",
+      "type": "Reply",
+      "timestamp": "2025-10-13T15:14:25.000+00:00",
+      "content": "one worked example first, then checking the mistakes beside the purple margin",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1427313128374273001",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1427313942069249003",
+      "type": "Reply",
+      "timestamp": "2025-10-13T15:16:02.000+00:00",
+      "content": "sounds manageable, I will be near the common-room door during the long break if you need the notes",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1427313535221761002",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1467743870124033150",
+      "type": "Default",
+      "timestamp": "2026-02-02T04:50:08.000+00:00",
+      "content": "done with the example in the revised page, going for lemon tea now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1467744276971521151",
+      "type": "Reply",
+      "timestamp": "2026-02-02T04:51:45.000+00:00",
+      "content": "did the confusing step in the revised page finally make sense?",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1467743870124033150",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1467744683819009152",
+      "type": "Reply",
+      "timestamp": "2026-02-02T04:53:22.000+00:00",
+      "content": "yes, drawing it in the white notebook helped more than rereading the revised page 👍",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1467744276971521151",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1467745090666497153",
+      "type": "Reply",
+      "timestamp": "2026-02-02T04:54:59.000+00:00",
+      "content": "white, noted 👍",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1467744683819009152",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1471909594136577162",
+      "type": "Default",
+      "timestamp": "2026-02-13T16:43:14.000+00:00",
+      "content": "yaar, done with the example in the revised page, going for plain water now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1471910000984065163",
+      "type": "Reply",
+      "timestamp": "2026-02-13T16:44:51.000+00:00",
+      "content": "haan, did the confusing step in the revised page finally make sense?",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1471909594136577162",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1471910407831553164",
+      "type": "Reply",
+      "timestamp": "2026-02-13T16:46:28.000+00:00",
+      "content": "achha, yes, drawing it in the yellow notebook helped more than rereading the revised page ✅",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1471910000984065163",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1471910814679041165",
+      "type": "Reply",
+      "timestamp": "2026-02-13T16:48:05.000+00:00",
+      "content": "theek h, save that drawing beside the revised page, enjoy the plain water break",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1471910407831553164",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1489291909791745290",
+      "type": "Default",
+      "timestamp": "2026-04-02T15:54:21.000+00:00",
+      "content": "done with the example in the revised page, going for lemon tea now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1489292316639233291",
+      "type": "Reply",
+      "timestamp": "2026-04-02T15:55:58.000+00:00",
+      "content": "did the confusing step in the revised page finally make sense?",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1489291909791745290",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1489292723486721292",
+      "type": "Reply",
+      "timestamp": "2026-04-02T15:57:35.000+00:00",
+      "content": "yes, drawing it in the white notebook helped more than rereading the revised page",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1489292316639233291",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1489293130334209293",
+      "type": "Reply",
+      "timestamp": "2026-04-02T15:59:12.000+00:00",
+      "content": "save that drawing beside the revised page, enjoy the lemon tea break",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1489292723486721292",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1490571101208577302",
+      "type": "Default",
+      "timestamp": "2026-04-06T04:37:24.000+00:00",
+      "content": "suno, the printer ate the darker version right before I left for the little park gate",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1490571508056065303",
+      "type": "Reply",
+      "timestamp": "2026-04-06T04:39:01.000+00:00",
+      "content": "haan dekha, is the file safe, or did the darker version only exist on that printout?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1490571101208577302",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1490571914903553304",
+      "type": "Reply",
+      "timestamp": "2026-04-06T04:40:38.000+00:00",
+      "content": "samajh gaya, file is safe, the pink folder has the darker version and the backup",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1490571508056065303",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1490572321751041305",
+      "type": "Reply",
+      "timestamp": "2026-04-06T04:42:15.000+00:00",
+      "content": "done hai, yep, the darker version",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1490571914903553304",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1526235456864257620",
+      "type": "Default",
+      "timestamp": "2026-07-13T14:34:49.000+00:00",
+      "content": "the printer ate the final shortlist right before I left for the corner tea stall",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1526235863711745621",
+      "type": "Reply",
+      "timestamp": "2026-07-13T14:36:26.000+00:00",
+      "content": "is the file safe, or did the final shortlist only exist on that printout?",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1526235456864257620",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1526236270559233622",
+      "type": "Reply",
+      "timestamp": "2026-07-13T14:38:03.000+00:00",
+      "content": "file is safe, the green folder has the final shortlist and the backup",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1526235863711745621",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1526236677406721623",
+      "type": "Reply",
+      "timestamp": "2026-07-13T14:39:40.000+00:00",
+      "content": "then let the printer sulk; bring the green folder to the corner tea stall",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1526236270559233622",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1530983123779585640",
+      "type": "Default",
+      "timestamp": "2026-07-26T17:00:21.000+00:00",
+      "content": "The bit I cannot settle in the morning review is DBMS example: the dependency arrows are hard to follow.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1530983530627073641",
+      "type": "Reply",
+      "timestamp": "2026-07-26T17:01:58.000+00:00",
+      "content": "I checked the morning review; for DBMS example, start by trying to name the attributes before drawing the arrows.",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1530983123779585640",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1530983937474561642",
+      "type": "Reply",
+      "timestamp": "2026-07-26T17:03:35.000+00:00",
+      "content": "Back with the morning review result for DBMS example: the decomposition is easier to explain.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1530983530627073641",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1530984344322049643",
+      "type": "Reply",
+      "timestamp": "2026-07-26T17:05:12.000+00:00",
+      "content": "Keep both the labelled table and the revised DBMS example from the morning review together.",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1530983937474561642",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1536760286806017708",
+      "type": "Default",
+      "timestamp": "2026-08-11T15:36:44.000+00:00",
+      "content": "the printer ate the revised page right before I left for the market arch",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1536760693653505709",
+      "type": "Reply",
+      "timestamp": "2026-08-11T15:38:21.000+00:00",
+      "content": "is the file safe, or did the revised page only exist on that printout?",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1536760286806017708",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1536761100500993710",
+      "type": "Reply",
+      "timestamp": "2026-08-11T15:39:58.000+00:00",
+      "content": "file is safe, the brown folder has the revised page and the backup",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1536760693653505709",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1536761507348481711",
+      "type": "Reply",
+      "timestamp": "2026-08-11T15:41:35.000+00:00",
+      "content": "right, the market arch 😅",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1536761100500993710",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1548756793163777876",
+      "type": "Default",
+      "timestamp": "2026-09-13T18:06:34.000+00:00",
+      "content": "at the bookshop window with the teal notebook, starting the revision bit now",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1548757200011265877",
+      "type": "Reply",
+      "timestamp": "2026-09-13T18:08:11.000+00:00",
+      "content": "which part is first in that teal notebook today?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1548756793163777876",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1548757606858753878",
+      "type": "Reply",
+      "timestamp": "2026-09-13T18:09:48.000+00:00",
+      "content": "one worked example first, then checking the mistakes beside the teal margin",
+      "author": {
+        "id": "401234567890123406",
+        "name": "arjunm",
+        "username": "arjunm",
+        "nickname": "Arjun",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1548757200011265877",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1548758013706241879",
+      "type": "Reply",
+      "timestamp": "2026-09-13T18:11:25.000+00:00",
+      "content": "right, teal 😅",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1548757606858753878",
+        "channelId": "901234567890123456",
+        "guildId": "0"
+      }
+    }
+  ],
+  "messageCount": 65
+}

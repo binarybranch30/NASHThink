@@ -1,0 +1,17 @@
+id,permalink,thread_id,date,ip,from,to,subject,body
+b17148,/message/messages/b17148,ace01d,2024-08-16 15:59:01 UTC,192.0.2.21,quiet_shutter_21,owned_by_omar,Project notes mail,"pushed a small patch for the cancelled dialog, leaving the bigger change for later"
+b17149,/message/messages/b17149,ace01d,2024-08-16 16:00:38 UTC,192.0.2.21,owned_by_omar,quiet_shutter_21,Project notes mail,can you put the cancelled dialog in the reproduction notes before the screen share after class? 🤔
+b1714a,/message/messages/b1714a,ace01d,2024-08-16 16:02:15 UTC,192.0.2.21,quiet_shutter_21,owned_by_omar,Project notes mail,"done, the cancelled dialog notes include the input and the actual output"
+b1714b,/message/messages/b1714b,ace01d,2024-08-16 16:03:52 UTC,192.0.2.21,owned_by_omar,quiet_shutter_21,Project notes mail,"thanks, I will check the cancelled dialog against that input after class"
+b1714c,/message/messages/b1714c,ace01d,2024-12-23 15:56:05 UTC,192.0.2.21,quiet_shutter_21,owned_by_omar,Project notes mail,the funniest part of the last page was my comment saying this could never happen
+b1714d,/message/messages/b1714d,ace01d,2024-12-23 15:57:42 UTC,192.0.2.21,owned_by_omar,quiet_shutter_21,Project notes mail,please keep that comment beside the last page fixture as a historical artefact
+b1714e,/message/messages/b1714e,ace01d,2024-12-23 15:59:19 UTC,192.0.2.21,quiet_shutter_21,owned_by_omar,Project notes mail,renamed the test to say what the last page actually does instead of claiming magic
+b1714f,/message/messages/b1714f,ace01d,2024-12-23 16:00:56 UTC,192.0.2.21,owned_by_omar,quiet_shutter_21,Project notes mail,"good, future us can understand the last page without reading our minds"
+b17150,/message/messages/b17150,ace01d,2025-09-18 06:51:24 UTC,192.0.2.21,quiet_shutter_21,owned_by_omar,Project notes mail,"Revisited export archive for the morning debug session, and the ZIP entries inherit the current time."
+b17151,/message/messages/b17151,ace01d,2025-09-18 06:53:01 UTC,192.0.2.21,owned_by_omar,quiet_shutter_21,Project notes mail,Try this on export archive from the morning debug session: assign a fixed timestamp to each ZIP entry. 🫠
+b17152,/message/messages/b17152,ace01d,2025-09-18 06:54:38 UTC,192.0.2.21,quiet_shutter_21,owned_by_omar,Project notes mail,Just compared export archive again in the morning debug session; a repeat run produces the same ZIP bytes.
+b17153,/message/messages/b17153,ace01d,2025-09-18 06:56:15 UTC,192.0.2.21,owned_by_omar,quiet_shutter_21,Project notes mail,The next person checking export archive in the morning debug session will appreciate the archive checksum.
+b17154,/message/messages/b17154,ace01d,2025-12-28 16:51:34 UTC,192.0.2.21,owned_by_omar,quiet_shutter_21,Project notes mail,"sorry, just noticed the duplicate row review was on the uncropped frame, not the latest copy"
+b17155,/message/messages/b17155,ace01d,2025-12-28 16:53:11 UTC,192.0.2.21,quiet_shutter_21,owned_by_omar,Project notes mail,that explains why the duplicate row looked different in the screen share once the rain stops
+b17156,/message/messages/b17156,ace01d,2025-12-28 16:54:48 UTC,192.0.2.21,owned_by_omar,quiet_shutter_21,Project notes mail,moving the comment from the uncropped frame to the current duplicate row example now
+b17157,/message/messages/b17157,ace01d,2025-12-28 16:56:25 UTC,192.0.2.21,quiet_shutter_21,owned_by_omar,Project notes mail,leave a pointer in the uncropped frame so the next reviewer can find the current duplicate row notes 😅

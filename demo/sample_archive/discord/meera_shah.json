@@ -1,0 +1,2575 @@
+{
+  "guild": {
+    "id": "0",
+    "name": "Direct Messages"
+  },
+  "channel": {
+    "id": "901234567890123463",
+    "type": "DirectTextChat",
+    "name": "meera-shah",
+    "topic": "Meera Shah"
+  },
+  "messages": [
+    {
+      "id": "1348611342336000603",
+      "type": "Default",
+      "timestamp": "2025-03-10T11:00:00.000+00:00",
+      "content": "it's Meera from insta, meera.sketches. Meera Shah on Facebook too; sending the poster draft here because the upload is easier.",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1348611690463232604",
+      "type": "Reply",
+      "timestamp": "2025-03-10T11:01:23.000+00:00",
+      "content": "Found it. The orange version reads better at thumbnail size.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1348611342336000603",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1348612038590464605",
+      "type": "Reply",
+      "timestamp": "2025-03-10T11:02:46.000+00:00",
+      "content": "Please label your comments on the draft, not on a screenshot from last week.",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1348611690463232604",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1348612386717696606",
+      "type": "Reply",
+      "timestamp": "2025-03-10T11:04:09.000+00:00",
+      "content": "Leaving feedback in the current version now.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1348612038590464605",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1353364826750976635",
+      "type": "Default",
+      "timestamp": "2025-03-23T13:48:39.000+00:00",
+      "content": "can I get a second pair of eyes on the plain version, especially the orange corner?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1353365233598464636",
+      "type": "Reply",
+      "timestamp": "2025-03-23T13:50:16.000+00:00",
+      "content": "the orange corner of the plain version is louder than the title right now",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1353364826750976635",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1353365640445952637",
+      "type": "Reply",
+      "timestamp": "2025-03-23T13:51:53.000+00:00",
+      "content": "will simplify that orange block and send the plain version again",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1353365233598464636",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1353366047293440638",
+      "type": "Reply",
+      "timestamp": "2025-03-23T13:53:30.000+00:00",
+      "content": "yes, leave the useful information where it is in the plain version while changing the orange part",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1353365640445952637",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1353799289536512639",
+      "type": "Default",
+      "timestamp": "2025-03-24T18:35:03.000+00:00",
+      "content": "I keep wanting to add one more purple shape to the test export",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1353799696384000640",
+      "type": "Reply",
+      "timestamp": "2025-03-24T18:36:40.000+00:00",
+      "content": "what would the extra purple shape help someone understand in the test export?",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1353799289536512639",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1353800103231488641",
+      "type": "Reply",
+      "timestamp": "2025-03-24T18:38:17.000+00:00",
+      "content": "honestly nothing, the test export just felt too quiet beside the purple study",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1353799696384000640",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1353800510078976642",
+      "type": "Reply",
+      "timestamp": "2025-03-24T18:39:54.000+00:00",
+      "content": "purple, noted 👍",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1353800103231488641",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1355270886260736651",
+      "type": "Default",
+      "timestamp": "2025-03-28T20:02:39.000+00:00",
+      "content": "Sending credit line from the thumbnail review over because the name disappears in the crop.",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1355271293108224652",
+      "type": "Reply",
+      "timestamp": "2025-03-28T20:04:16.000+00:00",
+      "content": "For the credit line question from the thumbnail review, keep the agreed credit inside the safe area and compare the two versions.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1355270886260736651",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1355271699955712653",
+      "type": "Reply",
+      "timestamp": "2025-03-28T20:05:53.000+00:00",
+      "content": "I see what you meant about credit line in the thumbnail review — the visible version includes the credit.",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1355271293108224652",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1355272106803200654",
+      "type": "Reply",
+      "timestamp": "2025-03-28T20:07:30.000+00:00",
+      "content": "keep the approved preview 👍",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1355271699955712653",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1358330945601536672",
+      "type": "Default",
+      "timestamp": "2025-04-06T06:42:14.000+00:00",
+      "content": "😂🙌",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1359166891360256677",
+      "type": "Default",
+      "timestamp": "2025-04-08T14:03:59.000+00:00",
+      "content": "can I get a second pair of eyes on the wide crop, especially the purple corner?",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1359167298207744678",
+      "type": "Reply",
+      "timestamp": "2025-04-08T14:05:36.000+00:00",
+      "content": "the purple corner of the wide crop is louder than the title right now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1359166891360256677",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1359167705055232679",
+      "type": "Reply",
+      "timestamp": "2025-04-08T14:07:13.000+00:00",
+      "content": "will simplify that purple block and send the wide crop again",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1359167298207744678",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1359168111902720680",
+      "type": "Reply",
+      "timestamp": "2025-04-08T14:08:50.000+00:00",
+      "content": "the wide crop, noted 👍 🙂",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1359167705055232679",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1368601571360768721",
+      "type": "Default",
+      "timestamp": "2025-05-04T14:54:02.000+00:00",
+      "content": "I keep wanting to add one more red shape to the final shortlist",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1368601978208256722",
+      "type": "Reply",
+      "timestamp": "2025-05-04T14:55:39.000+00:00",
+      "content": "what would the extra red shape help someone understand in the final shortlist?",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1368601571360768721",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1368602385055744723",
+      "type": "Reply",
+      "timestamp": "2025-05-04T14:57:16.000+00:00",
+      "content": "honestly nothing, the final shortlist just felt too quiet beside the red study",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1368601978208256722",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1368602791903232724",
+      "type": "Reply",
+      "timestamp": "2025-05-04T14:58:53.000+00:00",
+      "content": "red, sounds good",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1368602385055744723",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1375300403331072750",
+      "type": "Default",
+      "timestamp": "2025-05-23T02:32:48.000+00:00",
+      "content": "Back at the orange draft, trying to understand why, in feedback sheet, comments refer to different versions.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1375300810178560751",
+      "type": "Reply",
+      "timestamp": "2025-05-23T02:34:25.000+00:00",
+      "content": "On the orange draft, my suggestion for feedback sheet is simple: put the revision date beside each image.",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1375300403331072750",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1375301217026048752",
+      "type": "Reply",
+      "timestamp": "2025-05-23T02:36:02.000+00:00",
+      "content": "I see what you meant about feedback sheet in the orange draft — each comment has an identifiable draft.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1375300810178560751",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1375301623873536753",
+      "type": "Reply",
+      "timestamp": "2025-05-23T02:37:39.000+00:00",
+      "content": "We can use the version list when feedback sheet from the orange draft comes up again.",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1375301217026048752",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1382008311775232787",
+      "type": "Default",
+      "timestamp": "2025-06-10T14:47:38.000+00:00",
+      "content": "the tiny preview of the darker version looks better than the huge one somehow 😅",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1382008718622720788",
+      "type": "Reply",
+      "timestamp": "2025-06-10T14:49:15.000+00:00",
+      "content": "try reading the pink line in the darker version from across the desk",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1382008311775232787",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1382009125470208789",
+      "type": "Reply",
+      "timestamp": "2025-06-10T14:50:52.000+00:00",
+      "content": "okay the pink line survives, the little subtitle in the darker version does not",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1382008718622720788",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1382009532317696790",
+      "type": "Reply",
+      "timestamp": "2025-06-10T14:52:29.000+00:00",
+      "content": "the darker version, noted 👍",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1382009125470208789",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1386074274267136811",
+      "type": "Default",
+      "timestamp": "2025-06-21T20:04:19.000+00:00",
+      "content": "I keep wanting to add one more green shape to the wide crop",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1386074681114624812",
+      "type": "Reply",
+      "timestamp": "2025-06-21T20:05:56.000+00:00",
+      "content": "what would the extra green shape help someone understand in the wide crop?",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1386074274267136811",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1386075087962112813",
+      "type": "Reply",
+      "timestamp": "2025-06-21T20:07:33.000+00:00",
+      "content": "honestly nothing, the wide crop just felt too quiet beside the green study",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1386074681114624812",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1386075494809600814",
+      "type": "Reply",
+      "timestamp": "2025-06-21T20:09:10.000+00:00",
+      "content": "quiet is allowed; save the green idea separately from the wide crop",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1386075087962112813",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1387798774939648820",
+      "type": "Default",
+      "timestamp": "2025-06-26T14:16:52.000+00:00",
+      "content": "can I get a second pair of eyes on the quieter version, especially the orange corner?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1387799181787136821",
+      "type": "Reply",
+      "timestamp": "2025-06-26T14:18:29.000+00:00",
+      "content": "the orange corner of the quieter version is louder than the title right now",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1387798774939648820",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1387799588634624822",
+      "type": "Reply",
+      "timestamp": "2025-06-26T14:20:06.000+00:00",
+      "content": "will simplify that orange block and send the quieter version again",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1387799181787136821",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1387799995482112823",
+      "type": "Reply",
+      "timestamp": "2025-06-26T14:21:43.000+00:00",
+      "content": "the quieter version, sounds good 📌",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1387799588634624822",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1399056572088320888",
+      "type": "Default",
+      "timestamp": "2025-07-27T15:51:20.000+00:00",
+      "content": "the tiny preview of the final shortlist looks better than the huge one somehow",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1399056978935808889",
+      "type": "Reply",
+      "timestamp": "2025-07-27T15:52:57.000+00:00",
+      "content": "try reading the teal line in the final shortlist from across the desk ✨",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1399056572088320888",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1399057385783296890",
+      "type": "Reply",
+      "timestamp": "2025-07-27T15:54:34.000+00:00",
+      "content": "okay the teal line survives, the little subtitle in the final shortlist does not",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1399056978935808889",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1399057792630784891",
+      "type": "Reply",
+      "timestamp": "2025-07-27T15:56:11.000+00:00",
+      "content": "then fix that subtitle in the final shortlist before touching the teal line",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1399057385783296890",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1406106312114176924",
+      "type": "Default",
+      "timestamp": "2025-08-16T02:44:29.000+00:00",
+      "content": "Quick check on feedback sheet in the warm-colour draft: comments refer to different versions.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1406106718961664925",
+      "type": "Reply",
+      "timestamp": "2025-08-16T02:46:06.000+00:00",
+      "content": "On the warm-colour draft, my suggestion for feedback sheet is simple: put the revision date beside each image.",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1406106312114176924",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1406107125809152926",
+      "type": "Reply",
+      "timestamp": "2025-08-16T02:47:43.000+00:00",
+      "content": "Reopening feedback sheet from the warm-colour draft confirms it: each comment has an identifiable draft.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1406106718961664925",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1406107532656640927",
+      "type": "Reply",
+      "timestamp": "2025-08-16T02:49:20.000+00:00",
+      "content": "For the next pass at the warm-colour draft, leave the version list with feedback sheet.",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1406107125809152926",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1463235429531649129",
+      "type": "Default",
+      "timestamp": "2026-01-20T18:15:12.000+00:00",
+      "content": "the tiny preview of the wide crop looks better than the huge one somehow",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1463235836379137130",
+      "type": "Reply",
+      "timestamp": "2026-01-20T18:16:49.000+00:00",
+      "content": "try reading the red line in the wide crop from across the desk",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1463235429531649129",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1463236243226625131",
+      "type": "Reply",
+      "timestamp": "2026-01-20T18:18:26.000+00:00",
+      "content": "okay the red line survives, the little subtitle in the wide crop does not",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1463235836379137130",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1463236650074113132",
+      "type": "Reply",
+      "timestamp": "2026-01-20T18:20:03.000+00:00",
+      "content": "then fix that subtitle in the wide crop before touching the red line",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1463236243226625131",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1465069091160065141",
+      "type": "Default",
+      "timestamp": "2026-01-25T19:41:31.000+00:00",
+      "content": "Back at the plain version, trying to understand why, in credit line, the name disappears in the crop.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1465069498007553142",
+      "type": "Reply",
+      "timestamp": "2026-01-25T19:43:08.000+00:00",
+      "content": "With credit line in the plain version, maybe keep the agreed credit inside the safe area before changing anything else.",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1465069091160065141",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1465069904855041143",
+      "type": "Reply",
+      "timestamp": "2026-01-25T19:44:45.000+00:00",
+      "content": "The difference in the plain version is visible now; for credit line, the visible version includes the credit.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1465069498007553142",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1465070311702529144",
+      "type": "Reply",
+      "timestamp": "2026-01-25T19:46:22.000+00:00",
+      "content": "The next person checking credit line in the plain version will appreciate the approved preview.",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1465069904855041143",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1472927950176257174",
+      "type": "Default",
+      "timestamp": "2026-02-16T12:09:49.000+00:00",
+      "content": "the tiny preview of the first draft looks better than the huge one somehow",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1472928357023745175",
+      "type": "Reply",
+      "timestamp": "2026-02-16T12:11:26.000+00:00",
+      "content": "try reading the teal line in the first draft from across the desk 🙂",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1472927950176257174",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1472928763871233176",
+      "type": "Reply",
+      "timestamp": "2026-02-16T12:13:03.000+00:00",
+      "content": "okay the teal line survives, the little subtitle in the first draft does not",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1472928357023745175",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1472929170718721177",
+      "type": "Reply",
+      "timestamp": "2026-02-16T12:14:40.000+00:00",
+      "content": "then fix that subtitle in the first draft before touching the teal line",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1472928763871233176",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1474822336937985200",
+      "type": "Default",
+      "timestamp": "2026-02-21T17:37:26.000+00:00",
+      "content": "I keep wanting to add one more purple shape to the wide crop",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1474822743785473201",
+      "type": "Reply",
+      "timestamp": "2026-02-21T17:39:03.000+00:00",
+      "content": "what would the extra purple shape help someone understand in the wide crop?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1474822336937985200",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1474823150632961202",
+      "type": "Reply",
+      "timestamp": "2026-02-21T17:40:40.000+00:00",
+      "content": "honestly nothing, the wide crop just felt too quiet beside the purple study",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1474822743785473201",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1474823557480449203",
+      "type": "Reply",
+      "timestamp": "2026-02-21T17:42:17.000+00:00",
+      "content": "quiet is allowed; save the purple idea separately from the wide crop 🙌",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1474823150632961202",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1485144653299713269",
+      "type": "Default",
+      "timestamp": "2026-03-22T05:14:38.000+00:00",
+      "content": "I keep wanting to add one more grey shape to the revised page",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1485145060147201270",
+      "type": "Reply",
+      "timestamp": "2026-03-22T05:16:15.000+00:00",
+      "content": "what would the extra grey shape help someone understand in the revised page?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1485144653299713269",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1485145466994689271",
+      "type": "Reply",
+      "timestamp": "2026-03-22T05:17:52.000+00:00",
+      "content": "honestly nothing, the revised page just felt too quiet beside the grey study",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1485145060147201270",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1485145873842177272",
+      "type": "Reply",
+      "timestamp": "2026-03-22T05:19:29.000+00:00",
+      "content": "quiet is allowed; save the grey idea separately from the revised page",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1485145466994689271",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1488069588942849282",
+      "type": "Default",
+      "timestamp": "2026-03-30T06:57:17.000+00:00",
+      "content": "I keep wanting to add one more brown shape to the quieter version",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1488069995790337283",
+      "type": "Reply",
+      "timestamp": "2026-03-30T06:58:54.000+00:00",
+      "content": "what would the extra brown shape help someone understand in the quieter version?",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1488069588942849282",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1488070402637825284",
+      "type": "Reply",
+      "timestamp": "2026-03-30T07:00:31.000+00:00",
+      "content": "honestly nothing, the quieter version just felt too quiet beside the brown study",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1488069995790337283",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1488070809485313285",
+      "type": "Reply",
+      "timestamp": "2026-03-30T07:02:08.000+00:00",
+      "content": "quiet is allowed; save the brown idea separately from the quieter version",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1488070402637825284",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1488568602066945286",
+      "type": "Default",
+      "timestamp": "2026-03-31T16:00:11.000+00:00",
+      "content": "the tiny preview of the first draft looks better than the huge one somehow",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1488569008914433287",
+      "type": "Reply",
+      "timestamp": "2026-03-31T16:01:48.000+00:00",
+      "content": "try reading the red line in the first draft from across the desk",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1488568602066945286",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1488569415761921288",
+      "type": "Reply",
+      "timestamp": "2026-03-31T16:03:25.000+00:00",
+      "content": "okay the red line survives, the little subtitle in the first draft does not",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1488569008914433287",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1488569822609409289",
+      "type": "Reply",
+      "timestamp": "2026-03-31T16:05:02.000+00:00",
+      "content": "got it — the first draft",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1488569415761921288",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1503117753450497399",
+      "type": "Default",
+      "timestamp": "2026-05-10T19:33:19.000+00:00",
+      "content": "suno, can I get a second pair of eyes on the first draft, especially the yellow corner?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1503118160297985400",
+      "type": "Reply",
+      "timestamp": "2026-05-10T19:34:56.000+00:00",
+      "content": "haan dekha, the yellow corner of the first draft is louder than the title right now",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1503117753450497399",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1503118567145473401",
+      "type": "Reply",
+      "timestamp": "2026-05-10T19:36:33.000+00:00",
+      "content": "samajh gaya, will simplify that yellow block and send the first draft again",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1503118160297985400",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1503118973992961402",
+      "type": "Reply",
+      "timestamp": "2026-05-10T19:38:10.000+00:00",
+      "content": "done hai, yes, leave the useful information where it is in the first draft while changing the yellow part",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1503118567145473401",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1504508966338561407",
+      "type": "Default",
+      "timestamp": "2026-05-14T15:41:30.000+00:00",
+      "content": "the tiny preview of the quieter version looks better than the huge one somehow",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1504509373186049408",
+      "type": "Reply",
+      "timestamp": "2026-05-14T15:43:07.000+00:00",
+      "content": "try reading the grey line in the quieter version from across the desk",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1504508966338561407",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1504509780033537409",
+      "type": "Reply",
+      "timestamp": "2026-05-14T15:44:44.000+00:00",
+      "content": "okay the grey line survives, the little subtitle in the quieter version does not",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1504509373186049408",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1504510186881025410",
+      "type": "Reply",
+      "timestamp": "2026-05-14T15:46:21.000+00:00",
+      "content": "then fix that subtitle in the quieter version before touching the grey line",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1504509780033537409",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1506275951116289415",
+      "type": "Default",
+      "timestamp": "2026-05-19T12:42:52.000+00:00",
+      "content": "I keep wanting to add one more teal shape to the marked-up copy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1506276357963777416",
+      "type": "Reply",
+      "timestamp": "2026-05-19T12:44:29.000+00:00",
+      "content": "what would the extra teal shape help someone understand in the marked-up copy?",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1506275951116289415",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1506276764811265417",
+      "type": "Reply",
+      "timestamp": "2026-05-19T12:46:06.000+00:00",
+      "content": "honestly nothing, the marked-up copy just felt too quiet beside the teal study",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1506276357963777416",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1506277171658753418",
+      "type": "Reply",
+      "timestamp": "2026-05-19T12:47:43.000+00:00",
+      "content": "quiet is allowed; save the teal idea separately from the marked-up copy",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1506276764811265417",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1516864987463681511",
+      "type": "Default",
+      "timestamp": "2026-06-17T17:59:55.000+00:00",
+      "content": "can I get a second pair of eyes on the wide crop, especially the purple corner? 👍",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1516865394311169512",
+      "type": "Reply",
+      "timestamp": "2026-06-17T18:01:32.000+00:00",
+      "content": "the purple corner of the wide crop is louder than the title right now",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1516864987463681511",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1516865801158657513",
+      "type": "Reply",
+      "timestamp": "2026-06-17T18:03:09.000+00:00",
+      "content": "will simplify that purple block and send the wide crop again",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1516865394311169512",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1516866208006145514",
+      "type": "Reply",
+      "timestamp": "2026-06-17T18:04:46.000+00:00",
+      "content": "yes, leave the useful information where it is in the wide crop while changing the purple part",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1516865801158657513",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1519208659681281535",
+      "type": "Default",
+      "timestamp": "2026-06-24T05:12:50.000+00:00",
+      "content": "the tiny preview of the small preview looks better than the huge one somehow",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1519209066528769536",
+      "type": "Reply",
+      "timestamp": "2026-06-24T05:14:27.000+00:00",
+      "content": "try reading the red line in the small preview from across the desk",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1519208659681281535",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1519209473376257537",
+      "type": "Reply",
+      "timestamp": "2026-06-24T05:16:04.000+00:00",
+      "content": "okay the red line survives, the little subtitle in the small preview does not",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1519209066528769536",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1519209880223745538",
+      "type": "Reply",
+      "timestamp": "2026-06-24T05:17:41.000+00:00",
+      "content": "right, red 😅 👀",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1519209473376257537",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1525951531843585612",
+      "type": "Default",
+      "timestamp": "2026-07-12T19:46:36.000+00:00",
+      "content": "can I get a second pair of eyes on the final shortlist, especially the white corner?",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1525951938691073613",
+      "type": "Reply",
+      "timestamp": "2026-07-12T19:48:13.000+00:00",
+      "content": "the white corner of the final shortlist is louder than the title right now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1525951531843585612",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1525952345538561614",
+      "type": "Reply",
+      "timestamp": "2026-07-12T19:49:50.000+00:00",
+      "content": "will simplify that white block and send the final shortlist again",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1525951938691073613",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1525952752386049615",
+      "type": "Reply",
+      "timestamp": "2026-07-12T19:51:27.000+00:00",
+      "content": "yes, leave the useful information where it is in the final shortlist while changing the white part 😭",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1525952345538561614",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1536648944812033704",
+      "type": "Default",
+      "timestamp": "2026-08-11T08:14:18.000+00:00",
+      "content": "Sending poster draft from the revised sketch over because the title disappears at thumbnail size.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1536649351659521705",
+      "type": "Reply",
+      "timestamp": "2026-08-11T08:15:55.000+00:00",
+      "content": "Try this on poster draft from the revised sketch: try a simpler title weight before adding effects.",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1536648944812033704",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1536649758507009706",
+      "type": "Reply",
+      "timestamp": "2026-08-11T08:17:32.000+00:00",
+      "content": "Finished checking poster draft in the revised sketch and, yes, the title stays readable in the small preview.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1536649351659521705",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1536650165354497707",
+      "type": "Reply",
+      "timestamp": "2026-08-11T08:19:09.000+00:00",
+      "content": "send the thumbnail comparison?",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1536649758507009706",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1537078852583425712",
+      "type": "Default",
+      "timestamp": "2026-08-12T12:42:36.000+00:00",
+      "content": "👀😭",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1539721087942657737",
+      "type": "Default",
+      "timestamp": "2026-08-19T19:41:54.000+00:00",
+      "content": "I keep wanting to add one more green shape to the darker version",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1539721494790145738",
+      "type": "Reply",
+      "timestamp": "2026-08-19T19:43:31.000+00:00",
+      "content": "what would the extra green shape help someone understand in the darker version?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1539721087942657737",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1539721901637633739",
+      "type": "Reply",
+      "timestamp": "2026-08-19T19:45:08.000+00:00",
+      "content": "honestly nothing, the darker version just felt too quiet beside the green study",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1539721494790145738",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1539722308485121740",
+      "type": "Reply",
+      "timestamp": "2026-08-19T19:46:45.000+00:00",
+      "content": "green, noted 👍",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1539721901637633739",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1542520815222785781",
+      "type": "Default",
+      "timestamp": "2026-08-27T13:07:01.000+00:00",
+      "content": "bhai, can I get a second pair of eyes on the darker version, especially the green corner?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1542521222070273782",
+      "type": "Reply",
+      "timestamp": "2026-08-27T13:08:38.000+00:00",
+      "content": "ek sec, the green corner of the darker version is louder than the title right now",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1542520815222785781",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1542521628917761783",
+      "type": "Reply",
+      "timestamp": "2026-08-27T13:10:15.000+00:00",
+      "content": "sahi h, will simplify that green block and send the darker version again",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1542521222070273782",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1542522035765249784",
+      "type": "Reply",
+      "timestamp": "2026-08-27T13:11:52.000+00:00",
+      "content": "chalo, the darker version, sounds good",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1542521628917761783",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1545765805621249832",
+      "type": "Default",
+      "timestamp": "2026-09-05T12:01:27.000+00:00",
+      "content": "I keep wanting to add one more red shape to the wide crop",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1545766212468737833",
+      "type": "Reply",
+      "timestamp": "2026-09-05T12:03:04.000+00:00",
+      "content": "what would the extra red shape help someone understand in the wide crop?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1545765805621249832",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1545766619316225834",
+      "type": "Reply",
+      "timestamp": "2026-09-05T12:04:41.000+00:00",
+      "content": "honestly nothing, the wide crop just felt too quiet beside the red study",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1545766212468737833",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1545767026163713835",
+      "type": "Reply",
+      "timestamp": "2026-09-05T12:06:18.000+00:00",
+      "content": "quiet is allowed; save the red idea separately from the wide crop 😂",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1545766619316225834",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1545989844369409836",
+      "type": "Default",
+      "timestamp": "2026-09-06T02:51:42.000+00:00",
+      "content": "I keep wanting to add one more pink shape to the uncropped frame",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1545990251216897837",
+      "type": "Reply",
+      "timestamp": "2026-09-06T02:53:19.000+00:00",
+      "content": "what would the extra pink shape help someone understand in the uncropped frame? 😭",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1545989844369409836",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1545990658064385838",
+      "type": "Reply",
+      "timestamp": "2026-09-06T02:54:56.000+00:00",
+      "content": "honestly nothing, the uncropped frame just felt too quiet beside the pink study 😅",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1545990251216897837",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1545991064911873839",
+      "type": "Reply",
+      "timestamp": "2026-09-06T02:56:33.000+00:00",
+      "content": "quiet is allowed; save the pink idea separately from the uncropped frame",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1545990658064385838",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1547634862981121852",
+      "type": "Default",
+      "timestamp": "2026-09-10T15:48:25.000+00:00",
+      "content": "I keep wanting to add one more purple shape to the quieter version",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1547635269828609853",
+      "type": "Reply",
+      "timestamp": "2026-09-10T15:50:02.000+00:00",
+      "content": "what would the extra purple shape help someone understand in the quieter version?",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1547634862981121852",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1547635676676097854",
+      "type": "Reply",
+      "timestamp": "2026-09-10T15:51:39.000+00:00",
+      "content": "honestly nothing, the quieter version just felt too quiet beside the purple study",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1547635269828609853",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1547636083523585855",
+      "type": "Reply",
+      "timestamp": "2026-09-10T15:53:16.000+00:00",
+      "content": "quiet is allowed; save the purple idea separately from the quieter version",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1547635676676097854",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1552337961222145900",
+      "type": "Default",
+      "timestamp": "2026-09-23T15:16:51.000+00:00",
+      "content": "can I get a second pair of eyes on the plain version, especially the brown corner?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1552338368069633901",
+      "type": "Reply",
+      "timestamp": "2026-09-23T15:18:28.000+00:00",
+      "content": "the brown corner of the plain version is louder than the title right now",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1552337961222145900",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1552338774917121902",
+      "type": "Reply",
+      "timestamp": "2026-09-23T15:20:05.000+00:00",
+      "content": "will simplify that brown block and send the plain version again",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1552338368069633901",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1552339181764609903",
+      "type": "Reply",
+      "timestamp": "2026-09-23T15:21:42.000+00:00",
+      "content": "the plain version, sounds good",
+      "author": {
+        "id": "401234567890123402",
+        "name": "meeradraws",
+        "username": "meeradraws",
+        "nickname": "Meera",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1552338774917121902",
+        "channelId": "901234567890123463",
+        "guildId": "0"
+      }
+    }
+  ],
+  "messageCount": 130
+}

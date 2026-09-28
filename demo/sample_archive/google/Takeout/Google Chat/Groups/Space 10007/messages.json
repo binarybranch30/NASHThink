@@ -1,0 +1,685 @@
+{
+  "messages": [
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Sunday, April 5, 2026 at 2:13:42 PM UTC",
+      "text": "Check: tiny question about the screen-share example — with loading indicator, an empty result looks like a running request. 😭",
+      "message_id": "934ff4b9-ec9e-5f54-987d-a149c16db04a"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, April 5, 2026 at 2:15:19 PM UTC",
+      "text": "On the screen-share example, my suggestion for loading indicator is simple: separate loading from successful emptiness.",
+      "message_id": "601102aa-5ef0-54cb-b7fa-173d0c345e09",
+      "topic_id": "934ff4b9-ec9e-5f54-987d-a149c16db04a"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Sunday, April 5, 2026 at 2:16:56 PM UTC",
+      "text": "Check: finished checking loading indicator in the screen-share example and, yes, the empty state has its own message.",
+      "message_id": "6302e388-c06f-54bd-9dab-05d2c0fb97ab",
+      "topic_id": "601102aa-5ef0-54cb-b7fa-173d0c345e09"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, April 5, 2026 at 2:18:33 PM UTC",
+      "text": "We can use the state transition notes when loading indicator from the screen-share example comes up again. 😅",
+      "message_id": "737383c4-1549-5401-8940-50869e7ad26c",
+      "topic_id": "6302e388-c06f-54bd-9dab-05d2c0fb97ab"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, May 3, 2026 at 7:11:10 PM UTC",
+      "text": "sorry, just noticed the Unicode filename review was on the second sketch, not the latest copy",
+      "message_id": "470e6072-fa12-56a0-8d85-f639f0359399"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Sunday, May 3, 2026 at 7:12:47 PM UTC",
+      "text": "Check: that explains why the Unicode filename looked different in the screen share during the long break",
+      "message_id": "13639963-13ed-5ce0-a4b9-d9ebbbc3358e",
+      "topic_id": "470e6072-fa12-56a0-8d85-f639f0359399"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, May 3, 2026 at 7:14:24 PM UTC",
+      "text": "moving the comment from the second sketch to the current Unicode filename example now",
+      "message_id": "ff13ff40-ebc4-59dc-8030-1e0727d288a5",
+      "topic_id": "13639963-13ed-5ce0-a4b9-d9ebbbc3358e"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Sunday, May 3, 2026 at 7:16:01 PM UTC",
+      "text": "Check: leave a pointer in the second sketch so the next reviewer can find the current Unicode filename notes",
+      "message_id": "d901e23b-b8d1-5711-996d-f75222126b88",
+      "topic_id": "ff13ff40-ebc4-59dc-8030-1e0727d288a5"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Thursday, May 14, 2026 at 5:02:18 AM UTC",
+      "text": "sorry, just noticed the stale cache review was on the uncropped frame, not the latest copy",
+      "message_id": "2c98ce4b-6a78-53d8-a8db-17e4be9b4fa4"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Thursday, May 14, 2026 at 5:03:55 AM UTC",
+      "text": "Repro note: that explains why the stale cache looked different in the screen share in the evening",
+      "message_id": "c4b769b8-b917-5544-8ed4-1591fbcbe713",
+      "topic_id": "2c98ce4b-6a78-53d8-a8db-17e4be9b4fa4"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Thursday, May 14, 2026 at 5:05:32 AM UTC",
+      "text": "moving the comment from the uncropped frame to the current stale cache example now",
+      "message_id": "d594334e-d9bf-5d6d-9003-affb6584b894",
+      "topic_id": "c4b769b8-b917-5544-8ed4-1591fbcbe713"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Thursday, May 14, 2026 at 5:07:09 AM UTC",
+      "text": "Repro note: the stale cache, noted 👍",
+      "message_id": "8fe2216c-83f3-5941-8cfc-c0d8d37afa56",
+      "topic_id": "d594334e-d9bf-5d6d-9003-affb6584b894"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Tuesday, May 26, 2026 at 4:48:39 AM UTC",
+      "text": "Check: sorry, just noticed the cancelled dialog review was on the revised page, not the latest copy",
+      "message_id": "1ff28937-b463-572b-84bf-acb2c7389740"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, May 26, 2026 at 4:50:16 AM UTC",
+      "text": "that explains why the cancelled dialog looked different in the screen share after the lab",
+      "message_id": "c80c2b74-2046-5f7d-97ea-7fb3ce9bc773",
+      "topic_id": "1ff28937-b463-572b-84bf-acb2c7389740"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Tuesday, May 26, 2026 at 4:51:53 AM UTC",
+      "text": "Check: moving the comment from the revised page to the current cancelled dialog example now",
+      "message_id": "5982bbf1-1e53-59b0-aad2-1851e723f2d9",
+      "topic_id": "c80c2b74-2046-5f7d-97ea-7fb3ce9bc773"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, May 26, 2026 at 4:53:30 AM UTC",
+      "text": "leave a pointer in the revised page so the next reviewer can find the current cancelled dialog notes",
+      "message_id": "218b944a-e658-5e26-b420-e345bb0e8272",
+      "topic_id": "5982bbf1-1e53-59b0-aad2-1851e723f2d9"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Wednesday, June 3, 2026 at 10:00:00 AM UTC",
+      "text": "Role split for the September demo: Aarav owns import/retrieval, I own the graph UI, Sana owns fixtures and checks.",
+      "message_id": "392fc73b-04db-5c7a-a6d6-4cece504bb4f"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Wednesday, June 3, 2026 at 10:01:23 AM UTC",
+      "text": "I'll keep source snippets beside expected answers. A correct sentence with the wrong citation is still a failed check.",
+      "message_id": "4ae6724f-8862-54ce-8742-a1d8f37d4de4",
+      "topic_id": "392fc73b-04db-5c7a-a6d6-4cece504bb4f"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Wednesday, June 3, 2026 at 10:02:46 AM UTC",
+      "text": "Owner identity first; cross-person linking stays out of this build.",
+      "message_id": "b168a950-27c9-5c4b-962f-6c5d94c86cd8",
+      "topic_id": "4ae6724f-8862-54ce-8742-a1d8f37d4de4"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Wednesday, June 3, 2026 at 10:04:09 AM UTC",
+      "text": "Third milestone is a complete offline rehearsal, including a question with no evidence.",
+      "message_id": "b0ef1af3-8b40-5bdf-a468-c3a320d3a87a",
+      "topic_id": "b168a950-27c9-5c4b-962f-6c5d94c86cd8"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Friday, June 5, 2026 at 3:15:44 PM UTC",
+      "text": "Check: i can explain the duplicate row verbally but my notes still look like a maze",
+      "message_id": "f6d1b213-b1c6-54c1-9537-c6a998e715c2"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, June 5, 2026 at 3:17:21 PM UTC",
+      "text": "bring the tiny duplicate row example to the bus shelter after class ✨",
+      "message_id": "5c488745-5c8e-5cd0-ab97-4dc4ff4be260",
+      "topic_id": "f6d1b213-b1c6-54c1-9537-c6a998e715c2"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Friday, June 5, 2026 at 3:18:58 PM UTC",
+      "text": "Check: will do, the orange notebook has the duplicate row sketch",
+      "message_id": "eec2cdc5-93a8-5273-b195-fba9c65c13b6",
+      "topic_id": "5c488745-5c8e-5cd0-ab97-4dc4ff4be260"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, June 5, 2026 at 3:20:35 PM UTC",
+      "text": "right, after class 😅",
+      "message_id": "95d37751-e38d-5b55-812d-134e0eacc66d",
+      "topic_id": "eec2cdc5-93a8-5273-b195-fba9c65c13b6"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, June 12, 2026 at 4:06:49 PM UTC",
+      "text": "👍🙌",
+      "message_id": "345dc6cb-6a3d-5c89-83e2-ea885d1a3a4c"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, June 23, 2026 at 2:46:30 PM UTC",
+      "text": "bhai, the funniest part of the stale cache was my comment saying this could never happen",
+      "message_id": "21967afb-d9c7-5457-8149-3bcbcfa223d8"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Tuesday, June 23, 2026 at 2:48:07 PM UTC",
+      "text": "Repro note: ek sec, please keep that comment beside the stale cache fixture as a historical artefact",
+      "message_id": "b963d409-ef80-5d3f-9823-c9b6425081f9",
+      "topic_id": "21967afb-d9c7-5457-8149-3bcbcfa223d8"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, June 23, 2026 at 2:49:44 PM UTC",
+      "text": "sahi h, renamed the test to say what the stale cache actually does instead of claiming magic",
+      "message_id": "bac69d34-6883-5594-a6b4-0c074b2b679d",
+      "topic_id": "b963d409-ef80-5d3f-9823-c9b6425081f9"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Tuesday, June 23, 2026 at 2:51:21 PM UTC",
+      "text": "Repro note: chalo, good, future us can understand the stale cache without reading our minds",
+      "message_id": "2b790a05-13fc-5ddb-a35c-dd2f7b58b6d2",
+      "topic_id": "bac69d34-6883-5594-a6b4-0c074b2b679d"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Saturday, July 4, 2026 at 12:38:21 PM UTC",
+      "text": "Repro note: pushed a small patch for the empty folder, leaving the bigger change for later",
+      "message_id": "d9db737d-c637-56be-bd5e-3024c53658ec"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, July 4, 2026 at 12:39:58 PM UTC",
+      "text": "can you put the empty folder in the reproduction notes before the screen share after the lab?",
+      "message_id": "44d7e545-9abf-5d02-8370-168943fdd8d5",
+      "topic_id": "d9db737d-c637-56be-bd5e-3024c53658ec"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Saturday, July 4, 2026 at 12:41:35 PM UTC",
+      "text": "Repro note: done, the empty folder notes include the input and the actual output",
+      "message_id": "8f9a606b-d389-5337-8452-0091e0b1d7cc",
+      "topic_id": "44d7e545-9abf-5d02-8370-168943fdd8d5"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, July 4, 2026 at 12:43:12 PM UTC",
+      "text": "right, after the lab 😅",
+      "message_id": "5adcd9e8-73ed-51f3-979e-5cce2f73e811",
+      "topic_id": "8f9a606b-d389-5337-8452-0091e0b1d7cc"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, July 5, 2026 at 7:34:08 AM UTC",
+      "text": "👀🙌",
+      "message_id": "94e53e04-8798-5476-bf31-85177aa73701"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, July 17, 2026 at 2:49:38 PM UTC",
+      "text": "Nearly done with path resolver for the archived example, except a folder with spaces fails to open.",
+      "message_id": "b4442056-bca7-52b7-90e5-a77d8880cc7a"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Friday, July 17, 2026 at 2:51:15 PM UTC",
+      "text": "Check: looking at the archived example, could you pass the path as one argument for path resolver?",
+      "message_id": "d61c5d3f-471a-567b-8132-cd94e549f621",
+      "topic_id": "b4442056-bca7-52b7-90e5-a77d8880cc7a"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, July 17, 2026 at 2:52:52 PM UTC",
+      "text": "Saving the revised path resolver from the archived example, since the folder with spaces opens correctly.",
+      "message_id": "a05d0183-d27b-5a81-8852-b1d5b80361fa",
+      "topic_id": "d61c5d3f-471a-567b-8132-cd94e549f621"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Friday, July 17, 2026 at 2:54:29 PM UTC",
+      "text": "Check: the next person checking path resolver in the archived example will appreciate the space-containing path fixture.",
+      "message_id": "f338339b-542d-536c-8177-6fea8b499dfe",
+      "topic_id": "a05d0183-d27b-5a81-8852-b1d5b80361fa"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, August 22, 2026 at 7:01:42 PM UTC",
+      "text": "sorry, just noticed the Unicode filename review was on the wide crop, not the latest copy",
+      "message_id": "1f3cedde-c9fb-5dc9-bcb2-055d33d013f2"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Saturday, August 22, 2026 at 7:03:19 PM UTC",
+      "text": "Check: that explains why the Unicode filename looked different in the screen share after the lab",
+      "message_id": "0f8d6882-c463-5269-b4bc-bcd09e573e3d",
+      "topic_id": "1f3cedde-c9fb-5dc9-bcb2-055d33d013f2"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, August 22, 2026 at 7:04:56 PM UTC",
+      "text": "moving the comment from the wide crop to the current Unicode filename example now",
+      "message_id": "8ded8271-7289-59ec-b044-9557e55d8584",
+      "topic_id": "0f8d6882-c463-5269-b4bc-bcd09e573e3d"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Saturday, August 22, 2026 at 7:06:33 PM UTC",
+      "text": "Check: the wide crop, sounds good",
+      "message_id": "d6b10618-9025-5641-ba8b-38c2c9a59fda",
+      "topic_id": "8ded8271-7289-59ec-b044-9557e55d8584"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, August 25, 2026 at 1:35:15 PM UTC",
+      "text": "I got stuck on pagination control while looking at the notebook example; the last page repeats a row.",
+      "message_id": "51692442-ea22-550a-83ad-77fa8719b255"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Tuesday, August 25, 2026 at 1:36:52 PM UTC",
+      "text": "Check: on the notebook example, my suggestion for pagination control is simple: check the cursor boundary against a fixed dataset.",
+      "message_id": "13a71143-f279-5434-a360-932afc7a9ff9",
+      "topic_id": "51692442-ea22-550a-83ad-77fa8719b255"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, August 25, 2026 at 1:38:29 PM UTC",
+      "text": "Back with the notebook example result for pagination control: each row appears on one page.",
+      "message_id": "b28474dd-06b9-5155-a305-d5cb50370865",
+      "topic_id": "13a71143-f279-5434-a360-932afc7a9ff9"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Tuesday, August 25, 2026 at 1:40:06 PM UTC",
+      "text": "keep the page-boundary case 👍",
+      "message_id": "b8fe8325-b520-573f-86a1-65dd3791fc54",
+      "topic_id": "b28474dd-06b9-5155-a305-d5cb50370865"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Wednesday, August 26, 2026 at 2:43:14 PM UTC",
+      "text": "Repro note: i can explain the repeated click verbally but my notes still look like a maze",
+      "message_id": "66499b0b-7008-57bc-89e4-c36b3a1fedef"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Wednesday, August 26, 2026 at 2:44:51 PM UTC",
+      "text": "bring the tiny repeated click example to the library steps once the rain stops",
+      "message_id": "ab124e5d-a005-5bc5-beb1-88640c721509",
+      "topic_id": "66499b0b-7008-57bc-89e4-c36b3a1fedef"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Wednesday, August 26, 2026 at 2:46:28 PM UTC",
+      "text": "Repro note: will do, the orange notebook has the repeated click sketch",
+      "message_id": "254810a4-392e-5dec-a50a-016f099720fe",
+      "topic_id": "ab124e5d-a005-5bc5-beb1-88640c721509"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Wednesday, August 26, 2026 at 2:48:05 PM UTC",
+      "text": "right, once the rain stops 😅",
+      "message_id": "83aa4256-4fe1-5edf-a6f8-0d22addbade2",
+      "topic_id": "254810a4-392e-5dec-a50a-016f099720fe"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, August 28, 2026 at 11:37:52 AM UTC",
+      "text": "sorry, just noticed the duplicate row review was on the quieter version, not the latest copy",
+      "message_id": "2f4700e4-c906-5dbd-897c-f62ce44a52f8"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Friday, August 28, 2026 at 11:39:29 AM UTC",
+      "text": "Repro note: that explains why the duplicate row looked different in the screen share after class 🙌",
+      "message_id": "59ac7913-8826-5773-ae9b-2af536d84ee3",
+      "topic_id": "2f4700e4-c906-5dbd-897c-f62ce44a52f8"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, August 28, 2026 at 11:41:06 AM UTC",
+      "text": "moving the comment from the quieter version to the current duplicate row example now",
+      "message_id": "a1d644b0-0ac5-5b31-8afa-efde8a4cea78",
+      "topic_id": "59ac7913-8826-5773-ae9b-2af536d84ee3"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Friday, August 28, 2026 at 11:42:43 AM UTC",
+      "text": "Repro note: leave a pointer in the quieter version so the next reviewer can find the current duplicate row notes",
+      "message_id": "837e9f5f-8dab-5e6f-960d-8d259f766caf",
+      "topic_id": "a1d644b0-0ac5-5b31-8afa-efde8a4cea78"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, August 31, 2026 at 9:00:00 AM UTC",
+      "text": "Citation fix is in: every evidence item carries its stable source message ID; display sorting no longer changes what a citation opens.",
+      "message_id": "2824a5c1-0593-512d-9b5b-2e8c8ccb3496"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Monday, August 31, 2026 at 9:01:23 AM UTC",
+      "text": "Checked shuffled results, duplicate-looking messages and an empty export. All twelve rehearsal questions open the expected source now.",
+      "message_id": "09c3a3a9-9b6c-59e8-a848-c526848f8230",
+      "topic_id": "2824a5c1-0593-512d-9b5b-2e8c8ccb3496"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Monday, August 31, 2026 at 9:02:46 AM UTC",
+      "text": "Also show an explicit no-recorded-information answer when nothing supports a claim.",
+      "message_id": "cf32346f-cfd5-5d65-a516-8c5c10fba527",
+      "topic_id": "09c3a3a9-9b6c-59e8-a848-c526848f8230"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, August 31, 2026 at 9:04:09 AM UTC",
+      "text": "Agreed. We are not fabricating missing facts to make the demo look complete.",
+      "message_id": "d425ad5e-baf7-59ba-a946-7f03cde5599d",
+      "topic_id": "cf32346f-cfd5-5d65-a516-8c5c10fba527"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, September 12, 2026 at 11:46:54 AM UTC",
+      "text": "sorry, just noticed the empty folder review was on the final shortlist, not the latest copy",
+      "message_id": "f952f5b6-007b-5dae-be40-3e74c7cb5ca1"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Saturday, September 12, 2026 at 11:48:31 AM UTC",
+      "text": "Check: that explains why the empty folder looked different in the screen share before lunch",
+      "message_id": "57f28544-7d87-5c56-bfbe-ba44cf8eba94",
+      "topic_id": "f952f5b6-007b-5dae-be40-3e74c7cb5ca1"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, September 12, 2026 at 11:50:08 AM UTC",
+      "text": "moving the comment from the final shortlist to the current empty folder example now 🤔",
+      "message_id": "d0a98ca8-1ae8-5bc5-8298-c3068dfa9f25",
+      "topic_id": "57f28544-7d87-5c56-bfbe-ba44cf8eba94"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Saturday, September 12, 2026 at 11:51:45 AM UTC",
+      "text": "Check: okay, the final shortlist then",
+      "message_id": "1d0ac4af-3086-5adb-af56-f036492a351d",
+      "topic_id": "d0a98ca8-1ae8-5bc5-8298-c3068dfa9f25"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Saturday, September 12, 2026 at 5:44:14 PM UTC",
+      "text": "Check: revisited keyboard shortcut for the second attempt, and the handler runs twice after reopening.",
+      "message_id": "71f0de5c-9c3e-5673-ae5c-34796bf5f377"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, September 12, 2026 at 5:45:51 PM UTC",
+      "text": "Before redoing keyboard shortcut in the second attempt, remove the old listener when the view closes.",
+      "message_id": "9b6890ec-0514-5878-83f1-7eb484448d03",
+      "topic_id": "71f0de5c-9c3e-5673-ae5c-34796bf5f377"
+    },
+    {
+      "creator": {
+        "name": "Kabir Rao",
+        "email": "kabir.rao@example.com"
+      },
+      "created_date": "Saturday, September 12, 2026 at 5:47:28 PM UTC",
+      "text": "Check: update on keyboard shortcut in the second attempt: reopening the view leaves one handler. 🙂",
+      "message_id": "eef2a3c9-4161-5034-b45a-d6b9f081d14b",
+      "topic_id": "9b6890ec-0514-5878-83f1-7eb484448d03"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, September 12, 2026 at 5:49:05 PM UTC",
+      "text": "Keep both the event-count log and the revised keyboard shortcut from the second attempt together.",
+      "message_id": "a219f11a-a61f-5e73-b3e2-54539c5e11ac",
+      "topic_id": "eef2a3c9-4161-5034-b45a-d6b9f081d14b"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, September 18, 2026 at 6:12:17 PM UTC",
+      "text": "The bit I cannot settle in the screen-share example is text preview: an emoji shifts the highlight.",
+      "message_id": "3396e6d7-007d-58fd-960a-250c25564cc0"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Friday, September 18, 2026 at 6:13:54 PM UTC",
+      "text": "Repro note: before redoing text preview in the screen-share example, check which string offsets the renderer expects.",
+      "message_id": "b615e682-b38d-5ed6-87aa-00e845b84ff3",
+      "topic_id": "3396e6d7-007d-58fd-960a-250c25564cc0"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, September 18, 2026 at 6:15:31 PM UTC",
+      "text": "The revised text preview for the screen-share example makes more sense — the highlight covers the intended phrase.",
+      "message_id": "91cd9ad4-6964-5990-ab21-01acc6726326",
+      "topic_id": "b615e682-b38d-5ed6-87aa-00e845b84ff3"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Friday, September 18, 2026 at 6:17:08 PM UTC",
+      "text": "Unicode sample makes sense now",
+      "message_id": "3caf0d0b-b54e-5baf-8cf2-04859e7e3328",
+      "topic_id": "91cd9ad4-6964-5990-ab21-01acc6726326"
+    }
+  ]
+}

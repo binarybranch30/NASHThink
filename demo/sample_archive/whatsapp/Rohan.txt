@@ -1,0 +1,384 @@
+1/7/24, 7:00 PM - Aarav: Took a photo of the tea stall near college on my phone today. The steam caught the evening light somehow.
+1/7/24, 7:01 PM - Rohan: finally the chai has a better portrait than me
+1/7/24, 7:02 PM - Aarav: I only have the phone camera for now. Trying to notice light before buying gear.
+1/7/24, 7:04 PM - Rohan: sunday walk then? no lens shopping detour pls
+1/17/24, 10:11 PM - Aarav: not posting the second sketch tonight, still thinking about the caption from the bus shelter
+1/17/24, 10:13 PM - Rohan: you can let the second sketch exist without posting it immediately
+1/17/24, 10:14 PM - Aarav: true, the line of empty chairs does not become less interesting if I wait 📌
+1/17/24, 10:16 PM - Rohan: bhai, exactly, tomorrow you might have a clearer sentence about the line of empty chairs in the second sketch 👀
+1/25/24, 5:18 PM - Aarav: movie later or just chole and a quiet evening?
+1/25/24, 5:20 PM - Rohan: leaning towards chole, can meet near the library steps
+1/25/24, 5:21 PM - Aarav: fine by me, bringing my blue folder so I do not forget it again
+1/25/24, 5:23 PM - Rohan: then the library steps is officially our lost-property desk for the folder
+1/29/24, 12:34 PM - Rohan: pushed a small patch for the stale cache, leaving the bigger change for later
+1/29/24, 12:36 PM - Aarav: can you put the stale cache in the reproduction notes before the screen share in the evening?
+1/29/24, 12:38 PM - Rohan: done, the stale cache notes include the input and the actual output
+1/29/24, 12:39 PM - Aarav: thanks, I will check the stale cache against that input in the evening
+2/19/24, 11:49 PM - Aarav: bhai, movie later or just samosa and a quiet evening?
+2/19/24, 11:51 PM - Rohan: ek sec, leaning towards samosa, can meet near the college lawn
+2/19/24, 11:53 PM - Aarav: sahi h, fine by me, bringing my yellow water bottle so I do not forget it again
+2/19/24, 11:54 PM - Rohan: bhai, chalo, then the college lawn is officially our lost-property desk for the water bottle
+3/22/24, 7:24 PM - Rohan: someone forwarded the same samosa meme in three groups
+3/22/24, 7:26 PM - Aarav: the version in our group has a random yellow scarf drawn on it
+3/22/24, 7:27 PM - Rohan: bhai, why does the yellow scarf make the samosa meme funnier
+3/22/24, 7:29 PM - Aarav: right, yellow 😅
+3/30/24, 10:31 PM - Aarav: not posting the second sketch tonight, still thinking about the caption from the covered walkway
+3/30/24, 10:32 PM - Rohan: bhai, you can let the second sketch exist without posting it immediately
+3/30/24, 10:34 PM - Aarav: true, a torn poster edge does not become less interesting if I wait
+3/30/24, 10:35 PM - Rohan: exactly, tomorrow you might have a clearer sentence about a torn poster edge in the second sketch
+3/31/24, 9:13 PM - Aarav: suno, almost walked past the reflection in a window at the library steps without looking
+3/31/24, 9:15 PM - Rohan: haan dekha, did you stop for the reflection in a window or only notice it in the pictures later?
+3/31/24, 9:16 PM - Aarav: samajh gaya, stopped this time, waited near the library steps until the background cleared
+3/31/24, 9:18 PM - Rohan: done hai, that pause probably did more for the reflection in a window than another round of edits
+4/13/24, 8:32 AM - Rohan: at the bus shelter with the pink notebook, starting the revision bit now
+4/13/24, 8:34 AM - Aarav: which part is first in that pink notebook today?
+4/13/24, 8:35 AM - Rohan: one worked example first, then checking the mistakes beside the pink margin
+4/13/24, 8:37 AM - Aarav: pink, noted 👍
+4/24/24, 4:49 PM - Rohan: bhai, sent the darker version, please be honest about the bit with a stack of steel cups
+4/24/24, 4:51 PM - Aarav: the strongest part of the darker version is actually the space beside a stack of steel cups
+4/24/24, 4:53 PM - Rohan: huh, I was about to crop the space beside a stack of steel cups out of the darker version
+4/24/24, 4:54 PM - Aarav: keep both crops of the darker version for a day before you decide about a stack of steel cups
+5/11/24, 12:40 AM - Aarav: It's past midnight and I'm rereading the same DBMS page. May exams are making sleep a mess.
+5/11/24, 12:41 AM - Rohan: close the pdf for ten mins, the transactions will survive
+5/11/24, 12:42 AM - Aarav: I keep trying to finish every topic tonight and then I can't focus tomorrow.
+5/11/24, 12:44 AM - Rohan: ask Arjun how he split the revision, he had the same pile last year
+5/28/24, 11:19 PM - Aarav: Tiny question about the error-log review — with DBMS example, the dependency arrows are hard to follow. 👍
+5/28/24, 11:20 PM - Rohan: with DBMS example in the error-log review, maybe name the attributes before drawing the arrows before changing anything else.
+5/28/24, 11:22 PM - Aarav: Just compared DBMS example again in the error-log review; the decomposition is easier to explain.
+5/28/24, 11:24 PM - Rohan: the next person checking DBMS example in the error-log review will appreciate the labelled table. 😭
+6/11/24, 5:10 PM - Aarav: ginger tea plan still alive once the rain stops?
+6/11/24, 5:11 PM - Rohan: alive, but I am currently trapped behind the noticeboard with a grey notebook 🙌
+6/11/24, 5:13 PM - Aarav: that is an oddly specific location report for a ginger tea plan
+6/11/24, 5:14 PM - Rohan: bhai, right, ginger tea 😅
+6/16/24, 5:40 PM - Aarav: Bought the used Fujifilm X-T30 today, 16 June. ₹52,000 total with the 15–45mm kit lens from Frame Again in Indiranagar.
+6/16/24, 5:41 PM - Rohan: bhai finally. receipt sambhal ke rakhna
+6/16/24, 5:42 PM - Aarav: Saved it. Not ₹52k for the body alone; that was the entire used kit.
+6/16/24, 5:44 PM - Rohan: excellent, now photograph something other than the receipt
+6/23/24, 7:01 PM - Aarav: pushed a small patch for the last page, leaving the bigger change for later
+6/23/24, 7:03 PM - Rohan: bhai, can you put the last page in the reproduction notes before the screen share during the long break?
+6/23/24, 7:04 PM - Aarav: done, the last page notes include the input and the actual output
+6/23/24, 7:06 PM - Rohan: bhai, thanks, I will check the last page against that input during the long break
+6/30/24, 5:16 PM - Rohan: nearly done with night photograph for the tea-stall series, except the colour cast feels inconsistent.
+6/30/24, 5:18 PM - Aarav: My first thought for the tea-stall series is to compare the neutral version beside the warm one around night photograph.
+6/30/24, 5:19 PM - Rohan: finished checking night photograph in the tea-stall series and, yes, the chosen colour matches the rest of the set.
+6/30/24, 5:21 PM - Aarav: We can use the comparison export when night photograph from the tea-stall series comes up again.
+7/22/24, 6:37 PM - Rohan: bhai, cannot choose between the first draft and the version with the orange umbrella
+7/22/24, 6:38 PM - Aarav: what are you trying to keep from the photocopy shop: the shape or the moment?
+7/22/24, 6:40 PM - Rohan: bhai, the shape around a folded newspaper; the umbrella version distracts me
+7/22/24, 6:42 PM - Aarav: then the first draft sounds closer to what you noticed at the photocopy shop
+8/18/24, 10:14 PM - Aarav: the printer ate the marked-up copy right before I left for the common-room door
+8/18/24, 10:16 PM - Rohan: bhai, is the file safe, or did the marked-up copy only exist on that printout?
+8/18/24, 10:17 PM - Aarav: file is safe, the red folder has the marked-up copy and the backup 🤔
+8/18/24, 10:19 PM - Rohan: bhai, got it — red
+8/23/24, 9:36 PM - Rohan: sending study plan from the OS session over because the first task is too vague to begin.
+8/23/24, 9:37 PM - Aarav: Small experiment for the OS session: write the first question beside the topic when revisiting study plan.
+8/23/24, 9:39 PM - Rohan: bhai, i see what you meant about study plan in the OS session — starting no longer requires another planning session.
+8/23/24, 9:40 PM - Aarav: send the first-question note?
+9/2/24, 11:31 PM - Aarav: plain water plan still alive after class? 😂
+9/2/24, 11:33 PM - Rohan: alive, but I am currently trapped behind the college lawn with a teal umbrella
+9/2/24, 11:35 PM - Aarav: that is an oddly specific location report for a plain water plan
+9/2/24, 11:36 PM - Rohan: i will send a less dramatic update once I reach the college lawn
+9/6/24, 12:38 PM - Rohan: sorry saw this late, left my phone beside the pink folder
+9/6/24, 12:39 PM - Aarav: I only needed to know if you were passing the photocopy shop at the weekend
+9/6/24, 12:41 PM - Rohan: can do the photocopy shop at the weekend, what do you need?
+9/6/24, 12:42 PM - Aarav: folder, noted 👍
+9/9/24, 6:23 PM - Rohan: sorry saw this late, left my phone beside the red umbrella
+9/9/24, 6:25 PM - Aarav: I only needed to know if you were passing the photocopy shop after the lab
+9/9/24, 6:26 PM - Rohan: can do the photocopy shop after the lab, what do you need? 😂
+9/9/24, 6:28 PM - Aarav: just the red umbrella if it fits in your bag, thanks
+9/12/24, 6:04 PM - Rohan: bhai, plain water plan still alive before lunch? 📌
+9/12/24, 6:06 PM - Aarav: alive, but I am currently trapped behind the canteen entrance with a teal pencil case
+9/12/24, 6:08 PM - Rohan: that is an oddly specific location report for a plain water plan
+9/12/24, 6:09 PM - Aarav: got it — plain water
+9/18/24, 12:49 PM - Rohan: bhai, the printer ate the darker version right before I left for the noticeboard
+9/18/24, 12:50 PM - Aarav: is the file safe, or did the darker version only exist on that printout?
+9/18/24, 12:52 PM - Rohan: file is safe, the white folder has the darker version and the backup 🙂
+9/18/24, 12:54 PM - Aarav: okay, the noticeboard then
+9/24/24, 10:48 PM - Aarav: noticed a crooked sign near the stair landing, no idea why I like that frame so much
+9/24/24, 10:50 PM - Rohan: bhai, does the marked-up copy leave enough room around a crooked sign?
+9/24/24, 10:51 PM - Aarav: yes, the marked-up copy feels calmer with a crooked sign slightly off centre
+9/24/24, 10:53 PM - Rohan: keep the marked-up copy; the small observation about a crooked sign is enough
+10/31/24, 8:45 PM - Aarav: movie later or just pav bhaji and a quiet evening?
+10/31/24, 8:47 PM - Rohan: leaning towards pav bhaji, can meet near the little park gate
+10/31/24, 8:48 PM - Aarav: fine by me, bringing my navy umbrella so I do not forget it again
+10/31/24, 8:50 PM - Rohan: okay, pav bhaji then
+11/6/24, 9:42 PM - Aarav: the printer ate the darker version right before I left for the shaded bench
+11/6/24, 9:44 PM - Rohan: bhai, is the file safe, or did the darker version only exist on that printout?
+11/6/24, 9:46 PM - Aarav: file is safe, the green folder has the darker version and the backup
+11/6/24, 9:47 PM - Rohan: bhai, yep, the darker version
+11/11/24, 7:06 PM - Aarav: Tiny question about the contact-sheet review — with rain reflection, the inverted shapes look busier than expected.
+11/11/24, 7:08 PM - Rohan: my first thought for the contact-sheet review is to turn the preview around before judging the crop around rain reflection.
+11/11/24, 7:09 PM - Aarav: Update on rain reflection in the contact-sheet review: the reflection reads as a simpler shape.
+11/11/24, 7:11 PM - Rohan: keep the alternate orientation 👍
+11/16/24, 9:27 PM - Rohan: i can explain the cancelled dialog verbally but my notes still look like a maze
+11/16/24, 9:29 PM - Aarav: bring the tiny cancelled dialog example to the market arch tomorrow morning
+11/16/24, 9:30 PM - Rohan: bhai, will do, the teal notebook has the cancelled dialog sketch
+11/16/24, 9:32 PM - Aarav: nice, one the cancelled dialog diagram and then a break for cold coffee
+12/3/24, 6:05 PM - Rohan: bhai, i can explain the duplicate row verbally but my notes still look like a maze
+12/3/24, 6:07 PM - Aarav: bring the tiny duplicate row example to the college lawn tomorrow morning 📌
+12/3/24, 6:09 PM - Rohan: will do, the pink notebook has the duplicate row sketch
+12/3/24, 6:10 PM - Aarav: pink, sounds good
+12/18/24, 9:21 PM - Rohan: sent the test export, please be honest about the bit with a torn poster edge 🫠
+12/18/24, 9:22 PM - Aarav: the strongest part of the test export is actually the space beside a torn poster edge
+12/18/24, 9:24 PM - Rohan: bhai, huh, I was about to crop the space beside a torn poster edge out of the test export
+12/18/24, 9:26 PM - Aarav: keep both crops of the test export for a day before you decide about a torn poster edge
+1/2/25, 9:06 PM - Rohan: nearly done with charging cable for the shared checklist, except it keeps disappearing under the table.
+1/2/25, 9:08 PM - Aarav: With charging cable in the shared checklist, maybe put a small label on our own cables before changing anything else.
+1/2/25, 9:10 PM - Rohan: okay, with the change to charging cable in the shared checklist, the labelled cable returns to the right bag. 🙂
+1/2/25, 9:11 PM - Aarav: The next person checking charging cable in the shared checklist will appreciate the label photo.
+1/8/25, 4:34 PM - Rohan: at the bookshop window with the grey notebook, starting the revision bit now
+1/8/25, 4:35 PM - Aarav: which part is first in that grey notebook today?
+1/8/25, 4:37 PM - Rohan: one worked example first, then checking the mistakes beside the grey margin
+1/8/25, 4:38 PM - Aarav: sounds manageable, I will be near the bookshop window at the weekend if you need the notes
+1/29/25, 1:45 AM - Aarav: 📌😭
+2/2/25, 5:30 PM - Rohan: add me on discord: r0hanx. insta is rohan.eats.code and twitter is @rohan_iyer_.
+2/2/25, 5:31 PM - Aarav: same food-related jokes, three different profile pictures
+2/2/25, 5:32 PM - Rohan: sambar_overflow on reddit is also me btw. rohan.iyer98@example.com for the shared doc invite.
+2/2/25, 5:34 PM - Aarav: Got it, Rohan Iyer. The cricket group's Rohan Kapoor is a different Rohan.
+2/8/25, 10:10 PM - Aarav: the group meme about veg sandwich is painfully accurate today
+2/8/25, 10:11 PM - Rohan: was this inspired by the queue near the campus gate?
+2/8/25, 10:13 PM - Aarav: the campus gate queue gave me enough time to reconsider my entire veg sandwich choice
+2/8/25, 10:15 PM - Rohan: bhai, the campus gate, sounds good
+3/2/25, 11:30 PM - Aarav: bhai, nimbu paani plan still alive once the rain stops?
+3/2/25, 11:32 PM - Rohan: ek sec, alive, but I am currently trapped behind the photocopy shop with a brown paper bag
+3/2/25, 11:33 PM - Aarav: sahi h, that is an oddly specific location report for a nimbu paani plan 👍
+3/2/25, 11:35 PM - Rohan: chalo, I will send a less dramatic update once I reach the photocopy shop
+3/13/25, 12:45 AM - Rohan: movie later or just masala dosa and a quiet evening?
+3/13/25, 12:47 AM - Aarav: leaning towards masala dosa, can meet near the market arch
+3/13/25, 12:48 AM - Rohan: fine by me, bringing my yellow umbrella so I do not forget it again 🙂
+3/13/25, 12:50 AM - Aarav: okay, masala dosa then 😂
+3/19/25, 11:02 PM - Aarav: I can explain the last page verbally but my notes still look like a maze
+3/19/25, 11:04 PM - Rohan: bring the tiny last page example to the bus shelter once the rain stops
+3/19/25, 11:05 PM - Aarav: will do, the brown notebook has the last page sketch
+3/19/25, 11:07 PM - Rohan: right, brown 😅
+3/25/25, 9:21 PM - Rohan: bhai, movie later or just khichdi and a quiet evening?
+3/25/25, 9:23 PM - Aarav: leaning towards khichdi, can meet near the campus gate
+3/25/25, 9:25 PM - Rohan: bhai, fine by me, bringing my navy sketchbook so I do not forget it again 🤔
+3/25/25, 9:26 PM - Aarav: right, navy 😅
+3/26/25, 8:17 AM - Aarav: yaar, at the campus gate with the green notebook, starting the revision bit now
+3/26/25, 8:19 AM - Rohan: haan, which part is first in that green notebook today?
+3/26/25, 8:21 AM - Aarav: achha, one worked example first, then checking the mistakes beside the green margin
+3/26/25, 8:22 AM - Rohan: theek h, yep, the campus gate
+5/5/25, 1:27 AM - Rohan: sorry, saw this late; on wide street frame from the shaded-lane study, the foreground obscures the crossing.
+5/5/25, 1:28 AM - Aarav: With wide street frame in the shaded-lane study, maybe look at the frame just before the foreground entered before changing anything else. 📌
+5/5/25, 1:30 AM - Rohan: bhai, i see what you meant about wide street frame in the shaded-lane study — the crossing is visible without a forced crop.
+5/5/25, 1:32 AM - Aarav: adjacent frames makes sense now
+5/7/25, 9:28 PM - Rohan: bhai, suno, sorry, just noticed the repeated click review was on the darker version, not the latest copy
+5/7/25, 9:29 PM - Aarav: haan dekha, that explains why the repeated click looked different in the screen share during the long break 🫠
+5/7/25, 9:31 PM - Rohan: samajh gaya, moving the comment from the darker version to the current repeated click example now
+5/7/25, 9:32 PM - Aarav: done hai, okay, during the long break then
+5/10/25, 6:39 PM - Rohan: tiny question about the DBMS session — with revision sheet, the same mistake appears in three questions.
+5/10/25, 6:40 PM - Aarav: For the revision sheet question from the DBMS session, write one worked example beside the error and compare the two versions.
+5/10/25, 6:42 PM - Rohan: bhai, saving the revised revision sheet from the DBMS session, since the next attempt starts from the right step.
+5/10/25, 6:44 PM - Aarav: keep the error-log entry 👍
+5/22/25, 10:02 AM - Aarav: movie later or just pav bhaji and a quiet evening?
+5/22/25, 10:04 AM - Rohan: leaning towards pav bhaji, can meet near the bookshop window
+5/22/25, 10:05 AM - Aarav: fine by me, bringing my red water bottle so I do not forget it again
+5/22/25, 10:07 AM - Rohan: then the bookshop window is officially our lost-property desk for the water bottle
+5/24/25, 8:17 AM - Aarav: bhai, movie later or just corn chaat and a quiet evening?
+5/24/25, 8:18 AM - Rohan: ek sec, leaning towards corn chaat, can meet near the stair landing 😭
+5/24/25, 8:20 AM - Aarav: sahi h, fine by me, bringing my red lanyard so I do not forget it again
+5/24/25, 8:21 AM - Rohan: chalo, then the stair landing is officially our lost-property desk for the lanyard
+5/29/25, 12:42 AM - Aarav: Sorry, saw this late; on error banner from the weekend build, the raw exception is hard to understand.
+5/29/25, 12:43 AM - Rohan: before redoing error banner in the weekend build, show a useful action beside the error summary.
+5/29/25, 12:45 AM - Aarav: The difference in the weekend build is visible now; for error banner, the banner explains what the user can try.
+5/29/25, 12:46 AM - Rohan: could you attach the error-state screenshot to error banner in the notes for the weekend build?
+6/1/25, 8:37 PM - Rohan: movie later or just upma and a quiet evening?
+6/1/25, 8:39 PM - Aarav: leaning towards upma, can meet near the back courtyard
+6/1/25, 8:40 PM - Rohan: fine by me, bringing my red tote bag so I do not forget it again
+6/1/25, 8:42 PM - Aarav: then the back courtyard is officially our lost-property desk for the tote bag 👍
+7/9/25, 7:24 PM - Aarav: you free tomorrow morning? thinking tomato rice near the noticeboard 🤔
+7/9/25, 7:25 PM - Rohan: i can make tomorrow morning, but I am bringing the blue charging cable back too
+7/9/25, 7:27 PM - Aarav: oh THAT is where my blue charging cable went 😭
+7/9/25, 7:29 PM - Rohan: yep, charging cable
+7/10/25, 10:24 AM - Aarav: Quick check on lunch plan in the rainy-day version: the queue uses up the whole break.
+7/10/25, 10:26 AM - Rohan: bhai, my first thought for the rainy-day version is to decide the place before leaving class around lunch plan.
+7/10/25, 10:27 AM - Aarav: Tried that for lunch plan in the rainy-day version, and there is enough time to sit down.
+7/10/25, 10:29 AM - Rohan: lunch suggestion makes sense now
+7/27/25, 12:23 AM - Aarav: I can explain the blank search verbally but my notes still look like a maze
+7/27/25, 12:25 AM - Rohan: bring the tiny blank search example to the bookshop window after the lab 😅
+7/27/25, 12:27 AM - Aarav: will do, the brown notebook has the blank search sketch
+7/27/25, 12:28 AM - Rohan: bhai, the blank search, sounds good
+8/3/25, 1:12 AM - Rohan: cannot choose between the darker version and the version with the red umbrella
+8/3/25, 1:14 AM - Aarav: what are you trying to keep from the bus shelter: the shape or the moment? ✨
+8/3/25, 1:15 AM - Rohan: the shape around the striped awning; the umbrella version distracts me
+8/3/25, 1:17 AM - Aarav: then the darker version sounds closer to what you noticed at the bus shelter
+8/24/25, 11:34 PM - Aarav: almost walked past the striped awning at the stair landing without looking
+8/24/25, 11:35 PM - Rohan: did you stop for the striped awning or only notice it in the pictures later?
+8/24/25, 11:37 PM - Aarav: stopped this time, waited near the stair landing until the background cleared
+8/24/25, 11:39 PM - Rohan: bhai, that pause probably did more for the striped awning than another round of edits
+9/18/25, 8:40 PM - Aarav: Kiteleaf rejected the backend application. I keep treating each email like a verdict on everything I can do.
+9/18/25, 8:41 PM - Rohan: it's one company's one round, not the final boss of your degree
+9/18/25, 8:42 PM - Aarav: I'll take tonight off applications and review the exercise tomorrow.
+9/18/25, 8:44 PM - Rohan: dinner first, retrospective later
+9/22/25, 5:12 PM - Aarav: the group meme about pulao is painfully accurate today
+9/22/25, 5:14 PM - Rohan: was this inspired by the queue near the library steps?
+9/22/25, 5:16 PM - Aarav: the library steps queue gave me enough time to reconsider my entire pulao choice
+9/22/25, 5:17 PM - Rohan: okay, pulao then
+9/28/25, 6:28 PM - Rohan: bhai the shaded-lane study mein Sunday shortlist dekhna, the strongest image is buried near the end
+9/28/25, 6:30 PM - Aarav: mere hisaab se the shaded-lane study ke Sunday shortlist ke liye try opening with the quieter but clearer scene
+9/28/25, 6:31 PM - Rohan: achha, the shaded-lane study ke Sunday shortlist ka scene clear hai: the opening gives the rest some context
+9/28/25, 6:33 PM - Aarav: the shaded-lane study ke Sunday shortlist ke saath previous ordering bhi rakhna yaar 🫠
+10/4/25, 11:17 PM - Aarav: the printer ate the revised page right before I left for the noticeboard
+10/4/25, 11:18 PM - Rohan: is the file safe, or did the revised page only exist on that printout?
+10/4/25, 11:20 PM - Aarav: file is safe, the yellow folder has the revised page and the backup
+10/4/25, 11:21 PM - Rohan: the noticeboard, noted 👍 😅
+10/6/25, 8:30 PM - Aarav: Meera is upset about the poster I posted without asking. I was defensive at first, but she's right about permission and credit.
+10/6/25, 8:31 PM - Rohan: an apology doesn't need a presentation on your intentions
+10/6/25, 8:32 PM - Aarav: Yeah. I removed it and will leave the next conversation to a calmer time.
+10/6/25, 8:34 PM - Rohan: fix the habit, not just that one caption
+10/12/25, 11:35 PM - Rohan: pushed a small patch for the renamed file, leaving the bigger change for later
+10/12/25, 11:37 PM - Aarav: can you put the renamed file in the reproduction notes before the screen share during the long break?
+10/12/25, 11:38 PM - Rohan: bhai, done, the renamed file notes include the input and the actual output
+10/12/25, 11:40 PM - Aarav: thanks, I will check the renamed file against that input during the long break
+10/20/25, 11:01 PM - Aarav: Quick check on borrowed book in the revised group plan: the bookmark fell out in my bag.
+10/20/25, 11:02 PM - Rohan: try this on borrowed book from the revised group plan: write the chapter name in the return note.
+10/20/25, 11:04 PM - Aarav: Update on borrowed book in the revised group plan: the right chapter is easy to find.
+10/20/25, 11:05 PM - Rohan: return note saved?
+10/20/25, 11:22 PM - Aarav: movie later or just tomato rice and a quiet evening?
+10/20/25, 11:24 PM - Rohan: leaning towards tomato rice, can meet near the stair landing
+10/20/25, 11:26 PM - Aarav: fine by me, bringing my purple charging cable so I do not forget it again
+10/20/25, 11:27 PM - Rohan: then the stair landing is officially our lost-property desk for the charging cable
+11/25/25, 6:06 PM - Aarav: suno, sorry saw this late, left my phone beside the grey folder
+11/25/25, 6:07 PM - Rohan: bhai, haan dekha, I only needed to know if you were passing the covered walkway at the weekend
+11/25/25, 6:09 PM - Aarav: samajh gaya, can do the covered walkway at the weekend, what do you need? 😭
+11/25/25, 6:10 PM - Rohan: done hai, just the grey folder if it fits in your bag, thanks
+11/26/25, 10:43 PM - Aarav: filter coffee plan still alive after the lab?
+11/26/25, 10:45 PM - Rohan: alive, but I am currently trapped behind the campus gate with a brown notebook
+11/26/25, 10:46 PM - Aarav: that is an oddly specific location report for a filter coffee plan
+11/26/25, 10:48 PM - Rohan: bhai, got it — after the lab
+12/11/25, 10:38 AM - Aarav: Tiny question about the steps-and-shadows set — with contact sheet, the bright corner pulls my eye away.
+12/11/25, 10:40 AM - Rohan: try this on contact sheet from the steps-and-shadows set: compare a crop that leaves less of that corner.
+12/11/25, 10:41 AM - Aarav: Update on contact sheet in the steps-and-shadows set: the main shape is easier to notice.
+12/11/25, 10:43 AM - Rohan: uncropped original saved?
+12/29/25, 8:07 PM - Rohan: suno, noticed a stripe of afternoon sun near the canteen entrance, no idea why I like that frame so much
+12/29/25, 8:09 PM - Aarav: haan dekha, does the first draft leave enough room around a stripe of afternoon sun?
+12/29/25, 8:11 PM - Rohan: samajh gaya, yes, the first draft feels calmer with a stripe of afternoon sun slightly off centre
+12/29/25, 8:12 PM - Aarav: done hai, right, the canteen entrance 😅
+1/15/26, 10:04 PM - Aarav: the printer ate the quieter version right before I left for the canteen entrance
+1/15/26, 10:05 PM - Rohan: is the file safe, or did the quieter version only exist on that printout?
+1/15/26, 10:07 PM - Aarav: file is safe, the teal folder has the quieter version and the backup
+1/15/26, 10:08 PM - Rohan: then let the printer sulk; bring the teal folder to the canteen entrance
+1/20/26, 6:16 PM - Aarav: The bit I cannot settle in the revised group plan is borrowed book: the bookmark fell out in my bag.
+1/20/26, 6:17 PM - Rohan: looking at the revised group plan, could you write the chapter name in the return note for borrowed book?
+1/20/26, 6:19 PM - Aarav: The difference in the revised group plan is visible now; for borrowed book, the right chapter is easy to find.
+1/20/26, 6:20 PM - Rohan: that settles borrowed book for the revised group plan; the return note is the useful bit to keep.
+2/9/26, 12:22 PM - Rohan: suno, the funniest part of the missing parent was my comment saying this could never happen 🫠
+2/9/26, 12:24 PM - Aarav: haan dekha, please keep that comment beside the missing parent fixture as a historical artefact
+2/9/26, 12:26 PM - Rohan: samajh gaya, renamed the test to say what the missing parent actually does instead of claiming magic
+2/9/26, 12:27 PM - Aarav: done hai, okay, the missing parent then 🤔
+2/11/26, 8:30 PM - Aarav: Nimbus offered ₹60,000/month, but I haven't accepted the Nimbus offer yet. Need to confirm the college project schedule first.
+2/11/26, 8:31 PM - Rohan: nice problem to have, still check the actual dates before celebrating the calendar
+2/11/26, 8:32 PM - Aarav: It's 2 March to 29 May. I'll decide after the coordinator replies.
+2/14/26, 12:25 AM - Aarav: I can explain the duplicate row verbally but my notes still look like a maze 🤔
+2/14/26, 12:26 AM - Rohan: bring the tiny duplicate row example to the bookshop window tomorrow morning
+2/14/26, 12:28 AM - Aarav: will do, the white notebook has the duplicate row sketch 🙂
+2/14/26, 12:30 AM - Rohan: the duplicate row, sounds good
+2/14/26, 7:00 PM - Aarav: ok I accepted it. Sent Nimbus the acceptance email this morning, 14 February. College schedule sorted.
+2/14/26, 7:01 PM - Rohan: excellent, celebratory dosa now has documentary support
+2/20/26, 7:45 PM - Rohan: the printer ate the plain version right before I left for the stair landing
+2/20/26, 7:47 PM - Aarav: is the file safe, or did the plain version only exist on that printout?
+2/20/26, 7:49 PM - Rohan: file is safe, the red folder has the plain version and the backup
+2/20/26, 7:50 PM - Aarav: red, noted 👍
+2/21/26, 11:47 PM - Rohan: i got stuck on networking notes while looking at the DBMS session; two similar terms keep getting mixed up.
+2/21/26, 11:49 PM - Aarav: Can we write a tiny contrasting example for each for networking notes in the DBMS session and see what actually changes?
+2/21/26, 11:50 PM - Rohan: i see what you meant about networking notes in the DBMS session — the distinction is clear in the example.
+2/21/26, 11:52 PM - Aarav: Glad networking notes in the DBMS session is clearer; tuck the comparison card into the same folder.
+3/7/26, 1:03 AM - Aarav: Tiny question about the short-break plan — with group poll, the options mix days and times.
+3/7/26, 1:04 AM - Rohan: about group poll from the short-break plan — put one complete day-and-time option on each line, then send the result.
+3/7/26, 1:06 AM - Aarav: Tried that for group poll in the short-break plan, and people can choose without guessing.
+3/7/26, 1:07 AM - Rohan: bhai, keep both the poll draft and the revised group poll from the short-break plan together.
+3/10/26, 12:17 AM - Aarav: sorry saw this late, left my phone beside the pink book
+3/10/26, 12:19 AM - Rohan: i only needed to know if you were passing the little park gate tomorrow morning
+3/10/26, 12:21 AM - Aarav: can do the little park gate tomorrow morning, what do you need?
+3/10/26, 12:22 AM - Rohan: okay, the little park gate then
+3/18/26, 12:24 PM - Rohan: cold coffee plan still alive during the long break?
+3/18/26, 12:25 PM - Aarav: alive, but I am currently trapped behind the little park gate with a pink sketchbook 👍
+3/18/26, 12:27 PM - Rohan: that is an oddly specific location report for a cold coffee plan
+3/18/26, 12:29 PM - Aarav: yep, sketchbook
+3/22/26, 8:28 AM - Rohan: bhai, sending lab report from the project viva prep over becuase the conclusion mentions a result missing from the table.
+3/22/26, 8:30 AM - Aarav: Looking at the project viva prep, could you check the conclusion against the recorded output for lab report?
+3/22/26, 8:32 AM - Rohan: bhai, the revised lab report for the project viva prep makes more sense — each claim points to a visible result.
+3/22/26, 8:33 AM - Aarav: corrected table makes sense now
+4/25/26, 11:26 PM - Aarav: at the covered walkway with the white notebook, starting the revision bit now
+4/25/26, 11:28 PM - Rohan: bhai, which part is first in that white notebook today?
+4/25/26, 11:30 PM - Aarav: one worked example first, then checking the mistakes beside the white margin
+4/25/26, 11:31 PM - Rohan: sounds manageable, I will be near the covered walkway after the lab if you need the notes
+5/3/26, 7:40 PM - Aarav: nimbu paani plan still alive during the long break?
+5/3/26, 7:42 PM - Rohan: alive, but I am currently trapped behind the stair landing with a brown cap
+5/3/26, 7:43 PM - Aarav: that is an oddly specific location report for a nimbu paani plan
+5/3/26, 7:45 PM - Rohan: nimbu paani, sounds good
+5/10/26, 12:33 PM - Rohan: pushed a small patch for the blank search, leaving the bigger change for later
+5/10/26, 12:34 PM - Aarav: can you put the blank search in the reproduction notes before the screen share after class?
+5/10/26, 12:36 PM - Rohan: done, the blank search notes include the input and the actual output
+5/10/26, 12:37 PM - Aarav: after class, sounds good
+7/3/26, 5:25 PM - Aarav: the group meme about chole is painfully accurate today
+7/3/26, 5:27 PM - Rohan: was this inspired by the queue near the back courtyard?
+7/3/26, 5:29 PM - Aarav: the back courtyard queue gave me enough time to reconsider my entire chole choice
+7/3/26, 5:30 PM - Rohan: chole, sounds good
+7/6/26, 7:31 PM - Aarav: Revisited rainy-day plan for the quiet-evening plan, and the meeting point has no shelter.
+7/6/26, 7:33 PM - Rohan: can we pick the covered entrance as the landmark for rainy-day plan in the quiet-evening plan and see what actually changes?
+7/6/26, 7:34 PM - Aarav: Saving the revised rainy-day plan from the quiet-evening plan, since nobody has to wait in the rain.
+7/6/26, 7:36 PM - Rohan: bhai, the next person checking rainy-day plan in the quiet-evening plan will appreciate the entrance photo.
+7/7/26, 5:35 PM - Rohan: pushed a small patch for the missing parent, leaving the bigger change for later
+7/7/26, 5:37 PM - Aarav: can you put the missing parent in the reproduction notes before the screen share after class?
+7/7/26, 5:39 PM - Rohan: bhai, done, the missing parent notes include the input and the actual output
+7/7/26, 5:40 PM - Aarav: thanks, I will check the missing parent against that input after class
+7/16/26, 1:42 PM - Aarav: someone forwarded the same upma meme in three groups
+7/16/26, 1:44 PM - Rohan: the version in our group has a random pink book drawn on it
+7/16/26, 1:45 PM - Aarav: why does the pink book make the upma meme funnier
+7/16/26, 1:47 PM - Rohan: okay, book then
+7/18/26, 11:36 PM - Rohan: the funniest part of the cancelled dialog was my comment saying this could never happen
+7/18/26, 11:38 PM - Aarav: please keep that comment beside the cancelled dialog fixture as a historical artefact 👍
+7/18/26, 11:39 PM - Rohan: renamed the test to say what the cancelled dialog actually does instead of claiming magic
+7/18/26, 11:41 PM - Aarav: okay, the cancelled dialog then
+7/20/26, 8:27 PM - Rohan: the funniest part of the Unicode filename was my comment saying this could never happen
+7/20/26, 8:29 PM - Aarav: please keep that comment beside the Unicode filename fixture as a historical artefact
+7/20/26, 8:30 PM - Rohan: renamed the test to say what the Unicode filename actually does instead of claiming magic
+7/20/26, 8:32 PM - Aarav: got it — the Unicode filename
+8/11/26, 8:30 PM - Aarav: almost walked past a crooked sign at the back courtyard without looking
+8/11/26, 8:32 PM - Rohan: did you stop for a crooked sign or only notice it in the pictures later?
+8/11/26, 8:34 PM - Aarav: stopped this time, waited near the back courtyard until the background cleared
+8/11/26, 8:35 PM - Rohan: that pause probably did more for a crooked sign than another round of edits
+8/14/26, 8:05 PM - Rohan: at the campus gate with the green notebook, starting the revision bit now
+8/14/26, 8:07 PM - Aarav: which part is first in that green notebook today?
+8/14/26, 8:08 PM - Rohan: one worked example first, then checking the mistakes beside the green margin
+8/14/26, 8:10 PM - Aarav: got it — green
+8/15/26, 12:27 PM - Aarav: Would you have a min for revision sheet in the group review, where the same mistake appears in three questions?
+8/15/26, 12:29 PM - Rohan: my first thought for the group review is to write one worked example beside the error around revision sheet. ✨
+8/15/26, 12:30 PM - Aarav: Okay, with the change to revision sheet in the group review, the next attempt starts from the right step.
+8/15/26, 12:32 PM - Rohan: error-log entry saved?
+8/21/26, 4:09 PM - Aarav: sent the uncropped frame, please be honest about the bit with a torn poster edge
+8/21/26, 4:11 PM - Rohan: the strongest part of the uncropped frame is actually the space beside a torn poster edge
+8/21/26, 4:12 PM - Aarav: huh, I was about to crop the space beside a torn poster edge out of the uncropped frame
+8/21/26, 4:14 PM - Rohan: yep, a torn poster edge
+8/23/26, 5:40 PM - Aarav: First 10K done, chip result 42:30. Adi has the finish photo where neither of us knows where the camera is.
+8/23/26, 5:41 PM - Rohan: finally an event where the timing was better than our Goa departure
+8/25/26, 8:42 AM - Rohan: you free after the lab? thinking pav bhaji near the noticeboard 📌
+8/25/26, 8:44 AM - Aarav: I can make after the lab, but I am bringing the pink tote bag back too 🤔
+8/25/26, 8:45 AM - Rohan: oh THAT is where my pink tote bag went 😭
+8/25/26, 8:47 AM - Aarav: right, after the lab 😅
+8/28/26, 12:35 PM - Rohan: yaar, movie later or just idli and a quiet evening?
+8/28/26, 12:36 PM - Aarav: haan, leaning towards idli, can meet near the photocopy shop
+8/28/26, 12:38 PM - Rohan: achha, fine by me, bringing my pink book so I do not forget it again
+8/28/26, 12:39 PM - Aarav: theek h, then the photocopy shop is officially our lost-property desk for the book
+8/28/26, 10:22 PM - Aarav: I can explain the missing parent verbally but my notes still look like a maze
+8/28/26, 10:24 PM - Rohan: bring the tiny missing parent example to the photocopy shop before lunch
+8/28/26, 10:26 PM - Aarav: will do, the green notebook has the missing parent sketch ✨
+8/28/26, 10:27 PM - Rohan: nice, one the missing parent diagram and then a break for plain water 👀
+8/30/26, 12:07 AM - Aarav: bhai, at the corner tea stall with the brown notebook, starting the revision bit now
+8/30/26, 12:09 AM - Rohan: ek sec, which part is first in that brown notebook today? 🫠
+8/30/26, 12:11 AM - Aarav: sahi h, one worked example first, then checking the mistakes beside the brown margin
+8/30/26, 12:12 AM - Rohan: chalo, sounds manageable, I will be near the corner tea stall during the long break if you need the notes
+8/31/26, 9:45 PM - Aarav: bhai, sorry saw this late, left my phone beside the blue notebook
+8/31/26, 9:46 PM - Rohan: ek sec, I only needed to know if you were passing the bookshop window once the rain stops
+8/31/26, 9:48 PM - Aarav: sahi h, can do the bookshop window once the rain stops, what do you need?
+8/31/26, 9:50 PM - Rohan: chalo, yep, blue
+9/7/26, 5:10 PM - Aarav: the group meme about dal rice is painfully accurate today
+9/7/26, 5:12 PM - Rohan: was this inspired by the queue near the shaded bench?
+9/7/26, 5:14 PM - Aarav: the shaded bench queue gave me enough time to reconsider my entire dal rice choice
+9/7/26, 5:15 PM - Rohan: next time we decide on dal rice before walking to the shaded bench 😂
+9/21/26, 1:49 AM - Aarav: someone forwarded the same poha meme in three groups ✨
+9/21/26, 1:50 AM - Rohan: the version in our group has a random green paper bag drawn on it
+9/21/26, 1:52 AM - Aarav: why does the green paper bag make the poha meme funnier 😭
+9/21/26, 1:54 AM - Rohan: because the joke now has completely unnecessary stationery lore around that paper bag 📌

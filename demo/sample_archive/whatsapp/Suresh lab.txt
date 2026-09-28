@@ -1,0 +1,57 @@
+1/20/24, 10:47 PM - Aarav: Tiny question about the error-log review — with OS scheduling table, the waiting times do not match the timeline. 👀
+1/20/24, 10:48 PM - Suresh lab: before redoing OS scheduling table in the error-log review, mark arrivals on a separate line first.
+1/20/24, 10:50 PM - Aarav: Reopening OS scheduling table from the error-log review confirms it: the table agrees with the timeline.
+1/20/24, 10:52 PM - Suresh lab: please save the worked timeline alongside OS scheduling table in the error-log review.
+6/3/24, 5:29 PM - Aarav: done with the example in the small preview, going for plain water now
+6/3/24, 5:31 PM - Suresh lab: did the confusing step in the small preview finally make sense?
+6/3/24, 5:33 PM - Aarav: yes, drawing it in the pink notebook helped more than rereading the small preview
+6/3/24, 5:34 PM - Suresh lab: save that drawing beside the small preview, enjoy the plain water break
+6/8/24, 8:13 AM - Suresh lab: the printer ate the first draft right before I left for the bookshop window
+6/8/24, 8:15 AM - Aarav: is the file safe, or did the first draft only exist on that printout?
+6/8/24, 8:16 AM - Suresh lab: file is safe, the grey folder has the first draft and the backup
+6/8/24, 8:18 AM - Aarav: then let the printer sulk; bring the grey folder to the bookshop window 📌
+10/22/24, 1:15 AM - Aarav: Sending lab report from the second attempt over because the conclusion mentions a result missing from the table.
+10/22/24, 1:16 AM - Suresh lab: with lab report in the second attempt, maybe check the conclusion against the recorded output before changing anything else.
+10/22/24, 1:18 AM - Aarav: Back with the second attempt result for lab report: each claim points to a visible result.
+10/22/24, 1:19 AM - Suresh lab: the corrected table from the second attempt sounds worth keeping with lab report.
+5/4/25, 10:00 AM - Aarav: Back at the library session, trying to understand why, in revision sheet, the same mistake appears in three questions.
+5/4/25, 10:01 AM - Suresh lab: about revision sheet from the library session — write one worked example beside the error, then send the result.
+5/4/25, 10:03 AM - Aarav: The revised revision sheet for the library session makes more sense — the next attempt starts from the right step. ✨
+5/4/25, 10:05 AM - Suresh lab: error-log entry saved?
+6/6/25, 11:20 PM - Aarav: Revisited OS scheduling table for the group review, and the waiting times do not match the timeline.
+6/6/25, 11:22 PM - Suresh lab: with OS scheduling table in the group review, maybe mark arrivals on a separate line first before changing anything else.
+6/6/25, 11:24 PM - Aarav: The revised OS scheduling table for the group review makes more sense — the table agrees with the timeline.
+6/6/25, 11:25 PM - Suresh lab: send the worked timeline?
+6/17/25, 9:22 PM - Suresh lab: done with the example in the plain version, going for lemon tea now
+6/17/25, 9:23 PM - Aarav: did the confusing step in the plain version finally make sense?
+6/17/25, 9:25 PM - Suresh lab: yes, drawing it in the blue notebook helped more than rereading the plain version
+6/17/25, 9:27 PM - Aarav: save that drawing beside the plain version, enjoy the lemon tea break
+9/29/25, 8:46 PM - Aarav: Quick check on study plan in the lab preparation: the first task is too vague to begin.
+9/29/25, 8:47 PM - Suresh lab: can we write the first question beside the topic for study plan in the lab preparation and see what actually changes?
+9/29/25, 8:49 PM - Aarav: The revised study plan for the lab preparation makes more sense — starting no longer requires another planning session.
+9/29/25, 8:50 PM - Suresh lab: glad study plan in the lab preparation is clearer; tuck the first-question note into the same folder.
+12/1/25, 8:06 PM - Aarav: done with the example in the marked-up copy, going for chai now
+12/1/25, 8:07 PM - Suresh lab: did the confusing step in the marked-up copy finally make sense?
+12/1/25, 8:09 PM - Aarav: yes, drawing it in the purple notebook helped more than rereading the marked-up copy
+12/1/25, 8:11 PM - Suresh lab: chai, sounds good
+12/23/25, 1:03 PM - Aarav: the worked-example page wala revision sheet samajh nahi aa raha: the same mistake appears in three questions
+12/23/25, 1:04 PM - Suresh lab: the worked-example page mein revision sheet par ek baar write one worked example beside the error, dekhte h kya hota
+12/23/25, 1:06 PM - Aarav: sahi bola tha, the worked-example page mein revision sheet ke baad the next attempt starts from the right step
+12/23/25, 1:07 PM - Suresh lab: theek h, the worked-example page ke revision sheet ka error-log entry save kar lena
+1/25/26, 11:10 PM - Aarav: done with the example in the quieter version, going for filter coffee now
+1/25/26, 11:12 PM - Suresh lab: did the confusing step in the quieter version finally make sense?
+1/25/26, 11:14 PM - Aarav: yes, drawing it in the grey notebook helped more than rereading the quieter version
+1/25/26, 11:15 PM - Suresh lab: save that drawing beside the quieter version, enjoy the filter coffee break 🙌
+3/6/26, 11:04 PM - Aarav: <Media omitted>
+5/23/26, 11:09 PM - Suresh lab: the printer ate the marked-up copy right before I left for the common-room door
+5/23/26, 11:10 PM - Aarav: is the file safe, or did the marked-up copy only exist on that printout?
+5/23/26, 11:12 PM - Suresh lab: file is safe, the green folder has the marked-up copy and the backup
+5/23/26, 11:14 PM - Aarav: then let the printer sulk; bring the green folder to the common-room door
+5/24/26, 7:29 PM - Suresh lab: done with the example in the plain version, going for buttermilk now
+5/24/26, 7:31 PM - Aarav: did the confusing step in the plain version finally make sense?
+5/24/26, 7:33 PM - Suresh lab: yes, drawing it in the brown notebook helped more than rereading the plain version
+5/24/26, 7:34 PM - Aarav: okay, the plain version then
+7/25/26, 10:16 PM - Aarav: Can you look at study plan for the tutorial prep? the first task is too vague to begin.
+7/25/26, 10:18 PM - Suresh lab: try this on study plan from the tutorial prep: write the first question beside the topic.
+7/25/26, 10:20 PM - Aarav: Tried that for study plan in the tutorial prep, and starting no longer requires another planning session.
+7/25/26, 10:21 PM - Suresh lab: keep the first-question note 👍

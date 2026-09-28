@@ -1,0 +1,247 @@
+{
+  "messages": [
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, April 6, 2025 at 5:17:05 AM UTC",
+      "text": "sorry, just noticed the blank search review was on the wide crop, not the latest copy 👍",
+      "message_id": "bc632935-febf-5491-a271-ebc2f7d6d4b3"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Sunday, April 6, 2025 at 5:18:42 AM UTC",
+      "text": "Repro note: that explains why the blank search looked different in the screen share tomorrow morning",
+      "message_id": "e903b5a4-e530-524c-a2a6-d80c701cb8eb",
+      "topic_id": "bc632935-febf-5491-a271-ebc2f7d6d4b3"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, April 6, 2025 at 5:20:19 AM UTC",
+      "text": "moving the comment from the wide crop to the current blank search example now",
+      "message_id": "cb801715-d9ef-5237-a0bd-4bb74be7a97c",
+      "topic_id": "e903b5a4-e530-524c-a2a6-d80c701cb8eb"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Sunday, April 6, 2025 at 5:21:56 AM UTC",
+      "text": "Repro note: leave a pointer in the wide crop so the next reviewer can find the current blank search notes",
+      "message_id": "5574222e-4d6b-5f75-898a-594365a809ef",
+      "topic_id": "cb801715-d9ef-5237-a0bd-4bb74be7a97c"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, December 29, 2025 at 6:07:16 PM UTC",
+      "text": "✅🙌",
+      "message_id": "19a60241-8253-5fc3-8a4f-d4d772dbc3ee"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, March 27, 2026 at 6:47:05 PM UTC",
+      "text": "sorry, just noticed the offline start review was on the plain version, not the latest copy",
+      "message_id": "ce90f10e-7d19-5ac7-85f1-78ad27d7a857"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Friday, March 27, 2026 at 6:48:42 PM UTC",
+      "text": "Repro note: that explains why the offline start looked different in the screen share during the long break",
+      "message_id": "5ba8f5ea-9f77-55f5-830b-9516b17659e7",
+      "topic_id": "ce90f10e-7d19-5ac7-85f1-78ad27d7a857"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, March 27, 2026 at 6:50:19 PM UTC",
+      "text": "moving the comment from the plain version to the current offline start example now",
+      "message_id": "35d789a9-367f-5590-a8f4-80acbe99f562",
+      "topic_id": "5ba8f5ea-9f77-55f5-830b-9516b17659e7"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Friday, March 27, 2026 at 6:51:56 PM UTC",
+      "text": "Repro note: leave a pointer in the plain version so the next reviewer can find the current offline start notes",
+      "message_id": "6563143d-d4f1-5abf-9de9-f655778774e8",
+      "topic_id": "35d789a9-367f-5590-a8f4-80acbe99f562"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Tuesday, April 14, 2026 at 2:30:37 PM UTC",
+      "text": "Repro note: revisited JSON reader for the small demo, and one empty object aborts the whole batch.",
+      "message_id": "df527477-6354-5c4e-8f5a-f761fb449458"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, April 14, 2026 at 2:32:14 PM UTC",
+      "text": "About JSON reader from the small demo — validate each entry and report its position, then send the result. 👍",
+      "message_id": "a78bbf83-e660-5e24-84f6-7b5dca0394f8",
+      "topic_id": "df527477-6354-5c4e-8f5a-f761fb449458"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Tuesday, April 14, 2026 at 2:33:51 PM UTC",
+      "text": "Repro note: just compared JSON reader again in the small demo; the valid entries survive the malformed one.",
+      "message_id": "84a938b8-e1f1-5f2d-9498-4d566b17292f",
+      "topic_id": "a78bbf83-e660-5e24-84f6-7b5dca0394f8"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, April 14, 2026 at 2:35:28 PM UTC",
+      "text": "keep the minimal JSON sample 👍",
+      "message_id": "3446e4d5-5514-5ce5-96e0-80a86aee0db3",
+      "topic_id": "84a938b8-e1f1-5f2d-9498-4d566b17292f"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, May 15, 2026 at 8:11:01 AM UTC",
+      "text": "Revisited text preview for the notebook example, and an emoji shifts the highlight.",
+      "message_id": "217408da-e3d8-5d0e-88c0-f36c93170a91"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Friday, May 15, 2026 at 8:12:38 AM UTC",
+      "text": "Repro note: about text preview from the notebook example — check which string offsets the renderer expects, then send the result.",
+      "message_id": "ca9b1d30-2510-5585-9099-42913f488394",
+      "topic_id": "217408da-e3d8-5d0e-88c0-f36c93170a91"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, May 15, 2026 at 8:14:15 AM UTC",
+      "text": "Saving the revised text preview from the notebook example, since the highlight covers the intended phrase.",
+      "message_id": "69588e4b-288b-5cf2-8641-affae6e7a0ac",
+      "topic_id": "ca9b1d30-2510-5585-9099-42913f488394"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Friday, May 15, 2026 at 8:15:52 AM UTC",
+      "text": "Repro note: nice, put that Unicode sample beside the text preview notes for the notebook example. 👀",
+      "message_id": "e8dcb866-be4c-5c1f-bcd0-48991a3568e7",
+      "topic_id": "69588e4b-288b-5cf2-8641-affae6e7a0ac"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Tuesday, September 22, 2026 at 6:41:43 AM UTC",
+      "text": "Repro note: sorry, just noticed the cancelled dialog review was on the small preview, not the latest copy",
+      "message_id": "42b68b83-380f-519e-86c3-1c81cca1c473"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, September 22, 2026 at 6:43:20 AM UTC",
+      "text": "that explains why the cancelled dialog looked different in the screen share in the evening",
+      "message_id": "a2052d82-9a5e-5e48-b4e2-87cebb6e94b6",
+      "topic_id": "42b68b83-380f-519e-86c3-1c81cca1c473"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Tuesday, September 22, 2026 at 6:44:57 AM UTC",
+      "text": "Repro note: moving the comment from the small preview to the current cancelled dialog example now",
+      "message_id": "f812d30e-eb0c-5f57-a163-89d38858d490",
+      "topic_id": "a2052d82-9a5e-5e48-b4e2-87cebb6e94b6"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, September 22, 2026 at 6:46:34 AM UTC",
+      "text": "yep, in the evening",
+      "message_id": "c9629fb9-097c-5b98-9426-c14f5a7b747f",
+      "topic_id": "f812d30e-eb0c-5f57-a163-89d38858d490"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, September 25, 2026 at 7:39:16 PM UTC",
+      "text": "sorry, just noticed the cancelled dialog review was on the final shortlist, not the latest copy",
+      "message_id": "56251aff-1c31-5031-ab14-afec568cd039"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Friday, September 25, 2026 at 7:40:53 PM UTC",
+      "text": "Repro note: that explains why the cancelled dialog looked different in the screen share in the evening 🙌",
+      "message_id": "4346031e-2168-57da-b375-b48c587a5249",
+      "topic_id": "56251aff-1c31-5031-ab14-afec568cd039"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Friday, September 25, 2026 at 7:42:30 PM UTC",
+      "text": "moving the comment from the final shortlist to the current cancelled dialog example now",
+      "message_id": "3e5da3b9-59e1-5fee-917c-07b4920236a0",
+      "topic_id": "4346031e-2168-57da-b375-b48c587a5249"
+    },
+    {
+      "creator": {
+        "name": "Sana Ali",
+        "email": "sana.ali@example.com"
+      },
+      "created_date": "Friday, September 25, 2026 at 7:44:07 PM UTC",
+      "text": "Repro note: leave a pointer in the final shortlist so the next reviewer can find the current cancelled dialog notes 👍",
+      "message_id": "ec5d2dc4-22c0-588b-a915-7576e9036b66",
+      "topic_id": "3e5da3b9-59e1-5fee-917c-07b4920236a0"
+    }
+  ]
+}

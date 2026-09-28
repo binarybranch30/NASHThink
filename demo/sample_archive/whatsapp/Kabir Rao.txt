@@ -1,0 +1,402 @@
+1/23/24, 8:03 PM - Aarav: bhai the draft patch mein loading indicator dekhna, an empty result looks like a running request 😅
+1/23/24, 8:05 PM - Kabir Rao: Check: haan the draft patch wala loading indicator dekha; separate loading from successful emptiness, shayad clear ho
+1/23/24, 8:06 PM - Aarav: the draft patch wala loading indicator phir check kiya, ab the empty state has its own message
+1/23/24, 8:08 PM - Kabir Rao: state transition notes saved?
+1/25/24, 10:40 AM - Aarav: yaar the clean test folder ke date filter pe atka hu — midnight records land on the wrong day ✅
+1/25/24, 10:41 AM - Kabir Rao: Check: the clean test folder ke date filter mein pehle make the timezone conversion explicit, phir compare kar
+1/25/24, 10:43 AM - Aarav: sahi bola tha, the clean test folder mein date filter ke baad the midnight row stays in the intended day
+1/25/24, 10:44 AM - Kabir Rao: Check: theek h, the clean test folder ke date filter ka boundary-date fixture save kar lena
+1/27/24, 10:12 PM - Kabir Rao: Check: the funniest part of the Unicode filename was my comment saying this could never happen 🫠
+1/27/24, 10:13 PM - Aarav: please keep that comment beside the Unicode filename fixture as a historical artefact
+1/27/24, 10:15 PM - Kabir Rao: Check: renamed the test to say what the Unicode filename actually does instead of claiming magic
+1/27/24, 10:16 PM - Aarav: good, future us can understand the Unicode filename without reading our minds
+2/6/24, 9:30 PM - Kabir Rao: Check: i can explain the stale cache verbally but my notes still look like a maze 📌
+2/6/24, 9:31 PM - Aarav: bring the tiny stale cache example to the stair landing once the rain stops
+2/6/24, 9:33 PM - Kabir Rao: Check: will do, the blue notebook has the stale cache sketch
+2/6/24, 9:35 PM - Aarav: nice, one the stale cache diagram and then a break for buttermilk
+2/11/24, 12:04 PM - Aarav: Revisited export archive for the second attempt, and the ZIP entries inherit the current time.
+2/11/24, 12:06 PM - Kabir Rao: Check: for export archive in the second attempt, I would assign a fixed timestamp to each ZIP entry.
+2/11/24, 12:07 PM - Aarav: Back with the second attempt result for export archive: a repeat run produces the same ZIP bytes.
+2/11/24, 12:09 PM - Kabir Rao: Check: keep the archive checksum for export archive from the second attempt; it will explain the change later.
+2/17/24, 9:28 PM - Kabir Rao: Check: i can explain the renamed file verbally but my notes still look like a maze
+2/17/24, 9:29 PM - Aarav: bring the tiny renamed file example to the stair landing before lunch
+2/17/24, 9:31 PM - Kabir Rao: Check: will do, the blue notebook has the renamed file sketch ✅
+2/17/24, 9:33 PM - Aarav: nice, one the renamed file diagram and then a break for nimbu paani
+2/25/24, 7:43 PM - Aarav: pushed a small patch for the Unicode filename, leaving the bigger change for later
+2/25/24, 7:44 PM - Kabir Rao: Check: can you put the Unicode filename in the reproduction notes before the screen share once the rain stops?
+2/25/24, 7:46 PM - Aarav: done, the Unicode filename notes include the input and the actual output
+2/25/24, 7:47 PM - Kabir Rao: Check: right, the Unicode filename 😅 😅
+3/5/24, 1:42 AM - Kabir Rao: Check: pushed a small patch for the missing parent, leaving the bigger change for later
+3/5/24, 1:43 AM - Aarav: can you put the missing parent in the reproduction notes before the screen share after the lab?
+3/5/24, 1:45 AM - Kabir Rao: Check: done, the missing parent notes include the input and the actual output
+3/5/24, 1:46 AM - Aarav: thanks, I will check the missing parent against that input after the lab
+3/7/24, 4:41 PM - Aarav: the archived example wala search box samajh nahi aa raha: a trailing space changes the result
+3/7/24, 4:43 PM - Kabir Rao: Check: the archived example ke search box mein pehle trim the query at the input boundary, phir compare kar
+3/7/24, 4:45 PM - Aarav: the archived example wala search box phir check kiya, ab the same query gives the same matches
+3/7/24, 4:46 PM - Kabir Rao: Check: bas the archived example wala query example aur search box ek jagah rakh do
+3/14/24, 9:18 PM - Kabir Rao: Check: the review branch wala loading indicator samajh nahi aa raha: an empty result looks like a running request
+3/14/24, 9:20 PM - Aarav: haan the review branch wala loading indicator dekha; separate loading from successful emptiness, shayad clear ho
+3/14/24, 9:22 PM - Kabir Rao: Check: the review branch wala loading indicator phir check kiya, ab the empty state has its own message
+3/14/24, 9:23 PM - Aarav: send the state transition notes?
+3/19/24, 4:42 PM - Aarav: the funniest part of the last page was my comment saying this could never happen 🫠
+3/19/24, 4:44 PM - Kabir Rao: Check: please keep that comment beside the last page fixture as a historical artefact
+3/19/24, 4:46 PM - Aarav: renamed the test to say what the last page actually does instead of claiming magic 🙌
+3/19/24, 4:47 PM - Kabir Rao: Check: good, future us can understand the last page without reading our minds
+3/27/24, 8:15 PM - Aarav: sorry, just noticed the stale cache review was on the revised page, not the latest copy
+3/27/24, 8:17 PM - Kabir Rao: Check: that explains why the stale cache looked different in the screen share in the evening
+3/27/24, 8:18 PM - Aarav: moving the comment from the revised page to the current stale cache example now
+3/27/24, 8:20 PM - Kabir Rao: Check: the revised page, sounds good ✅
+4/6/24, 12:04 PM - Aarav: sorry, just noticed the offline start review was on the wide crop, not the latest copy
+4/6/24, 12:06 PM - Kabir Rao: Check: that explains why the offline start looked different in the screen share during the long break
+4/6/24, 12:07 PM - Aarav: moving the comment from the wide crop to the current offline start example now
+4/6/24, 12:09 PM - Kabir Rao: Check: during the long break, noted 👍
+4/11/24, 11:31 PM - Kabir Rao: Check: i got stuck on CSV import while looking at the second attempt; the first name has a strange extra character.
+4/11/24, 11:33 PM - Aarav: Looking at the second attempt, could you check for a UTF-8 byte-order mark for CSV import?
+4/11/24, 11:34 PM - Kabir Rao: Check: the revised CSV import for the second attempt makes more sense — the first name now matches the header.
+4/11/24, 11:36 PM - Aarav: The next person checking CSV import in the second attempt will appreciate the tiny input fixture.
+5/7/24, 12:28 AM - Aarav: Nearly done with path resolver for the screen-share example, except a folder with spaces fails to open. 🙂
+5/7/24, 12:30 AM - Kabir Rao: Check: try this on path resolver from the screen-share example: pass the path as one argument.
+5/7/24, 12:31 AM - Aarav: Update on path resolver in the screen-share example: the folder with spaces opens correctly.
+5/7/24, 12:33 AM - Kabir Rao: Check: for the next pass at the screen-share example, leave the space-containing path fixture with path resolver. 👍
+6/10/24, 8:04 PM - Aarav: pushed a small patch for the duplicate row, leaving the bigger change for later 🙂
+6/10/24, 8:05 PM - Kabir Rao: Check: can you put the duplicate row in the reproduction notes before the screen share at the weekend?
+6/10/24, 8:07 PM - Aarav: done, the duplicate row notes include the input and the actual output
+6/10/24, 8:09 PM - Kabir Rao: Check: thanks, I will check the duplicate row against that input at the weekend 🤔
+6/11/24, 8:38 PM - Aarav: bhai the shared fixture mein CSV import dekhna, the first name has a strange extra character
+6/11/24, 8:40 PM - Kabir Rao: Check: the shared fixture mein CSV import par ek baar check for a UTF-8 byte-order mark, dekhte h kya hota
+6/11/24, 8:42 PM - Aarav: the shared fixture wala CSV import phir check kiya, ab the first name now matches the header
+6/11/24, 8:43 PM - Kabir Rao: Check: the shared fixture ke CSV import ke saath tiny input fixture bhi rakhna yaar
+6/14/24, 11:23 PM - Kabir Rao: Check: i can explain the empty folder verbally but my notes still look like a maze
+6/14/24, 11:25 PM - Aarav: bring the tiny empty folder example to the canteen entrance once the rain stops
+6/14/24, 11:26 PM - Kabir Rao: Check: will do, the orange notebook has the empty folder sketch
+6/14/24, 11:28 PM - Aarav: nice, one the empty folder diagram and then a break for plain water
+6/17/24, 5:29 PM - Kabir Rao: Check: pushed a small patch for the repeated click, leaving the bigger change for later
+6/17/24, 5:31 PM - Aarav: can you put the repeated click in the reproduction notes before the screen share once the rain stops?
+6/17/24, 5:33 PM - Kabir Rao: Check: done, the repeated click notes include the input and the actual output
+6/17/24, 5:34 PM - Aarav: thanks, I will check the repeated click against that input once the rain stops
+7/5/24, 6:17 PM - Kabir Rao: Check: yaar, the funniest part of the duplicate row was my comment saying this could never happen
+7/5/24, 6:18 PM - Aarav: haan, please keep that comment beside the duplicate row fixture as a historical artefact
+7/5/24, 6:20 PM - Kabir Rao: Check: achha, renamed the test to say what the duplicate row actually does instead of claiming magic
+7/5/24, 6:21 PM - Aarav: theek h, good, future us can understand the duplicate row without reading our minds
+7/23/24, 6:47 PM - Aarav: the funniest part of the stale cache was my comment saying this could never happen
+7/23/24, 6:49 PM - Kabir Rao: Check: please keep that comment beside the stale cache fixture as a historical artefact
+7/23/24, 6:50 PM - Aarav: renamed the test to say what the stale cache actually does instead of claiming magic
+7/23/24, 6:52 PM - Kabir Rao: Check: good, future us can understand the stale cache without reading our minds
+7/26/24, 6:34 PM - Aarav: I can explain the duplicate row verbally but my notes still look like a maze
+7/26/24, 6:35 PM - Kabir Rao: Check: bring the tiny duplicate row example to the market arch tomorrow morning
+7/26/24, 6:37 PM - Aarav: will do, the blue notebook has the duplicate row sketch
+7/26/24, 6:39 PM - Kabir Rao: Check: nice, one the duplicate row diagram and then a break for plain water
+7/31/24, 11:34 PM - Aarav: I can explain the repeated click verbally but my notes still look like a maze
+7/31/24, 11:35 PM - Kabir Rao: Check: bring the tiny repeated click example to the bus shelter after class
+7/31/24, 11:37 PM - Aarav: will do, the navy notebook has the repeated click sketch
+7/31/24, 11:39 PM - Kabir Rao: Check: the repeated click, noted 👍
+8/2/24, 7:19 PM - Aarav: yaar, pushed a small patch for the offline start, leaving the bigger change for later ✅
+8/2/24, 7:20 PM - Kabir Rao: Check: haan, can you put the offline start in the reproduction notes before the screen share before lunch?
+8/2/24, 7:22 PM - Aarav: achha, done, the offline start notes include the input and the actual output
+8/2/24, 7:24 PM - Kabir Rao: Check: theek h, right, before lunch 😅
+10/5/24, 7:23 PM - Aarav: pushed a small patch for the repeated click, leaving the bigger change for later
+10/5/24, 7:25 PM - Kabir Rao: Check: can you put the repeated click in the reproduction notes before the screen share once the rain stops?
+10/5/24, 7:26 PM - Aarav: done, the repeated click notes include the input and the actual output
+10/5/24, 7:28 PM - Kabir Rao: Check: the repeated click, noted 👍
+10/15/24, 10:28 PM - Aarav: pushed a small patch for the empty folder, leaving the bigger change for later
+10/15/24, 10:29 PM - Kabir Rao: Check: can you put the empty folder in the reproduction notes before the screen share after class?
+10/15/24, 10:31 PM - Aarav: done, the empty folder notes include the input and the actual output
+10/15/24, 10:32 PM - Kabir Rao: Check: thanks, I will check the empty folder against that input after class
+10/30/24, 9:19 PM - Aarav: Revisited JSON reader for the screen-share example, and one empty object aborts the whole batch.
+10/30/24, 9:21 PM - Kabir Rao: Check: on the screen-share example, my suggestion for JSON reader is simple: validate each entry and report its position.
+10/30/24, 9:22 PM - Aarav: Back with the screen-share example result for JSON reader: the valid entries survive the malformed one.
+10/30/24, 9:24 PM - Kabir Rao: send the minimal JSON sample?
+11/5/24, 8:40 AM - Aarav: Revisited read-only mode for the weekend build, and the button still suggests editing is possible. ✅
+11/5/24, 8:41 AM - Kabir Rao: Check: with read-only mode in the weekend build, maybe make the available action explicit before changing anything else.
+11/5/24, 8:43 AM - Aarav: Reopening read-only mode from the weekend build confirms it: the read-only state explains its limit.
+11/5/24, 8:45 AM - Kabir Rao: keep the disabled-state note 👍
+11/12/24, 9:06 PM - Aarav: Sending queue worker from the review branch over because a retry adds the same item twice.
+11/12/24, 9:08 PM - Kabir Rao: Check: on the review branch, my suggestion for queue worker is simple: make the duplicate decision atomic.
+11/12/24, 9:10 PM - Aarav: Finished checking queue worker in the review branch and, yes, the duplicate attempt leaves one row.
+11/12/24, 9:11 PM - Kabir Rao: retry log saved?
+11/16/24, 9:05 PM - Aarav: sorry, just noticed the last page review was on the marked-up copy, not the latest copy
+11/16/24, 9:06 PM - Kabir Rao: Check: that explains why the last page looked different in the screen share once the rain stops
+11/16/24, 9:08 PM - Aarav: moving the comment from the marked-up copy to the current last page example now
+11/16/24, 9:10 PM - Kabir Rao: Check: right, once the rain stops 😅
+11/24/24, 1:03 PM - Kabir Rao: Check: the bit I cannot settle in the archived example is cache example: old values outlive the refresh.
+11/24/24, 1:04 PM - Aarav: Before redoing cache example in the archived example, make the invalidation rule explicit.
+11/24/24, 1:06 PM - Kabir Rao: Check: saving the revised cache example from the archived example, since the refresh replaces the stale entry.
+11/24/24, 1:08 PM - Aarav: keep the cache trace 👍
+12/2/24, 9:35 PM - Kabir Rao: Check: sorry, just noticed the renamed file review was on the quieter version, not the latest copy
+12/2/24, 9:37 PM - Aarav: that explains why the renamed file looked different in the screen share after the lab
+12/2/24, 9:38 PM - Kabir Rao: Check: moving the comment from the quieter version to the current renamed file example now
+12/2/24, 9:40 PM - Aarav: okay, after the lab then 🫠
+12/6/24, 6:40 PM - Kabir Rao: Check: i got stuck on read-only mode while looking at the workshop example; the button still suggests editing is possible.
+12/6/24, 6:42 PM - Aarav: For the read-only mode question from the workshop example, make the available action explicit and compare the two versions.
+12/6/24, 6:44 PM - Kabir Rao: Check: reopening read-only mode from the workshop example confirms it: the read-only state explains its limit. 👍
+12/6/24, 6:45 PM - Aarav: disabled-state note makes sense now
+12/7/24, 8:13 PM - Aarav: the funniest part of the repeated click was my comment saying this could never happen
+12/7/24, 8:14 PM - Kabir Rao: Check: please keep that comment beside the repeated click fixture as a historical artefact
+12/7/24, 8:16 PM - Aarav: renamed the test to say what the repeated click actually does instead of claiming magic
+12/7/24, 8:17 PM - Kabir Rao: Check: good, future us can understand the repeated click without reading our minds
+12/9/24, 1:34 AM - Aarav: ek chhota doubt, my local prototype ke settings form mein the save button hides the error
+12/9/24, 1:36 AM - Kabir Rao: Check: haan my local prototype wala settings form dekha; put the validation message beside the field, shayad clear ho
+12/9/24, 1:37 AM - Aarav: haan ab my local prototype ke settings form mein the invalid field is easy to find, better lag raha
+12/9/24, 1:39 AM - Kabir Rao: Check: bas my local prototype wala form screenshot aur settings form ek jagah rakh do
+12/15/24, 11:00 PM - Kabir Rao: Check: pushed a small patch for the cancelled dialog, leaving the bigger change for later
+12/15/24, 11:01 PM - Aarav: can you put the cancelled dialog in the reproduction notes before the screen share once the rain stops?
+12/15/24, 11:03 PM - Kabir Rao: Check: done, the cancelled dialog notes include the input and the actual output
+12/15/24, 11:05 PM - Aarav: okay, once the rain stops then
+12/18/24, 11:42 PM - Aarav: the funniest part of the duplicate row was my comment saying this could never happen
+12/18/24, 11:43 PM - Kabir Rao: Check: please keep that comment beside the duplicate row fixture as a historical artefact
+12/18/24, 11:45 PM - Aarav: renamed the test to say what the duplicate row actually does instead of claiming magic
+12/18/24, 11:47 PM - Kabir Rao: Check: good, future us can understand the duplicate row without reading our minds
+12/19/24, 9:14 PM - Aarav: sorry, just noticed the blank search review was on the revised page, not the latest copy 👍
+12/19/24, 9:16 PM - Kabir Rao: Check: that explains why the blank search looked different in the screen share at the weekend
+12/19/24, 9:18 PM - Aarav: moving the comment from the revised page to the current blank search example now
+12/19/24, 9:19 PM - Kabir Rao: Check: leave a pointer in the revised page so the next reviewer can find the current blank search notes
+12/20/24, 10:23 AM - Aarav: Tiny question about the empty-input case — with grouping function, similar names collapse into one row.
+12/20/24, 10:25 AM - Kabir Rao: Check: looking at the empty-input case, could you group by stable account IDs instead of display names for grouping function? 😅
+12/20/24, 10:27 AM - Aarav: Just compared grouping function again in the empty-input case; the two people stay separate. 👍
+12/20/24, 10:28 AM - Kabir Rao: Check: for the next pass at the empty-input case, leave the same-name fixture with grouping function.
+12/21/24, 10:29 PM - Kabir Rao: Check: sending text preview from the practice app over because an emoji shifts the highlight.
+12/21/24, 10:31 PM - Aarav: Can we check which string offsets the renderer expects for text preview in the practice app and see what actually changes?
+12/21/24, 10:33 PM - Kabir Rao: Check: i see what you meant about text preview in the practice app — the highlight covers the intended phrase.
+12/21/24, 10:34 PM - Aarav: keep the Unicode sample 👍
+1/17/25, 1:31 PM - Kabir Rao: Check: the funniest part of the duplicate row was my comment saying this could never happen
+1/17/25, 1:32 PM - Aarav: please keep that comment beside the duplicate row fixture as a historical artefact
+1/17/25, 1:34 PM - Kabir Rao: Check: renamed the test to say what the duplicate row actually does instead of claiming magic
+1/17/25, 1:36 PM - Aarav: got it — the duplicate row
+2/9/25, 7:12 PM - Aarav: yaar, pushed a small patch for the missing parent, leaving the bigger change for later
+2/9/25, 7:14 PM - Kabir Rao: Check: haan, can you put the missing parent in the reproduction notes before the screen share at the weekend?
+2/9/25, 7:15 PM - Aarav: achha, done, the missing parent notes include the input and the actual output
+2/9/25, 7:17 PM - Kabir Rao: Check: theek h, the missing parent, noted 👍
+3/4/25, 4:08 PM - Kabir Rao: Check: pushed a small patch for the repeated click, leaving the bigger change for later
+3/4/25, 4:09 PM - Aarav: can you put the repeated click in the reproduction notes before the screen share once the rain stops? ✨
+3/4/25, 4:11 PM - Kabir Rao: Check: done, the repeated click notes include the input and the actual output 🫠
+3/4/25, 4:13 PM - Aarav: thanks, I will check the repeated click against that input once the rain stops
+3/7/25, 10:13 PM - Kabir Rao: Check: yaar, sorry, just noticed the Unicode filename review was on the plain version, not the latest copy
+3/7/25, 10:14 PM - Aarav: haan, that explains why the Unicode filename looked different in the screen share during the long break
+3/7/25, 10:16 PM - Kabir Rao: Check: achha, moving the comment from the plain version to the current Unicode filename example now
+3/7/25, 10:17 PM - Aarav: theek h, leave a pointer in the plain version so the next reviewer can find the current Unicode filename notes
+4/6/25, 8:49 PM - Kabir Rao: Check: sorry, just noticed the repeated click review was on the uncropped frame, not the latest copy
+4/6/25, 8:51 PM - Aarav: that explains why the repeated click looked different in the screen share in the evening
+4/6/25, 8:53 PM - Kabir Rao: Check: moving the comment from the uncropped frame to the current repeated click example now
+4/6/25, 8:54 PM - Aarav: leave a pointer in the uncropped frame so the next reviewer can find the current repeated click notes
+4/12/25, 11:24 PM - Aarav: suno, sorry, just noticed the Unicode filename review was on the darker version, not the latest copy
+4/12/25, 11:26 PM - Kabir Rao: Check: haan dekha, that explains why the Unicode filename looked different in the screen share in the evening
+4/12/25, 11:28 PM - Aarav: samajh gaya, moving the comment from the darker version to the current Unicode filename example now 🤔
+4/12/25, 11:29 PM - Kabir Rao: Check: done hai, in the evening, sounds good
+4/15/25, 5:24 PM - Aarav: The bit I cannot settle in the shared fixture is CSV writer: a comma splits one message into two columns.
+4/15/25, 5:25 PM - Kabir Rao: Check: i checked the shared fixture; for CSV writer, start by trying to let the CSV writer quote complete field values.
+4/15/25, 5:27 PM - Aarav: Finished checking CSV writer in the shared fixture and, yes, the comma remains inside one cell.
+4/15/25, 5:29 PM - Kabir Rao: Check: could you attach the round-trip row to CSV writer in the notes for the shared fixture?
+5/5/25, 1:47 AM - Aarav: yaar, I can explain the renamed file verbally but my notes still look like a maze
+5/5/25, 1:48 AM - Kabir Rao: Check: haan, bring the tiny renamed file example to the common-room door tomorrow morning
+5/5/25, 1:50 AM - Aarav: achha, will do, the white notebook has the renamed file sketch
+5/5/25, 1:52 AM - Kabir Rao: Check: theek h, nice, one the renamed file diagram and then a break for plain water
+5/8/25, 7:38 PM - Aarav: I can explain the Unicode filename verbally but my notes still look like a maze
+5/8/25, 7:39 PM - Kabir Rao: Check: bring the tiny Unicode filename example to the little park gate during the long break
+5/8/25, 7:41 PM - Aarav: will do, the yellow notebook has the Unicode filename sketch
+5/8/25, 7:42 PM - Kabir Rao: Check: yep, the Unicode filename
+5/10/25, 4:48 PM - Aarav: the funniest part of the offline start was my comment saying this could never happen
+5/10/25, 4:50 PM - Kabir Rao: Check: please keep that comment beside the offline start fixture as a historical artefact
+5/10/25, 4:51 PM - Aarav: renamed the test to say what the offline start actually does instead of claiming magic
+5/10/25, 4:53 PM - Kabir Rao: Check: good, future us can understand the offline start without reading our minds
+5/23/25, 6:27 PM - Kabir Rao: Check: the bit I cannot settle in the small demo is message sorter: two equal timestamps exchange places.
+5/23/25, 6:29 PM - Aarav: For the message sorter question from the small demo, use the source ID as a stable tie-breaker and compare the two versions.
+5/23/25, 6:30 PM - Kabir Rao: Check: i see what you meant about message sorter in the small demo — the equal-time rows keep their order.
+5/23/25, 6:32 PM - Aarav: For the next pass at the small demo, leave the before-and-after output with message sorter.
+6/19/25, 10:31 PM - Aarav: the funniest part of the repeated click was my comment saying this could never happen
+6/19/25, 10:33 PM - Kabir Rao: Check: please keep that comment beside the repeated click fixture as a historical artefact
+6/19/25, 10:35 PM - Aarav: renamed the test to say what the repeated click actually does instead of claiming magic
+6/19/25, 10:36 PM - Kabir Rao: Check: okay, the repeated click then
+6/21/25, 9:45 PM - Aarav: pushed a small patch for the last page, leaving the bigger change for later 👀
+6/21/25, 9:46 PM - Kabir Rao: Check: can you put the last page in the reproduction notes before the screen share once the rain stops?
+6/21/25, 9:48 PM - Aarav: done, the last page notes include the input and the actual output
+6/21/25, 9:50 PM - Kabir Rao: Check: thanks, I will check the last page against that input once the rain stops
+6/24/25, 4:35 PM - Aarav: I can explain the slow request verbally but my notes still look like a maze
+6/24/25, 4:37 PM - Kabir Rao: Check: bring the tiny slow request example to the college lawn in the evening
+6/24/25, 4:39 PM - Aarav: will do, the green notebook has the slow request sketch
+6/24/25, 4:40 PM - Kabir Rao: Check: nice, one the slow request diagram and then a break for lemon tea
+7/12/25, 10:49 AM - Aarav: sorry, just noticed the repeated click review was on the wide crop, not the latest copy
+7/12/25, 10:50 AM - Kabir Rao: Check: that explains why the repeated click looked different in the screen share after class
+7/12/25, 10:52 AM - Aarav: moving the comment from the wide crop to the current repeated click example now
+7/12/25, 10:54 AM - Kabir Rao: Check: got it — the wide crop 😭
+7/27/25, 10:29 PM - Kabir Rao: Check: the funniest part of the stale cache was my comment saying this could never happen
+7/27/25, 10:30 PM - Aarav: please keep that comment beside the stale cache fixture as a historical artefact
+7/27/25, 10:32 PM - Kabir Rao: Check: renamed the test to say what the stale cache actually does instead of claiming magic 😂
+7/27/25, 10:33 PM - Aarav: right, the stale cache 😅 😂
+8/14/25, 12:38 AM - Aarav: Something odd in the notebook example: queue worker has a snag — a retry adds the same item twice.
+8/14/25, 12:40 AM - Kabir Rao: Check: before redoing queue worker in the notebook example, make the duplicate decision atomic.
+8/14/25, 12:42 AM - Aarav: Update on queue worker in the notebook example: the duplicate attempt leaves one row.
+8/14/25, 12:43 AM - Kabir Rao: Check: no need to reopen queue worker in the notebook example tonight; just save the retry log.
+9/6/25, 10:26 PM - Kabir Rao: Check: suno, sorry, just noticed the missing parent review was on the second sketch, not the latest copy ✅
+9/6/25, 10:28 PM - Aarav: haan dekha, that explains why the missing parent looked different in the screen share after class
+9/6/25, 10:29 PM - Kabir Rao: Check: samajh gaya, moving the comment from the second sketch to the current missing parent example now
+9/6/25, 10:31 PM - Aarav: done hai, leave a pointer in the second sketch so the next reviewer can find the current missing parent notes
+9/10/25, 10:13 PM - Aarav: pushed a small patch for the renamed file, leaving the bigger change for later
+9/10/25, 10:15 PM - Kabir Rao: Check: can you put the renamed file in the reproduction notes before the screen share at the weekend? 👀
+9/10/25, 10:16 PM - Aarav: done, the renamed file notes include the input and the actual output
+9/10/25, 10:18 PM - Kabir Rao: Check: got it — the renamed file
+9/15/25, 12:10 AM - Aarav: The bit I cannot settle in the small demo is notes index: a deleted file remains searchable.
+9/15/25, 12:12 AM - Kabir Rao: Check: can we include deletions in the scan comparison for notes index in the small demo and see what actually changes? 📌
+9/15/25, 12:13 AM - Aarav: Back with the small demo result for notes index: removed files disappear from the result.
+9/15/25, 12:15 AM - Kabir Rao: three-file fixture makes sense now
+9/21/25, 12:22 AM - Aarav: the funniest part of the missing parent was my comment saying this could never happen
+9/21/25, 12:24 AM - Kabir Rao: Check: please keep that comment beside the missing parent fixture as a historical artefact
+9/21/25, 12:25 AM - Aarav: renamed the test to say what the missing parent actually does instead of claiming magic
+9/21/25, 12:27 AM - Kabir Rao: Check: good, future us can understand the missing parent without reading our minds
+10/2/25, 10:41 AM - Aarav: 📌🙌
+10/4/25, 10:44 PM - Aarav: Can you look at notes index for the minimal reproduction? a deleted file remains searchable.
+10/4/25, 10:45 PM - Kabir Rao: Check: my first thought for the minimal reproduction is to include deletions in the scan comparison around notes index.
+10/4/25, 10:47 PM - Aarav: That helped with notes index from the minimal reproduction: removed files disappear from the result.
+10/4/25, 10:49 PM - Kabir Rao: Check: keep both the three-file fixture and the revised notes index from the minimal reproduction together.
+10/7/25, 8:38 AM - Aarav: yaar the second attempt ke error banner pe atka hu — the raw exception is hard to understand
+10/7/25, 8:39 AM - Kabir Rao: Check: haan the second attempt wala error banner dekha; show a useful action beside the error summary, shayad clear ho
+10/7/25, 8:41 AM - Aarav: sahi bola tha, the second attempt mein error banner ke baad the banner explains what the user can try
+10/7/25, 8:43 AM - Kabir Rao: error-state screenshot makes sense now
+10/13/25, 1:40 PM - Aarav: yaar, I can explain the stale cache verbally but my notes still look like a maze
+10/13/25, 1:42 PM - Kabir Rao: Check: haan, bring the tiny stale cache example to the common-room door tomorrow morning
+10/13/25, 1:43 PM - Aarav: achha, will do, the pink notebook has the stale cache sketch
+10/13/25, 1:45 PM - Kabir Rao: Check: theek h, right, the stale cache 😅
+10/27/25, 4:45 PM - Aarav: the funniest part of the renamed file was my comment saying this could never happen
+10/27/25, 4:47 PM - Kabir Rao: Check: please keep that comment beside the renamed file fixture as a historical artefact
+10/27/25, 4:48 PM - Aarav: renamed the test to say what the renamed file actually does instead of claiming magic
+10/27/25, 4:50 PM - Kabir Rao: Check: good, future us can understand the renamed file without reading our minds 🙂
+10/30/25, 12:49 PM - Kabir Rao: Check: suno, I can explain the missing parent verbally but my notes still look like a maze
+10/30/25, 12:51 PM - Aarav: haan dekha, bring the tiny missing parent example to the shaded bench after the lab
+10/30/25, 12:52 PM - Kabir Rao: Check: samajh gaya, will do, the green notebook has the missing parent sketch
+10/30/25, 12:54 PM - Aarav: done hai, nice, one the missing parent diagram and then a break for plain water
+12/6/25, 8:26 AM - Aarav: 👀🤔
+12/11/25, 9:21 PM - Aarav: sorry, just noticed the repeated click review was on the revised page, not the latest copy
+12/11/25, 9:23 PM - Kabir Rao: Check: that explains why the repeated click looked different in the screen share after the lab
+12/11/25, 9:24 PM - Aarav: moving the comment from the revised page to the current repeated click example now
+12/11/25, 9:26 PM - Kabir Rao: Check: leave a pointer in the revised page so the next reviewer can find the current repeated click notes
+12/20/25, 1:48 PM - Kabir Rao: Check: quick check on date filter in the offline sample: midnight records land on the wrong day. 🙂
+12/20/25, 1:50 PM - Aarav: With date filter in the offline sample, maybe make the timezone conversion explicit before changing anything else.
+12/20/25, 1:51 PM - Kabir Rao: Check: update on date filter in the offline sample: the midnight row stays in the intended day.
+12/20/25, 1:53 PM - Aarav: The next person checking date filter in the offline sample will appreciate the boundary-date fixture.
+12/22/25, 12:30 PM - Kabir Rao: Check: i can explain the slow request verbally but my notes still look like a maze
+12/22/25, 12:32 PM - Aarav: bring the tiny slow request example to the noticeboard before lunch
+12/22/25, 12:33 PM - Kabir Rao: Check: will do, the red notebook has the slow request sketch
+12/22/25, 12:35 PM - Aarav: nice, one the slow request diagram and then a break for plain water 🙂
+12/28/25, 9:06 PM - Kabir Rao: Check: yaar, I can explain the Unicode filename verbally but my notes still look like a maze
+12/28/25, 9:08 PM - Aarav: haan, bring the tiny Unicode filename example to the covered walkway after the lab
+12/28/25, 9:09 PM - Kabir Rao: Check: achha, will do, the blue notebook has the Unicode filename sketch
+12/28/25, 9:11 PM - Aarav: theek h, right, blue 😅
+12/29/25, 11:13 PM - Aarav: Quick check on file picker in the practice app: a cancelled selection clears the old path.
+12/29/25, 11:14 PM - Kabir Rao: Check: i checked the practice app; for file picker, start by trying to handle cancellation before replacing state.
+12/29/25, 11:16 PM - Aarav: Finished checking file picker in the practice app and, yes, the previous selection survives cancellation.
+12/29/25, 11:18 PM - Kabir Rao: Check: for the next pass at the practice app, leave the reproduction notes with file picker.
+1/8/26, 4:25 PM - Kabir Rao: Check: i got stuck on settings form while looking at the workshop example; the save button hides the error. 📌
+1/8/26, 4:27 PM - Aarav: Before redoing settings form in the workshop example, put the validation message beside the field.
+1/8/26, 4:28 PM - Kabir Rao: Check: just compared settings form again in the workshop example; the invalid field is easy to find.
+1/8/26, 4:30 PM - Aarav: For the next pass at the workshop example, leave the form screenshot with settings form.
+1/8/26, 9:04 PM - Aarav: bhai, I can explain the cancelled dialog verbally but my notes still look like a maze
+1/8/26, 9:06 PM - Kabir Rao: Check: ek sec, bring the tiny cancelled dialog example to the bus shelter tomorrow morning
+1/8/26, 9:07 PM - Aarav: sahi h, will do, the navy notebook has the cancelled dialog sketch
+1/8/26, 9:09 PM - Kabir Rao: Check: chalo, right, navy 😅
+3/8/26, 8:15 AM - Kabir Rao: Check: can you look at reply preview for the offline sample? a missing parent crashes the panel.
+3/8/26, 8:16 AM - Aarav: For reply preview in the offline sample, I would represent a missing parent explicitly.
+3/8/26, 8:18 AM - Kabir Rao: Check: update on reply preview in the offline sample: the panel shows a missing-context label.
+3/8/26, 8:20 AM - Aarav: orphan-reply sample saved?
+3/12/26, 12:46 PM - Aarav: sorry, just noticed the renamed file review was on the plain version, not the latest copy
+3/12/26, 12:47 PM - Kabir Rao: Check: that explains why the renamed file looked different in the screen share before lunch 🙂
+3/12/26, 12:49 PM - Aarav: moving the comment from the plain version to the current renamed file example now
+3/12/26, 12:50 PM - Kabir Rao: Check: leave a pointer in the plain version so the next reviewer can find the current renamed file notes
+3/17/26, 10:24 AM - Aarav: Would you have a minute for error banner in the workshop example, where the raw exception is hard to understand?
+3/17/26, 10:25 AM - Kabir Rao: Check: before redoing error banner in the workshop example, show a useful action beside the error summary.
+3/17/26, 10:27 AM - Aarav: Saving the revised error banner from the workshop example, since the banner explains what the user can try.
+3/17/26, 10:29 AM - Kabir Rao: error-state screenshot saved?
+3/21/26, 1:41 AM - Aarav: Quick check on CSV writer in the draft patch: a comma splits one message into two columns.
+3/21/26, 1:43 AM - Kabir Rao: Check: i checked the draft patch; for CSV writer, start by trying to let the CSV writer quote complete field values.
+3/21/26, 1:44 AM - Aarav: Update on CSV writer in the draft patch: the comma remains inside one cell.
+3/21/26, 1:46 AM - Kabir Rao: Check: could you attach the round-trip row to CSV writer in the notes for the draft patch? 🫠
+3/30/26, 6:05 PM - Aarav: Sorry, saw this late; on loading indicator from the lab exercise, an empty result looks like a running request.
+3/30/26, 6:07 PM - Kabir Rao: Check: my first thought for the lab exercise is to separate loading from successful emptiness around loading indicator.
+3/30/26, 6:09 PM - Aarav: Just compared loading indicator again in the lab exercise; the empty state has its own message.
+3/30/26, 6:10 PM - Kabir Rao: Check: the state transition notes from the lab exercise sounds worth keeping with loading indicator.
+4/15/26, 1:16 AM - Aarav: sorry, just noticed the empty folder review was on the wide crop, not the latest copy
+4/15/26, 1:18 AM - Kabir Rao: Check: that explains why the empty folder looked different in the screen share in the evening
+4/15/26, 1:19 AM - Aarav: moving the comment from the wide crop to the current empty folder example now 🤔
+4/15/26, 1:21 AM - Kabir Rao: Check: the empty folder, noted 👍
+4/30/26, 8:08 AM - Aarav: Nearly done with path resolver for the import exercise, except a folder with spaces fails to open.
+4/30/26, 8:10 AM - Kabir Rao: Check: for path resolver in the import exercise, I would pass the path as one argument.
+4/30/26, 8:12 AM - Aarav: That helped with path resolver from the import exercise: the folder with spaces opens correctly.
+4/30/26, 8:13 AM - Kabir Rao: space-containing path fixture saved?
+5/2/26, 12:37 PM - Kabir Rao: Check: i can explain the offline start verbally but my notes still look like a maze
+5/2/26, 12:39 PM - Aarav: bring the tiny offline start example to the market arch in the evening
+5/2/26, 12:40 PM - Kabir Rao: Check: will do, the yellow notebook has the offline start sketch
+5/2/26, 12:42 PM - Aarav: nice, one the offline start diagram and then a break for chai
+5/12/26, 12:03 AM - Kabir Rao: Check: back at the workshop example, trying to understand why, in pagination control, the last page repeats a row. ✅
+5/12/26, 12:04 AM - Aarav: About pagination control from the workshop example — check the cursor boundary against a fixed dataset, then send the result.
+5/12/26, 12:06 AM - Kabir Rao: Check: finished checking pagination control in the workshop example and, yes, each row appears on one page.
+5/12/26, 12:07 AM - Aarav: page-boundary case makes sense now
+5/12/26, 5:47 PM - Aarav: I got stuck on grouping function while looking at the workshop example; similar names collapse into one row. 😭
+5/12/26, 5:49 PM - Kabir Rao: Check: for grouping function in the workshop example, I would group by stable account IDs instead of display names.
+5/12/26, 5:50 PM - Aarav: Just compared grouping function again in the workshop example; the two people stay separate.
+5/12/26, 5:52 PM - Kabir Rao: Check: nice, put that same-name fixture beside the grouping function notes for the workshop example. 🙌
+5/14/26, 6:39 PM - Kabir Rao: Check: i can explain the duplicate row verbally but my notes still look like a maze
+5/14/26, 6:41 PM - Aarav: bring the tiny duplicate row example to the corner tea stall in the evening
+5/14/26, 6:43 PM - Kabir Rao: Check: will do, the green notebook has the duplicate row sketch
+5/14/26, 6:44 PM - Aarav: the duplicate row, sounds good
+5/25/26, 8:45 PM - Aarav: I got stuck on grouping function while looking at the archived example; similar names collapse into one row.
+5/25/26, 8:47 PM - Kabir Rao: Check: small experiment for the archived example: group by stable account IDs instead of display names when revisiting grouping function.
+5/25/26, 8:49 PM - Aarav: The difference in the archived example is visible now; for grouping function, the two people stay separate.
+5/25/26, 8:50 PM - Kabir Rao: send the same-name fixture?
+5/27/26, 8:06 AM - Aarav: I got stuck on CSV writer while looking at the import exercise; a comma splits one message into two columns.
+5/27/26, 8:07 AM - Kabir Rao: Check: before redoing CSV writer in the import exercise, let the CSV writer quote complete field values.
+5/27/26, 8:09 AM - Aarav: Just compared CSV writer again in the import exercise; the comma remains inside one cell.
+5/27/26, 8:10 AM - Kabir Rao: Check: nice, put that round-trip row beside the CSV writer notes for the import exercise.
+6/3/26, 1:44 AM - Aarav: sorry, just noticed the missing parent review was on the quieter version, not the latest copy
+6/3/26, 1:46 AM - Kabir Rao: Check: that explains why the missing parent looked different in the screen share in the evening
+6/3/26, 1:47 AM - Aarav: moving the comment from the quieter version to the current missing parent example now
+6/3/26, 1:49 AM - Kabir Rao: Check: leave a pointer in the quieter version so the next reviewer can find the current missing parent notes
+6/9/26, 8:15 PM - Aarav: the funniest part of the blank search was my comment saying this could never happen
+6/9/26, 8:17 PM - Kabir Rao: Check: please keep that comment beside the blank search fixture as a historical artefact
+6/9/26, 8:18 PM - Aarav: renamed the test to say what the blank search actually does instead of claiming magic
+6/9/26, 8:20 PM - Kabir Rao: Check: good, future us can understand the blank search without reading our minds
+6/16/26, 5:38 PM - Kabir Rao: Check: pushed a small patch for the offline start, leaving the bigger change for later
+6/16/26, 5:40 PM - Aarav: can you put the offline start in the reproduction notes before the screen share before lunch?
+6/16/26, 5:41 PM - Kabir Rao: Check: done, the offline start notes include the input and the actual output
+6/16/26, 5:43 PM - Aarav: thanks, I will check the offline start against that input before lunch
+6/30/26, 11:39 PM - Kabir Rao: Check: i can explain the Unicode filename verbally but my notes still look like a maze
+6/30/26, 11:40 PM - Aarav: bring the tiny Unicode filename example to the corner tea stall during the long break
+6/30/26, 11:42 PM - Kabir Rao: Check: will do, the green notebook has the Unicode filename sketch
+6/30/26, 11:43 PM - Aarav: right, green 😅
+7/14/26, 5:17 PM - Kabir Rao: Check: i can explain the empty folder verbally but my notes still look like a maze
+7/14/26, 5:19 PM - Aarav: bring the tiny empty folder example to the noticeboard once the rain stops
+7/14/26, 5:20 PM - Kabir Rao: Check: will do, the navy notebook has the empty folder sketch
+7/14/26, 5:22 PM - Aarav: nice, one the empty folder diagram and then a break for cold coffee
+8/4/26, 10:45 PM - Aarav: sorry, just noticed the renamed file review was on the uncropped frame, not the latest copy
+8/4/26, 10:47 PM - Kabir Rao: Check: that explains why the renamed file looked different in the screen share in the evening
+8/4/26, 10:48 PM - Aarav: moving the comment from the uncropped frame to the current renamed file example now 🤔
+8/4/26, 10:50 PM - Kabir Rao: Check: leave a pointer in the uncropped frame so the next reviewer can find the current renamed file notes
+8/13/26, 8:08 AM - Kabir Rao: Check: yaar, sorry, just noticed the cancelled dialog review was on the darker version, not the latest copy
+8/13/26, 8:10 AM - Aarav: haan, that explains why the cancelled dialog looked different in the screen share after the lab
+8/13/26, 8:11 AM - Kabir Rao: Check: achha, moving the comment from the darker version to the current cancelled dialog example now 🫠
+8/13/26, 8:13 AM - Aarav: theek h, leave a pointer in the darker version so the next reviewer can find the current cancelled dialog notes
+8/13/26, 8:01 PM - Aarav: pushed a small patch for the duplicate row, leaving the bigger change for later
+8/13/26, 8:02 PM - Kabir Rao: Check: can you put the duplicate row in the reproduction notes before the screen share once the rain stops?
+8/13/26, 8:04 PM - Aarav: done, the duplicate row notes include the input and the actual output
+8/13/26, 8:06 PM - Kabir Rao: Check: thanks, I will check the duplicate row against that input once the rain stops
+8/16/26, 8:30 PM - Kabir Rao: Check: suno, the funniest part of the empty folder was my comment saying this could never happen
+8/16/26, 8:31 PM - Aarav: haan dekha, please keep that comment beside the empty folder fixture as a historical artefact
+8/16/26, 8:33 PM - Kabir Rao: Check: samajh gaya, renamed the test to say what the empty folder actually does instead of claiming magic
+8/16/26, 8:34 PM - Aarav: done hai, good, future us can understand the empty folder without reading our minds
+8/20/26, 5:04 PM - Kabir Rao: Check: sorry, saw this late; on CSV import from the shared fixture, the first name has a strange extra character.
+8/20/26, 5:06 PM - Aarav: About CSV import from the shared fixture — check for a UTF-8 byte-order mark, then send the result.
+8/20/26, 5:08 PM - Kabir Rao: Check: okay, with the change to CSV import in the shared fixture, the first name now matches the header.
+8/20/26, 5:09 PM - Aarav: tiny input fixture saved?
+9/9/26, 10:24 PM - Aarav: pushed a small patch for the stale cache, leaving the bigger change for later
+9/9/26, 10:26 PM - Kabir Rao: Check: can you put the stale cache in the reproduction notes before the screen share after class?
+9/9/26, 10:27 PM - Aarav: done, the stale cache notes include the input and the actual output
+9/9/26, 10:29 PM - Kabir Rao: Check: thanks, I will check the stale cache against that input after class
+9/14/26, 11:18 PM - Aarav: Sorry, saw this late; on date filter from the practice app, midnight records land on the wrong day.
+9/14/26, 11:19 PM - Kabir Rao: Check: can we make the timezone conversion explicit for date filter in the practice app and see what actually changes?
+9/14/26, 11:21 PM - Aarav: Update on date filter in the practice app: the midnight row stays in the intended day. ✨
+9/14/26, 11:23 PM - Kabir Rao: keep the boundary-date fixture 👍
+9/21/26, 8:37 AM - Kabir Rao: Check: back at the small demo, trying to understand why, in error banner, the raw exception is hard to understand.
+9/21/26, 8:38 AM - Aarav: Looking at the small demo, could you show a useful action beside the error summary for error banner? 🤔
+9/21/26, 8:40 AM - Kabir Rao: Check: back with the small demo result for error banner: the banner explains what the user can try.
+9/21/26, 8:42 AM - Aarav: send the error-state screenshot?
+9/23/26, 11:44 PM - Kabir Rao: Check: can you look at error banner for the shared fixture? the raw exception is hard to understand.
+9/23/26, 11:46 PM - Aarav: About error banner from the shared fixture — show a useful action beside the error summary, then send the result. 🤔
+9/23/26, 11:48 PM - Kabir Rao: Check: the difference in the shared fixture is visible now; for error banner, the banner explains what the user can try. 😭
+9/23/26, 11:49 PM - Aarav: keep the error-state screenshot 👍

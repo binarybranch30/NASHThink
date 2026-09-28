@@ -1,0 +1,3513 @@
+{
+  "guild": {
+    "id": "0",
+    "name": "Direct Messages"
+  },
+  "channel": {
+    "id": "901234567890123469",
+    "type": "DirectTextChat",
+    "name": "rohan-iyer",
+    "topic": "Rohan Iyer"
+  },
+  "messages": [
+    {
+      "id": "1335999032459264561",
+      "type": "Default",
+      "timestamp": "2025-02-03T15:43:11.000+00:00",
+      "content": "Quick check on bus-stop frame in the bus shelter study: the sign cuts across the umbrella.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1335999439306752562",
+      "type": "Reply",
+      "timestamp": "2025-02-03T15:44:48.000+00:00",
+      "content": "about bus-stop frame from the bus shelter study — compare the version made a little farther left, then send the result.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1335999032459264561",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1335999846154240563",
+      "type": "Reply",
+      "timestamp": "2025-02-03T15:46:25.000+00:00",
+      "content": "The difference in the bus shelter study is visible now; for bus-stop frame, the umbrella has breathing room.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1335999439306752562",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1336000253001728564",
+      "type": "Reply",
+      "timestamp": "2025-02-03T15:48:02.000+00:00",
+      "content": "bhai, for the next pass at the bus shelter study, leave the two-frame comparison with bus-stop frame.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1335999846154240563",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1341478802554880582",
+      "type": "Default",
+      "timestamp": "2025-02-18T18:37:50.000+00:00",
+      "content": "i got stuck on shared calendar while looking at the weekend plan; two reminders have different start times. 🙂",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1341479209402368583",
+      "type": "Reply",
+      "timestamp": "2025-02-18T18:39:27.000+00:00",
+      "content": "Before redoing shared calendar in the weekend plan, check the original invite before editing either.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1341478802554880582",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1341479616249856584",
+      "type": "Reply",
+      "timestamp": "2025-02-18T18:41:04.000+00:00",
+      "content": "bhai, saving the revised shared calendar from the weekend plan, since both reminders match the invite. 👍",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1341479209402368583",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1341480023097344585",
+      "type": "Reply",
+      "timestamp": "2025-02-18T18:42:41.000+00:00",
+      "content": "Could you attach the original invitation to shared calendar in the notes for the weekend plan?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1341479616249856584",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1360452986601472681",
+      "type": "Default",
+      "timestamp": "2025-04-12T03:14:28.000+00:00",
+      "content": "not posting the quieter version tonight, still thinking about the caption from the college lawn",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1360453393448960682",
+      "type": "Reply",
+      "timestamp": "2025-04-12T03:16:05.000+00:00",
+      "content": "you can let the quieter version exist without posting it immediately",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1360452986601472681",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1360453800296448683",
+      "type": "Reply",
+      "timestamp": "2025-04-12T03:17:42.000+00:00",
+      "content": "true, a crooked sign does not become less interesting if I wait",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1360453393448960682",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1360454207143936684",
+      "type": "Reply",
+      "timestamp": "2025-04-12T03:19:19.000+00:00",
+      "content": "bhai, exactly, tomorrow you might have a clearer sentence about a crooked sign in the quieter version 😭",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1360453800296448683",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1364228447404032697",
+      "type": "Default",
+      "timestamp": "2025-04-22T13:16:48.000+00:00",
+      "content": "suno, sorry saw this late, left my phone beside the red water bottle",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1364228854251520698",
+      "type": "Reply",
+      "timestamp": "2025-04-22T13:18:25.000+00:00",
+      "content": "bhai, haan dekha, I only needed to know if you were passing the bus shelter in the evening",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1364228447404032697",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1364229261099008699",
+      "type": "Reply",
+      "timestamp": "2025-04-22T13:20:02.000+00:00",
+      "content": "samajh gaya, can do the bus shelter in the evening, what do you need?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1364228854251520698",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1364229667946496700",
+      "type": "Reply",
+      "timestamp": "2025-04-22T13:21:39.000+00:00",
+      "content": "done hai, just the red water bottle if it fits in your bag, thanks 😂",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1364229261099008699",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1375531048108032754",
+      "type": "Default",
+      "timestamp": "2025-05-23T17:49:18.000+00:00",
+      "content": "someone forwarded the same tomato rice meme in three groups",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1375531454955520755",
+      "type": "Reply",
+      "timestamp": "2025-05-23T17:50:55.000+00:00",
+      "content": "the version in our group has a random yellow charging cable drawn on it",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1375531048108032754",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1375531861803008756",
+      "type": "Reply",
+      "timestamp": "2025-05-23T17:52:32.000+00:00",
+      "content": "why does the yellow charging cable make the tomato rice meme funnier",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1375531454955520755",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1375532268650496757",
+      "type": "Reply",
+      "timestamp": "2025-05-23T17:54:09.000+00:00",
+      "content": "bhai, because the joke now has completely unnecessary stationery lore around that charging cable ✅",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1375531861803008756",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1380594239930368771",
+      "type": "Default",
+      "timestamp": "2025-06-06T17:08:37.000+00:00",
+      "content": "Sorry, saw this late; on voice-note summary from the revised group plan, the important time is hard to find.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1380594646777856772",
+      "type": "Reply",
+      "timestamp": "2025-06-06T17:10:14.000+00:00",
+      "content": "small experiment for the revised group plan: put the agreed time in a text reply when revisiting voice-note summary.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1380594239930368771",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1380595053625344773",
+      "type": "Reply",
+      "timestamp": "2025-06-06T17:11:51.000+00:00",
+      "content": "That helped with voice-note summary from the revised group plan: the plan is readable without replaying audio.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1380594646777856772",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1380595460472832774",
+      "type": "Reply",
+      "timestamp": "2025-06-06T17:13:28.000+00:00",
+      "content": "glad voice-note summary in the revised group plan is clearer; tuck the short text summary into the same folder.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1380595053625344773",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1383488821395456799",
+      "type": "Default",
+      "timestamp": "2025-06-14T16:50:39.000+00:00",
+      "content": "Tiny question about the shared checklist — with borrowed book, the bookmark fell out in my bag.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1383489228242944800",
+      "type": "Reply",
+      "timestamp": "2025-06-14T16:52:16.000+00:00",
+      "content": "try this on borrowed book from the shared checklist: write the chapter name in the return note. 😭",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1383488821395456799",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1383489635090432801",
+      "type": "Reply",
+      "timestamp": "2025-06-14T16:53:53.000+00:00",
+      "content": "Back with the shared checklist result for borrowed book: the right chapter is easy to find. 🙂",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1383489228242944800",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1383490041937920802",
+      "type": "Reply",
+      "timestamp": "2025-06-14T16:55:30.000+00:00",
+      "content": "return note makes sense now",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1383489635090432801",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1383853151223808807",
+      "type": "Default",
+      "timestamp": "2025-06-15T16:58:22.000+00:00",
+      "content": "bhai, something odd in the empty-input case: message sorter has a snag — two equal timestamps exchange places.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1383853558071296808",
+      "type": "Reply",
+      "timestamp": "2025-06-15T16:59:59.000+00:00",
+      "content": "For message sorter in the empty-input case, I would use the source ID as a stable tie-breaker.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1383853151223808807",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1383853964918784809",
+      "type": "Reply",
+      "timestamp": "2025-06-15T17:01:36.000+00:00",
+      "content": "back with the empty-input case result for message sorter: the equal-time rows keep their order.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1383853558071296808",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1383854371766272810",
+      "type": "Reply",
+      "timestamp": "2025-06-15T17:03:13.000+00:00",
+      "content": "before-and-after output makes sense now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1383853964918784809",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1388742317178880832",
+      "type": "Default",
+      "timestamp": "2025-06-29T04:46:10.000+00:00",
+      "content": "movie later or just idli and a quiet evening?",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1388742724026368833",
+      "type": "Reply",
+      "timestamp": "2025-06-29T04:47:47.000+00:00",
+      "content": "leaning towards idli, can meet near the common-room door 🫠",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1388742317178880832",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1388743130873856834",
+      "type": "Reply",
+      "timestamp": "2025-06-29T04:49:24.000+00:00",
+      "content": "bhai, fine by me, bringing my yellow lanyard so I do not forget it again",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1388742724026368833",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1388743537721344835",
+      "type": "Reply",
+      "timestamp": "2025-06-29T04:51:01.000+00:00",
+      "content": "then the common-room door is officially our lost-property desk for the lanyard",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1388743130873856834",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1391109519441920840",
+      "type": "Default",
+      "timestamp": "2025-07-05T17:32:35.000+00:00",
+      "content": "done with the example in the quieter version, going for chai now 😂",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1391109926289408841",
+      "type": "Reply",
+      "timestamp": "2025-07-05T17:34:12.000+00:00",
+      "content": "bhai, did the confusing step in the quieter version finally make sense? 😭",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1391109519441920840",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1391110333136896842",
+      "type": "Reply",
+      "timestamp": "2025-07-05T17:35:49.000+00:00",
+      "content": "yes, drawing it in the blue notebook helped more than rereading the quieter version",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1391109926289408841",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1391110739984384843",
+      "type": "Reply",
+      "timestamp": "2025-07-05T17:37:26.000+00:00",
+      "content": "blue, sounds good",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1391110333136896842",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1396501066547200860",
+      "type": "Default",
+      "timestamp": "2025-07-20T14:36:40.000+00:00",
+      "content": "suno, sorry, just noticed the Unicode filename review was on the plain version, not the latest copy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1396501473394688861",
+      "type": "Reply",
+      "timestamp": "2025-07-20T14:38:17.000+00:00",
+      "content": "haan dekha, that explains why the Unicode filename looked different in the screen share after class",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1396501066547200860",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1396501880242176862",
+      "type": "Reply",
+      "timestamp": "2025-07-20T14:39:54.000+00:00",
+      "content": "samajh gaya, moving the comment from the plain version to the current Unicode filename example now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1396501473394688861",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1396502287089664863",
+      "type": "Reply",
+      "timestamp": "2025-07-20T14:41:31.000+00:00",
+      "content": "done hai, leave a pointer in the plain version so the next reviewer can find the current Unicode filename notes",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1396501880242176862",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1399051274682368884",
+      "type": "Default",
+      "timestamp": "2025-07-27T15:30:17.000+00:00",
+      "content": "Something odd in the library session: study plan has a snag — the first task is too vague to begin.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1399051681529856885",
+      "type": "Reply",
+      "timestamp": "2025-07-27T15:31:54.000+00:00",
+      "content": "with study plan in the library session, maybe write the first question beside the topic before changing anything else.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1399051274682368884",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1399052088377344886",
+      "type": "Reply",
+      "timestamp": "2025-07-27T15:33:31.000+00:00",
+      "content": "Just compared study plan again in the library session; starting no longer requires another planning session. 🙌",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1399051681529856885",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1399052495224832887",
+      "type": "Reply",
+      "timestamp": "2025-07-27T15:35:08.000+00:00",
+      "content": "please save the first-question note alongside study plan in the library session.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1399052088377344886",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1400344491851776892",
+      "type": "Default",
+      "timestamp": "2025-07-31T05:09:04.000+00:00",
+      "content": "yaar, noticed the peeling blue paint near the corner tea stall, no idea why I like that frame so much",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1400344898699264893",
+      "type": "Reply",
+      "timestamp": "2025-07-31T05:10:41.000+00:00",
+      "content": "haan, does the test export leave enough room around the peeling blue paint? 📌",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1400344491851776892",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1400345305546752894",
+      "type": "Reply",
+      "timestamp": "2025-07-31T05:12:18.000+00:00",
+      "content": "achha, yes, the test export feels calmer with the peeling blue paint slightly off centre",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1400344898699264893",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1400345712394240895",
+      "type": "Reply",
+      "timestamp": "2025-07-31T05:13:55.000+00:00",
+      "content": "theek h, the test export, noted 👍",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1400345305546752894",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1414278540165120948",
+      "type": "Default",
+      "timestamp": "2025-09-07T15:58:00.000+00:00",
+      "content": "I got stuck on cricket watch plan while looking at the Friday idea; the group has picked two different rooms. 😂",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1414278947012608949",
+      "type": "Reply",
+      "timestamp": "2025-09-07T15:59:37.000+00:00",
+      "content": "small experiment for the Friday idea: confirm one screen and share the location when revisiting cricket watch plan.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1414278540165120948",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1414279353860096950",
+      "type": "Reply",
+      "timestamp": "2025-09-07T16:01:14.000+00:00",
+      "content": "Reopening cricket watch plan from the Friday idea confirms it: everyone is heading to the same place.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1414278947012608949",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1414279760707584951",
+      "type": "Reply",
+      "timestamp": "2025-09-07T16:02:51.000+00:00",
+      "content": "room confirmation saved?",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1414279353860096950",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1416314115588096956",
+      "type": "Default",
+      "timestamp": "2025-09-13T06:46:39.000+00:00",
+      "content": "lemon tea plan still alive at the weekend?",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1416314522435584957",
+      "type": "Reply",
+      "timestamp": "2025-09-13T06:48:16.000+00:00",
+      "content": "alive, but I am currently trapped behind the photocopy shop with a navy sketchbook",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1416314115588096956",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1416314929283072958",
+      "type": "Reply",
+      "timestamp": "2025-09-13T06:49:53.000+00:00",
+      "content": "that is an oddly specific location report for a lemon tea plan",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1416314522435584957",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1416315336130560959",
+      "type": "Reply",
+      "timestamp": "2025-09-13T06:51:30.000+00:00",
+      "content": "I will send a less dramatic update once I reach the photocopy shop",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1416314929283072958",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1416974638776320960",
+      "type": "Default",
+      "timestamp": "2025-09-15T02:31:20.000+00:00",
+      "content": "bhai, done with the example in the first draft, going for chai now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1416975045623808961",
+      "type": "Reply",
+      "timestamp": "2025-09-15T02:32:57.000+00:00",
+      "content": "ek sec, did the confusing step in the first draft finally make sense?",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1416974638776320960",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1416975452471296962",
+      "type": "Reply",
+      "timestamp": "2025-09-15T02:34:34.000+00:00",
+      "content": "sahi h, yes, drawing it in the navy notebook helped more than rereading the first draft",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1416975045623808961",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1416975859318784963",
+      "type": "Reply",
+      "timestamp": "2025-09-15T02:36:11.000+00:00",
+      "content": "chalo, okay, the first draft then",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1416975452471296962",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1419292239200256980",
+      "type": "Default",
+      "timestamp": "2025-09-21T12:00:39.000+00:00",
+      "content": "would you have a minute for contact sheet in the tea-stall series, where the bright corner pulls my eye away?",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1419292646047744981",
+      "type": "Reply",
+      "timestamp": "2025-09-21T12:02:16.000+00:00",
+      "content": "Try this on contact sheet from the tea-stall series: compare a crop that leaves less of that corner.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1419292239200256980",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1419293052895232982",
+      "type": "Reply",
+      "timestamp": "2025-09-21T12:03:53.000+00:00",
+      "content": "bhai, update on contact sheet in the tea-stall series: the main shape is easier to notice.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1419292646047744981",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1419293459742720983",
+      "type": "Reply",
+      "timestamp": "2025-09-21T12:05:30.000+00:00",
+      "content": "Nice, put that uncropped original beside the contact sheet notes for the tea-stall series. 😅",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1419293052895232982",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1424098362130432996",
+      "type": "Default",
+      "timestamp": "2025-10-04T18:18:28.000+00:00",
+      "content": "bhai, not posting the first draft tonight, still thinking about the caption from the bookshop window",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1424098768977920997",
+      "type": "Reply",
+      "timestamp": "2025-10-04T18:20:05.000+00:00",
+      "content": "ek sec, you can let the first draft exist without posting it immediately",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1424098362130432996",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1424099175825408998",
+      "type": "Reply",
+      "timestamp": "2025-10-04T18:21:42.000+00:00",
+      "content": "sahi h, true, the striped awning does not become less interesting if I wait",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1424098768977920997",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1424099582672896999",
+      "type": "Reply",
+      "timestamp": "2025-10-04T18:23:19.000+00:00",
+      "content": "chalo, exactly, tomorrow you might have a clearer sentence about the striped awning in the first draft",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1424099175825408998",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1431146231496705024",
+      "type": "Default",
+      "timestamp": "2025-10-24T05:04:11.000+00:00",
+      "content": "ek chhota doubt, the morning review ke lab report mein the conclusion mentions a result missing from the table",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1431146638344193025",
+      "type": "Reply",
+      "timestamp": "2025-10-24T05:05:48.000+00:00",
+      "content": "the morning review ke lab report mein pehle check the conclusion against the recorded output, phir compare kar 🫠",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1431146231496705024",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1431147045191681026",
+      "type": "Reply",
+      "timestamp": "2025-10-24T05:07:25.000+00:00",
+      "content": "the morning review wala lab report phir check kiya, ab each claim points to a visible result",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1431146638344193025",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1431147452039169027",
+      "type": "Reply",
+      "timestamp": "2025-10-24T05:09:02.000+00:00",
+      "content": "corrected table makes sense now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1431147045191681026",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1441125168578561044",
+      "type": "Default",
+      "timestamp": "2025-11-20T17:56:55.000+00:00",
+      "content": "quick check on cafe plan in the canteen plan: the suggested table is beside the loud speaker.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1441125575426049045",
+      "type": "Reply",
+      "timestamp": "2025-11-20T17:58:32.000+00:00",
+      "content": "Looking at the canteen plan, could you ask about the quieter corner when we arrive for cafe plan?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1441125168578561044",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1441125982273537046",
+      "type": "Reply",
+      "timestamp": "2025-11-20T18:00:09.000+00:00",
+      "content": "back with the canteen plan result for cafe plan: the quieter corner makes talking easier.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1441125575426049045",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1441126389121025047",
+      "type": "Reply",
+      "timestamp": "2025-11-20T18:01:46.000+00:00",
+      "content": "keep the location note 👍",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1441125982273537046",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1442742831939585052",
+      "type": "Default",
+      "timestamp": "2025-11-25T05:04:56.000+00:00",
+      "content": "Can you look at notes index for the shared fixture? a deleted file remains searchable.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1442743238787073053",
+      "type": "Reply",
+      "timestamp": "2025-11-25T05:06:33.000+00:00",
+      "content": "with notes index in the shared fixture, maybe include deletions in the scan comparison before changing anything else.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1442742831939585052",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1442743645634561054",
+      "type": "Reply",
+      "timestamp": "2025-11-25T05:08:10.000+00:00",
+      "content": "I see what you meant about notes index in the shared fixture — removed files disappear from the result.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1442743238787073053",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1442744052482049055",
+      "type": "Reply",
+      "timestamp": "2025-11-25T05:09:47.000+00:00",
+      "content": "three-file fixture makes sense now",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1442743645634561054",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1446895012544513068",
+      "type": "Default",
+      "timestamp": "2025-12-06T16:04:13.000+00:00",
+      "content": "Sending caption draft from the wide-street study over because the wording claims more than the frame shows.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1446895419392001069",
+      "type": "Reply",
+      "timestamp": "2025-12-06T16:05:50.000+00:00",
+      "content": "small experiment for the wide-street study: describe what was visible without guessing the person’s story when revisiting caption draft.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1446895012544513068",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1446895826239489070",
+      "type": "Reply",
+      "timestamp": "2025-12-06T16:07:27.000+00:00",
+      "content": "The difference in the wide-street study is visible now; for caption draft, the caption stays close to the photograph.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1446895419392001069",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1446896233086977071",
+      "type": "Reply",
+      "timestamp": "2025-12-06T16:09:04.000+00:00",
+      "content": "send the caption revision?",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1446895826239489070",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1450442752000001080",
+      "type": "Default",
+      "timestamp": "2025-12-16T11:01:40.000+00:00",
+      "content": "almost walked past a crooked sign at the market arch without looking",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1450443158847489081",
+      "type": "Reply",
+      "timestamp": "2025-12-16T11:03:17.000+00:00",
+      "content": "did you stop for a crooked sign or only notice it in the pictures later?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1450442752000001080",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1450443565694977082",
+      "type": "Reply",
+      "timestamp": "2025-12-16T11:04:54.000+00:00",
+      "content": "stopped this time, waited near the market arch until the background cleared 😂",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1450443158847489081",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1450443972542465083",
+      "type": "Reply",
+      "timestamp": "2025-12-16T11:06:31.000+00:00",
+      "content": "got it — a crooked sign",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1450443565694977082",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1455952301654017092",
+      "type": "Default",
+      "timestamp": "2025-12-31T15:54:39.000+00:00",
+      "content": "the group meme about idli is painfully accurate today 😂",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1455952708501505093",
+      "type": "Reply",
+      "timestamp": "2025-12-31T15:56:16.000+00:00",
+      "content": "was this inspired by the queue near the common-room door?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1455952301654017092",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1455953115348993094",
+      "type": "Reply",
+      "timestamp": "2025-12-31T15:57:53.000+00:00",
+      "content": "bhai, the common-room door queue gave me enough time to reconsider my entire idli choice",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1455952708501505093",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1455953522196481095",
+      "type": "Reply",
+      "timestamp": "2025-12-31T15:59:30.000+00:00",
+      "content": "next time we decide on idli before walking to the common-room door 😂",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1455953115348993094",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1464980369047553137",
+      "type": "Default",
+      "timestamp": "2026-01-25T13:48:58.000+00:00",
+      "content": "sorry saw this late, left my phone beside the navy tote bag 😂",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1464980775895041138",
+      "type": "Reply",
+      "timestamp": "2026-01-25T13:50:35.000+00:00",
+      "content": "i only needed to know if you were passing the corner tea stall after the lab",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1464980369047553137",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1464981182742529139",
+      "type": "Reply",
+      "timestamp": "2026-01-25T13:52:12.000+00:00",
+      "content": "can do the corner tea stall after the lab, what do you need?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1464980775895041138",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1464981589590017140",
+      "type": "Reply",
+      "timestamp": "2026-01-25T13:53:49.000+00:00",
+      "content": "okay, tote bag then",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1464981182742529139",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1467017605414913145",
+      "type": "Default",
+      "timestamp": "2026-01-31T04:44:13.000+00:00",
+      "content": "nimbu paani plan still alive once the rain stops?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1467018012262401146",
+      "type": "Reply",
+      "timestamp": "2026-01-31T04:45:50.000+00:00",
+      "content": "alive, but I am currently trapped behind the campus gate with a orange lunch box",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1467017605414913145",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1467018419109889147",
+      "type": "Reply",
+      "timestamp": "2026-01-31T04:47:27.000+00:00",
+      "content": "that is an oddly specific location report for a nimbu paani plan",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1467018012262401146",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1467018825957377148",
+      "type": "Reply",
+      "timestamp": "2026-01-31T04:49:04.000+00:00",
+      "content": "i will send a less dramatic update once I reach the campus gate 👀",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1467018419109889147",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1467528240955393149",
+      "type": "Default",
+      "timestamp": "2026-02-01T14:33:18.000+00:00",
+      "content": "",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [
+        {
+          "id": "1467528240955393150",
+          "fileName": "shared_frame.png",
+          "url": "https://media.example/shared_frame.png"
+        }
+      ],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1474665893593089190",
+      "type": "Default",
+      "timestamp": "2026-02-21T07:15:47.000+00:00",
+      "content": "bhai, the group meme about veg sandwich is painfully accurate today",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1474666300440577191",
+      "type": "Reply",
+      "timestamp": "2026-02-21T07:17:24.000+00:00",
+      "content": "was this inspired by the queue near the bookshop window?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1474665893593089190",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1474666707288065192",
+      "type": "Reply",
+      "timestamp": "2026-02-21T07:19:01.000+00:00",
+      "content": "the bookshop window queue gave me enough time to reconsider my entire veg sandwich choice",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1474666300440577191",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1474667114135553193",
+      "type": "Reply",
+      "timestamp": "2026-02-21T07:20:38.000+00:00",
+      "content": "next time we decide on veg sandwich before walking to the bookshop window 😂",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1474666707288065192",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1476939588042753216",
+      "type": "Default",
+      "timestamp": "2026-02-27T13:50:38.000+00:00",
+      "content": "Sending archive folder from the quiet-corner series over because I cannot tell edited files from originals.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1476939994890241217",
+      "type": "Reply",
+      "timestamp": "2026-02-27T13:52:15.000+00:00",
+      "content": "bhai, before redoing archive folder in the quiet-corner series, use separate original and export folders.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1476939588042753216",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1476940401737729218",
+      "type": "Reply",
+      "timestamp": "2026-02-27T13:53:52.000+00:00",
+      "content": "The difference in the quiet-corner series is visible now; for archive folder, the untouched files are easy to locate.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1476939994890241217",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1476940808585217219",
+      "type": "Reply",
+      "timestamp": "2026-02-27T13:55:29.000+00:00",
+      "content": "please save the folder diagram alongside archive folder in the quiet-corner series.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1476940401737729218",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1486983306149889278",
+      "type": "Default",
+      "timestamp": "2026-03-27T07:00:47.000+00:00",
+      "content": "bhai the OS session mein study plan dekhna, the first task is too vague to begin",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1486983712997377279",
+      "type": "Reply",
+      "timestamp": "2026-03-27T07:02:24.000+00:00",
+      "content": "the OS session mein study plan par ek baar write the first question beside the topic, dekhte h kya hota",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1486983306149889278",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1486984119844865280",
+      "type": "Reply",
+      "timestamp": "2026-03-27T07:04:01.000+00:00",
+      "content": "bhai, the OS session wala study plan phir check kiya, ab starting no longer requires another planning session",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1486983712997377279",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1486984526692353281",
+      "type": "Reply",
+      "timestamp": "2026-03-27T07:05:38.000+00:00",
+      "content": "done, the OS session ke study plan ka first-question note baad mein kaam aayega",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1486984119844865280",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1494958901035009310",
+      "type": "Default",
+      "timestamp": "2026-04-18T07:12:57.000+00:00",
+      "content": "ginger tea plan still alive after class?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1494959307882497311",
+      "type": "Reply",
+      "timestamp": "2026-04-18T07:14:34.000+00:00",
+      "content": "alive, but I am currently trapped behind the bookshop window with a blue mug",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1494958901035009310",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1494959714729985312",
+      "type": "Reply",
+      "timestamp": "2026-04-18T07:16:11.000+00:00",
+      "content": "that is an oddly specific location report for a ginger tea plan",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1494959307882497311",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1494960121577473313",
+      "type": "Reply",
+      "timestamp": "2026-04-18T07:17:48.000+00:00",
+      "content": "bhai, okay, blue then",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1494959714729985312",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1501266890981377383",
+      "type": "Default",
+      "timestamp": "2026-05-05T16:58:39.000+00:00",
+      "content": "someone forwarded the same pulao meme in three groups 🙌",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1501267297828865384",
+      "type": "Reply",
+      "timestamp": "2026-05-05T17:00:16.000+00:00",
+      "content": "the version in our group has a random white scarf drawn on it",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1501266890981377383",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1501267704676353385",
+      "type": "Reply",
+      "timestamp": "2026-05-05T17:01:53.000+00:00",
+      "content": "why does the white scarf make the pulao meme funnier",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1501267297828865384",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1501268111523841386",
+      "type": "Reply",
+      "timestamp": "2026-05-05T17:03:30.000+00:00",
+      "content": "because the joke now has completely unnecessary stationery lore around that scarf",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1501267704676353385",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1508061894148097419",
+      "type": "Default",
+      "timestamp": "2026-05-24T10:59:34.000+00:00",
+      "content": "you free before lunch? thinking upma near the shaded bench",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1508062300995585420",
+      "type": "Reply",
+      "timestamp": "2026-05-24T11:01:11.000+00:00",
+      "content": "i can make before lunch, but I am bringing the yellow sketchbook back too",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1508061894148097419",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1508062707843073421",
+      "type": "Reply",
+      "timestamp": "2026-05-24T11:02:48.000+00:00",
+      "content": "oh THAT is where my yellow sketchbook went 😭 🫠",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1508062300995585420",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1508063114690561422",
+      "type": "Reply",
+      "timestamp": "2026-05-24T11:04:25.000+00:00",
+      "content": "yes, the sketchbook is safe; it has seen more of the shaded bench than you have 😅",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1508062707843073421",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1509251625254913427",
+      "type": "Default",
+      "timestamp": "2026-05-27T17:47:08.000+00:00",
+      "content": "suno, done with the example in the revised page, going for chai now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1509252032102401428",
+      "type": "Reply",
+      "timestamp": "2026-05-27T17:48:45.000+00:00",
+      "content": "haan dekha, did the confusing step in the revised page finally make sense?",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1509251625254913427",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1509252438949889429",
+      "type": "Reply",
+      "timestamp": "2026-05-27T17:50:22.000+00:00",
+      "content": "samajh gaya, yes, drawing it in the teal notebook helped more than rereading the revised page",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1509252032102401428",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1509252845797377430",
+      "type": "Reply",
+      "timestamp": "2026-05-27T17:51:59.000+00:00",
+      "content": "bhai, done hai, got it — chai",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1509252438949889429",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1513234859294721459",
+      "type": "Default",
+      "timestamp": "2026-06-07T17:35:05.000+00:00",
+      "content": "bhai, the funniest part of the repeated click was my comment saying this could never happen",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1513235266142209460",
+      "type": "Reply",
+      "timestamp": "2026-06-07T17:36:42.000+00:00",
+      "content": "please keep that comment beside the repeated click fixture as a historical artefact",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1513234859294721459",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1513235672989697461",
+      "type": "Reply",
+      "timestamp": "2026-06-07T17:38:19.000+00:00",
+      "content": "bhai, renamed the test to say what the repeated click actually does instead of claiming magic",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1513235266142209460",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1513236079837185462",
+      "type": "Reply",
+      "timestamp": "2026-06-07T17:39:56.000+00:00",
+      "content": "the repeated click, sounds good 😭",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1513235672989697461",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1513797613256705463",
+      "type": "Default",
+      "timestamp": "2026-06-09T06:51:16.000+00:00",
+      "content": "suno, the funniest part of the repeated click was my comment saying this could never happen",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1513798020104193464",
+      "type": "Reply",
+      "timestamp": "2026-06-09T06:52:53.000+00:00",
+      "content": "haan dekha, please keep that comment beside the repeated click fixture as a historical artefact",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1513797613256705463",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1513798426951681465",
+      "type": "Reply",
+      "timestamp": "2026-06-09T06:54:30.000+00:00",
+      "content": "samajh gaya, renamed the test to say what the repeated click actually does instead of claiming magic",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1513798020104193464",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1513798833799169466",
+      "type": "Reply",
+      "timestamp": "2026-06-09T06:56:07.000+00:00",
+      "content": "bhai, done hai, okay, the repeated click then",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1513798426951681465",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1515216210755585483",
+      "type": "Default",
+      "timestamp": "2026-06-13T04:48:16.000+00:00",
+      "content": "movie later or just idli and a quiet evening?",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1515216617603073484",
+      "type": "Reply",
+      "timestamp": "2026-06-13T04:49:53.000+00:00",
+      "content": "leaning towards idli, can meet near the back courtyard",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515216210755585483",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1515217024450561485",
+      "type": "Reply",
+      "timestamp": "2026-06-13T04:51:30.000+00:00",
+      "content": "fine by me, bringing my teal book so I do not forget it again ✨",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515216617603073484",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1515217431298049486",
+      "type": "Reply",
+      "timestamp": "2026-06-13T04:53:07.000+00:00",
+      "content": "then the back courtyard is officially our lost-property desk for the book",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515217024450561485",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1517481495625729519",
+      "type": "Default",
+      "timestamp": "2026-06-19T10:49:42.000+00:00",
+      "content": "The bit I cannot settle in the next-day note is weekend checklist: the useful task is buried under tiny errands.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1517481902473217520",
+      "type": "Reply",
+      "timestamp": "2026-06-19T10:51:19.000+00:00",
+      "content": "looking at the next-day note, could you put the time-sensitive item first for weekend checklist?",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1517481495625729519",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1517482309320705521",
+      "type": "Reply",
+      "timestamp": "2026-06-19T10:52:56.000+00:00",
+      "content": "The difference in the next-day note is visible now; for weekend checklist, the order makes the morning simpler.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1517481902473217520",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1517482716168193522",
+      "type": "Reply",
+      "timestamp": "2026-06-19T10:54:33.000+00:00",
+      "content": "glad weekend checklist in the next-day note is clearer; tuck the reordered checklist into the same folder.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1517482309320705521",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1521765729697793561",
+      "type": "Default",
+      "timestamp": "2026-07-01T06:33:43.000+00:00",
+      "content": "you free before lunch? thinking aloo paratha near the shaded bench",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1521766136545281562",
+      "type": "Reply",
+      "timestamp": "2026-07-01T06:35:20.000+00:00",
+      "content": "i can make before lunch, but I am bringing the red paper bag back too",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1521765729697793561",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1521766543392769563",
+      "type": "Reply",
+      "timestamp": "2026-07-01T06:36:57.000+00:00",
+      "content": "oh THAT is where my red paper bag went 😭",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1521766136545281562",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1521766950240257564",
+      "type": "Reply",
+      "timestamp": "2026-07-01T06:38:34.000+00:00",
+      "content": "bhai, yes, the paper bag is safe; it has seen more of the shaded bench than you have",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1521766543392769563",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1540988598222849753",
+      "type": "Default",
+      "timestamp": "2026-08-23T07:38:32.000+00:00",
+      "content": "The bit I cannot settle in the blue-door study is night photograph: the colour cast feels inconsistent. 🙂",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1540989005070337754",
+      "type": "Reply",
+      "timestamp": "2026-08-23T07:40:09.000+00:00",
+      "content": "about night photograph from the blue-door study — compare the neutral version beside the warm one, then send the result.",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1540988598222849753",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1540989411917825755",
+      "type": "Reply",
+      "timestamp": "2026-08-23T07:41:46.000+00:00",
+      "content": "The revised night photograph for the blue-door study makes more sense — the chosen colour matches the rest of the set.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1540989005070337754",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1540989818765313756",
+      "type": "Reply",
+      "timestamp": "2026-08-23T07:43:23.000+00:00",
+      "content": "comparison export makes sense now",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1540989411917825755",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1541442824568833765",
+      "type": "Default",
+      "timestamp": "2026-08-24T13:43:28.000+00:00",
+      "content": "done with the example in the test export, going for buttermilk now",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1541443231416321766",
+      "type": "Reply",
+      "timestamp": "2026-08-24T13:45:05.000+00:00",
+      "content": "did the confusing step in the test export finally make sense?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1541442824568833765",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1541443638263809767",
+      "type": "Reply",
+      "timestamp": "2026-08-24T13:46:42.000+00:00",
+      "content": "bhai, yes, drawing it in the pink notebook helped more than rereading the test export",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1541443231416321766",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1541444045111297768",
+      "type": "Reply",
+      "timestamp": "2026-08-24T13:48:19.000+00:00",
+      "content": "save that drawing beside the test export, enjoy the buttermilk break",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1541443638263809767",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1541502538874881769",
+      "type": "Default",
+      "timestamp": "2026-08-24T17:40:45.000+00:00",
+      "content": "sorry saw this late, left my phone beside the purple lanyard",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1541502945722369770",
+      "type": "Reply",
+      "timestamp": "2026-08-24T17:42:22.000+00:00",
+      "content": "i only needed to know if you were passing the back courtyard during the long break",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1541502538874881769",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1541503352569857771",
+      "type": "Reply",
+      "timestamp": "2026-08-24T17:43:59.000+00:00",
+      "content": "can do the back courtyard during the long break, what do you need?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1541502945722369770",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1541503759417345772",
+      "type": "Reply",
+      "timestamp": "2026-08-24T17:45:36.000+00:00",
+      "content": "bhai, just the purple lanyard if it fits in your bag, thanks",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1541503352569857771",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1543651322757121801",
+      "type": "Default",
+      "timestamp": "2026-08-30T15:59:15.000+00:00",
+      "content": "suno, movie later or just uttapam and a quiet evening?",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1543651729604609802",
+      "type": "Reply",
+      "timestamp": "2026-08-30T16:00:52.000+00:00",
+      "content": "haan dekha, leaning towards uttapam, can meet near the library steps",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543651322757121801",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1543652136452097803",
+      "type": "Reply",
+      "timestamp": "2026-08-30T16:02:29.000+00:00",
+      "content": "samajh gaya, fine by me, bringing my teal paper bag so I do not forget it again",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543651729604609802",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1543652543299585804",
+      "type": "Reply",
+      "timestamp": "2026-08-30T16:04:06.000+00:00",
+      "content": "done hai, then the library steps is officially our lost-property desk for the paper bag",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543652136452097803",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1547671013687297856",
+      "type": "Default",
+      "timestamp": "2026-09-10T18:12:04.000+00:00",
+      "content": "someone forwarded the same aloo paratha meme in three groups",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1547671420534785857",
+      "type": "Reply",
+      "timestamp": "2026-09-10T18:13:41.000+00:00",
+      "content": "bhai, the version in our group has a random purple cap drawn on it",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1547671013687297856",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1547671827382273858",
+      "type": "Reply",
+      "timestamp": "2026-09-10T18:15:18.000+00:00",
+      "content": "why does the purple cap make the aloo paratha meme funnier ✨",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1547671420534785857",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1547672234229761859",
+      "type": "Reply",
+      "timestamp": "2026-09-10T18:16:55.000+00:00",
+      "content": "okay, aloo paratha then",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1547671827382273858",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1550881304608769888",
+      "type": "Default",
+      "timestamp": "2026-09-19T14:48:37.000+00:00",
+      "content": "bhai, the funniest part of the Unicode filename was my comment saying this could never happen",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1550881711456257889",
+      "type": "Reply",
+      "timestamp": "2026-09-19T14:50:14.000+00:00",
+      "content": "bhai, ek sec, please keep that comment beside the Unicode filename fixture as a historical artefact",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1550881304608769888",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1550882118303745890",
+      "type": "Reply",
+      "timestamp": "2026-09-19T14:51:51.000+00:00",
+      "content": "sahi h, renamed the test to say what the Unicode filename actually does instead of claiming magic",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1550881711456257889",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1550882525151233891",
+      "type": "Reply",
+      "timestamp": "2026-09-19T14:53:28.000+00:00",
+      "content": "bhai, chalo, right, the Unicode filename 😅",
+      "author": {
+        "id": "401234567890123401",
+        "name": "r0hanx",
+        "username": "r0hanx",
+        "nickname": "Rohan",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1550882118303745890",
+        "channelId": "901234567890123469",
+        "guildId": "0"
+      }
+    }
+  ],
+  "messageCount": 177
+}

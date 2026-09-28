@@ -1,0 +1,481 @@
+{
+  "messages": [
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Saturday, January 6, 2024 at 5:15:44 PM UTC",
+      "text": "suno, I keep wanting to add one more purple shape to the wide crop",
+      "message_id": "b78d742f-bec8-5f96-b5a6-89bd91e466b8"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, January 6, 2024 at 5:17:21 PM UTC",
+      "text": "haan dekha, what would the extra purple shape help someone understand in the wide crop?",
+      "message_id": "7ac9dfe9-2d43-577d-9caf-c80b58a77625",
+      "topic_id": "b78d742f-bec8-5f96-b5a6-89bd91e466b8"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Saturday, January 6, 2024 at 5:18:58 PM UTC",
+      "text": "samajh gaya, honestly nothing, the wide crop just felt too quiet beside the purple study",
+      "message_id": "0dd8887e-f4fd-53cd-a514-9299e0e8fda7",
+      "topic_id": "7ac9dfe9-2d43-577d-9caf-c80b58a77625"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, January 6, 2024 at 5:20:35 PM UTC",
+      "text": "done hai, yep, the wide crop",
+      "message_id": "39a79a4c-e32a-5bf5-99cb-58a3b906f4dc",
+      "topic_id": "0dd8887e-f4fd-53cd-a514-9299e0e8fda7"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Monday, June 10, 2024 at 6:45:36 AM UTC",
+      "text": "I keep wanting to add one more navy shape to the quieter version",
+      "message_id": "e655da13-4005-5cb9-bccd-26448f3d7d39"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, June 10, 2024 at 6:47:13 AM UTC",
+      "text": "what would the extra navy shape help someone understand in the quieter version?",
+      "message_id": "be0da230-df38-554e-a75b-37b301f9f1f9",
+      "topic_id": "e655da13-4005-5cb9-bccd-26448f3d7d39"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Monday, June 10, 2024 at 6:48:50 AM UTC",
+      "text": "honestly nothing, the quieter version just felt too quiet beside the navy study",
+      "message_id": "8106ab07-2f75-5198-b007-d2f19294b884",
+      "topic_id": "be0da230-df38-554e-a75b-37b301f9f1f9"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, June 10, 2024 at 6:50:27 AM UTC",
+      "text": "the quieter version, sounds good",
+      "message_id": "f4d25933-8355-553f-a7c9-9db88a712ddf",
+      "topic_id": "8106ab07-2f75-5198-b007-d2f19294b884"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, January 21, 2025 at 2:42:49 PM UTC",
+      "text": "can I get a second pair of eyes on the small preview, especially the orange corner? 🫠",
+      "message_id": "9b7586ae-04a9-568e-9a9f-41347239ff3d"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Tuesday, January 21, 2025 at 2:44:26 PM UTC",
+      "text": "the orange corner of the small preview is louder than the title right now 🫠",
+      "message_id": "0125a613-0ed4-5747-9af5-a257347b07ce",
+      "topic_id": "9b7586ae-04a9-568e-9a9f-41347239ff3d"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, January 21, 2025 at 2:46:03 PM UTC",
+      "text": "will simplify that orange block and send the small preview again",
+      "message_id": "3577d0ab-084e-5bc9-98bf-7a74f3c522fa",
+      "topic_id": "0125a613-0ed4-5747-9af5-a257347b07ce"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Tuesday, January 21, 2025 at 2:47:40 PM UTC",
+      "text": "yes, leave the useful information where it is in the small preview while changing the orange part",
+      "message_id": "f89f483b-8f12-5047-94df-b0f1d2ec3941",
+      "topic_id": "3577d0ab-084e-5bc9-98bf-7a74f3c522fa"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, January 25, 2025 at 3:17:32 PM UTC",
+      "text": "I keep wanting to add one more purple shape to the first draft 🫠",
+      "message_id": "5ac14471-921b-5a00-81ed-cb48ef8e7d6f"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Saturday, January 25, 2025 at 3:19:09 PM UTC",
+      "text": "what would the extra purple shape help someone understand in the first draft?",
+      "message_id": "47967a3c-e752-501a-9bf1-054fa5ed0b5e",
+      "topic_id": "5ac14471-921b-5a00-81ed-cb48ef8e7d6f"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, January 25, 2025 at 3:20:46 PM UTC",
+      "text": "honestly nothing, the first draft just felt too quiet beside the purple study",
+      "message_id": "02d5ffa7-deb7-54dc-ae68-ffeebef8dbf9",
+      "topic_id": "47967a3c-e752-501a-9bf1-054fa5ed0b5e"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Saturday, January 25, 2025 at 3:22:23 PM UTC",
+      "text": "okay, purple then",
+      "message_id": "a9310f6d-430e-52c1-b7dd-06e235d5c24b",
+      "topic_id": "02d5ffa7-deb7-54dc-ae68-ffeebef8dbf9"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, March 17, 2025 at 7:09:06 AM UTC",
+      "text": "Sending poster draft from the campus notice over because the title disappears at thumbnail size. 🙂",
+      "message_id": "9f1baad5-cdf3-53f7-962f-67ee8cde610c"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Monday, March 17, 2025 at 7:10:43 AM UTC",
+      "text": "Before redoing poster draft in the campus notice, try a simpler title weight before adding effects.",
+      "message_id": "8289a829-1618-5bae-9dec-11364aaa2e1f",
+      "topic_id": "9f1baad5-cdf3-53f7-962f-67ee8cde610c"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, March 17, 2025 at 7:12:20 AM UTC",
+      "text": "Reopening poster draft from the campus notice confirms it: the title stays readable in the small preview.",
+      "message_id": "2e24f218-e508-5292-94e8-6a3ce24d1d13",
+      "topic_id": "8289a829-1618-5bae-9dec-11364aaa2e1f"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Monday, March 17, 2025 at 7:13:57 AM UTC",
+      "text": "Please save the thumbnail comparison alongside poster draft in the campus notice.",
+      "message_id": "1d2081a9-2b86-5547-945f-b6930f298477",
+      "topic_id": "2e24f218-e508-5292-94e8-6a3ce24d1d13"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, April 6, 2025 at 10:50:50 AM UTC",
+      "text": "bhai, the tiny preview of the uncropped frame looks better than the huge one somehow",
+      "message_id": "7d1d5228-82a9-54fc-8ef0-e2e642ac71d5"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Sunday, April 6, 2025 at 10:52:27 AM UTC",
+      "text": "ek sec, try reading the red line in the uncropped frame from across the desk",
+      "message_id": "bb312edc-7009-5918-b090-da20a7eff7d2",
+      "topic_id": "7d1d5228-82a9-54fc-8ef0-e2e642ac71d5"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, April 6, 2025 at 10:54:04 AM UTC",
+      "text": "sahi h, okay the red line survives, the little subtitle in the uncropped frame does not",
+      "message_id": "f535a716-6696-5cde-a433-0ac04e5b4347",
+      "topic_id": "bb312edc-7009-5918-b090-da20a7eff7d2"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Sunday, April 6, 2025 at 10:55:41 AM UTC",
+      "text": "chalo, then fix that subtitle in the uncropped frame before touching the red line",
+      "message_id": "9af7abad-f0cd-538d-b54d-13bb46b6d1b9",
+      "topic_id": "f535a716-6696-5cde-a433-0ac04e5b4347"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, September 21, 2025 at 5:35:50 PM UTC",
+      "text": "suno, the tiny preview of the uncropped frame looks better than the huge one somehow",
+      "message_id": "8fe7601b-500a-5114-8537-73bcd7161bdc"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Sunday, September 21, 2025 at 5:37:27 PM UTC",
+      "text": "haan dekha, try reading the pink line in the uncropped frame from across the desk",
+      "message_id": "cf2cd6bb-5835-54cf-b1c2-d5cecd6db056",
+      "topic_id": "8fe7601b-500a-5114-8537-73bcd7161bdc"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Sunday, September 21, 2025 at 5:39:04 PM UTC",
+      "text": "samajh gaya, okay the pink line survives, the little subtitle in the uncropped frame does not",
+      "message_id": "7e1daa48-f50a-52dd-96de-f7d1df7ff93b",
+      "topic_id": "cf2cd6bb-5835-54cf-b1c2-d5cecd6db056"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Sunday, September 21, 2025 at 5:40:41 PM UTC",
+      "text": "done hai, then fix that subtitle in the uncropped frame before touching the pink line 🙂",
+      "message_id": "c405d893-1d69-5312-be56-bf0615e208a5",
+      "topic_id": "7e1daa48-f50a-52dd-96de-f7d1df7ff93b"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, January 13, 2026 at 3:34:35 PM UTC",
+      "text": "🙌🙌",
+      "message_id": "c3931842-b76f-52e5-bd69-9e0c7a81ef39"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, January 17, 2026 at 10:43:06 AM UTC",
+      "text": "can I get a second pair of eyes on the plain version, especially the white corner?",
+      "message_id": "07414703-ee83-5bd3-8b3a-f5b3c9fbcdf9"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Saturday, January 17, 2026 at 10:44:43 AM UTC",
+      "text": "the white corner of the plain version is louder than the title right now",
+      "message_id": "1d8c949d-fef5-5b81-a36c-b3421cb2e274",
+      "topic_id": "07414703-ee83-5bd3-8b3a-f5b3c9fbcdf9"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, January 17, 2026 at 10:46:20 AM UTC",
+      "text": "will simplify that white block and send the plain version again",
+      "message_id": "caf85e68-d2d8-52e8-a145-c22a0c1187f0",
+      "topic_id": "1d8c949d-fef5-5b81-a36c-b3421cb2e274"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Saturday, January 17, 2026 at 10:47:57 AM UTC",
+      "text": "yes, leave the useful information where it is in the plain version while changing the white part",
+      "message_id": "ce127d77-24c2-5d19-a2c7-1ff0603a6eaf",
+      "topic_id": "caf85e68-d2d8-52e8-a145-c22a0c1187f0"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Saturday, February 28, 2026 at 1:57:04 PM UTC",
+      "text": "Sorry, saw this late; on colour study from the first-page study, two adjacent blocks merge together.",
+      "message_id": "cc319801-aa04-5cdc-a525-b97407514fca"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, February 28, 2026 at 1:58:41 PM UTC",
+      "text": "About colour study from the first-page study — compare them with a stronger light-dark difference, then send the result.",
+      "message_id": "518ce950-35aa-5389-844f-b9d270289499",
+      "topic_id": "cc319801-aa04-5cdc-a525-b97407514fca"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Saturday, February 28, 2026 at 2:00:18 PM UTC",
+      "text": "The difference in the first-page study is visible now; for colour study, the boundary is visible in the preview.",
+      "message_id": "4e8906ab-0d79-5adf-a6e1-8fb3db8b5b79",
+      "topic_id": "518ce950-35aa-5389-844f-b9d270289499"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Saturday, February 28, 2026 at 2:01:55 PM UTC",
+      "text": "keep the contrast study 👍",
+      "message_id": "cb871713-9f09-504d-8071-5941dfd69f09",
+      "topic_id": "4e8906ab-0d79-5adf-a6e1-8fb3db8b5b79"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Wednesday, April 22, 2026 at 7:13:01 AM UTC",
+      "text": "the tiny preview of the plain version looks better than the huge one somehow",
+      "message_id": "67e5d331-eea7-522f-b8bb-d3eae2fa544a"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Wednesday, April 22, 2026 at 7:14:38 AM UTC",
+      "text": "try reading the grey line in the plain version from across the desk 👍",
+      "message_id": "afe3d3e1-bf78-5251-97cb-9e7320d4c9f1",
+      "topic_id": "67e5d331-eea7-522f-b8bb-d3eae2fa544a"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Wednesday, April 22, 2026 at 7:16:15 AM UTC",
+      "text": "okay the grey line survives, the little subtitle in the plain version does not",
+      "message_id": "9f0b6b73-f1ac-50fd-8562-e1409bd67fb9",
+      "topic_id": "afe3d3e1-bf78-5251-97cb-9e7320d4c9f1"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Wednesday, April 22, 2026 at 7:17:52 AM UTC",
+      "text": "then fix that subtitle in the plain version before touching the grey line",
+      "message_id": "f1e7b881-7c1f-5ae3-ac4c-63d247cff331",
+      "topic_id": "9f0b6b73-f1ac-50fd-8562-e1409bd67fb9"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, September 21, 2026 at 10:52:24 AM UTC",
+      "text": "can I get a second pair of eyes on the small preview, especially the purple corner?",
+      "message_id": "cb0e2a19-47ae-5809-83fc-ad1335788579"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Monday, September 21, 2026 at 10:54:01 AM UTC",
+      "text": "the purple corner of the small preview is louder than the title right now",
+      "message_id": "dcac18db-d355-57c7-88db-eff7c23968aa",
+      "topic_id": "cb0e2a19-47ae-5809-83fc-ad1335788579"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Monday, September 21, 2026 at 10:55:38 AM UTC",
+      "text": "will simplify that purple block and send the small preview again",
+      "message_id": "64af76ca-873c-54a0-a1bd-bc1dec59056d",
+      "topic_id": "dcac18db-d355-57c7-88db-eff7c23968aa"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Monday, September 21, 2026 at 10:57:15 AM UTC",
+      "text": "okay, purple then",
+      "message_id": "3db43043-e182-5eb7-a759-1e7dd70c9461",
+      "topic_id": "64af76ca-873c-54a0-a1bd-bc1dec59056d"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, September 22, 2026 at 6:12:14 PM UTC",
+      "text": "I keep wanting to add one more grey shape to the final shortlist",
+      "message_id": "dd299e41-9978-5544-8640-97a59156802e"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Tuesday, September 22, 2026 at 6:13:51 PM UTC",
+      "text": "what would the extra grey shape help someone understand in the final shortlist?",
+      "message_id": "a8a9fd6c-d512-54af-b41a-678d26876960",
+      "topic_id": "dd299e41-9978-5544-8640-97a59156802e"
+    },
+    {
+      "creator": {
+        "name": "Aarav Mehta",
+        "email": "aarav.mehta.dev@gmail.com"
+      },
+      "created_date": "Tuesday, September 22, 2026 at 6:15:28 PM UTC",
+      "text": "honestly nothing, the final shortlist just felt too quiet beside the grey study 😭",
+      "message_id": "506e4ba6-6480-5653-b8ea-2574c933d853",
+      "topic_id": "a8a9fd6c-d512-54af-b41a-678d26876960"
+    },
+    {
+      "creator": {
+        "name": "Meera Shah",
+        "email": "meera.shah@example.com"
+      },
+      "created_date": "Tuesday, September 22, 2026 at 6:17:05 PM UTC",
+      "text": "quiet is allowed; save the grey idea separately from the final shortlist",
+      "message_id": "d10af0b9-fce2-50bb-82c8-7ef2ff9088db",
+      "topic_id": "506e4ba6-6480-5653-b8ea-2574c933d853"
+    }
+  ]
+}

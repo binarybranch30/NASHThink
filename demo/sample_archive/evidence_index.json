@@ -1,0 +1,3048 @@
+{
+  "biscuit_adopted": [
+    {
+      "path": "whatsapp/Tara rescue.txt",
+      "locator": "line=1; local_time=9/14/25, 3:30 PM IST",
+      "message_id": "d389a0aa-080e-5c48-a28f-e1dee878d3ed",
+      "platform": "whatsapp",
+      "conversation": "Tara rescue",
+      "date_utc": "2025-09-14T10:00:00.000Z",
+      "sender": "p09",
+      "text": "The neighbourhood checks are done and the vet visit is recorded. Are all three flatmates agreed?"
+    },
+    {
+      "path": "whatsapp/Tara rescue.txt",
+      "locator": "line=2; local_time=9/14/25, 3:31 PM IST",
+      "message_id": "7bf6a147-af77-5195-9f25-0f9427802a96",
+      "platform": "whatsapp",
+      "conversation": "Tara rescue",
+      "date_utc": "2025-09-14T10:01:23.000Z",
+      "sender": "me",
+      "text": "Yes. Adopted Biscuit today, 14 September 2025. Rohan and Nisha are on board; I've saved the vet's care notes."
+    },
+    {
+      "path": "whatsapp/Tara rescue.txt",
+      "locator": "line=3; local_time=9/14/25, 3:32 PM IST",
+      "message_id": "7be8c790-a9f3-5569-957e-12c93e577fca",
+      "platform": "whatsapp",
+      "conversation": "Tara rescue",
+      "date_utc": "2025-09-14T10:02:46.000Z",
+      "sender": "p09",
+      "text": "Send me an update once he's had a quiet few days to settle."
+    },
+    {
+      "path": "whatsapp/Tara rescue.txt",
+      "locator": "line=4; local_time=9/14/25, 3:34 PM IST",
+      "message_id": "41969974-8662-5a4b-bc32-8558213fb36c",
+      "platform": "whatsapp",
+      "conversation": "Tara rescue",
+      "date_utc": "2025-09-14T10:04:09.000Z",
+      "sender": "me",
+      "text": "He's currently investigating a cardboard box like it's a full-time research job."
+    }
+  ],
+  "biscuit_flatmates": [
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=222; local_time=9/8/25, 6:30 PM IST",
+      "message_id": "24e4c358-56e6-509f-9b89-15f3c060ae6c",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-09-08T13:00:00.000Z",
+      "sender": "me",
+      "text": "Would you both be okay with Biscuit living here if the checks work out? I will take responsibility for his regular care."
+    },
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=223; local_time=9/8/25, 6:31 PM IST",
+      "message_id": "7d070b79-a63b-5c76-ae1d-5de0604c6474",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-09-08T13:01:23.000Z",
+      "sender": "p04",
+      "text": "I'm open to it, but we need a plan for the days you're away and a gate latch that actually closes."
+    },
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=224; local_time=9/8/25, 6:32 PM IST",
+      "message_id": "f8eb9b22-ea98-5d49-81f0-c0f88ed3e332",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-09-08T13:02:46.000Z",
+      "sender": "p01",
+      "text": "i'm in, biscuit can review my cooking by sniffing from a safe distance"
+    },
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=225; local_time=9/8/25, 6:34 PM IST",
+      "message_id": "6b66b6d5-39b9-52b8-b43c-41fd3f2b06cd",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-09-08T13:04:09.000Z",
+      "sender": "me",
+      "text": "Tara is helping check the practical details. Nothing decided until we all agree."
+    }
+  ],
+  "biscuit_found": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/tara_bose_100010/message_1.json",
+      "locator": "timestamp_ms=1757160000000; sender=aarav.frames",
+      "message_id": "1062fa4c-355e-5f21-96de-46ea0ce11064",
+      "platform": "instagram",
+      "conversation": "Tara Bose",
+      "date_utc": "2025-09-06T12:00:00.000Z",
+      "sender": "me",
+      "text": "The small tan street dog near our HSR lane keeps following me to the gate. We've been calling him Biscuit."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/tara_bose_100010/message_1.json",
+      "locator": "timestamp_ms=1757160083000; sender=tara.pawsblr",
+      "message_id": "cf3c5717-3990-5324-ae1d-0be1c5577deb",
+      "platform": "instagram",
+      "conversation": "Tara Bose",
+      "date_utc": "2025-09-06T12:01:23.000Z",
+      "sender": "p09",
+      "text": "Before deciding anything, let's check whether someone is already caring for him and arrange a vet visit."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/tara_bose_100010/message_1.json",
+      "locator": "timestamp_ms=1757160166000; sender=aarav.frames",
+      "message_id": "c995825f-33f3-569a-b34c-16a6b2430f25",
+      "platform": "instagram",
+      "conversation": "Tara Bose",
+      "date_utc": "2025-09-06T12:02:46.000Z",
+      "sender": "me",
+      "text": "I'll ask around the lane with you tomorrow. I haven't adopted him yet."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/tara_bose_100010/message_1.json",
+      "locator": "timestamp_ms=1757160249000; sender=tara.pawsblr",
+      "message_id": "7ddfda76-5000-5595-a52c-6292988a3fcd",
+      "platform": "instagram",
+      "conversation": "Tara Bose",
+      "date_utc": "2025-09-06T12:04:09.000Z",
+      "sender": "p09",
+      "text": "Good, and talk to your flatmates about space and daily care first."
+    }
+  ],
+  "biscuit_settled": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/nisha_verma_100007/message_1.json",
+      "locator": "timestamp_ms=1758460200000; sender=nisha.onthebus",
+      "message_id": "ee57c2aa-018d-547c-a844-d5b07f39ab86",
+      "platform": "instagram",
+      "conversation": "Nisha Verma",
+      "date_utc": "2025-09-21T13:10:00.000Z",
+      "sender": "p04",
+      "text": "A week after the adoption and Biscuit already knows which cupboard makes the food sound."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/nisha_verma_100007/message_1.json",
+      "locator": "timestamp_ms=1758460283000; sender=aarav.frames",
+      "message_id": "6a3ca089-9b12-5a10-b6e5-ff8b5744fb0a",
+      "platform": "instagram",
+      "conversation": "Nisha Verma",
+      "date_utc": "2025-09-21T13:11:23.000Z",
+      "sender": "me",
+      "text": "He also thinks your doormat is a personal appointment calendar."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/nisha_verma_100007/message_1.json",
+      "locator": "timestamp_ms=1758460366000; sender=nisha.onthebus",
+      "message_id": "88f89fdc-e202-5217-8509-7f38a4fbcab6",
+      "platform": "instagram",
+      "conversation": "Nisha Verma",
+      "date_utc": "2025-09-21T13:12:46.000Z",
+      "sender": "p04",
+      "text": "I was worried about daily care before we agreed, but the rota is working so far."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/nisha_verma_100007/message_1.json",
+      "locator": "timestamp_ms=1758460449000; sender=aarav.frames",
+      "message_id": "c8f44592-3bcf-5a6a-b5b6-8125e0c247b8",
+      "platform": "instagram",
+      "conversation": "Nisha Verma",
+      "date_utc": "2025-09-21T13:14:09.000Z",
+      "sender": "me",
+      "text": "Thank you for insisting on the gate latch too. The new one is properly fitted."
+    }
+  ],
+  "camera_bought": [
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=53; local_time=6/16/24, 5:40 PM IST",
+      "message_id": "40d9358e-5030-56d4-8d95-269749a362b6",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2024-06-16T12:10:00.000Z",
+      "sender": "me",
+      "text": "Bought the used Fujifilm X-T30 today, 16 June. ₹52,000 total with the 15–45mm kit lens from Frame Again in Indiranagar."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=54; local_time=6/16/24, 5:41 PM IST",
+      "message_id": "c0297de9-dbb4-5d66-a405-48054eb43095",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2024-06-16T12:11:23.000Z",
+      "sender": "p01",
+      "text": "bhai finally. receipt sambhal ke rakhna"
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=55; local_time=6/16/24, 5:42 PM IST",
+      "message_id": "e0f3bcdd-bc02-502a-b784-c44c1b5bbb0d",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2024-06-16T12:12:46.000Z",
+      "sender": "me",
+      "text": "Saved it. Not ₹52k for the body alone; that was the entire used kit."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=56; local_time=6/16/24, 5:44 PM IST",
+      "message_id": "fcf4b5af-0dd6-5f75-bd1c-04655345b626",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2024-06-16T12:14:09.000Z",
+      "sender": "p01",
+      "text": "excellent, now photograph something other than the receipt"
+    }
+  ],
+  "camera_confirm": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1718705400000; sender=aarav.frames",
+      "message_id": "85e7ff5c-d76c-5337-99e5-87c7e2014d0b",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2024-06-18T10:10:00.000Z",
+      "sender": "me",
+      "text": "The used X-T30 kit came to ₹52,000 on Sunday. I'm taking it to KR Market this weekend."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1718705483000; sender=devika.lightnotes",
+      "message_id": "e610a7e0-c544-5032-a66c-1c37cfe6b389",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2024-06-18T10:11:23.000Z",
+      "sender": "p05",
+      "text": "Spend the first walk observing and learning the controls. You don't need to photograph every face."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1718705566000; sender=aarav.frames",
+      "message_id": "746b704d-4cb7-5723-9829-eb6b727ffea7",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2024-06-18T10:12:46.000Z",
+      "sender": "me",
+      "text": "Going to start with stalls, hands arranging flowers, and wider street scenes."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1718705649000; sender=devika.lightnotes",
+      "message_id": "c7836b8f-e853-5fcc-9eaa-331e07ff7ee2",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2024-06-18T10:14:09.000Z",
+      "sender": "p05",
+      "text": "Ask when a close portrait would feel intrusive. A skipped frame can be the right decision."
+    }
+  ],
+  "camera_research": [
+    {
+      "path": "reddit-export/posts.csv",
+      "locator": "row=3; id=ace002",
+      "message_id": "e86fa09d-1675-5ff9-b528-4d1cb2327a03",
+      "platform": "reddit",
+      "conversation": "Camera decision",
+      "date_utc": "2024-05-19T17:15:00.000Z",
+      "sender": "me",
+      "text": "Posted in r/photography: used X-T30 or keep the phone? I want everyday street scenes, not a bag full of lenses."
+    },
+    {
+      "path": "reddit-export/comments.csv",
+      "locator": "row=24; id=b107d1",
+      "message_id": "1ee1fe7d-06b4-573c-8a9a-f19a9c473fff",
+      "platform": "reddit",
+      "conversation": "Camera decision",
+      "date_utc": "2024-05-19T17:16:23.000Z",
+      "sender": "me",
+      "text": "A new body is outside my budget. I am comparing a used Fujifilm X-T30 kit and continuing with the phone for another term."
+    }
+  ],
+  "decoy_rohan": [
+    {
+      "path": "whatsapp/Rohan K cricket.txt",
+      "locator": "line=38; local_time=3/9/25, 5:30 PM IST",
+      "message_id": "3df03a79-1a4f-540a-92d2-713f549cfcbe",
+      "platform": "whatsapp",
+      "conversation": "Rohan K cricket",
+      "date_utc": "2025-03-09T12:00:00.000Z",
+      "sender": "p20",
+      "text": "Rohan Kapoor from the cricket group here. That camera message went to the wrong Rohan lol."
+    },
+    {
+      "path": "whatsapp/Rohan K cricket.txt",
+      "locator": "line=39; local_time=3/9/25, 5:31 PM IST",
+      "message_id": "33db8d30-93bc-51f8-8ec5-128a6c78e965",
+      "platform": "whatsapp",
+      "conversation": "Rohan K cricket",
+      "date_utc": "2025-03-09T12:01:23.000Z",
+      "sender": "me",
+      "text": "Sorry, meant Rohan Iyer. You are Rohan K cricket in my contacts now."
+    },
+    {
+      "path": "whatsapp/Rohan K cricket.txt",
+      "locator": "line=40; local_time=3/9/25, 5:32 PM IST",
+      "message_id": "c86d257c-7208-5bb1-9fd8-f8cf277c8550",
+      "platform": "whatsapp",
+      "conversation": "Rohan K cricket",
+      "date_utc": "2025-03-09T12:02:46.000Z",
+      "sender": "p20",
+      "text": "Sorted. I wasn't on the Goa trip either, so don't send me a bill."
+    },
+    {
+      "path": "whatsapp/Rohan K cricket.txt",
+      "locator": "line=41; local_time=3/9/25, 5:34 PM IST",
+      "message_id": "74b0ca81-686f-5c31-9403-c8212e2a2f9c",
+      "platform": "whatsapp",
+      "conversation": "Rohan K cricket",
+      "date_utc": "2025-03-09T12:04:09.000Z",
+      "sender": "me",
+      "text": "No accidental ₹8,400 invoice, promise."
+    }
+  ],
+  "deposit_confirm": [
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=206; local_time=8/6/25, 6:30 PM IST",
+      "message_id": "7758ffb4-10ec-5318-8091-bafe514b624f",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-08-06T13:00:00.000Z",
+      "sender": "me",
+      "text": "Deposit refund arrived: ₹54,000 back, ₹6,000 deducted. Splitting the refund ₹18,000 each between me, Rohan and Nisha."
+    },
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=207; local_time=8/6/25, 6:31 PM IST",
+      "message_id": "ef11dae4-7de7-553b-bd03-f78d6d44fb0e",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-08-06T13:01:23.000Z",
+      "sender": "p04",
+      "text": "Updated the moving sheet; dispute closed."
+    },
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=208; local_time=8/6/25, 6:32 PM IST",
+      "message_id": "f977ac29-1fe3-59e5-b9a5-0200ef608fde",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-08-06T13:02:46.000Z",
+      "sender": "p01",
+      "text": "good work preserving the boring receipts, apparently paper beats vibes"
+    }
+  ],
+  "deposit_dispute": [
+    {
+      "path": "google/Takeout/Mail/All mail Including Spam and Trash.mbox",
+      "locator": "Message-ID=<cb77069f-f780-572b-923c-de319cab6a9a@demo.sarthink.example>",
+      "message_id": "cb77069f-f780-572b-923c-de319cab6a9a",
+      "platform": "gmail",
+      "conversation": "Koramangala security deposit",
+      "date_utc": "2025-07-22T08:30:00.000Z",
+      "sender": "p10",
+      "text": "I propose deducting ₹18,000 from the ₹60,000 security deposit for painting and cleaning. The remaining amount would be ₹42,000."
+    },
+    {
+      "path": "google/Takeout/Mail/All mail Including Spam and Trash.mbox",
+      "locator": "Message-ID=<03466aac-e58d-559e-aa73-1bbb5a45bac8@demo.sarthink.example>",
+      "message_id": "03466aac-e58d-559e-aa73-1bbb5a45bac8",
+      "platform": "gmail",
+      "conversation": "Koramangala security deposit",
+      "date_utc": "2025-07-22T08:31:23.000Z",
+      "sender": "me",
+      "text": "We dispute the ₹18,000 deduction. The signed move-in inventory records the existing wall marks, and we supplied the cleaning receipt on 20 July. Please review both documents."
+    }
+  ],
+  "deposit_resolution": [
+    {
+      "path": "google/Takeout/Mail/All mail Including Spam and Trash.mbox",
+      "locator": "Message-ID=<e40e1ae6-81fc-57fa-b0d0-40e7e8a4bd74@demo.sarthink.example>",
+      "message_id": "e40e1ae6-81fc-57fa-b0d0-40e7e8a4bd74",
+      "platform": "gmail",
+      "conversation": "Koramangala security deposit",
+      "date_utc": "2025-08-06T09:00:00.000Z",
+      "sender": "p10",
+      "text": "Having reviewed the inventory and receipts, I agree to a ₹6,000 deduction. I have refunded ₹54,000 from the original ₹60,000 deposit today, 6 August."
+    },
+    {
+      "path": "google/Takeout/Mail/All mail Including Spam and Trash.mbox",
+      "locator": "Message-ID=<4f8a3a0a-c740-5456-8179-c17d42cea043@demo.sarthink.example>",
+      "message_id": "4f8a3a0a-c740-5456-8179-c17d42cea043",
+      "platform": "gmail",
+      "conversation": "Koramangala security deposit",
+      "date_utc": "2025-08-06T09:01:23.000Z",
+      "sender": "me",
+      "text": "Received ₹54,000, thank you. The original proposed ₹18,000 deduction was not the final deduction; the settled deduction is ₹6,000."
+    }
+  ],
+  "exam_2024": [
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=41; local_time=5/11/24, 12:40 AM IST",
+      "message_id": "3aca65b5-987c-50f6-bb0c-0c2d902f7f22",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2024-05-10T19:10:00.000Z",
+      "sender": "me",
+      "text": "It's past midnight and I'm rereading the same DBMS page. May exams are making sleep a mess."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=42; local_time=5/11/24, 12:41 AM IST",
+      "message_id": "a0d59ec0-c3e1-570c-9b14-ae7ac91e3fdb",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2024-05-10T19:11:23.000Z",
+      "sender": "p01",
+      "text": "close the pdf for ten mins, the transactions will survive"
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=43; local_time=5/11/24, 12:42 AM IST",
+      "message_id": "ea9a1458-d9aa-597c-9e16-f45363424c11",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2024-05-10T19:12:46.000Z",
+      "sender": "me",
+      "text": "I keep trying to finish every topic tonight and then I can't focus tomorrow."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=44; local_time=5/11/24, 12:44 AM IST",
+      "message_id": "35d10b3b-9ec8-5436-b677-d573356f5dab",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2024-05-10T19:14:09.000Z",
+      "sender": "p01",
+      "text": "ask Arjun how he split the revision, he had the same pile last year"
+    }
+  ],
+  "exam_2025": [
+    {
+      "path": "whatsapp/Arjun senior.txt",
+      "locator": "line=65; local_time=11/13/25, 12:25 AM IST",
+      "message_id": "e40b7d2b-7665-5fe3-b2f0-e015b1e1b15d",
+      "platform": "whatsapp",
+      "conversation": "Arjun senior",
+      "date_utc": "2025-11-12T18:55:00.000Z",
+      "sender": "me",
+      "text": "November exams brought back the late-night revision loop. I forgot your one-page error log idea."
+    },
+    {
+      "path": "whatsapp/Arjun senior.txt",
+      "locator": "line=66; local_time=11/13/25, 12:26 AM IST",
+      "message_id": "ea040ec3-e6ae-5886-9b9d-177c8ead0efb",
+      "platform": "whatsapp",
+      "conversation": "Arjun senior",
+      "date_utc": "2025-11-12T18:56:23.000Z",
+      "sender": "p06",
+      "text": "Bring it back for one subject first. You don't have to repair the entire week tonight."
+    },
+    {
+      "path": "whatsapp/Arjun senior.txt",
+      "locator": "line=67; local_time=11/13/25, 12:27 AM IST",
+      "message_id": "cb32047f-0a37-5a22-bc90-11b0b044d1ed",
+      "platform": "whatsapp",
+      "conversation": "Arjun senior",
+      "date_utc": "2025-11-12T18:57:46.000Z",
+      "sender": "me",
+      "text": "Tonight I'll list the OS scheduling mistakes and stop after that. Kal fresh dimaag se dekhunga."
+    },
+    {
+      "path": "whatsapp/Arjun senior.txt",
+      "locator": "line=68; local_time=11/13/25, 12:29 AM IST",
+      "message_id": "db286128-7e2a-556e-b7b9-0c18104bb7ff",
+      "platform": "whatsapp",
+      "conversation": "Arjun senior",
+      "date_utc": "2025-11-12T18:59:09.000Z",
+      "sender": "p06",
+      "text": "Send the confusing example tomorrow; we'll go through the waiting-time table."
+    }
+  ],
+  "goa_cost": [
+    {
+      "path": "whatsapp/Goa December crew.txt",
+      "locator": "line=267; local_time=12/24/24, 6:50 PM IST",
+      "message_id": "0e9a98aa-06e6-5b29-a656-bdb1bdb164a0",
+      "platform": "whatsapp",
+      "conversation": "Goa December crew",
+      "date_utc": "2024-12-24T13:20:00.000Z",
+      "sender": "me",
+      "text": "Final Goa split: ₹8,400 each, ₹33,600 for all four. Travel ₹3,200 + stay ₹2,400 + food ₹1,800 + local rides ₹1,000 per person."
+    },
+    {
+      "path": "whatsapp/Goa December crew.txt",
+      "locator": "line=269; local_time=12/24/24, 6:51 PM IST",
+      "message_id": "1732d6fa-f8d5-58b1-b883-121ca7b5d1f4",
+      "platform": "whatsapp",
+      "conversation": "Goa December crew",
+      "date_utc": "2024-12-24T13:21:23.000Z",
+      "sender": "p04",
+      "text": "That includes the replacement bus and the train cancellation loss, right?"
+    },
+    {
+      "path": "whatsapp/Goa December crew.txt",
+      "locator": "line=270; local_time=12/24/24, 6:52 PM IST",
+      "message_id": "940a3694-41c4-5ec7-b785-02a91f1ab36b",
+      "platform": "whatsapp",
+      "conversation": "Goa December crew",
+      "date_utc": "2024-12-24T13:22:46.000Z",
+      "sender": "me",
+      "text": "Yes, both are already in travel. Nobody needs to add the missed train again."
+    },
+    {
+      "path": "whatsapp/Goa December crew.txt",
+      "locator": "line=271; local_time=12/24/24, 6:54 PM IST",
+      "message_id": "aa812e36-3432-500f-9db4-929d997c1ab8",
+      "platform": "whatsapp",
+      "conversation": "Goa December crew",
+      "date_utc": "2024-12-24T13:24:09.000Z",
+      "sender": "p01",
+      "text": "goa ka kharcha 8400 each, clock-reading tuition complimentary"
+    }
+  ],
+  "goa_missed_train": [
+    {
+      "path": "whatsapp/Goa December crew.txt",
+      "locator": "line=201; local_time=12/19/24, 9:50 PM IST",
+      "message_id": "a2a5cd05-ecdb-5111-9816-b6fff71990ef",
+      "platform": "whatsapp",
+      "conversation": "Goa December crew",
+      "date_utc": "2024-12-19T16:20:00.000Z",
+      "sender": "me",
+      "text": "We missed the train at Yeshwanthpur. I read the departure as 22:10; it was 21:10. That's on me."
+    },
+    {
+      "path": "whatsapp/Goa December crew.txt",
+      "locator": "line=202; local_time=12/19/24, 9:51 PM IST",
+      "message_id": "75e31e16-8b7f-5c00-950b-b8dd9e55b9d8",
+      "platform": "whatsapp",
+      "conversation": "Goa December crew",
+      "date_utc": "2024-12-19T16:21:23.000Z",
+      "sender": "p04",
+      "text": "All four of us are together and the overnight bus still has seats. Let's compare the total before booking."
+    },
+    {
+      "path": "whatsapp/Goa December crew.txt",
+      "locator": "line=203; local_time=12/19/24, 9:52 PM IST",
+      "message_id": "0e6f5218-53d4-58ce-a00b-86af97066fc9",
+      "platform": "whatsapp",
+      "conversation": "Goa December crew",
+      "date_utc": "2024-12-19T16:22:46.000Z",
+      "sender": "p02",
+      "text": "Disappointed, but no point standing here arguing with a closed platform."
+    },
+    {
+      "path": "whatsapp/Goa December crew.txt",
+      "locator": "line=204; local_time=12/19/24, 9:54 PM IST",
+      "message_id": "32cb0f5b-690c-5373-bfa4-51dede7530ce",
+      "platform": "whatsapp",
+      "conversation": "Goa December crew",
+      "date_utc": "2024-12-19T16:24:09.000Z",
+      "sender": "p01",
+      "text": "booked the bus after everyone confirmed. aarav is banned from reading clocks until breakfast"
+    }
+  ],
+  "goa_photos": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1734867000000; sender=meera.sketches",
+      "message_id": "f9a80b2c-dc0f-51e7-a612-080490a6c805",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2024-12-22T11:30:00.000Z",
+      "sender": "p02",
+      "text": "Sent the Anjuna morning contact sheet. The blue fishing boat frame is my favourite from Goa."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1734867083000; sender=aarav.frames",
+      "message_id": "870dd8de-3fac-57da-bf63-7ccd2cbed4fb",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2024-12-22T11:31:23.000Z",
+      "sender": "me",
+      "text": "That quiet morning almost compensates for the Yeshwanthpur clock disaster."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1734867166000; sender=meera.sketches",
+      "message_id": "a5015ccc-08bc-5e07-bee3-9b83a0ed94bf",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2024-12-22T11:32:46.000Z",
+      "sender": "p02",
+      "text": "Almost. I'm keeping the bus-stop photo as supporting evidence."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1734867249000; sender=aarav.frames",
+      "message_id": "3e07abac-856f-5893-b89a-63731e1c278c",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2024-12-22T11:34:09.000Z",
+      "sender": "me",
+      "text": "Fair. I'll credit your frame if I post the group carousel."
+    }
+  ],
+  "goa_plan": [
+    {
+      "path": "whatsapp/Goa December crew.txt",
+      "locator": "line=49; local_time=11/17/24, 5:30 PM IST",
+      "message_id": "731344b6-9695-5fe6-bb12-f5d8b4af8400",
+      "platform": "whatsapp",
+      "conversation": "Goa December crew",
+      "date_utc": "2024-11-17T12:00:00.000Z",
+      "sender": "p04",
+      "text": "Goa plan: 20–23 December, four people: Aarav, Rohan, Meera and me. Stay near Anjuna, no moving hotels each night."
+    },
+    {
+      "path": "whatsapp/Goa December crew.txt",
+      "locator": "line=50; local_time=11/17/24, 5:31 PM IST",
+      "message_id": "cce614cf-cb7f-509a-bcc9-efb2128ed341",
+      "platform": "whatsapp",
+      "conversation": "Goa December crew",
+      "date_utc": "2024-11-17T12:01:23.000Z",
+      "sender": "p02",
+      "text": "I'm in if we leave room for a slow morning and the Mapusa market."
+    },
+    {
+      "path": "whatsapp/Goa December crew.txt",
+      "locator": "line=51; local_time=11/17/24, 5:32 PM IST",
+      "message_id": "771fe216-8139-5a78-85d2-212b54791f03",
+      "platform": "whatsapp",
+      "conversation": "Goa December crew",
+      "date_utc": "2024-11-17T12:02:46.000Z",
+      "sender": "me",
+      "text": "Budget cap ₹9,000 each. I'll keep the split sheet; travel and stay before cafe experiments please."
+    },
+    {
+      "path": "whatsapp/Goa December crew.txt",
+      "locator": "line=52; local_time=11/17/24, 5:34 PM IST",
+      "message_id": "9aeefea8-0bc1-53b8-9d7e-367ee418c062",
+      "platform": "whatsapp",
+      "conversation": "Goa December crew",
+      "date_utc": "2024-11-17T12:04:09.000Z",
+      "sender": "p01",
+      "text": "travel and stay are merely the infrastructure for breakfast"
+    }
+  ],
+  "gym_break": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/aditya_kulkarni_100000/message_1.json",
+      "locator": "timestamp_ms=1747566000000; sender=aarav.frames",
+      "message_id": "6b0a4a0d-239e-55f5-bdb1-63201dd4c5e0",
+      "platform": "instagram",
+      "conversation": "Aditya Kulkarni",
+      "date_utc": "2025-05-18T11:00:00.000Z",
+      "sender": "me",
+      "text": "Haven't been to the gym for most of May. Exams plus travelling home disrupted the routine."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/aditya_kulkarni_100000/message_1.json",
+      "locator": "timestamp_ms=1747566083000; sender=adi.takes.the.stairs",
+      "message_id": "57953d3d-8c2e-575c-9417-99740b1242f2",
+      "platform": "instagram",
+      "conversation": "Aditya Kulkarni",
+      "date_utc": "2025-05-18T11:01:23.000Z",
+      "sender": "p08",
+      "text": "We can keep in touch without making every conversation an attendance check."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/aditya_kulkarni_100000/message_1.json",
+      "locator": "timestamp_ms=1747566166000; sender=aarav.frames",
+      "message_id": "dfe7d490-7979-5a29-85d2-9a7ad50888d5",
+      "platform": "instagram",
+      "conversation": "Aditya Kulkarni",
+      "date_utc": "2025-05-18T11:02:46.000Z",
+      "sender": "me",
+      "text": "Thanks, I needed that. I'll figure out what fits after exams."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/aditya_kulkarni_100000/message_1.json",
+      "locator": "timestamp_ms=1747566249000; sender=adi.takes.the.stairs",
+      "message_id": "7b68dfb6-41fb-5254-b4df-8ce2cd5135b2",
+      "platform": "instagram",
+      "conversation": "Aditya Kulkarni",
+      "date_utc": "2025-05-18T11:04:09.000Z",
+      "sender": "p08",
+      "text": "Coffee after the last paper is still on."
+    }
+  ],
+  "gym_start": [
+    {
+      "path": "whatsapp/Adi gym.txt",
+      "locator": "line=1; local_time=1/8/25, 7:10 PM IST",
+      "message_id": "4afb762b-774b-52c1-aba8-bd450ac5e51b",
+      "platform": "whatsapp",
+      "conversation": "Adi gym",
+      "date_utc": "2025-01-08T13:40:00.000Z",
+      "sender": "me",
+      "text": "Joined the neighbourhood gym today. I want a routine that fits college and helps me feel less stiff from sitting."
+    },
+    {
+      "path": "whatsapp/Adi gym.txt",
+      "locator": "line=2; local_time=1/8/25, 7:11 PM IST",
+      "message_id": "e4acdc2a-2868-5a8c-b818-4f63af231788",
+      "platform": "whatsapp",
+      "conversation": "Adi gym",
+      "date_utc": "2025-01-08T13:41:23.000Z",
+      "sender": "p08",
+      "text": "Nice, let's go together sometimes. We can ask the trainer about equipment we haven't used."
+    },
+    {
+      "path": "whatsapp/Adi gym.txt",
+      "locator": "line=3; local_time=1/8/25, 7:12 PM IST",
+      "message_id": "0cf9c1b3-c08e-5755-ab5c-ab1934c0425d",
+      "platform": "whatsapp",
+      "conversation": "Adi gym",
+      "date_utc": "2025-01-08T13:42:46.000Z",
+      "sender": "me",
+      "text": "Tuesday and Friday evenings look manageable for now."
+    },
+    {
+      "path": "whatsapp/Adi gym.txt",
+      "locator": "line=4; local_time=1/8/25, 7:14 PM IST",
+      "message_id": "c14d5678-210e-5060-816a-52e540c46c4c",
+      "platform": "whatsapp",
+      "conversation": "Adi gym",
+      "date_utc": "2025-01-08T13:44:09.000Z",
+      "sender": "p08",
+      "text": "Works for me, and no guilt if a lab runs late."
+    }
+  ],
+  "hack_failed": [
+    {
+      "path": "discord/hackathon_2026.json",
+      "locator": "message_id=1543289123635201797",
+      "message_id": "15925b08-3e9e-5548-8d6a-ef3c86e1b43e",
+      "platform": "discord",
+      "conversation": "Hackathon 2026",
+      "date_utc": "2026-08-29T16:00:00.000Z",
+      "sender": "me",
+      "text": "First Sarthink demo failed. The question found the Goa cost, but the citation opened the previous message after we sorted the merged results."
+    },
+    {
+      "path": "discord/hackathon_2026.json",
+      "locator": "message_id=1543289471762433798",
+      "message_id": "19de430a-5f69-5df5-9e1b-3057d7f04745",
+      "platform": "discord",
+      "conversation": "Hackathon 2026",
+      "date_utc": "2026-08-29T16:01:23.000Z",
+      "sender": "p07",
+      "text": "Reproduced it: citation numbers were tied to list positions, then the UI sorted the messages differently."
+    },
+    {
+      "path": "discord/hackathon_2026.json",
+      "locator": "message_id=1543289819889665799",
+      "message_id": "b068fde4-2c9c-58eb-bccf-6cee81c68a52",
+      "platform": "discord",
+      "conversation": "Hackathon 2026",
+      "date_utc": "2026-08-29T16:02:46.000Z",
+      "sender": "p03",
+      "text": "Freeze extra graph effects until this is fixed. A nice graph can't compensate for a wrong source."
+    },
+    {
+      "path": "discord/hackathon_2026.json",
+      "locator": "message_id=1543290168016897800",
+      "message_id": "95363ce2-c400-5463-b768-49c9469639cf",
+      "platform": "discord",
+      "conversation": "Hackathon 2026",
+      "date_utc": "2026-08-29T16:04:09.000Z",
+      "sender": "me",
+      "text": "I'll attach citations to stable message IDs and resolve them after the display sort."
+    }
+  ],
+  "hack_fix": [
+    {
+      "path": "google/Takeout/Google Chat/Groups/Space 10007/messages.json",
+      "locator": "message_id=2824a5c1-0593-512d-9b5b-2e8c8ccb3496",
+      "message_id": "2824a5c1-0593-512d-9b5b-2e8c8ccb3496",
+      "platform": "google_chat",
+      "conversation": "Sarthink build room",
+      "date_utc": "2026-08-31T09:00:00.000Z",
+      "sender": "me",
+      "text": "Citation fix is in: every evidence item carries its stable source message ID; display sorting no longer changes what a citation opens."
+    },
+    {
+      "path": "google/Takeout/Google Chat/Groups/Space 10007/messages.json",
+      "locator": "message_id=09c3a3a9-9b6c-59e8-a848-c526848f8230",
+      "message_id": "09c3a3a9-9b6c-59e8-a848-c526848f8230",
+      "platform": "google_chat",
+      "conversation": "Sarthink build room",
+      "date_utc": "2026-08-31T09:01:23.000Z",
+      "sender": "p07",
+      "text": "Checked shuffled results, duplicate-looking messages and an empty export. All twelve rehearsal questions open the expected source now."
+    },
+    {
+      "path": "google/Takeout/Google Chat/Groups/Space 10007/messages.json",
+      "locator": "message_id=cf32346f-cfd5-5d65-a516-8c5c10fba527",
+      "message_id": "cf32346f-cfd5-5d65-a516-8c5c10fba527",
+      "platform": "google_chat",
+      "conversation": "Sarthink build room",
+      "date_utc": "2026-08-31T09:02:46.000Z",
+      "sender": "p03",
+      "text": "Also show an explicit no-recorded-information answer when nothing supports a claim."
+    },
+    {
+      "path": "google/Takeout/Google Chat/Groups/Space 10007/messages.json",
+      "locator": "message_id=d425ad5e-baf7-59ba-a946-7f03cde5599d",
+      "message_id": "d425ad5e-baf7-59ba-a946-7f03cde5599d",
+      "platform": "google_chat",
+      "conversation": "Sarthink build room",
+      "date_utc": "2026-08-31T09:04:09.000Z",
+      "sender": "me",
+      "text": "Agreed. We are not fabricating missing facts to make the demo look complete."
+    }
+  ],
+  "hack_idea": [
+    {
+      "path": "discord/hackathon_2026.json",
+      "locator": "message_id=1474752518553601194",
+      "message_id": "71107c94-f953-594e-8887-7b6dbc067d16",
+      "platform": "discord",
+      "conversation": "Hackathon 2026",
+      "date_utc": "2026-02-21T13:00:00.000Z",
+      "sender": "p03",
+      "text": "Idea for Sarthink: a local-first second brain from exports. We need a real question with source citations, not just a pretty graph."
+    },
+    {
+      "path": "discord/hackathon_2026.json",
+      "locator": "message_id=1474752866680833195",
+      "message_id": "c974afe4-a5d6-5996-a16e-df82fe2b4268",
+      "platform": "discord",
+      "conversation": "Hackathon 2026",
+      "date_utc": "2026-02-21T13:01:23.000Z",
+      "sender": "p07",
+      "text": "Start with an answer we can verify. Otherwise a confident summary could be completely wrong."
+    },
+    {
+      "path": "discord/hackathon_2026.json",
+      "locator": "message_id=1474753214808065196",
+      "message_id": "5310532c-a104-54ac-ab63-63dfa075e93e",
+      "platform": "discord",
+      "conversation": "Hackathon 2026",
+      "date_utc": "2026-02-21T13:02:46.000Z",
+      "sender": "me",
+      "text": "What changed in my photography? That would need messages from different months and apps."
+    },
+    {
+      "path": "discord/hackathon_2026.json",
+      "locator": "message_id=1474753562935297197",
+      "message_id": "1b62a46a-fea3-52e7-ae03-9ef0b5e34dde",
+      "platform": "discord",
+      "conversation": "Hackathon 2026",
+      "date_utc": "2026-02-21T13:04:09.000Z",
+      "sender": "p03",
+      "text": "Scope: import exports, show a 3D people/conversation graph, retrieve evidence, cite exact messages."
+    },
+    {
+      "path": "discord/hackathon_2026.json",
+      "locator": "message_id=1474753911062529198",
+      "message_id": "91f80aba-f4e0-5a04-a05b-d45d5ab312d1",
+      "platform": "discord",
+      "conversation": "Hackathon 2026",
+      "date_utc": "2026-02-21T13:05:32.000Z",
+      "sender": "p07",
+      "text": "No automatic linking of other people's accounts yet. Only the archive owner's aliases are unified through identity_map.json."
+    },
+    {
+      "path": "discord/hackathon_2026.json",
+      "locator": "message_id=1474754259189761199",
+      "message_id": "7d9bf46d-3c23-5de9-b40b-3ace2085d8f3",
+      "platform": "discord",
+      "conversation": "Hackathon 2026",
+      "date_utc": "2026-02-21T13:06:55.000Z",
+      "sender": "me",
+      "text": "Good. The contacts map is ground truth for a future feature, not a claim that the graph already merges Rohan."
+    }
+  ],
+  "hack_result": [
+    {
+      "path": "discord/hackathon_2026.json",
+      "locator": "message_id=1548317255270401868",
+      "message_id": "27647429-175a-5542-a43c-e6f15fd469f7",
+      "platform": "discord",
+      "conversation": "Hackathon 2026",
+      "date_utc": "2026-09-12T13:00:00.000Z",
+      "sender": "p07",
+      "text": "Official results for CampusForge 2026: Sarthink placed third out of 42 teams."
+    },
+    {
+      "path": "discord/hackathon_2026.json",
+      "locator": "message_id=1548317603397633869",
+      "message_id": "b8d7f79b-89a7-57aa-ad5b-ed37f97fe35a",
+      "platform": "discord",
+      "conversation": "Hackathon 2026",
+      "date_utc": "2026-09-12T13:01:23.000Z",
+      "sender": "me",
+      "text": "Third! The judges asked the Goa total and the photography change question, and both citations opened the right messages."
+    },
+    {
+      "path": "discord/hackathon_2026.json",
+      "locator": "message_id=1548317951524865870",
+      "message_id": "88ceec05-eebc-5cf7-9d22-5b1b457b7df3",
+      "platform": "discord",
+      "conversation": "Hackathon 2026",
+      "date_utc": "2026-09-12T13:02:46.000Z",
+      "sender": "p03",
+      "text": "Team was Aarav, Kabir Rao and Sana Ali. Write that before someone credits audio-plugin Kabir again."
+    },
+    {
+      "path": "discord/hackathon_2026.json",
+      "locator": "message_id=1548318299652097871",
+      "message_id": "650dd2ed-7b43-5f60-8d0d-7bbc1e1f1b8f",
+      "platform": "discord",
+      "conversation": "Hackathon 2026",
+      "date_utc": "2026-09-12T13:04:09.000Z",
+      "sender": "p07",
+      "text": "The unanswered-fact example also worked: we said there was no recorded information."
+    }
+  ],
+  "hack_result_x": [
+    {
+      "path": "twitter/data/tweets.js",
+      "locator": "tweet_id=2099075614110647146",
+      "message_id": "230d34a6-3c0e-5fc2-8deb-a5af70ff1fd0",
+      "platform": "twitter",
+      "conversation": "Sarthink result",
+      "date_utc": "2026-09-13T10:00:00.000Z",
+      "sender": "me",
+      "text": "Sarthink placed 3rd of 42 teams at CampusForge 2026. Built with @kabir_queues and Sana: local exports, a social graph and answers with source-message citations."
+    },
+    {
+      "path": "twitter/data/tweets.js",
+      "locator": "tweet_id=2099075962237879147",
+      "message_id": "afd80772-6fc9-5ffa-a6ea-756fb21368e7",
+      "platform": "twitter",
+      "conversation": "Sarthink result",
+      "date_utc": "2026-09-13T10:01:23.000Z",
+      "sender": "me",
+      "text": "Biggest lesson: stable IDs fixed our broken citations; extra graph animations would not have fixed the source mismatch. Other people's cross-app account linking is still future work."
+    }
+  ],
+  "hack_roles": [
+    {
+      "path": "google/Takeout/Google Chat/Groups/Space 10007/messages.json",
+      "locator": "message_id=392fc73b-04db-5c7a-a6d6-4cece504bb4f",
+      "message_id": "392fc73b-04db-5c7a-a6d6-4cece504bb4f",
+      "platform": "google_chat",
+      "conversation": "Sarthink build room",
+      "date_utc": "2026-06-03T10:00:00.000Z",
+      "sender": "p03",
+      "text": "Role split for the September demo: Aarav owns import/retrieval, I own the graph UI, Sana owns fixtures and checks."
+    },
+    {
+      "path": "google/Takeout/Google Chat/Groups/Space 10007/messages.json",
+      "locator": "message_id=4ae6724f-8862-54ce-8742-a1d8f37d4de4",
+      "message_id": "4ae6724f-8862-54ce-8742-a1d8f37d4de4",
+      "platform": "google_chat",
+      "conversation": "Sarthink build room",
+      "date_utc": "2026-06-03T10:01:23.000Z",
+      "sender": "p07",
+      "text": "I'll keep source snippets beside expected answers. A correct sentence with the wrong citation is still a failed check."
+    },
+    {
+      "path": "google/Takeout/Google Chat/Groups/Space 10007/messages.json",
+      "locator": "message_id=b168a950-27c9-5c4b-962f-6c5d94c86cd8",
+      "message_id": "b168a950-27c9-5c4b-962f-6c5d94c86cd8",
+      "platform": "google_chat",
+      "conversation": "Sarthink build room",
+      "date_utc": "2026-06-03T10:02:46.000Z",
+      "sender": "me",
+      "text": "Owner identity first; cross-person linking stays out of this build."
+    },
+    {
+      "path": "google/Takeout/Google Chat/Groups/Space 10007/messages.json",
+      "locator": "message_id=b0ef1af3-8b40-5bdf-a468-c3a320d3a87a",
+      "message_id": "b0ef1af3-8b40-5bdf-a468-c3a320d3a87a",
+      "platform": "google_chat",
+      "conversation": "Sarthink build room",
+      "date_utc": "2026-06-03T10:04:09.000Z",
+      "sender": "p03",
+      "text": "Third milestone is a complete offline rehearsal, including a question with no evidence."
+    }
+  ],
+  "identity_devika": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1720360800000; sender=devika.lightnotes",
+      "message_id": "9a160925-4200-5c72-ac11-699470ffd091",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2024-07-07T14:00:00.000Z",
+      "sender": "p05",
+      "text": "btw lightnotes_dev on Reddit is me. I use @devika.lightnotes on YouTube too; the contact-sheet walkthrough is there."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1720360883000; sender=aarav.frames",
+      "message_id": "d479bdba-8aca-52f0-986e-5ea8bdb8e62b",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2024-07-07T14:01:23.000Z",
+      "sender": "me",
+      "text": "Ohh I replied to your shadow-study thread without connecting the names."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1720360966000; sender=devika.lightnotes",
+      "message_id": "e8925f42-b713-5eee-b339-1d3356314ba8",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2024-07-07T14:02:46.000Z",
+      "sender": "p05",
+      "text": "Same blue bus shelter, different crop. That's the photo you recognised."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1720361049000; sender=aarav.frames",
+      "message_id": "c6889346-06d2-5b97-96df-c6c09d625efb",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2024-07-07T14:04:09.000Z",
+      "sender": "me",
+      "text": "Saved the walkthrough; will put my next question below it."
+    }
+  ],
+  "identity_kabir": [
+    {
+      "path": "discord/general.json",
+      "locator": "message_id=1336320353894400565",
+      "message_id": "626be195-d7ab-55db-a2d9-ed818a28f1a0",
+      "platform": "discord",
+      "conversation": "General",
+      "date_utc": "2025-02-04T13:00:00.000Z",
+      "sender": "p03",
+      "text": "I'm Kabir Rao: kabirbuilds here, @kabir_queues on Twitter and u/queue_kabir on Reddit. Use kabir.rao@example.com for Chat."
+    },
+    {
+      "path": "discord/general.json",
+      "locator": "message_id=1336320702021632566",
+      "message_id": "427a5dfe-9aed-5c70-a36f-e75a4b2abb91",
+      "platform": "discord",
+      "conversation": "General",
+      "date_utc": "2025-02-04T13:01:23.000Z",
+      "sender": "me",
+      "text": "added the email to our project notes"
+    },
+    {
+      "path": "discord/general.json",
+      "locator": "message_id=1336321050148864567",
+      "message_id": "5d0247bd-2b4a-5e9a-98f0-d4bd4d884472",
+      "platform": "discord",
+      "conversation": "General",
+      "date_utc": "2025-02-04T13:02:46.000Z",
+      "sender": "p29",
+      "text": "And I'm Kabir Sethi, kabir_s. Different person; I work on audio plugins and I'm not on that hackathon team."
+    },
+    {
+      "path": "discord/general.json",
+      "locator": "message_id=1336321398276096568",
+      "message_id": "f17229fb-aa09-569f-a7ee-534044d801f5",
+      "platform": "discord",
+      "conversation": "General",
+      "date_utc": "2025-02-04T13:04:09.000Z",
+      "sender": "p03",
+      "text": "Good clarification. Please don't assign my queue bugs to the other Kabir."
+    }
+  ],
+  "identity_meera": [
+    {
+      "path": "discord/meera_shah.json",
+      "locator": "message_id=1348611342336000603",
+      "message_id": "8d0ae1c1-a14c-55a3-b333-69b3927d3baf",
+      "platform": "discord",
+      "conversation": "Meera Shah",
+      "date_utc": "2025-03-10T11:00:00.000Z",
+      "sender": "p02",
+      "text": "it's Meera from insta, meera.sketches. Meera Shah on Facebook too; sending the poster draft here because the upload is easier."
+    },
+    {
+      "path": "discord/meera_shah.json",
+      "locator": "message_id=1348611690463232604",
+      "message_id": "13b88647-4777-5996-87c2-b1f50d0f3898",
+      "platform": "discord",
+      "conversation": "Meera Shah",
+      "date_utc": "2025-03-10T11:01:23.000Z",
+      "sender": "me",
+      "text": "Found it. The orange version reads better at thumbnail size."
+    },
+    {
+      "path": "discord/meera_shah.json",
+      "locator": "message_id=1348612038590464605",
+      "message_id": "8687c139-7f6f-55b8-a98c-01a77b7f7d3c",
+      "platform": "discord",
+      "conversation": "Meera Shah",
+      "date_utc": "2025-03-10T11:02:46.000Z",
+      "sender": "p02",
+      "text": "Please label your comments on the draft, not on a screenshot from last week."
+    },
+    {
+      "path": "discord/meera_shah.json",
+      "locator": "message_id=1348612386717696606",
+      "message_id": "91af78a9-fbb1-5510-8ea9-b86f559a2c0c",
+      "platform": "discord",
+      "conversation": "Meera Shah",
+      "date_utc": "2025-03-10T11:04:09.000Z",
+      "sender": "me",
+      "text": "Leaving feedback in the current version now."
+    }
+  ],
+  "identity_nisha": [
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=158; local_time=4/4/25, 7:50 PM IST",
+      "message_id": "445c0fbe-2b0f-509a-8b70-c8a5977b5bc7",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-04-04T14:20:00.000Z",
+      "sender": "p04",
+      "text": "nisha.onthebus is my Instagram, nishav on Discord. Nisha Verma on Facebook is also me; the metro photo is the same one."
+    },
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=159; local_time=4/4/25, 7:51 PM IST",
+      "message_id": "36d8bf7f-a2d2-5242-a968-9d0176ae2a11",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-04-04T14:21:23.000Z",
+      "sender": "me",
+      "text": "Invited nisha.verma@example.com to the grocery sheet."
+    },
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=160; local_time=4/4/25, 7:52 PM IST",
+      "message_id": "0002b00b-f484-50b6-9c06-39d03a9f4256",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-04-04T14:22:46.000Z",
+      "sender": "p04",
+      "text": "Thanks. Please put quantities next to things, two people bought tomatoes again."
+    },
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=161; local_time=4/4/25, 7:54 PM IST",
+      "message_id": "d7a62e47-73fa-59e4-aef3-d9d68285bcfd",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-04-04T14:24:09.000Z",
+      "sender": "p01",
+      "text": "the tomato redundancy strategy needs a rollback"
+    }
+  ],
+  "identity_omar": [
+    {
+      "path": "discord/rust_clinic.json",
+      "locator": "message_id=1358833700044800673",
+      "message_id": "23097f4f-4bd5-5bbb-98ef-e82e6f397961",
+      "platform": "discord",
+      "conversation": "Rust clinic",
+      "date_utc": "2025-04-07T16:00:00.000Z",
+      "sender": "p12",
+      "text": "@omar_borrows on Twitter is me, and owned_by_omar on Reddit. Happy to review a tiny example in either place."
+    },
+    {
+      "path": "discord/rust_clinic.json",
+      "locator": "message_id=1358834048172032674",
+      "message_id": "2ddfd63e-8222-54f3-90b8-d071a2d94e47",
+      "platform": "discord",
+      "conversation": "Rust clinic",
+      "date_utc": "2025-04-07T16:01:23.000Z",
+      "sender": "me",
+      "text": "The borrowed-slice diagram made much more sense than my notes."
+    },
+    {
+      "path": "discord/rust_clinic.json",
+      "locator": "message_id=1358834396299264675",
+      "message_id": "8407d0c3-30ea-57c7-9731-05820ab98199",
+      "platform": "discord",
+      "conversation": "Rust clinic",
+      "date_utc": "2025-04-07T16:02:46.000Z",
+      "sender": "p12",
+      "text": "Keep the code beside the diagram. Otherwise the arrows start explaining imaginary variables."
+    },
+    {
+      "path": "discord/rust_clinic.json",
+      "locator": "message_id=1358834744426496676",
+      "message_id": "c5f7b056-cf0b-5a3f-b98e-f6401775560d",
+      "platform": "discord",
+      "conversation": "Rust clinic",
+      "date_utc": "2025-04-07T16:04:09.000Z",
+      "sender": "me",
+      "text": "I'll reduce the example before posting it."
+    }
+  ],
+  "identity_rohan": [
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=134; local_time=2/2/25, 5:30 PM IST",
+      "message_id": "04dc2a49-b32d-5da0-a38a-186e7bf6d881",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2025-02-02T12:00:00.000Z",
+      "sender": "p01",
+      "text": "add me on discord: r0hanx. insta is rohan.eats.code and twitter is @rohan_iyer_."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=135; local_time=2/2/25, 5:31 PM IST",
+      "message_id": "ac8570d3-af20-5206-a48e-84f2e9d9fae3",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2025-02-02T12:01:23.000Z",
+      "sender": "me",
+      "text": "same food-related jokes, three different profile pictures"
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=136; local_time=2/2/25, 5:32 PM IST",
+      "message_id": "d7aef48d-44bd-56fe-b4f3-60a33da66d97",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2025-02-02T12:02:46.000Z",
+      "sender": "p01",
+      "text": "sambar_overflow on reddit is also me btw. rohan.iyer98@example.com for the shared doc invite."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=137; local_time=2/2/25, 5:34 PM IST",
+      "message_id": "c30d32c8-bdb0-526d-a15f-e76cd5f0bc29",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2025-02-02T12:04:09.000Z",
+      "sender": "me",
+      "text": "Got it, Rohan Iyer. The cricket group's Rohan Kapoor is a different Rohan."
+    }
+  ],
+  "identity_tara": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/tara_bose_100010/message_1.json",
+      "locator": "timestamp_ms=1757239200000; sender=tara.pawsblr",
+      "message_id": "422b40d8-a24c-5653-9a8f-b5c82818dc95",
+      "platform": "instagram",
+      "conversation": "Tara Bose",
+      "date_utc": "2025-09-07T10:00:00.000Z",
+      "sender": "p09",
+      "text": "It's Tara from tara.pawsblr. Save me as Tara rescue on WhatsApp and send the vet appointment time there."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/tara_bose_100010/message_1.json",
+      "locator": "timestamp_ms=1757239283000; sender=aarav.frames",
+      "message_id": "84ba5aa1-8984-5836-abca-a11a983d6a7f",
+      "platform": "instagram",
+      "conversation": "Tara Bose",
+      "date_utc": "2025-09-07T10:01:23.000Z",
+      "sender": "me",
+      "text": "Thanks, moving the practical details there so I don't lose them under story replies."
+    }
+  ],
+  "intern_prep": [
+    {
+      "path": "chatgpt/conversations.json",
+      "locator": "conversation=d90a2c00-0d35-54e4-8a5d-22e451f5e20f; node=1fc4f6d4-6cc6-59f6-8f5a-9008b368851c",
+      "message_id": "1fc4f6d4-6cc6-59f6-8f5a-9008b368851c",
+      "platform": "chatgpt",
+      "conversation": "Nimbus interview preparation",
+      "date_utc": "2026-01-22T14:00:00.000Z",
+      "sender": "me",
+      "text": "Nimbus Labs has invited me to a backend interview. Can we practise explaining idempotency with a queue worker example, one question at a time?"
+    },
+    {
+      "path": "chatgpt/conversations.json",
+      "locator": "conversation=d90a2c00-0d35-54e4-8a5d-22e451f5e20f; node=59d1bf97-05da-5329-9207-e0445313e0e0",
+      "message_id": "59d1bf97-05da-5329-9207-e0445313e0e0",
+      "platform": "chatgpt",
+      "conversation": "Nimbus interview preparation",
+      "date_utc": "2026-01-22T14:01:23.000Z",
+      "sender": "assistant",
+      "text": "Suppose a worker receives the same job twice after a retry. How would you prevent the external effect from happening twice?"
+    },
+    {
+      "path": "chatgpt/conversations.json",
+      "locator": "conversation=d90a2c00-0d35-54e4-8a5d-22e451f5e20f; node=de574517-aba4-55ca-86cf-3674dd766d4d",
+      "message_id": "de574517-aba4-55ca-86cf-3674dd766d4d",
+      "platform": "chatgpt",
+      "conversation": "Nimbus interview preparation",
+      "date_utc": "2026-01-22T14:02:46.000Z",
+      "sender": "me",
+      "text": "Store a job key and check it, but I think a separate check followed by an insert has a race."
+    },
+    {
+      "path": "chatgpt/conversations.json",
+      "locator": "conversation=d90a2c00-0d35-54e4-8a5d-22e451f5e20f; node=8001ba31-27f0-5bb4-b60d-77c9dae23236",
+      "message_id": "8001ba31-27f0-5bb4-b60d-77c9dae23236",
+      "platform": "chatgpt",
+      "conversation": "Nimbus interview preparation",
+      "date_utc": "2026-01-22T14:04:09.000Z",
+      "sender": "assistant",
+      "text": "Right: make the decision atomic, for example with an enforced unique key and a transaction appropriate to the effect. What would happen if the worker crashed between recording the key and completing the work?"
+    }
+  ],
+  "intern_prep_claude": [
+    {
+      "path": "claude/conversations.json",
+      "locator": "conversation=b1f09524-bbaa-5aae-bcee-728f2df0f14e; uuid=d83b23e8-c6f9-513c-b1cf-90a98f3c3f2a",
+      "message_id": "d83b23e8-c6f9-513c-b1cf-90a98f3c3f2a",
+      "platform": "claude",
+      "conversation": "Explaining a retry design",
+      "date_utc": "2026-01-25T14:00:00.000Z",
+      "sender": "me",
+      "text": "I have a Nimbus interview coming up. My answer about retries sounded like every request could just be repeated safely."
+    },
+    {
+      "path": "claude/conversations.json",
+      "locator": "conversation=b1f09524-bbaa-5aae-bcee-728f2df0f14e; uuid=b1451df2-2739-5d59-a28b-5f4b6a7c505f",
+      "message_id": "b1451df2-2739-5d59-a28b-5f4b6a7c505f",
+      "platform": "claude",
+      "conversation": "Explaining a retry design",
+      "date_utc": "2026-01-25T14:01:23.000Z",
+      "sender": "assistant",
+      "text": "Separate reading from creating effects. A retry policy alone does not make an operation idempotent; explain how duplicate work is detected and what state is stored."
+    },
+    {
+      "path": "claude/conversations.json",
+      "locator": "conversation=b1f09524-bbaa-5aae-bcee-728f2df0f14e; uuid=8c6736f2-7e5b-51a5-8afe-30ad3cde3b78",
+      "message_id": "8c6736f2-7e5b-51a5-8afe-30ad3cde3b78",
+      "platform": "claude",
+      "conversation": "Explaining a retry design",
+      "date_utc": "2026-01-25T14:02:46.000Z",
+      "sender": "me",
+      "text": "I'll use a stable request key and talk through the failure points instead of saying exactly-once like a magic word."
+    },
+    {
+      "path": "claude/conversations.json",
+      "locator": "conversation=b1f09524-bbaa-5aae-bcee-728f2df0f14e; uuid=2379ea86-f31c-5beb-b139-d1e1bd8b1240",
+      "message_id": "2379ea86-f31c-5beb-b139-d1e1bd8b1240",
+      "platform": "claude",
+      "conversation": "Explaining a retry design",
+      "date_utc": "2026-01-25T14:04:09.000Z",
+      "sender": "assistant",
+      "text": "That makes the explanation testable. Include the point where the downstream system might already have performed the effect."
+    }
+  ],
+  "intern_rejection": [
+    {
+      "path": "google/Takeout/Mail/All mail Including Spam and Trash.mbox",
+      "locator": "Message-ID=<2412e172-5bc7-5f3e-b0c4-3463340cac67@demo.sarthink.example>",
+      "message_id": "2412e172-5bc7-5f3e-b0c4-3463340cac67",
+      "platform": "gmail",
+      "conversation": "Kiteleaf backend application",
+      "date_utc": "2025-09-18T08:00:00.000Z",
+      "sender": "p40",
+      "text": "Thank you for applying to Kiteleaf. We will not move forward with your backend internship application this round. We appreciate the time you spent on the exercise."
+    },
+    {
+      "path": "google/Takeout/Mail/All mail Including Spam and Trash.mbox",
+      "locator": "Message-ID=<31ec5ef4-a5bf-544f-ad10-da0bac6689da@demo.sarthink.example>",
+      "message_id": "31ec5ef4-a5bf-544f-ad10-da0bac6689da",
+      "platform": "gmail",
+      "conversation": "Kiteleaf backend application",
+      "date_utc": "2025-09-18T08:01:23.000Z",
+      "sender": "me",
+      "text": "Thank you for letting me know. If brief feedback on the exercise is available, I would appreciate it."
+    }
+  ],
+  "intern_vent": [
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=210; local_time=9/18/25, 8:40 PM IST",
+      "message_id": "c8f092aa-ed0b-5e79-ad71-2f8aa6c2b8ac",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2025-09-18T15:10:00.000Z",
+      "sender": "me",
+      "text": "Kiteleaf rejected the backend application. I keep treating each email like a verdict on everything I can do."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=211; local_time=9/18/25, 8:41 PM IST",
+      "message_id": "d7ae5ead-207c-55d8-b93d-4e9defe64b18",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2025-09-18T15:11:23.000Z",
+      "sender": "p01",
+      "text": "it's one company's one round, not the final boss of your degree"
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=212; local_time=9/18/25, 8:42 PM IST",
+      "message_id": "09d46f0d-b752-5031-bfa5-a15f6d691957",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2025-09-18T15:12:46.000Z",
+      "sender": "me",
+      "text": "I'll take tonight off applications and review the exercise tomorrow."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=213; local_time=9/18/25, 8:44 PM IST",
+      "message_id": "574a0de1-489a-528b-8ac1-c43640a6f6e7",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2025-09-18T15:14:09.000Z",
+      "sender": "p01",
+      "text": "dinner first, retrospective later"
+    }
+  ],
+  "ipl_2024": [
+    {
+      "path": "whatsapp/Rohan K cricket.txt",
+      "locator": "line=9; local_time=4/14/24, 7:40 PM IST",
+      "message_id": "39eea8f0-7d32-59e1-b1e7-ee348a0f33f6",
+      "platform": "whatsapp",
+      "conversation": "Rohan K cricket",
+      "date_utc": "2024-04-14T14:10:00.000Z",
+      "sender": "p20",
+      "text": "IPL stream is buffering exactly when everyone starts shouting. Peak timing."
+    },
+    {
+      "path": "whatsapp/Rohan K cricket.txt",
+      "locator": "line=10; local_time=4/14/24, 7:41 PM IST",
+      "message_id": "b752911f-c44f-5b07-bd88-921c672d050a",
+      "platform": "whatsapp",
+      "conversation": "Rohan K cricket",
+      "date_utc": "2024-04-14T14:11:23.000Z",
+      "sender": "me",
+      "text": "The neighbours are providing commentary two seconds ahead of my screen."
+    },
+    {
+      "path": "whatsapp/Rohan K cricket.txt",
+      "locator": "line=11; local_time=4/14/24, 7:42 PM IST",
+      "message_id": "5d286eca-a8a0-538e-a38b-6187a5b362b5",
+      "platform": "whatsapp",
+      "conversation": "Rohan K cricket",
+      "date_utc": "2024-04-14T14:12:46.000Z",
+      "sender": "p20",
+      "text": "mute the group until the stream catches up, accidental spoilers everywhere"
+    },
+    {
+      "path": "whatsapp/Rohan K cricket.txt",
+      "locator": "line=12; local_time=4/14/24, 7:44 PM IST",
+      "message_id": "1f05b8d7-189d-5237-a151-8e0897171c41",
+      "platform": "whatsapp",
+      "conversation": "Rohan K cricket",
+      "date_utc": "2024-04-14T14:14:09.000Z",
+      "sender": "me",
+      "text": "I came for cricket and got a distributed-systems latency demonstration."
+    }
+  ],
+  "ipl_2025": [
+    {
+      "path": "whatsapp/Rohan K cricket.txt",
+      "locator": "line=50; local_time=4/19/25, 7:40 PM IST",
+      "message_id": "be93f684-596e-5d57-97fb-402dfdde637d",
+      "platform": "whatsapp",
+      "conversation": "Rohan K cricket",
+      "date_utc": "2025-04-19T14:10:00.000Z",
+      "sender": "p20",
+      "text": "Another IPL evening, another argument over which screen is closest to live."
+    },
+    {
+      "path": "whatsapp/Rohan K cricket.txt",
+      "locator": "line=51; local_time=4/19/25, 7:41 PM IST",
+      "message_id": "d0c81ecc-1458-5c2c-b604-0069d09b50d1",
+      "platform": "whatsapp",
+      "conversation": "Rohan K cricket",
+      "date_utc": "2025-04-19T14:11:23.000Z",
+      "sender": "me",
+      "text": "Last year's neighbour-commentary system was more reliable than this app."
+    },
+    {
+      "path": "whatsapp/Rohan K cricket.txt",
+      "locator": "line=52; local_time=4/19/25, 7:42 PM IST",
+      "message_id": "0c3a0949-b9b1-5337-95fe-664747146dc8",
+      "platform": "whatsapp",
+      "conversation": "Rohan K cricket",
+      "date_utc": "2025-04-19T14:12:46.000Z",
+      "sender": "p20",
+      "text": "bring snacks to the common room, that part of the system has no latency"
+    },
+    {
+      "path": "whatsapp/Rohan K cricket.txt",
+      "locator": "line=53; local_time=4/19/25, 7:44 PM IST",
+      "message_id": "9fbec7e7-f0ff-5233-bb6b-b347835d346f",
+      "platform": "whatsapp",
+      "conversation": "Rohan K cricket",
+      "date_utc": "2025-04-19T14:14:09.000Z",
+      "sender": "me",
+      "text": "On my way with bhel, please preserve one chair."
+    }
+  ],
+  "landlord_link": [
+    {
+      "path": "whatsapp/Vikram landlord.txt",
+      "locator": "line=73; local_time=7/23/25, 2:30 PM IST",
+      "message_id": "b9864e0f-bd0f-56a7-918d-497c53f0b57f",
+      "platform": "whatsapp",
+      "conversation": "Vikram landlord",
+      "date_utc": "2025-07-23T09:00:00.000Z",
+      "sender": "p10",
+      "text": "This is Vikram. I received your email about the Koramangala deposit; please keep the inventory and receipt discussion in that email thread."
+    },
+    {
+      "path": "whatsapp/Vikram landlord.txt",
+      "locator": "line=74; local_time=7/23/25, 2:31 PM IST",
+      "message_id": "6765039a-b8a8-58da-bcda-04b637c93931",
+      "platform": "whatsapp",
+      "conversation": "Vikram landlord",
+      "date_utc": "2025-07-23T09:01:23.000Z",
+      "sender": "me",
+      "text": "Understood, Mr Sethi. I have replied to vikram.sethi@example.com with the handover photos from 20 July."
+    }
+  ],
+  "leela_fb": [
+    {
+      "path": "facebook-aaravmehta.zip!/your_activity_across_facebook/messages/inbox/community_noticeboard_100000/message_1.json",
+      "locator": "timestamp_ms=1754906400000; sender=Leela Nair",
+      "message_id": "8b8d276f-9710-548c-985e-8fab92e3fa5b",
+      "platform": "facebook",
+      "conversation": "Community noticeboard",
+      "date_utc": "2025-08-11T10:00:00.000Z",
+      "sender": "p11",
+      "text": "Bringing Two Monsoons to the print board on Sunday: two blue bus-shelter pictures with a narrow white gap and a tiny red umbrella."
+    },
+    {
+      "path": "facebook-aaravmehta.zip!/your_activity_across_facebook/messages/inbox/community_noticeboard_100000/message_1.json",
+      "locator": "timestamp_ms=1754906483000; sender=Rita D'Souza",
+      "message_id": "1f42d6ce-1400-5027-8fa3-3b6b7693384b",
+      "platform": "facebook",
+      "conversation": "Community noticeboard",
+      "date_utc": "2025-08-11T10:01:23.000Z",
+      "sender": "p37",
+      "text": "Thank you, Leela. I'll leave a space for the pair beside the entrance."
+    },
+    {
+      "path": "facebook-aaravmehta.zip!/your_activity_across_facebook/messages/inbox/community_noticeboard_100000/message_1.json",
+      "locator": "timestamp_ms=1754906566000; sender=Aarav Mehta",
+      "message_id": "85856f10-9295-5527-8648-157ae44b04fd",
+      "platform": "facebook",
+      "conversation": "Community noticeboard",
+      "date_utc": "2025-08-11T10:02:46.000Z",
+      "sender": "me",
+      "text": "Looking forward to seeing the diptych printed instead of on my phone."
+    }
+  ],
+  "leela_ig": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/leela_nair_100005/message_1.json",
+      "locator": "timestamp_ms=1754823600000; sender=leela.in.lines",
+      "message_id": "cabad379-585e-5c18-97bf-952b8a57a03a",
+      "platform": "instagram",
+      "conversation": "Leela Nair",
+      "date_utc": "2025-08-10T11:00:00.000Z",
+      "sender": "p11",
+      "text": "The blue bus-shelter diptych is ready for the community print board. I'm calling the pair Two Monsoons."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/leela_nair_100005/message_1.json",
+      "locator": "timestamp_ms=1754823683000; sender=aarav.frames",
+      "message_id": "0ad58486-d96e-5322-bb2d-a6a71cdfc9ae",
+      "platform": "instagram",
+      "conversation": "Leela Nair",
+      "date_utc": "2025-08-10T11:01:23.000Z",
+      "sender": "me",
+      "text": "The narrow white gap between the two pictures works well. Are you bringing that version on Sunday?"
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/leela_nair_100005/message_1.json",
+      "locator": "timestamp_ms=1754823766000; sender=leela.in.lines",
+      "message_id": "2ccd5a7c-f6f2-5f3b-b2f9-f4acbb182949",
+      "platform": "instagram",
+      "conversation": "Leela Nair",
+      "date_utc": "2025-08-10T11:02:46.000Z",
+      "sender": "p11",
+      "text": "Yes, the one with the tiny red umbrella in the lower left."
+    }
+  ],
+  "meera_apology": [
+    {
+      "path": "whatsapp/Meera.txt",
+      "locator": "line=263; local_time=1/9/26, 7:00 PM IST",
+      "message_id": "7c3c3ca8-3115-540e-b927-e76fb5df939c",
+      "platform": "whatsapp",
+      "conversation": "Meera",
+      "date_utc": "2026-01-09T13:30:00.000Z",
+      "sender": "me",
+      "text": "Meera, I'm sorry for posting your poster without permission and credit in October. I removed it then, and I won't post your work again without asking first."
+    },
+    {
+      "path": "whatsapp/Meera.txt",
+      "locator": "line=264; local_time=1/9/26, 7:01 PM IST",
+      "message_id": "0352e278-533a-541b-aabf-1f0685e40c42",
+      "platform": "whatsapp",
+      "conversation": "Meera",
+      "date_utc": "2026-01-09T13:31:23.000Z",
+      "sender": "p02",
+      "text": "Thanks for being specific. What bothered me was having to ask you to take my own work down."
+    },
+    {
+      "path": "whatsapp/Meera.txt",
+      "locator": "line=265; local_time=1/9/26, 7:02 PM IST",
+      "message_id": "63c97c50-ee90-5c42-9440-0f1e7b8a7128",
+      "platform": "whatsapp",
+      "conversation": "Meera",
+      "date_utc": "2026-01-09T13:32:46.000Z",
+      "sender": "me",
+      "text": "I understand. If we work on anything again, you choose the version, credit and whether it gets posted at all."
+    },
+    {
+      "path": "whatsapp/Meera.txt",
+      "locator": "line=266; local_time=1/9/26, 7:04 PM IST",
+      "message_id": "aad48dfe-32c3-554f-a107-84d7c04f2d68",
+      "platform": "whatsapp",
+      "conversation": "Meera",
+      "date_utc": "2026-01-09T13:34:09.000Z",
+      "sender": "p02",
+      "text": "I'd be okay starting with a private draft review. Let's keep it small."
+    }
+  ],
+  "meera_fallout": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1759669200000; sender=meera.sketches",
+      "message_id": "cb1df7c5-c085-5c75-81f9-96d4e7458c83",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2025-10-05T13:00:00.000Z",
+      "sender": "p02",
+      "text": "You posted my exhibition poster crop without asking and left off my credit. I needed to choose how the work was shown."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1759669283000; sender=aarav.frames",
+      "message_id": "4fd6ef77-8809-50e3-b333-8016256d012a",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2025-10-05T13:01:23.000Z",
+      "sender": "me",
+      "text": "I thought tagging you in a later story would be enough. I can see that didn't address permission or the missing credit."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1759669366000; sender=meera.sketches",
+      "message_id": "537768e9-40c2-5678-b2b4-58a99d27bfde",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2025-10-05T13:02:46.000Z",
+      "sender": "p02",
+      "text": "Please take that post down. I don't want to discuss another draft tonight."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1759669449000; sender=aarav.frames",
+      "message_id": "eb54bf65-6203-57d3-af4b-65290813a221",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2025-10-05T13:04:09.000Z",
+      "sender": "me",
+      "text": "Taken it down. I'm sorry; I'll give you space and won't repost it."
+    }
+  ],
+  "meera_reflection": [
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=226; local_time=10/6/25, 8:30 PM IST",
+      "message_id": "39a1f783-e426-5c43-92bd-f83feb9bd1d6",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2025-10-06T15:00:00.000Z",
+      "sender": "me",
+      "text": "Meera is upset about the poster I posted without asking. I was defensive at first, but she's right about permission and credit."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=227; local_time=10/6/25, 8:31 PM IST",
+      "message_id": "605ce394-dae4-5fac-9fd0-9fba2e204156",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2025-10-06T15:01:23.000Z",
+      "sender": "p01",
+      "text": "an apology doesn't need a presentation on your intentions"
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=228; local_time=10/6/25, 8:32 PM IST",
+      "message_id": "20009ee0-67d2-5b83-baa3-13c74c9aebd1",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2025-10-06T15:02:46.000Z",
+      "sender": "me",
+      "text": "Yeah. I removed it and will leave the next conversation to a calmer time."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=229; local_time=10/6/25, 8:34 PM IST",
+      "message_id": "ca9ead49-d66f-5c11-acd9-fa406710743b",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2025-10-06T15:04:09.000Z",
+      "sender": "p01",
+      "text": "fix the habit, not just that one caption"
+    }
+  ],
+  "meera_repaired": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1768737600000; sender=aarav.frames",
+      "message_id": "a288910b-d6af-563e-b85f-f624d0939483",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2026-01-18T12:00:00.000Z",
+      "sender": "me",
+      "text": "May I post the final three-panel exhibition draft? Your credit would be in the image and first caption line. Private is also fine."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1768737683000; sender=meera.sketches",
+      "message_id": "cd42608e-062f-52ac-9ab4-aff070c24143",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2026-01-18T12:01:23.000Z",
+      "sender": "p02",
+      "text": "Yes, that version is okay to share with those credits. Thanks for asking before uploading."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1768737766000; sender=aarav.frames",
+      "message_id": "e0b37221-5951-5e40-9b66-710d2bf4732e",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2026-01-18T12:02:46.000Z",
+      "sender": "me",
+      "text": "Done exactly as approved. Glad we could start working together again."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1768737849000; sender=meera.sketches",
+      "message_id": "dc9f8071-24b1-5224-8c58-ede652fd5137",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2026-01-18T12:04:09.000Z",
+      "sender": "p02",
+      "text": "Me too. Send the next contact sheet when you're ready."
+    }
+  ],
+  "move_plan": [
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=186; local_time=7/1/25, 7:30 PM IST",
+      "message_id": "c069ebbf-1a53-5f0a-b0a4-56437cfe4b9a",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-07-01T14:00:00.000Z",
+      "sender": "p04",
+      "text": "Confirming the flat move: Koramangala to HSR Layout on 20 July. Same three flatmates: you, Rohan and me."
+    },
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=187; local_time=7/1/25, 7:31 PM IST",
+      "message_id": "592d0d3c-fc82-51d6-a44f-0509fe79f995",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-07-01T14:01:23.000Z",
+      "sender": "me",
+      "text": "New rent ₹36,000 total per month, split three ways. Movers quoted ₹4,500 for the whole move."
+    },
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=188; local_time=7/1/25, 7:32 PM IST",
+      "message_id": "cf680ba4-584c-5aea-a300-bafe9e79c805",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-07-01T14:02:46.000Z",
+      "sender": "p01",
+      "text": "label the kitchen boxes properly, last time my mug lived with the cables"
+    },
+    {
+      "path": "whatsapp/Flatmates.txt",
+      "locator": "line=189; local_time=7/1/25, 7:34 PM IST",
+      "message_id": "ab0c3dca-0ccd-5291-977c-6291ca7f6f6c",
+      "platform": "whatsapp",
+      "conversation": "Flatmates",
+      "date_utc": "2025-07-01T14:04:09.000Z",
+      "sender": "p04",
+      "text": "Each person gets a bag of first-night essentials. Keys at 10 am on the 20th."
+    }
+  ],
+  "move_reddit": [
+    {
+      "path": "reddit-export/posts.csv",
+      "locator": "row=4; id=ace007",
+      "message_id": "2854232c-7815-5b51-a883-38772138fa13",
+      "platform": "reddit",
+      "conversation": "Moving to HSR",
+      "date_utc": "2025-07-24T15:30:00.000Z",
+      "sender": "me",
+      "text": "Moved from Koramangala to HSR Layout on 20 July. Glad we photographed the old flat at handover; now we have a record for the deposit discussion."
+    },
+    {
+      "path": "reddit-export/comments.csv",
+      "locator": "row=53; id=b11b59",
+      "message_id": "3cb30568-d51d-5ab1-8d6a-118de0c2fd70",
+      "platform": "reddit",
+      "conversation": "Moving to HSR",
+      "date_utc": "2025-07-24T15:31:23.000Z",
+      "sender": "me",
+      "text": "Not asking strangers to contact the landlord. I'm comparing our inventory and receipts privately and keeping the thread about moving logistics."
+    }
+  ],
+  "nimbus_accepted": [
+    {
+      "path": "google/Takeout/Mail/All mail Including Spam and Trash.mbox",
+      "locator": "Message-ID=<b2a45141-d381-56fe-bc08-0fcf54ec263c@demo.sarthink.example>",
+      "message_id": "b2a45141-d381-56fe-bc08-0fcf54ec263c",
+      "platform": "gmail",
+      "conversation": "Nimbus Labs internship offer",
+      "date_utc": "2026-02-14T08:30:00.000Z",
+      "sender": "me",
+      "text": "I accept the Nimbus Labs backend engineering internship at ₹60,000 per month, from 2 March to 29 May 2026. My college has confirmed the schedule works."
+    },
+    {
+      "path": "google/Takeout/Mail/All mail Including Spam and Trash.mbox",
+      "locator": "Message-ID=<d8cf6882-923d-5993-83d4-18f3be0b62f2@demo.sarthink.example>",
+      "message_id": "d8cf6882-923d-5993-83d4-18f3be0b62f2",
+      "platform": "gmail",
+      "conversation": "Nimbus Labs internship offer",
+      "date_utc": "2026-02-14T08:31:23.000Z",
+      "sender": "p39",
+      "text": "Thank you, Aarav. Your acceptance is recorded on 14 February. Onboarding instructions will follow in this thread."
+    }
+  ],
+  "nimbus_accepted_chat": [
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=277; local_time=2/14/26, 7:00 PM IST",
+      "message_id": "7644f73b-cc2e-5a07-ae82-328ab8964779",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2026-02-14T13:30:00.000Z",
+      "sender": "me",
+      "text": "ok I accepted it. Sent Nimbus the acceptance email this morning, 14 February. College schedule sorted."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=278; local_time=2/14/26, 7:01 PM IST",
+      "message_id": "61a97628-d1d0-5a4c-ba3e-3dc1988cdc65",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2026-02-14T13:31:23.000Z",
+      "sender": "p01",
+      "text": "excellent, celebratory dosa now has documentary support"
+    }
+  ],
+  "nimbus_completed": [
+    {
+      "path": "google/Takeout/Mail/All mail Including Spam and Trash.mbox",
+      "locator": "Message-ID=<13348cd7-c42f-51f7-98ea-9c458a71b94f@demo.sarthink.example>",
+      "message_id": "13348cd7-c42f-51f7-98ea-9c458a71b94f",
+      "platform": "gmail",
+      "conversation": "Nimbus internship completion",
+      "date_utc": "2026-05-29T09:00:00.000Z",
+      "sender": "p39",
+      "text": "Thank you for completing your internship from 2 March to 29 May. Your handover notes for the queue retry dashboard have been received. The final stipend will follow the agreed payroll cycle."
+    },
+    {
+      "path": "google/Takeout/Mail/All mail Including Spam and Trash.mbox",
+      "locator": "Message-ID=<32fa7ca9-05b0-54db-bdea-064a1c56708f@demo.sarthink.example>",
+      "message_id": "32fa7ca9-05b0-54db-bdea-064a1c56708f",
+      "platform": "gmail",
+      "conversation": "Nimbus internship completion",
+      "date_utc": "2026-05-29T09:01:23.000Z",
+      "sender": "me",
+      "text": "Thank you. Working on the retry dashboard taught me to explain failure states much more clearly; I have handed the notes to the team."
+    }
+  ],
+  "nimbus_not_accepted": [
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=270; local_time=2/11/26, 8:30 PM IST",
+      "message_id": "390e5777-d302-5538-b7a9-d81d1282e4b5",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2026-02-11T15:00:00.000Z",
+      "sender": "me",
+      "text": "Nimbus offered ₹60,000/month, but I haven't accepted the Nimbus offer yet. Need to confirm the college project schedule first."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=271; local_time=2/11/26, 8:31 PM IST",
+      "message_id": "29437a59-089d-51b6-a3ac-c4924eb619a9",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2026-02-11T15:01:23.000Z",
+      "sender": "p01",
+      "text": "nice problem to have, still check the actual dates before celebrating the calendar"
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=272; local_time=2/11/26, 8:32 PM IST",
+      "message_id": "93ead8a8-c7b3-54a1-8057-acf3d245ab7c",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2026-02-11T15:02:46.000Z",
+      "sender": "me",
+      "text": "It's 2 March to 29 May. I'll decide after the coordinator replies."
+    }
+  ],
+  "nimbus_offer": [
+    {
+      "path": "google/Takeout/Mail/All mail Including Spam and Trash.mbox",
+      "locator": "Message-ID=<6fbaf50e-bda0-5095-9d4d-7a20c9f21098@demo.sarthink.example>",
+      "message_id": "6fbaf50e-bda0-5095-9d4d-7a20c9f21098",
+      "platform": "gmail",
+      "conversation": "Nimbus Labs internship offer",
+      "date_utc": "2026-02-10T09:00:00.000Z",
+      "sender": "p39",
+      "text": "We are pleased to offer you a backend engineering internship at Nimbus Labs, Bengaluru, from 2 March to 29 May 2026. The stipend is ₹60,000 per month. Please reply by 16 February."
+    },
+    {
+      "path": "google/Takeout/Mail/All mail Including Spam and Trash.mbox",
+      "locator": "Message-ID=<343d681e-27f8-5398-9b97-1d4de8da2e01@demo.sarthink.example>",
+      "message_id": "343d681e-27f8-5398-9b97-1d4de8da2e01",
+      "platform": "gmail",
+      "conversation": "Nimbus Labs internship offer",
+      "date_utc": "2026-02-10T09:01:23.000Z",
+      "sender": "me",
+      "text": "Thank you for the offer. I am reviewing the dates with my college coordinator and will confirm before the deadline."
+    }
+  ],
+  "owner_background": [
+    {
+      "path": "discord/general.json",
+      "locator": "message_id=1544693376614401821",
+      "message_id": "4ed18b8c-e63f-517a-b151-31c51a5f5ce0",
+      "platform": "discord",
+      "conversation": "General",
+      "date_utc": "2026-09-02T13:00:00.000Z",
+      "sender": "me",
+      "text": "Final-year CSE has started. Bengaluru for college, Jaipur for home, and apparently every deadline wants the same week."
+    },
+    {
+      "path": "discord/general.json",
+      "locator": "message_id=1544693724741633822",
+      "message_id": "994bbd87-7d4f-51df-9bf1-b36d17ba05a7",
+      "platform": "discord",
+      "conversation": "General",
+      "date_utc": "2026-09-02T13:01:23.000Z",
+      "sender": "p01",
+      "text": "your calendar needs a traffic signal more than your photography page does"
+    },
+    {
+      "path": "discord/general.json",
+      "locator": "message_id=1544694072868865823",
+      "message_id": "97621e40-84e3-5540-931d-44386a3ca7b8",
+      "platform": "discord",
+      "conversation": "General",
+      "date_utc": "2026-09-02T13:02:46.000Z",
+      "sender": "me",
+      "text": "Keeping the September Sarthink demo scope small so the semester project gets proper time too."
+    }
+  ],
+  "owner_birthday": [
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=79; local_time=4/7/26, 9:00 AM IST",
+      "message_id": "5b599e69-1155-50e0-ab47-d23369a64654",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2026-04-07T03:30:00.000Z",
+      "sender": "p13",
+      "text": "Happy 21st birthday, Aarav! Call home when your Bengaluru classes finish."
+    },
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=80; local_time=4/7/26, 9:01 AM IST",
+      "message_id": "c2c8d385-88a0-53eb-b2fd-0bd8bddf72b3",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2026-04-07T03:31:23.000Z",
+      "sender": "me",
+      "text": "Thanks Maa, Jaipur birthday breakfast is being missed today. I'll call after the lab."
+    },
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=81; local_time=4/7/26, 9:02 AM IST",
+      "message_id": "455ab4b6-3d05-5549-9446-0db437d002ae",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2026-04-07T03:32:46.000Z",
+      "sender": "p15",
+      "text": "Twenty-one and still asking which folder you saved the family photos in."
+    },
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=82; local_time=4/7/26, 9:04 AM IST",
+      "message_id": "fb233a18-2f66-55ac-823d-eb6bb37ebe4d",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2026-04-07T03:34:09.000Z",
+      "sender": "me",
+      "text": "The folder has a sensible name now, progress is happening."
+    }
+  ],
+  "photo_mentor": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1707642000000; sender=aarav.frames",
+      "message_id": "de8c9f4d-c673-5b7a-817b-43cfe9b39c5e",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2024-02-11T09:00:00.000Z",
+      "sender": "me",
+      "text": "Your bus-stop series made me try shooting the same corner for a week. I'm Aarav, a student in Bengaluru."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1707642083000; sender=devika.lightnotes",
+      "message_id": "1b8bdbd5-5628-59eb-89c5-b591ec988a2e",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2024-02-11T09:01:23.000Z",
+      "sender": "p05",
+      "text": "Pick one frame and tell me what you wanted the viewer to notice."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1707642166000; sender=aarav.frames",
+      "message_id": "69d1ac4f-8fd0-5601-b965-74e7a42e408f",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2024-02-11T09:02:46.000Z",
+      "sender": "me",
+      "text": "The woman's yellow umbrella, but there's a bright sign pulling attention away."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1707642249000; sender=devika.lightnotes",
+      "message_id": "7a663795-b656-5109-85f9-0758816bfd0d",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2024-02-11T09:04:09.000Z",
+      "sender": "p05",
+      "text": "Change your position before changing your camera. Return when the sign is in shade."
+    }
+  ],
+  "photo_page": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1737289800000; sender=aarav.frames",
+      "message_id": "77440641-26d2-5218-ab33-724caf17a022",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2025-01-19T12:30:00.000Z",
+      "sender": "me",
+      "text": "Started a little series on aarav.frames: one Bengaluru street photo each Sunday, calling it Waiting for Green."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1737289883000; sender=meera.sketches",
+      "message_id": "2cf4925b-f32e-5240-81a0-b292a41cc6c1",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2025-01-19T12:31:23.000Z",
+      "sender": "p02",
+      "text": "Keep the captions about what you actually saw. The red light already does the dramatic work."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1737289966000; sender=aarav.frames",
+      "message_id": "9a663a4c-d3ea-5130-854d-42d5f5e80dfc",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2025-01-19T12:32:46.000Z",
+      "sender": "me",
+      "text": "Four posts ready, no follower target. I want to get better at editing a sequence."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1737290049000; sender=meera.sketches",
+      "message_id": "f3ca5ee6-d954-5389-82cb-6fe5391e96b1",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2025-01-19T12:34:09.000Z",
+      "sender": "p02",
+      "text": "Send the contact sheet before the fifth one; the quiet frames might belong together."
+    }
+  ],
+  "photo_phone": [
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=1; local_time=1/7/24, 7:00 PM IST",
+      "message_id": "4ae65444-c0ee-5f7f-8a16-9eeaf45a0730",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2024-01-07T13:30:00.000Z",
+      "sender": "me",
+      "text": "Took a photo of the tea stall near college on my phone today. The steam caught the evening light somehow."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=2; local_time=1/7/24, 7:01 PM IST",
+      "message_id": "774e0c1c-c592-5b23-b353-a4d0947f2ccb",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2024-01-07T13:31:23.000Z",
+      "sender": "p01",
+      "text": "finally the chai has a better portrait than me"
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=3; local_time=1/7/24, 7:02 PM IST",
+      "message_id": "b4d98022-6832-55ac-b03e-b98e1c976db8",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2024-01-07T13:32:46.000Z",
+      "sender": "me",
+      "text": "I only have the phone camera for now. Trying to notice light before buying gear."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=4; local_time=1/7/24, 7:04 PM IST",
+      "message_id": "38838b97-8117-5a0c-a46c-7f5243be7ff1",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2024-01-07T13:34:09.000Z",
+      "sender": "p01",
+      "text": "sunday walk then? no lens shopping detour pls"
+    }
+  ],
+  "photo_video": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1781442000000; sender=aarav.frames",
+      "message_id": "9657a9ee-8952-5cb6-80ab-6222304f943b",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2026-06-14T13:00:00.000Z",
+      "sender": "me",
+      "text": "The Sunday still-photo page has been quiet because I'm trying video now. The bus brakes and rain sound matter to this story."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1781442083000; sender=devika.lightnotes",
+      "message_id": "caee59eb-7f53-5cb4-b4ca-d4ad0d26dc6f",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2026-06-14T13:01:23.000Z",
+      "sender": "p05",
+      "text": "What would a moving image add that your street photographs cannot?"
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1781442166000; sender=aarav.frames",
+      "message_id": "0eb8fdd0-146d-5e4c-9f76-a3f4de35ec60",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2026-06-14T13:02:46.000Z",
+      "sender": "me",
+      "text": "Time and sound. I'm cutting a ninety-second KR Market morning sequence, still using the X-T30 and recording ambience on my phone."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1781442249000; sender=devika.lightnotes",
+      "message_id": "03000e7d-0d1c-5c5a-8739-00347a891455",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2026-06-14T13:04:09.000Z",
+      "sender": "p05",
+      "text": "Keep the patient observation from your still work; a sequence need not be busy."
+    }
+  ],
+  "photo_video_x": [
+    {
+      "path": "twitter/data/tweets.js",
+      "locator": "tweet_id=2067247138206647068",
+      "message_id": "c0b64def-5c52-5bae-a4b7-c482d2f34dc1",
+      "platform": "twitter",
+      "conversation": "Street video notes",
+      "date_utc": "2026-06-17T14:05:00.000Z",
+      "sender": "me",
+      "text": "In early 2024 I was learning light with a phone. The used X-T30 got me into street stills; now I'm learning how sound changes a ninety-second sequence."
+    },
+    {
+      "path": "twitter/data/tweets.js",
+      "locator": "tweet_id=2067247486333879069",
+      "message_id": "b6b06314-7eed-541a-9fbd-5773b86952f1",
+      "platform": "twitter",
+      "conversation": "Street video notes",
+      "date_utc": "2026-06-17T14:06:23.000Z",
+      "sender": "me",
+      "text": "Not abandoning photography. I want the waiting, bus brakes and rain to be part of the work too."
+    }
+  ],
+  "photo_youtube": [
+    {
+      "path": "google/Takeout/YouTube and YouTube Music/comments/comments.csv",
+      "locator": "row=2; comment_id=Uge303801eb86850398b7113eb0e56ab60",
+      "message_id": "e303801e-b868-5039-8b71-13eb0e56ab60",
+      "platform": "youtube",
+      "conversation": "Contact sheet walkthrough",
+      "date_utc": "2024-07-08T11:05:00.000Z",
+      "sender": "me",
+      "text": "@devika.lightnotes your suggestion on Instagram helped: I moved two steps left at the blue bus shelter and the sign stopped cutting through the frame."
+    },
+    {
+      "path": "google/Takeout/YouTube and YouTube Music/comments/comments.csv",
+      "locator": "row=3; comment_id=Ug3366f5d762ca5ca48bef4ae188a75949",
+      "message_id": "3366f5d7-62ca-5ca4-8bef-4ae188a75949",
+      "platform": "youtube",
+      "conversation": "Contact sheet walkthrough",
+      "date_utc": "2024-07-08T11:06:23.000Z",
+      "sender": "me",
+      "text": "Update after another walk: choosing six frames from one place taught me more than posting thirty unrelated ones."
+    }
+  ],
+  "post_hack_noise": [
+    {
+      "path": "discord/random.json",
+      "locator": "message_id=1549434617856001880",
+      "message_id": "5001dc2e-f750-54e5-9fdf-abfe85a8fa71",
+      "platform": "discord",
+      "conversation": "Random",
+      "date_utc": "2026-09-15T15:00:00.000Z",
+      "sender": "p25",
+      "text": "sent a meme of twelve browser tabs all called final_final, felt relevant after the demo"
+    },
+    {
+      "path": "discord/random.json",
+      "locator": "message_id=1549434965983233881",
+      "message_id": "8282d7d9-5473-5a9c-96f3-e5743b74c479",
+      "platform": "discord",
+      "conversation": "Random",
+      "date_utc": "2026-09-15T15:01:23.000Z",
+      "sender": "me",
+      "text": "Mine are final_final_actual and please_do_not_edit, very mature naming system."
+    },
+    {
+      "path": "discord/random.json",
+      "locator": "message_id=1549435314110465882",
+      "message_id": "a937e5dd-cf56-5e97-8b60-a718f56a51ac",
+      "platform": "discord",
+      "conversation": "Random",
+      "date_utc": "2026-09-15T15:02:46.000Z",
+      "sender": "p03",
+      "text": "Please replace this naming system before the handover."
+    },
+    {
+      "path": "discord/random.json",
+      "locator": "message_id=1549435662237697883",
+      "message_id": "d56c492b-3eae-5afc-b797-aba1b8e8f209",
+      "platform": "discord",
+      "conversation": "Random",
+      "date_utc": "2026-09-15T15:04:09.000Z",
+      "sender": "p01",
+      "text": "even the meme has received a code review"
+    }
+  ],
+  "reddit_ama": [
+    {
+      "path": "reddit-export/posts.csv",
+      "locator": "row=2; id=ace000",
+      "message_id": "1daafcbe-99d9-5d2d-aede-85fff864a987",
+      "platform": "reddit",
+      "conversation": "AMA on a small photo page",
+      "date_utc": "2025-04-13T12:00:00.000Z",
+      "sender": "me",
+      "text": "Small AMA in r/photography: I've been making a Sunday street-photo series called Waiting for Green since January. Happy to discuss editing a sequence while studying."
+    },
+    {
+      "path": "reddit-export/comments.csv",
+      "locator": "row=2; id=b10001",
+      "message_id": "0471cadf-f16a-5828-bbeb-49934ad78fe6",
+      "platform": "reddit",
+      "conversation": "AMA on a small photo page",
+      "date_utc": "2025-04-13T12:01:23.000Z",
+      "sender": "me",
+      "text": "On gear: the used X-T30 and kit zoom are still what I use; the June 2024 purchase was ₹52,000 for the kit."
+    },
+    {
+      "path": "reddit-export/comments.csv",
+      "locator": "row=3; id=b10002",
+      "message_id": "68c8559f-6496-5c7e-8adb-c1e316c16230",
+      "platform": "reddit",
+      "conversation": "AMA on a small photo page",
+      "date_utc": "2025-04-13T12:02:46.000Z",
+      "sender": "me",
+      "text": "On finding time: I return to familiar bus stops and market streets instead of planning a separate expedition for every frame."
+    }
+  ],
+  "reddit_argument": [
+    {
+      "path": "reddit-export/chat_history.csv",
+      "locator": "row=263; id=b16d70",
+      "message_id": "ec764b16-a954-511a-b83c-fc6e98c5bc33",
+      "platform": "reddit",
+      "conversation": "Photo ethics discussion",
+      "date_utc": "2025-02-16T14:00:00.000Z",
+      "sender": "p30",
+      "text": "Your r/photography reply made it sound like every candid street photo is automatically disrespectful. Is that really what you meant?"
+    },
+    {
+      "path": "reddit-export/chat_history.csv",
+      "locator": "row=264; id=b16d71",
+      "message_id": "bd4e65ab-d604-56c5-8027-2324d088dab2",
+      "platform": "reddit",
+      "conversation": "Photo ethics discussion",
+      "date_utc": "2025-02-16T14:01:23.000Z",
+      "sender": "me",
+      "text": "I was annoyed by the dismissive tone and wrote too broadly. I don't mean every candid frame is wrong; I mean context and the person's comfort matter."
+    },
+    {
+      "path": "reddit-export/chat_history.csv",
+      "locator": "row=265; id=b16d72",
+      "message_id": "6d902d3f-c727-5c6a-9e14-fc5500849d2b",
+      "platform": "reddit",
+      "conversation": "Photo ethics discussion",
+      "date_utc": "2025-02-16T14:02:46.000Z",
+      "sender": "p30",
+      "text": "That's a more useful distinction. My comment was about wide public scenes, not cornering somebody for a close portrait."
+    },
+    {
+      "path": "reddit-export/chat_history.csv",
+      "locator": "row=266; id=b16d73",
+      "message_id": "b7187449-af96-5b32-a702-96e3f6cb3866",
+      "platform": "reddit",
+      "conversation": "Photo ethics discussion",
+      "date_utc": "2025-02-16T14:04:09.000Z",
+      "sender": "me",
+      "text": "I'll edit my reply to make that clear. I argued about a claim you hadn't actually made."
+    }
+  ],
+  "reddit_bangalore": [
+    {
+      "path": "reddit-export/chat_history.csv",
+      "locator": "row=10; id=b103f0",
+      "message_id": "0e114759-07be-5dd9-8d29-0bc3ecbecb81",
+      "platform": "reddit",
+      "conversation": "Bengaluru routes chat",
+      "date_utc": "2025-08-17T11:00:00.000Z",
+      "sender": "p31",
+      "text": "Saw your r/bangalore moving post. How has the shift to HSR worked for your usual trips?"
+    },
+    {
+      "path": "reddit-export/chat_history.csv",
+      "locator": "row=11; id=b103f1",
+      "message_id": "4c2fb17c-34c4-595b-9eb6-2c93d93b1cc5",
+      "platform": "reddit",
+      "conversation": "Bengaluru routes chat",
+      "date_utc": "2025-08-17T11:01:23.000Z",
+      "sender": "me",
+      "text": "We moved on 20 July; I'm still learning which bus stop is least awkward in the rain. The home setup is calmer now the boxes are gone."
+    },
+    {
+      "path": "reddit-export/chat_history.csv",
+      "locator": "row=12; id=b103f2",
+      "message_id": "7de3668d-242d-5e62-83b1-8def99862046",
+      "platform": "reddit",
+      "conversation": "Bengaluru routes chat",
+      "date_utc": "2025-08-17T11:02:46.000Z",
+      "sender": "p31",
+      "text": "Walk the last part once in daylight so you know where the crossing is."
+    },
+    {
+      "path": "reddit-export/chat_history.csv",
+      "locator": "row=13; id=b103f3",
+      "message_id": "2864bf40-8cb0-5271-91d1-0b480eb97886",
+      "platform": "reddit",
+      "conversation": "Bengaluru routes chat",
+      "date_utc": "2025-08-17T11:04:09.000Z",
+      "sender": "me",
+      "text": "Did that this weekend, useful tip. Keeping an umbrella by the door now."
+    }
+  ],
+  "reddit_reflection": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1739797200000; sender=aarav.frames",
+      "message_id": "370254a1-c8f0-5d4f-8436-58434082d507",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2025-02-17T13:00:00.000Z",
+      "sender": "me",
+      "text": "Got into a heated r/photography argument yesterday. I ended up correcting my reply because I had turned a nuanced point into a blanket statement."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1739797283000; sender=devika.lightnotes",
+      "message_id": "cbad5bf6-78d5-5d07-b9a4-57cd6bd89e6d",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2025-02-17T13:01:23.000Z",
+      "sender": "p05",
+      "text": "Keep the correction visible. Being careful with people includes being fair to the person you're replying to."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json",
+      "locator": "timestamp_ms=1739797366000; sender=aarav.frames",
+      "message_id": "d0e0fd49-1a9c-5438-8133-6afa9ceff2c1",
+      "platform": "instagram",
+      "conversation": "Devika Sen",
+      "date_utc": "2025-02-17T13:02:46.000Z",
+      "sender": "me",
+      "text": "I left a short edit explaining the change and stopped refreshing the thread."
+    }
+  ],
+  "reddit_rust": [
+    {
+      "path": "discord/rust_clinic.json",
+      "locator": "message_id=1525864307097601605",
+      "message_id": "885a7125-369e-5534-a1a3-894c4ab3606f",
+      "platform": "discord",
+      "conversation": "Rust clinic",
+      "date_utc": "2026-07-12T14:00:00.000Z",
+      "sender": "me",
+      "text": "The r/rust discussion about my pocket-index deletion fixture was useful. I had tested updates but forgotten a renamed directory."
+    },
+    {
+      "path": "discord/rust_clinic.json",
+      "locator": "message_id=1525864655224833606",
+      "message_id": "f5299584-901f-56ec-b84b-fcfefb71c401",
+      "platform": "discord",
+      "conversation": "Rust clinic",
+      "date_utc": "2026-07-12T14:01:23.000Z",
+      "sender": "p12",
+      "text": "Renames are a good way to expose assumptions about identity. Keep a tiny reproducible tree for that case."
+    },
+    {
+      "path": "discord/rust_clinic.json",
+      "locator": "message_id=1525865003352065607",
+      "message_id": "474e1c9c-100f-51d1-81f2-edb20931af65",
+      "platform": "discord",
+      "conversation": "Rust clinic",
+      "date_utc": "2026-07-12T14:02:46.000Z",
+      "sender": "me",
+      "text": "Adding a three-file fixture instead of uploading my actual notes."
+    }
+  ],
+  "rohan_goa_callback": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/rohan_iyer_100008/message_1.json",
+      "locator": "timestamp_ms=1766232000000; sender=rohan.eats.code",
+      "message_id": "cd6d0b39-ef7d-540d-a64a-cab46f7c61a4",
+      "platform": "instagram",
+      "conversation": "Rohan Iyer",
+      "date_utc": "2025-12-20T12:00:00.000Z",
+      "sender": "p01",
+      "text": "one year since the Goa train fiasco; the blue-boat photo still looks peaceful enough to hide the entire backstory"
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/rohan_iyer_100008/message_1.json",
+      "locator": "timestamp_ms=1766232083000; sender=aarav.frames",
+      "message_id": "8af0ae89-5179-5806-9a33-e3b33f39af47",
+      "platform": "instagram",
+      "conversation": "Rohan Iyer",
+      "date_utc": "2025-12-20T12:01:23.000Z",
+      "sender": "me",
+      "text": "The photo is from Anjuna, the panic was entirely Yeshwanthpur."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/rohan_iyer_100008/message_1.json",
+      "locator": "timestamp_ms=1766232166000; sender=rohan.eats.code",
+      "message_id": "5896eb60-466f-5057-8929-7ea3f6d08ddd",
+      "platform": "instagram",
+      "conversation": "Rohan Iyer",
+      "date_utc": "2025-12-20T12:02:46.000Z",
+      "sender": "p01",
+      "text": "your street-photo page should have a transport-accuracy disclaimer"
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/rohan_iyer_100008/message_1.json",
+      "locator": "timestamp_ms=1766232249000; sender=aarav.frames",
+      "message_id": "1f60b1d3-b205-5c9e-899b-f59d9184d022",
+      "platform": "instagram",
+      "conversation": "Rohan Iyer",
+      "date_utc": "2025-12-20T12:04:09.000Z",
+      "sender": "me",
+      "text": "You got ₹8,400 worth of recurring material out of that trip."
+    }
+  ],
+  "rohan_hack_callback": [
+    {
+      "path": "twitter/data/direct-messages.js",
+      "locator": "dm_id=2099468200965047148",
+      "message_id": "ac9b242a-9154-5c9f-a7bb-c9e27da9b813",
+      "platform": "twitter",
+      "conversation": "Rohan Iyer",
+      "date_utc": "2026-09-14T12:00:00.000Z",
+      "sender": "p01",
+      "text": "saw the Sarthink result post, third of 42 is excellent. did the Goa cost question expose your clock-reading incident again?"
+    },
+    {
+      "path": "twitter/data/direct-messages.js",
+      "locator": "dm_id=2099468549092279149",
+      "message_id": "44f9216e-f1df-5c72-b074-dad16df0185b",
+      "platform": "twitter",
+      "conversation": "Rohan Iyer",
+      "date_utc": "2026-09-14T12:01:23.000Z",
+      "sender": "me",
+      "text": "Yes, the answer cited the actual split message this time. Sana made sure the fixed citation opened the right source."
+    },
+    {
+      "path": "twitter/data/direct-messages.js",
+      "locator": "dm_id=2099468897219511150",
+      "message_id": "0b751e31-e928-55b6-b9ad-baaebc86e336",
+      "platform": "twitter",
+      "conversation": "Rohan Iyer",
+      "date_utc": "2026-09-14T12:02:46.000Z",
+      "sender": "p01",
+      "text": "from camera receipts to citation receipts, your character development is mostly paperwork"
+    },
+    {
+      "path": "twitter/data/direct-messages.js",
+      "locator": "dm_id=2099469245346743151",
+      "message_id": "938ade16-a59f-5d04-9136-1356d0aabcc6",
+      "platform": "twitter",
+      "conversation": "Rohan Iyer",
+      "date_utc": "2026-09-14T12:04:09.000Z",
+      "sender": "me",
+      "text": "Accurate, unfortunately."
+    }
+  ],
+  "run_10k": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/aditya_kulkarni_100000/message_1.json",
+      "locator": "timestamp_ms=1787461800000; sender=aarav.frames",
+      "message_id": "2cfe4b5b-983b-5cbc-87eb-da6c774959ed",
+      "platform": "instagram",
+      "conversation": "Aditya Kulkarni",
+      "date_utc": "2026-08-23T05:10:00.000Z",
+      "sender": "me",
+      "text": "Finished my first organised 10K at the HSR Community Run this morning: official chip time 42:30. My watch showed 42:41."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/aditya_kulkarni_100000/message_1.json",
+      "locator": "timestamp_ms=1787461883000; sender=adi.takes.the.stairs",
+      "message_id": "d17ab2cb-0cb3-551b-8f80-7b1d0181f462",
+      "platform": "instagram",
+      "conversation": "Aditya Kulkarni",
+      "date_utc": "2026-08-23T05:11:23.000Z",
+      "sender": "p08",
+      "text": "You looked delighted at the finish. Keep the photo with both of us blinking."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/aditya_kulkarni_100000/message_1.json",
+      "locator": "timestamp_ms=1787461966000; sender=aarav.frames",
+      "message_id": "74cb4fbd-b64b-5e80-a2cb-40f729d91fec",
+      "platform": "instagram",
+      "conversation": "Aditya Kulkarni",
+      "date_utc": "2026-08-23T05:12:46.000Z",
+      "sender": "me",
+      "text": "Keeping it. The result is 42 minutes 30 seconds; the watch time isn't the official result."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/aditya_kulkarni_100000/message_1.json",
+      "locator": "timestamp_ms=1787462049000; sender=adi.takes.the.stairs",
+      "message_id": "d9bb6d0f-4c85-5fcc-aa9e-783fefae57d7",
+      "platform": "instagram",
+      "conversation": "Aditya Kulkarni",
+      "date_utc": "2026-08-23T05:14:09.000Z",
+      "sender": "p08",
+      "text": "Breakfast tasted especially good after all that cheering."
+    }
+  ],
+  "run_10k_confirm": [
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=355; local_time=8/23/26, 5:40 PM IST",
+      "message_id": "c57a26de-7800-5334-a83d-49cfd16a80da",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2026-08-23T12:10:00.000Z",
+      "sender": "me",
+      "text": "First 10K done, chip result 42:30. Adi has the finish photo where neither of us knows where the camera is."
+    },
+    {
+      "path": "whatsapp/Rohan.txt",
+      "locator": "line=356; local_time=8/23/26, 5:41 PM IST",
+      "message_id": "a6ca952b-7be8-5481-98b5-6afdca4151ab",
+      "platform": "whatsapp",
+      "conversation": "Rohan",
+      "date_utc": "2026-08-23T12:11:23.000Z",
+      "sender": "p01",
+      "text": "finally an event where the timing was better than our Goa departure"
+    }
+  ],
+  "running_restart": [
+    {
+      "path": "whatsapp/Adi gym.txt",
+      "locator": "line=55; local_time=1/11/26, 6:00 PM IST",
+      "message_id": "2ca74d98-52ff-5c67-98d4-67ffd1632fc2",
+      "platform": "whatsapp",
+      "conversation": "Adi gym",
+      "date_utc": "2026-01-11T12:30:00.000Z",
+      "sender": "me",
+      "text": "Restarting with easy runs this January. I like being outside more than staring at the gym clock."
+    },
+    {
+      "path": "whatsapp/Adi gym.txt",
+      "locator": "line=56; local_time=1/11/26, 6:01 PM IST",
+      "message_id": "aa642a81-7887-56c2-b8db-99ab2df794bc",
+      "platform": "whatsapp",
+      "conversation": "Adi gym",
+      "date_utc": "2026-01-11T12:31:23.000Z",
+      "sender": "p08",
+      "text": "I'll join when our schedules line up; we can just enjoy the route."
+    },
+    {
+      "path": "whatsapp/Adi gym.txt",
+      "locator": "line=57; local_time=1/11/26, 6:02 PM IST",
+      "message_id": "b0725e39-f4bc-53fb-b4d1-beb51c300080",
+      "platform": "whatsapp",
+      "conversation": "Adi gym",
+      "date_utc": "2026-01-11T12:32:46.000Z",
+      "sender": "me",
+      "text": "Looking forward to having something in the week that isn't a screen."
+    },
+    {
+      "path": "whatsapp/Adi gym.txt",
+      "locator": "line=58; local_time=1/11/26, 6:04 PM IST",
+      "message_id": "cb6cd94a-2d0e-599a-8293-2ad8955441ce",
+      "platform": "whatsapp",
+      "conversation": "Adi gym",
+      "date_utc": "2026-01-11T12:34:09.000Z",
+      "sender": "p08",
+      "text": "And a conversation that isn't about merge conflicts."
+    }
+  ],
+  "rust_help": [
+    {
+      "path": "discord/rust_clinic.json",
+      "locator": "message_id=1282324561920000336",
+      "message_id": "b7b14900-0c78-51ce-8b40-5c5188742d19",
+      "platform": "discord",
+      "conversation": "Rust clinic",
+      "date_utc": "2024-09-08T13:00:00.000Z",
+      "sender": "me",
+      "text": "pocket-index stores borrowed slices from a buffer I throw away after reading each file. The compiler is correctly unhappy."
+    },
+    {
+      "path": "discord/rust_clinic.json",
+      "locator": "message_id=1282324910047232337",
+      "message_id": "5fccc9d8-01cc-563e-8795-6a410ce7e1c4",
+      "platform": "discord",
+      "conversation": "Rust clinic",
+      "date_utc": "2024-09-08T13:01:23.000Z",
+      "sender": "p12",
+      "text": "Make the index own the text it needs, or make the backing storage live as long as the index. Pick the simpler ownership model first."
+    },
+    {
+      "path": "discord/rust_clinic.json",
+      "locator": "message_id=1282325258174464338",
+      "message_id": "4507ae88-a768-5c1e-8419-29a8fa284a90",
+      "platform": "discord",
+      "conversation": "Rust clinic",
+      "date_utc": "2024-09-08T13:02:46.000Z",
+      "sender": "me",
+      "text": "Owning the strings makes the data flow much easier to explain for this version."
+    },
+    {
+      "path": "discord/rust_clinic.json",
+      "locator": "message_id=1282325606301696339",
+      "message_id": "b3ef6fbc-5457-5d48-be09-816ce114921b",
+      "platform": "discord",
+      "conversation": "Rust clinic",
+      "date_utc": "2024-09-08T13:04:09.000Z",
+      "sender": "p12",
+      "text": "Then measure before adding a more complicated lifetime structure."
+    }
+  ],
+  "rust_project": [
+    {
+      "path": "claude/conversations.json",
+      "locator": "conversation=54cb54c9-b855-5abe-85af-8902893cc11b; uuid=7773faf3-efba-58d6-8d5d-ce57d9596764",
+      "message_id": "7773faf3-efba-58d6-8d5d-ce57d9596764",
+      "platform": "claude",
+      "conversation": "Pocket-index design notes",
+      "date_utc": "2025-06-08T12:00:00.000Z",
+      "sender": "me",
+      "text": "pocket-index now indexes my markdown notes into SQLite. I want a small incremental scan, not to re-read every file whenever I search."
+    },
+    {
+      "path": "claude/conversations.json",
+      "locator": "conversation=54cb54c9-b855-5abe-85af-8902893cc11b; uuid=ca9723f7-5345-5535-b292-d19d515129e6",
+      "message_id": "ca9723f7-5345-5535-b292-d19d515129e6",
+      "platform": "claude",
+      "conversation": "Pocket-index design notes",
+      "date_utc": "2025-06-08T12:01:23.000Z",
+      "sender": "assistant",
+      "text": "Separate scanning from querying. Track a file's last indexed state and decide how you will notice changes, deletions and interrupted updates."
+    },
+    {
+      "path": "claude/conversations.json",
+      "locator": "conversation=54cb54c9-b855-5abe-85af-8902893cc11b; uuid=89a9a7d0-c58a-5881-b849-db94acfdba10",
+      "message_id": "89a9a7d0-c58a-5881-b849-db94acfdba10",
+      "platform": "claude",
+      "conversation": "Pocket-index design notes",
+      "date_utc": "2025-06-08T12:02:46.000Z",
+      "sender": "me",
+      "text": "I'll keep a content hash and test deletes explicitly. Modification times alone made one copied file look unchanged."
+    },
+    {
+      "path": "claude/conversations.json",
+      "locator": "conversation=54cb54c9-b855-5abe-85af-8902893cc11b; uuid=c049cfaf-a224-5259-a7d0-238cc4b17a05",
+      "message_id": "c049cfaf-a224-5259-a7d0-238cc4b17a05",
+      "platform": "claude",
+      "conversation": "Pocket-index design notes",
+      "date_utc": "2025-06-08T12:04:09.000Z",
+      "sender": "assistant",
+      "text": "Make the update transaction cover the file metadata and indexed content together, so a partial run does not leave those out of sync."
+    }
+  ],
+  "rust_release": [
+    {
+      "path": "twitter/data/tweets.js",
+      "locator": "tweet_id=2055981657093047041",
+      "message_id": "e667ef1c-24d9-5365-a835-8bddc8142cf5",
+      "platform": "twitter",
+      "conversation": "Pocket-index release",
+      "date_utc": "2026-05-17T12:00:00.000Z",
+      "sender": "me",
+      "text": "Released pocket-index v0.3 today: incremental markdown indexing with content hashes and deletion handling. Learned more from the interrupted-update fixture than from the happy-path demo."
+    },
+    {
+      "path": "twitter/data/tweets.js",
+      "locator": "tweet_id=2055982005220279042",
+      "message_id": "bc6c40da-42da-5c6c-84f0-346038175ab3",
+      "platform": "twitter",
+      "conversation": "Pocket-index release",
+      "date_utc": "2026-05-17T12:01:23.000Z",
+      "sender": "me",
+      "text": "This remains a small Rust side project. Sarthink has its own import pipeline; I haven't rewritten the whole second brain in Rust."
+    }
+  ],
+  "rust_start": [
+    {
+      "path": "twitter/data/tweets.js",
+      "locator": "tweet_id=1825170785694646461",
+      "message_id": "96085dbe-2210-581d-b237-7efad911b34d",
+      "platform": "twitter",
+      "conversation": "Learning Rust",
+      "date_utc": "2024-08-18T14:00:00.000Z",
+      "sender": "me",
+      "text": "Starting Rust with a tiny CLI called pocket-index. I want to search my own plain-text notes, and I'm currently learning why my borrowed string cannot outlive its buffer."
+    },
+    {
+      "path": "twitter/data/tweets.js",
+      "locator": "tweet_id=1825171133821878462",
+      "message_id": "402a63ea-2607-5001-96ff-0768b79adc8b",
+      "platform": "twitter",
+      "conversation": "Learning Rust",
+      "date_utc": "2024-08-18T14:01:23.000Z",
+      "sender": "me",
+      "text": "No grand rewrite announcement. First milestone is indexing ten files and explaining every ownership decision to myself."
+    }
+  ],
+  "senior_advice": [
+    {
+      "path": "discord/study_room.json",
+      "locator": "message_id=1238868217036800186",
+      "message_id": "093fb9e5-33ac-5f73-9b39-9682663f4cf1",
+      "platform": "discord",
+      "conversation": "Study room",
+      "date_utc": "2024-05-11T15:00:00.000Z",
+      "sender": "p06",
+      "text": "Pick two topics for tomorrow, write the first small task for each, and give yourself a stopping time tonight."
+    },
+    {
+      "path": "discord/study_room.json",
+      "locator": "message_id=1238868565164032187",
+      "message_id": "b8846986-5029-55f0-8aa5-26d577c3f249",
+      "platform": "discord",
+      "conversation": "Study room",
+      "date_utc": "2024-05-11T15:01:23.000Z",
+      "sender": "me",
+      "text": "I was treating every unfinished chapter as an emergency. Two topics feels possible."
+    },
+    {
+      "path": "discord/study_room.json",
+      "locator": "message_id=1238868913291264188",
+      "message_id": "f03760c7-f8fe-5d97-98c4-e7bb937674c2",
+      "platform": "discord",
+      "conversation": "Study room",
+      "date_utc": "2024-05-11T15:02:46.000Z",
+      "sender": "p06",
+      "text": "Keep a one-page error log instead of restarting the whole syllabus when a question goes wrong."
+    },
+    {
+      "path": "discord/study_room.json",
+      "locator": "message_id=1238869261418496189",
+      "message_id": "92183ae4-989c-505a-a7d6-e3d1cfeb9e07",
+      "platform": "discord",
+      "conversation": "Study room",
+      "date_utc": "2024-05-11T15:04:09.000Z",
+      "sender": "me",
+      "text": "I'll start with normalisation and transactions, then ask about the mistakes in the morning."
+    }
+  ],
+  "sleep_better": [
+    {
+      "path": "chatgpt/conversations.json",
+      "locator": "conversation=a2110b3f-77a1-5a9d-85ec-3b6bd4dc47e7; node=bcce5b3b-f302-5273-8b37-8ab2eb6e88e2",
+      "message_id": "bcce5b3b-f302-5273-8b37-8ab2eb6e88e2",
+      "platform": "chatgpt",
+      "conversation": "Revision without restarting",
+      "date_utc": "2026-02-03T15:10:00.000Z",
+      "sender": "me",
+      "text": "Since January I've usually stopped studying by 11 pm and slept around seven and a half hours. Arjun's two-topic plan and error log helped more than another timetable."
+    },
+    {
+      "path": "chatgpt/conversations.json",
+      "locator": "conversation=a2110b3f-77a1-5a9d-85ec-3b6bd4dc47e7; node=c76634c8-7169-5974-bd4c-c4e3a7bec5b5",
+      "message_id": "c76634c8-7169-5974-bd4c-c4e3a7bec5b5",
+      "platform": "chatgpt",
+      "conversation": "Revision without restarting",
+      "date_utc": "2026-02-03T15:11:23.000Z",
+      "sender": "assistant",
+      "text": "You described two concrete changes: a stopping time and a smaller revision scope. Which part still feels difficult on busy days?"
+    },
+    {
+      "path": "chatgpt/conversations.json",
+      "locator": "conversation=a2110b3f-77a1-5a9d-85ec-3b6bd4dc47e7; node=5a58dac6-d8ea-507c-a25c-7dcb4f552856",
+      "message_id": "5a58dac6-d8ea-507c-a25c-7dcb4f552856",
+      "platform": "chatgpt",
+      "conversation": "Revision without restarting",
+      "date_utc": "2026-02-03T15:12:46.000Z",
+      "sender": "me",
+      "text": "Starting the first problem. Once it's open, I usually manage. I don't want a plan that assumes I'll never have a bad evening."
+    },
+    {
+      "path": "chatgpt/conversations.json",
+      "locator": "conversation=a2110b3f-77a1-5a9d-85ec-3b6bd4dc47e7; node=1e486530-9964-5259-a227-50c576d9480d",
+      "message_id": "1e486530-9964-5259-a227-50c576d9480d",
+      "platform": "chatgpt",
+      "conversation": "Revision without restarting",
+      "date_utc": "2026-02-03T15:14:09.000Z",
+      "sender": "assistant",
+      "text": "Put one example beside tomorrow's two topics. On a difficult evening, reviewing that example can be the smallest useful start."
+    }
+  ],
+  "surgery_done": [
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=53; local_time=3/12/25, 4:45 PM IST",
+      "message_id": "1b34d415-285a-504c-a9bb-852cbacafc22",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2025-03-12T11:15:00.000Z",
+      "sender": "p14",
+      "text": "Anjali's knee surgery is over and the doctor said it went as planned. She is resting; let's keep the calls short today."
+    },
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=54; local_time=3/12/25, 4:46 PM IST",
+      "message_id": "126eedc7-6da8-5200-86e0-f02ab2ca5849",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2025-03-12T11:16:23.000Z",
+      "sender": "me",
+      "text": "I'm downstairs with the folder and snacks for Papa. I'll update the relatives after dinner."
+    },
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=55; local_time=3/12/25, 4:47 PM IST",
+      "message_id": "6d94243f-93dd-57fc-8c4f-d7e73b3a1018",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2025-03-12T11:17:46.000Z",
+      "sender": "p15",
+      "text": "Thank you. I'll bring the charger tomorrow."
+    },
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=56; local_time=3/12/25, 4:49 PM IST",
+      "message_id": "24e9d4ce-953d-57f2-a778-63954ce56ebf",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2025-03-12T11:19:09.000Z",
+      "sender": "p16",
+      "text": "Bhagwan ka shukar. Sab aaram kar lo ab."
+    }
+  ],
+  "surgery_leave": [
+    {
+      "path": "google/Takeout/Mail/All mail Including Spam and Trash.mbox",
+      "locator": "Message-ID=<5de067d0-3fbb-540e-afa8-03300b2e96a9@demo.sarthink.example>",
+      "message_id": "5de067d0-3fbb-540e-afa8-03300b2e96a9",
+      "platform": "gmail",
+      "conversation": "Leave request for March",
+      "date_utc": "2025-03-05T08:00:00.000Z",
+      "sender": "me",
+      "text": "Hi Nisha, I will be in Jaipur from 9–19 March for my mother's knee surgery on 12 March. Could you send me the notes after class? I have updated our shared revision plan."
+    },
+    {
+      "path": "google/Takeout/Mail/All mail Including Spam and Trash.mbox",
+      "locator": "Message-ID=<b11ba781-a371-563e-9fe3-f82b0de79490@demo.sarthink.example>",
+      "message_id": "b11ba781-a371-563e-9fe3-f82b0de79490",
+      "platform": "gmail",
+      "conversation": "Leave request for March",
+      "date_utc": "2025-03-05T08:01:23.000Z",
+      "sender": "p04",
+      "text": "I'll send the class notes each evening. Don't promise to finish the full assignment while you are managing hospital visits."
+    }
+  ],
+  "surgery_plan": [
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=49; local_time=3/4/25, 5:30 PM IST",
+      "message_id": "10c99a49-f029-5c73-a30e-dcbf3f51a681",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2025-03-04T12:00:00.000Z",
+      "sender": "p14",
+      "text": "Maa's knee surgery is scheduled for 12 March at Pink Cedar Hospital in Jaipur. Isha has the appointment folder."
+    },
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=50; local_time=3/4/25, 5:31 PM IST",
+      "message_id": "e3a3ca6f-cfad-579d-adad-d3321f203211",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2025-03-04T12:01:23.000Z",
+      "sender": "me",
+      "text": "I'll come home on 9 March and stay through 19 March. I can handle groceries and the paperwork."
+    },
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=51; local_time=3/4/25, 5:32 PM IST",
+      "message_id": "36bdac14-f314-516c-bef5-aaa8b4df8018",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2025-03-04T12:02:46.000Z",
+      "sender": "p13",
+      "text": "Bas classes ka arrangement kar lena. Isha has the appointment folder."
+    },
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=52; local_time=3/4/25, 5:34 PM IST",
+      "message_id": "54fc9fbc-38e5-5a00-9443-ab2e54e5facb",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2025-03-04T12:04:09.000Z",
+      "sender": "p15",
+      "text": "Folder ready. Aarav, please call before travelling, not from the wrong platform like Goa."
+    }
+  ],
+  "surgery_recovery": [
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=57; local_time=4/20/25, 5:45 PM IST",
+      "message_id": "042b447b-2621-52d0-916a-2e1fe4cba01c",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2025-04-20T12:15:00.000Z",
+      "sender": "p13",
+      "text": "Follow-up done. I am continuing the exercises the physiotherapist gave me; walking around the house feels easier now."
+    },
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=58; local_time=4/20/25, 5:46 PM IST",
+      "message_id": "fbd898d2-6167-5426-91de-573399d59496",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2025-04-20T12:16:23.000Z",
+      "sender": "me",
+      "text": "Glad the follow-up went well, Maa. I'll call after class so you don't have to repeat everything five times."
+    }
+  ],
+  "wedding_date": [
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=83; local_time=4/12/26, 5:35 PM IST",
+      "message_id": "b27766de-e271-53c2-bbc5-2b3d24aa7ab2",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2026-04-12T12:05:00.000Z",
+      "sender": "p15",
+      "text": "Wedding planning update: 18 December 2026 in Jaipur, at Gulmohar Courtyard. Nothing is happening this September."
+    },
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=84; local_time=4/12/26, 5:36 PM IST",
+      "message_id": "3b1305e7-b343-5a87-b426-f918174164e6",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2026-04-12T12:06:23.000Z",
+      "sender": "p14",
+      "text": "Keep the guest list in one document. We currently have 180 names to review, not a final headcount."
+    },
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=85; local_time=4/12/26, 5:37 PM IST",
+      "message_id": "ab3965f5-6fab-554e-82af-374c32e1ad51",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2026-04-12T12:07:46.000Z",
+      "sender": "me",
+      "text": "I'll do the invitation layout and collect everyone's corrections in one place."
+    },
+    {
+      "path": "whatsapp/Family.txt",
+      "locator": "line=86; local_time=4/12/26, 5:39 PM IST",
+      "message_id": "4f0275ae-9449-5dfc-b823-312e52cd4f41",
+      "platform": "whatsapp",
+      "conversation": "Family",
+      "date_utc": "2026-04-12T12:09:09.000Z",
+      "sender": "p13",
+      "text": "Aur invitation par date dobara check karna."
+    }
+  ],
+  "wedding_design": [
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1786280400000; sender=aarav.frames",
+      "message_id": "40eae873-ae48-5753-84c1-d909ac3b5baf",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2026-08-09T13:00:00.000Z",
+      "sender": "me",
+      "text": "Can you look at Isha's wedding invitation draft? 18 December 2026, Gulmohar Courtyard, Jaipur. I'm doing the layout."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1786280483000; sender=meera.sketches",
+      "message_id": "93dce8ba-b13e-597d-978e-ddfe8703503b",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2026-08-09T13:01:23.000Z",
+      "sender": "p02",
+      "text": "Yes. I'll comment on spacing and readability; keep the family details in your private file."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1786280566000; sender=aarav.frames",
+      "message_id": "90419d21-e9d4-5a37-9989-7bebce4914c9",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2026-08-09T13:02:46.000Z",
+      "sender": "me",
+      "text": "Dad has 180 names on the review list but we aren't printing a headcount anywhere."
+    },
+    {
+      "path": "instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json",
+      "locator": "timestamp_ms=1786280649000; sender=meera.sketches",
+      "message_id": "60d8aaf9-a6ca-5a5a-a42f-d01085c62c80",
+      "platform": "instagram",
+      "conversation": "Meera Shah",
+      "date_utc": "2026-08-09T13:04:09.000Z",
+      "sender": "p02",
+      "text": "Good. Date first, venue second, decoration after the useful information."
+    }
+  ]
+}

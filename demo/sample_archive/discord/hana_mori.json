@@ -1,0 +1,1222 @@
+{
+  "guild": {
+    "id": "0",
+    "name": "Direct Messages"
+  },
+  "channel": {
+    "id": "901234567890123459",
+    "type": "DirectTextChat",
+    "name": "hana-mori",
+    "topic": "Hana Mori"
+  },
+  "messages": [
+    {
+      "id": "1213392954064896086",
+      "type": "Default",
+      "timestamp": "2024-03-02T07:50:24.000+00:00",
+      "content": "Quick check on keyboard shortcut in the lab exercise: the handler runs twice after reopening.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1213393360912384087",
+      "type": "Reply",
+      "timestamp": "2024-03-02T07:52:01.000+00:00",
+      "content": "I checked the lab exercise; for keyboard shortcut, start by trying to remove the old listener when the view closes.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1213392954064896086",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1213393767759872088",
+      "type": "Reply",
+      "timestamp": "2024-03-02T07:53:38.000+00:00",
+      "content": "Back with the lab exercise result for keyboard shortcut: reopening the view leaves one handler.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1213393360912384087",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1213394174607360089",
+      "type": "Reply",
+      "timestamp": "2024-03-02T07:55:15.000+00:00",
+      "content": "event-count log makes sense now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1213393767759872088",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1285663471173632352",
+      "type": "Default",
+      "timestamp": "2024-09-17T18:07:38.000+00:00",
+      "content": "Sorry, saw this late; on settings form from the second attempt, the save button hides the error. 😭",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1285663878021120353",
+      "type": "Reply",
+      "timestamp": "2024-09-17T18:09:15.000+00:00",
+      "content": "On the second attempt, my suggestion for settings form is simple: put the validation message beside the field.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1285663471173632352",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1285664284868608354",
+      "type": "Reply",
+      "timestamp": "2024-09-17T18:10:52.000+00:00",
+      "content": "Okay, with the change to settings form in the second attempt, the invalid field is easy to find.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1285663878021120353",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1285664691716096355",
+      "type": "Reply",
+      "timestamp": "2024-09-17T18:12:29.000+00:00",
+      "content": "Please save the form screenshot alongside settings form in the second attempt.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1285664284868608354",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1295102072848384380",
+      "type": "Default",
+      "timestamp": "2024-10-13T19:13:16.000+00:00",
+      "content": "Tiny question about the empty-input case — with message sorter, two equal timestamps exchange places.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1295102479695872381",
+      "type": "Reply",
+      "timestamp": "2024-10-13T19:14:53.000+00:00",
+      "content": "My first thought for the empty-input case is to use the source ID as a stable tie-breaker around message sorter.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1295102072848384380",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1295102886543360382",
+      "type": "Reply",
+      "timestamp": "2024-10-13T19:16:30.000+00:00",
+      "content": "Tried that for message sorter in the empty-input case, and the equal-time rows keep their order.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1295102479695872381",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1295103293390848383",
+      "type": "Reply",
+      "timestamp": "2024-10-13T19:18:07.000+00:00",
+      "content": "keep the before-and-after output 👍",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1295102886543360382",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1376471188766720758",
+      "type": "Default",
+      "timestamp": "2025-05-26T08:05:05.000+00:00",
+      "content": "Nearly done with export archive for the keyboard-only pass, except the ZIP entries inherit the current time.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1376471595614208759",
+      "type": "Reply",
+      "timestamp": "2025-05-26T08:06:42.000+00:00",
+      "content": "For export archive in the keyboard-only pass, I would assign a fixed timestamp to each ZIP entry.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1376471188766720758",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1376472002461696760",
+      "type": "Reply",
+      "timestamp": "2025-05-26T08:08:19.000+00:00",
+      "content": "Okay, with the change to export archive in the keyboard-only pass, a repeat run produces the same ZIP bytes.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1376471595614208759",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1376472409309184761",
+      "type": "Reply",
+      "timestamp": "2025-05-26T08:09:56.000+00:00",
+      "content": "Keep the archive checksum for export archive from the keyboard-only pass; it will explain the change later. ✨",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1376472002461696760",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1397533968433152868",
+      "type": "Default",
+      "timestamp": "2025-07-23T11:01:03.000+00:00",
+      "content": "Nearly done with CSV import for the weekend build, except the first name has a strange extra character.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1397534375280640869",
+      "type": "Reply",
+      "timestamp": "2025-07-23T11:02:40.000+00:00",
+      "content": "My first thought for the weekend build is to check for a UTF-8 byte-order mark around CSV import.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1397533968433152868",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1397534782128128870",
+      "type": "Reply",
+      "timestamp": "2025-07-23T11:04:17.000+00:00",
+      "content": "Tried that for CSV import in the weekend build, and the first name now matches the header.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1397534375280640869",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1397535188975616871",
+      "type": "Reply",
+      "timestamp": "2025-07-23T11:05:54.000+00:00",
+      "content": "For the next pass at the weekend build, leave the tiny input fixture with CSV import.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1397534782128128870",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1430511595552769020",
+      "type": "Default",
+      "timestamp": "2025-10-22T11:02:22.000+00:00",
+      "content": "Would you have a minute for test runner in the second attempt, where the failure vanishes when cases run alone?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1430512002400257021",
+      "type": "Reply",
+      "timestamp": "2025-10-22T11:03:59.000+00:00",
+      "content": "Small experiment for the second attempt: reset shared state between cases when revisiting test runner.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1430511595552769020",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1430512409247745022",
+      "type": "Reply",
+      "timestamp": "2025-10-22T11:05:36.000+00:00",
+      "content": "Just compared test runner again in the second attempt; the case order no longer changes the result.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1430512002400257021",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1430512816095233023",
+      "type": "Reply",
+      "timestamp": "2025-10-22T11:07:13.000+00:00",
+      "content": "No need to reopen test runner in the second attempt tonight; just save the isolated reproduction.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1430512409247745022",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1452135451459585084",
+      "type": "Default",
+      "timestamp": "2025-12-21T03:07:51.000+00:00",
+      "content": "Revisited transaction example for the keyboard-only pass, and an interrupted update leaves half the rows.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1452135858307073085",
+      "type": "Reply",
+      "timestamp": "2025-12-21T03:09:28.000+00:00",
+      "content": "I checked the keyboard-only pass; for transaction example, start by trying to commit related changes together.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1452135451459585084",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1452136265154561086",
+      "type": "Reply",
+      "timestamp": "2025-12-21T03:11:05.000+00:00",
+      "content": "I see what you meant about transaction example in the keyboard-only pass — the interrupted run leaves the previous state intact.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1452135858307073085",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1452136672002049087",
+      "type": "Reply",
+      "timestamp": "2025-12-21T03:12:42.000+00:00",
+      "content": "failure-path fixture saved?",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1452136265154561086",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1473630915526657178",
+      "type": "Default",
+      "timestamp": "2026-02-18T10:43:09.000+00:00",
+      "content": "Quick check on read-only mode in the workshop example: the button still suggests editing is possible.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1473631322374145179",
+      "type": "Reply",
+      "timestamp": "2026-02-18T10:44:46.000+00:00",
+      "content": "About read-only mode from the workshop example — make the available action explicit, then send the result.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1473630915526657178",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1473631729221633180",
+      "type": "Reply",
+      "timestamp": "2026-02-18T10:46:23.000+00:00",
+      "content": "That helped with read-only mode from the workshop example: the read-only state explains its limit.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1473631322374145179",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1473632136069121181",
+      "type": "Reply",
+      "timestamp": "2026-02-18T10:48:00.000+00:00",
+      "content": "send the disabled-state note?",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1473631729221633180",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1501124037181441378",
+      "type": "Default",
+      "timestamp": "2026-05-05T07:31:00.000+00:00",
+      "content": "Back at the workshop example, trying to understand why, in text preview, an emoji shifts the highlight.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1501124444028929379",
+      "type": "Reply",
+      "timestamp": "2026-05-05T07:32:37.000+00:00",
+      "content": "On the workshop example, my suggestion for text preview is simple: check which string offsets the renderer expects. 😭",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1501124037181441378",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1501124850876417380",
+      "type": "Reply",
+      "timestamp": "2026-05-05T07:34:14.000+00:00",
+      "content": "Tried that for text preview in the workshop example, and the highlight covers the intended phrase.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1501124444028929379",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1501125257723905381",
+      "type": "Reply",
+      "timestamp": "2026-05-05T07:35:51.000+00:00",
+      "content": "Keep both the Unicode sample and the revised text preview from the workshop example together.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1501124850876417380",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1501238629761025382",
+      "type": "Default",
+      "timestamp": "2026-05-05T15:06:21.000+00:00",
+      "content": "",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [
+        {
+          "id": "1501238629761025383",
+          "fileName": "shared_frame.png",
+          "url": "https://media.example/shared_frame.png"
+        }
+      ],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1512136882782209451",
+      "type": "Default",
+      "timestamp": "2026-06-04T16:52:07.000+00:00",
+      "content": "Nearly done with date filter for the minimal reproduction, except midnight records land on the wrong day.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1512137289629697452",
+      "type": "Reply",
+      "timestamp": "2026-06-04T16:53:44.000+00:00",
+      "content": "My first thought for the minimal reproduction is to make the timezone conversion explicit around date filter. 🙌",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1512136882782209451",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1512137696477185453",
+      "type": "Reply",
+      "timestamp": "2026-06-04T16:55:21.000+00:00",
+      "content": "I see what you meant about date filter in the minimal reproduction — the midnight row stays in the intended day.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1512137289629697452",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1512138103324673454",
+      "type": "Reply",
+      "timestamp": "2026-06-04T16:56:58.000+00:00",
+      "content": "Please save the boundary-date fixture alongside date filter in the minimal reproduction.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1512137696477185453",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1515396863623169491",
+      "type": "Default",
+      "timestamp": "2026-06-13T16:46:07.000+00:00",
+      "content": "The bit I cannot settle in the shared fixture is loading indicator: an empty result looks like a running request.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1515397270470657492",
+      "type": "Reply",
+      "timestamp": "2026-06-13T16:47:44.000+00:00",
+      "content": "Before redoing loading indicator in the shared fixture, separate loading from successful emptiness.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515396863623169491",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1515397677318145493",
+      "type": "Reply",
+      "timestamp": "2026-06-13T16:49:21.000+00:00",
+      "content": "That helped with loading indicator from the shared fixture: the empty state has its own message.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515397270470657492",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1515398084165633494",
+      "type": "Reply",
+      "timestamp": "2026-06-13T16:50:58.000+00:00",
+      "content": "keep the state transition notes 👍",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515397677318145493",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1520484348854273549",
+      "type": "Default",
+      "timestamp": "2026-06-27T17:41:58.000+00:00",
+      "content": "The bit I cannot settle in the small demo is grouping function: similar names collapse into one row.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1520484755701761550",
+      "type": "Reply",
+      "timestamp": "2026-06-27T17:43:35.000+00:00",
+      "content": "I checked the small demo; for grouping function, start by trying to group by stable account IDs instead of display names. 🤔",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1520484348854273549",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1520485162549249551",
+      "type": "Reply",
+      "timestamp": "2026-06-27T17:45:12.000+00:00",
+      "content": "Okay, with the change to grouping function in the small demo, the two people stay separate.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1520484755701761550",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1520485569396737552",
+      "type": "Reply",
+      "timestamp": "2026-06-27T17:46:49.000+00:00",
+      "content": "For the next pass at the small demo, leave the same-name fixture with grouping function.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1520485162549249551",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1541101269811201761",
+      "type": "Default",
+      "timestamp": "2026-08-23T15:06:15.000+00:00",
+      "content": "I got stuck on cache example while looking at the empty-input case; old values outlive the refresh.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1541101676658689762",
+      "type": "Reply",
+      "timestamp": "2026-08-23T15:07:52.000+00:00",
+      "content": "Small experiment for the empty-input case: make the invalidation rule explicit when revisiting cache example.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1541101269811201761",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1541102083506177763",
+      "type": "Reply",
+      "timestamp": "2026-08-23T15:09:29.000+00:00",
+      "content": "Update on cache example in the empty-input case: the refresh replaces the stale entry.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1541101676658689762",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1541102490353665764",
+      "type": "Reply",
+      "timestamp": "2026-08-23T15:11:06.000+00:00",
+      "content": "cache trace makes sense now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1541102083506177763",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1543956387069953813",
+      "type": "Default",
+      "timestamp": "2026-08-31T12:11:28.000+00:00",
+      "content": "Would you have a minute for file picker in the weekend build, where a cancelled selection clears the old path?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1543956793917441814",
+      "type": "Reply",
+      "timestamp": "2026-08-31T12:13:05.000+00:00",
+      "content": "Small experiment for the weekend build: handle cancellation before replacing state when revisiting file picker.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543956387069953813",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1543957200764929815",
+      "type": "Reply",
+      "timestamp": "2026-08-31T12:14:42.000+00:00",
+      "content": "Tried that for file picker in the weekend build, and the previous selection survives cancellation.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543956793917441814",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1543957607612417816",
+      "type": "Reply",
+      "timestamp": "2026-08-31T12:16:19.000+00:00",
+      "content": "Please save the reproduction notes alongside file picker in the weekend build.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543957200764929815",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1547691242815489860",
+      "type": "Default",
+      "timestamp": "2026-09-10T19:32:27.000+00:00",
+      "content": "Revisited CSV import for the draft patch, and the first name has a strange extra character.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1547691649662977861",
+      "type": "Reply",
+      "timestamp": "2026-09-10T19:34:04.000+00:00",
+      "content": "For CSV import in the draft patch, I would check for a UTF-8 byte-order mark.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1547691242815489860",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1547692056510465862",
+      "type": "Reply",
+      "timestamp": "2026-09-10T19:35:41.000+00:00",
+      "content": "Update on CSV import in the draft patch: the first name now matches the header.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1547691649662977861",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1547692463357953863",
+      "type": "Reply",
+      "timestamp": "2026-09-10T19:37:18.000+00:00",
+      "content": "Please save the tiny input fixture alongside CSV import in the draft patch.",
+      "author": {
+        "id": "401234567890123428",
+        "name": "hana_renders",
+        "username": "hana_renders",
+        "nickname": "Hana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1547692056510465862",
+        "channelId": "901234567890123459",
+        "guildId": "0"
+      }
+    }
+  ],
+  "messageCount": 61
+}

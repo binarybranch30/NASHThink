@@ -1,0 +1,739 @@
+{
+  "people": [
+    {
+      "person_id": "p01",
+      "real_name": "Rohan Iyer",
+      "relationship": "best friend",
+      "voice": "dry food metaphors",
+      "aliases": {
+        "whatsapp": [
+          "Rohan"
+        ],
+        "instagram": [
+          "rohan.eats.code"
+        ],
+        "discord": [
+          {
+            "id": "401234567890123401",
+            "username": "r0hanx",
+            "display": "Rohan"
+          }
+        ],
+        "twitter": [
+          "@rohan_iyer_",
+          "1500000000000000101"
+        ],
+        "reddit": [
+          "u/sambar_overflow"
+        ],
+        "google": [
+          "rohan.iyer98@example.com"
+        ]
+      },
+      "link_evidence": [
+        "explicit: whatsapp / Rohan / 2025-02-02T12:00:00.000Z / whatsapp/Rohan.txt / line=134; local_time=2/2/25, 5:30 PM IST"
+      ]
+    },
+    {
+      "person_id": "p02",
+      "real_name": "Meera Shah",
+      "relationship": "design friend",
+      "voice": "precise visual language",
+      "aliases": {
+        "whatsapp": [
+          "Meera"
+        ],
+        "instagram": [
+          "meera.sketches"
+        ],
+        "discord": [
+          {
+            "id": "401234567890123402",
+            "username": "meeradraws",
+            "display": "Meera"
+          }
+        ],
+        "facebook": [
+          "Meera Shah"
+        ],
+        "google": [
+          "meera.shah@example.com"
+        ]
+      },
+      "link_evidence": [
+        "explicit plus shared poster dispute: discord / Meera Shah / 2025-03-10T11:00:00.000Z / discord/meera_shah.json / message_id=1348611342336000603",
+        "explicit plus shared poster dispute: instagram / Meera Shah / 2025-10-05T13:00:00.000Z / instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/meera_shah_100006/message_1.json / timestamp_ms=1759669200000; sender=meera.sketches",
+        "explicit plus shared poster dispute: whatsapp / Meera / 2026-01-09T13:30:00.000Z / whatsapp/Meera.txt / line=263; local_time=1/9/26, 7:00 PM IST"
+      ]
+    },
+    {
+      "person_id": "p03",
+      "real_name": "Kabir Rao",
+      "relationship": "hackathon teammate",
+      "voice": "terse checklists",
+      "aliases": {
+        "whatsapp": [
+          "Kabir Rao"
+        ],
+        "discord": [
+          {
+            "id": "401234567890123403",
+            "username": "kabirbuilds",
+            "display": "Kabir"
+          }
+        ],
+        "twitter": [
+          "@kabir_queues",
+          "1500000000000000103"
+        ],
+        "reddit": [
+          "u/queue_kabir"
+        ],
+        "google": [
+          "kabir.rao@example.com"
+        ]
+      },
+      "link_evidence": [
+        "explicit: discord / General / 2025-02-04T13:00:00.000Z / discord/general.json / message_id=1336320353894400565",
+        "explicit: google_chat / Sarthink build room / 2026-06-03T10:00:00.000Z / google/Takeout/Google Chat/Groups/Space 10007/messages.json / message_id=392fc73b-04db-5c7a-a6d6-4cece504bb4f"
+      ]
+    },
+    {
+      "person_id": "p04",
+      "real_name": "Nisha Verma",
+      "relationship": "flatmate",
+      "voice": "practical logistics",
+      "aliases": {
+        "whatsapp": [
+          "Nisha"
+        ],
+        "instagram": [
+          "nisha.onthebus"
+        ],
+        "discord": [
+          {
+            "id": "401234567890123404",
+            "username": "nishav",
+            "display": "Nisha"
+          }
+        ],
+        "facebook": [
+          "Nisha Verma"
+        ],
+        "google": [
+          "nisha.verma@example.com"
+        ]
+      },
+      "link_evidence": [
+        "explicit: whatsapp / Flatmates / 2025-04-04T14:20:00.000Z / whatsapp/Flatmates.txt / line=158; local_time=4/4/25, 7:50 PM IST",
+        "explicit: whatsapp / Flatmates / 2025-07-01T14:00:00.000Z / whatsapp/Flatmates.txt / line=186; local_time=7/1/25, 7:30 PM IST"
+      ]
+    },
+    {
+      "person_id": "p05",
+      "real_name": "Devika Sen",
+      "relationship": "photography mentor",
+      "voice": "patient and specific",
+      "aliases": {
+        "instagram": [
+          "devika.lightnotes"
+        ],
+        "reddit": [
+          "u/lightnotes_dev"
+        ],
+        "youtube": [
+          "devika.lightnotes"
+        ]
+      },
+      "link_evidence": [
+        "explicit: instagram / Devika Sen / 2024-07-07T14:00:00.000Z / instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/devika_sen_100002/message_1.json / timestamp_ms=1720360800000; sender=devika.lightnotes",
+        "explicit: youtube / Contact sheet walkthrough / 2024-07-08T11:05:00.000Z / google/Takeout/YouTube and YouTube Music/comments/comments.csv / row=2; comment_id=Uge303801eb86850398b7113eb0e56ab60"
+      ]
+    },
+    {
+      "person_id": "p06",
+      "real_name": "Arjun Menon",
+      "relationship": "college senior",
+      "voice": "calm short suggestions",
+      "aliases": {
+        "whatsapp": [
+          "Arjun senior"
+        ],
+        "discord": [
+          {
+            "id": "401234567890123406",
+            "username": "arjunm",
+            "display": "Arjun"
+          }
+        ]
+      },
+      "link_evidence": [
+        "shared two-topic/error-log advice: discord / Study room / 2024-05-11T15:00:00.000Z / discord/study_room.json / message_id=1238868217036800186",
+        "shared two-topic/error-log advice: whatsapp / Arjun senior / 2025-11-12T18:55:00.000Z / whatsapp/Arjun senior.txt / line=65; local_time=11/13/25, 12:25 AM IST"
+      ]
+    },
+    {
+      "person_id": "p07",
+      "real_name": "Sana Ali",
+      "relationship": "hackathon teammate",
+      "voice": "asks for reproducible evidence",
+      "aliases": {
+        "discord": [
+          {
+            "id": "401234567890123407",
+            "username": "sana_tests",
+            "display": "Sana"
+          }
+        ],
+        "google": [
+          "sana.ali@example.com"
+        ]
+      },
+      "link_evidence": [
+        "shared citation failure, fix and team role: discord / Hackathon 2026 / 2026-08-29T16:00:00.000Z / discord/hackathon_2026.json / message_id=1543289123635201797",
+        "shared citation failure, fix and team role: google_chat / Sarthink build room / 2026-08-31T09:00:00.000Z / google/Takeout/Google Chat/Groups/Space 10007/messages.json / message_id=2824a5c1-0593-512d-9b5b-2e8c8ccb3496",
+        "shared citation failure, fix and team role: google_chat / Sarthink build room / 2026-06-03T10:00:00.000Z / google/Takeout/Google Chat/Groups/Space 10007/messages.json / message_id=392fc73b-04db-5c7a-a6d6-4cece504bb4f"
+      ]
+    },
+    {
+      "person_id": "p08",
+      "real_name": "Aditya Kulkarni",
+      "relationship": "gym and running friend",
+      "voice": "upbeat and uncompetitive",
+      "aliases": {
+        "whatsapp": [
+          "Adi gym"
+        ],
+        "instagram": [
+          "adi.takes.the.stairs"
+        ]
+      },
+      "link_evidence": [
+        "shared gym break/running arc and name Adi: whatsapp / Adi gym / 2025-01-08T13:40:00.000Z / whatsapp/Adi gym.txt / line=1; local_time=1/8/25, 7:10 PM IST",
+        "shared gym break/running arc and name Adi: instagram / Aditya Kulkarni / 2025-05-18T11:00:00.000Z / instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/aditya_kulkarni_100000/message_1.json / timestamp_ms=1747566000000; sender=aarav.frames",
+        "shared gym break/running arc and name Adi: whatsapp / Adi gym / 2026-01-11T12:30:00.000Z / whatsapp/Adi gym.txt / line=55; local_time=1/11/26, 6:00 PM IST",
+        "shared gym break/running arc and name Adi: instagram / Aditya Kulkarni / 2026-08-23T05:10:00.000Z / instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/aditya_kulkarni_100000/message_1.json / timestamp_ms=1787461800000; sender=aarav.frames"
+      ]
+    },
+    {
+      "person_id": "p09",
+      "real_name": "Tara Bose",
+      "relationship": "dog rescue volunteer",
+      "voice": "warm concrete questions",
+      "aliases": {
+        "whatsapp": [
+          "Tara rescue"
+        ],
+        "instagram": [
+          "tara.pawsblr"
+        ]
+      },
+      "link_evidence": [
+        "explicit: instagram / Tara Bose / 2025-09-07T10:00:00.000Z / instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/tara_bose_100010/message_1.json / timestamp_ms=1757239200000; sender=tara.pawsblr",
+        "explicit: whatsapp / Tara rescue / 2025-09-14T10:00:00.000Z / whatsapp/Tara rescue.txt / line=1; local_time=9/14/25, 3:30 PM IST"
+      ]
+    },
+    {
+      "person_id": "p10",
+      "real_name": "Vikram Sethi",
+      "relationship": "former landlord",
+      "voice": "formal and brief",
+      "aliases": {
+        "whatsapp": [
+          "Vikram landlord"
+        ],
+        "google": [
+          "vikram.sethi@example.com"
+        ]
+      },
+      "link_evidence": [
+        "explicit: whatsapp / Vikram landlord / 2025-07-23T09:00:00.000Z / whatsapp/Vikram landlord.txt / line=73; local_time=7/23/25, 2:30 PM IST",
+        "explicit: gmail / Koramangala security deposit / 2025-07-22T08:30:00.000Z / google/Takeout/Mail/All mail Including Spam and Trash.mbox / Message-ID=<cb77069f-f780-572b-923c-de319cab6a9a@demo.sarthink.example>"
+      ]
+    },
+    {
+      "person_id": "p11",
+      "real_name": "Leela Nair",
+      "relationship": "photography friend",
+      "voice": "notices tiny details",
+      "aliases": {
+        "instagram": [
+          "leela.in.lines"
+        ],
+        "facebook": [
+          "Leela Nair"
+        ]
+      },
+      "link_evidence": [
+        "shared Two Monsoons diptych, red umbrella and print event: instagram / Leela Nair / 2025-08-10T11:00:00.000Z / instagram-aarav.frames.zip!/your_instagram_activity/messages/inbox/leela_nair_100005/message_1.json / timestamp_ms=1754823600000; sender=leela.in.lines",
+        "shared Two Monsoons diptych, red umbrella and print event: facebook / Community noticeboard / 2025-08-11T10:00:00.000Z / facebook-aaravmehta.zip!/your_activity_across_facebook/messages/inbox/community_noticeboard_100000/message_1.json / timestamp_ms=1754906400000; sender=Leela Nair"
+      ]
+    },
+    {
+      "person_id": "p12",
+      "real_name": "Omar Farooq",
+      "relationship": "Rust collaborator",
+      "voice": "kind technical precision",
+      "aliases": {
+        "discord": [
+          {
+            "id": "401234567890123412",
+            "username": "omar_borrows",
+            "display": "Omar"
+          }
+        ],
+        "twitter": [
+          "@omar_borrows",
+          "1500000000000000112"
+        ],
+        "reddit": [
+          "u/owned_by_omar"
+        ]
+      },
+      "link_evidence": [
+        "explicit: discord / Rust clinic / 2025-04-07T16:00:00.000Z / discord/rust_clinic.json / message_id=1358833700044800673",
+        "explicit: discord / Rust clinic / 2024-09-08T13:00:00.000Z / discord/rust_clinic.json / message_id=1282324561920000336"
+      ]
+    },
+    {
+      "person_id": "p13",
+      "real_name": "Anjali Mehta",
+      "relationship": "mother",
+      "voice": "gentle reminders",
+      "aliases": {
+        "whatsapp": [
+          "Maa"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p14",
+      "real_name": "Sanjay Mehta",
+      "relationship": "father",
+      "voice": "measured practical questions",
+      "aliases": {
+        "whatsapp": [
+          "Papa"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p15",
+      "real_name": "Isha Mehta",
+      "relationship": "sister",
+      "voice": "affectionate teasing",
+      "aliases": {
+        "whatsapp": [
+          "Isha didi"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p16",
+      "real_name": "Savitri Mehta",
+      "relationship": "grandmother",
+      "voice": "short blessings and family updates",
+      "aliases": {
+        "whatsapp": [
+          "Dadi"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p17",
+      "real_name": "Manu Joshi",
+      "relationship": "classmate",
+      "voice": "lowercase and impatient with printers",
+      "aliases": {
+        "whatsapp": [
+          "Manu"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p18",
+      "real_name": "Priya Thomas",
+      "relationship": "classmate",
+      "voice": "organised and courteous",
+      "aliases": {
+        "whatsapp": [
+          "Priya class"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p19",
+      "real_name": "Suresh Yadav",
+      "relationship": "lab partner",
+      "voice": "playful debugging analogies",
+      "aliases": {
+        "whatsapp": [
+          "Suresh lab"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p20",
+      "real_name": "Rohan Kapoor",
+      "relationship": "cricket friend; NOT Rohan Iyer",
+      "voice": "cricket references",
+      "aliases": {
+        "whatsapp": [
+          "Rohan K cricket"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p21",
+      "real_name": "Kavya Nair",
+      "relationship": "photo walk friend",
+      "voice": "enthusiastic questions",
+      "aliases": {
+        "instagram": [
+          "kavya.walks"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p22",
+      "real_name": "Siddharth Das",
+      "relationship": "photography mutual",
+      "voice": "understated critique",
+      "aliases": {
+        "instagram": [
+          "sid.frames.blr"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p23",
+      "real_name": "Ananya Roy",
+      "relationship": "illustration mutual",
+      "voice": "colour and texture vocabulary",
+      "aliases": {
+        "instagram": [
+          "ananya.inklines"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p24",
+      "real_name": "Ishan Bose",
+      "relationship": "campus photographer",
+      "voice": "quick casual updates",
+      "aliases": {
+        "instagram": [
+          "ishan.at.f4"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p25",
+      "real_name": "Pranav Kale",
+      "relationship": "Discord regular",
+      "voice": "puns with useful follow-through",
+      "aliases": {
+        "discord": [
+          {
+            "id": "401234567890123425",
+            "username": "pixeltea",
+            "display": "Pranav"
+          }
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p26",
+      "real_name": "Noor Qureshi",
+      "relationship": "accessibility contributor",
+      "voice": "checks keyboard and screen-reader paths",
+      "aliases": {
+        "discord": [
+          {
+            "id": "401234567890123426",
+            "username": "noor_a11y",
+            "display": "Noor"
+          }
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p27",
+      "real_name": "Jules Martin",
+      "relationship": "open-source contributor",
+      "voice": "concise English, no Hinglish",
+      "aliases": {
+        "discord": [
+          {
+            "id": "401234567890123427",
+            "username": "julespatch",
+            "display": "Jules"
+          }
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p28",
+      "real_name": "Hana Mori",
+      "relationship": "game developer",
+      "voice": "curious English, no Hinglish",
+      "aliases": {
+        "discord": [
+          {
+            "id": "401234567890123428",
+            "username": "hana_renders",
+            "display": "Hana"
+          }
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p29",
+      "real_name": "Kabir Sethi",
+      "relationship": "Discord member; NOT Kabir Rao",
+      "voice": "audio projects, not hackathons",
+      "aliases": {
+        "discord": [
+          {
+            "id": "401234567890123429",
+            "username": "kabir_s",
+            "display": "Kabir"
+          }
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p30",
+      "real_name": "Elise Turner",
+      "relationship": "photography mutual",
+      "voice": "thoughtful English, no Hinglish",
+      "aliases": {
+        "reddit": [
+          "u/elise_contactsheet"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p31",
+      "real_name": "Naveen Bhat",
+      "relationship": "Bengaluru mutual",
+      "voice": "specific route observations",
+      "aliases": {
+        "reddit": [
+          "u/busstop_naveen"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p32",
+      "real_name": "Lucas Meyer",
+      "relationship": "programming mutual",
+      "voice": "direct English, no Hinglish",
+      "aliases": {
+        "reddit": [
+          "u/small_safe_steps"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p33",
+      "real_name": "Paolo Ricci",
+      "relationship": "developer mutual",
+      "voice": "wry English, no Hinglish",
+      "aliases": {
+        "twitter": [
+          "@paolo_ships",
+          "1500000000000000133"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p34",
+      "real_name": "Aditi Sood",
+      "relationship": "design mutual",
+      "voice": "clear questions about usability",
+      "aliases": {
+        "twitter": [
+          "@aditi_draws_ui",
+          "1500000000000000134"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p35",
+      "real_name": "Wei Lin",
+      "relationship": "Rust mutual",
+      "voice": "precise English, no Hinglish",
+      "aliases": {
+        "twitter": [
+          "@wei_owns_values",
+          "1500000000000000135"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p36",
+      "real_name": "Elena Cruz",
+      "relationship": "indie developer",
+      "voice": "encouraging English, no Hinglish",
+      "aliases": {
+        "twitter": [
+          "@elena_makes",
+          "1500000000000000136"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p37",
+      "real_name": "Rita D'Souza",
+      "relationship": "community organiser",
+      "voice": "friendly complete sentences",
+      "aliases": {
+        "facebook": [
+          "Rita D'Souza"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p38",
+      "real_name": "Harish Jain",
+      "relationship": "Jaipur neighbour",
+      "voice": "local history anecdotes",
+      "aliases": {
+        "facebook": [
+          "Harish Jain"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p39",
+      "real_name": "Ananya Desai",
+      "relationship": "Nimbus Labs recruiter",
+      "voice": "professional and explicit",
+      "aliases": {
+        "google": [
+          "ananya.desai@nimbus-labs.example"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    },
+    {
+      "person_id": "p40",
+      "real_name": "Mira Sinha",
+      "relationship": "Kiteleaf recruiter",
+      "voice": "courteous formal updates",
+      "aliases": {
+        "google": [
+          "mira.sinha@kiteleaf.example"
+        ]
+      },
+      "link_evidence": [
+        "Single-platform contact; no cross-platform merge is expected."
+      ]
+    }
+  ],
+  "do_not_merge": [
+    {
+      "person_ids": [
+        "p01",
+        "p20"
+      ],
+      "reason": "Rohan Iyer and Rohan Kapoor explicitly identify as different people",
+      "evidence_keys": [
+        "identity_rohan",
+        "decoy_rohan"
+      ]
+    },
+    {
+      "person_ids": [
+        "p03",
+        "p29"
+      ],
+      "reason": "Kabir Rao builds Sarthink; Kabir Sethi works on audio plugins",
+      "evidence_keys": [
+        "identity_kabir"
+      ]
+    }
+  ],
+  "purpose": "Ground truth only. Current Sarthink unifies the archive owner, not other contacts."
+}

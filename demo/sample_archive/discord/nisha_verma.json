@@ -1,0 +1,2243 @@
+{
+  "guild": {
+    "id": "0",
+    "name": "Direct Messages"
+  },
+  "channel": {
+    "id": "901234567890123464",
+    "type": "DirectTextChat",
+    "name": "nisha-verma",
+    "topic": "Nisha Verma"
+  },
+  "messages": [
+    {
+      "id": "1193870645788672004",
+      "type": "Default",
+      "timestamp": "2024-01-08T10:55:43.000+00:00",
+      "content": "Sorry, saw this late; on spare-key plan from the shared flat, the labelled envelope is in the wrong drawer.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1193871052636160005",
+      "type": "Reply",
+      "timestamp": "2024-01-08T10:57:20.000+00:00",
+      "content": "Looking at the shared flat, could you agree on one accessible place together for spare-key plan?",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1193870645788672004",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1193871459483648006",
+      "type": "Reply",
+      "timestamp": "2024-01-08T10:58:57.000+00:00",
+      "content": "Finished checking spare-key plan in the shared flat and, yes, everyone knows where the envelope is.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1193871052636160005",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1193871866331136007",
+      "type": "Reply",
+      "timestamp": "2024-01-08T11:00:34.000+00:00",
+      "content": "send the location note?",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1193871459483648006",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1193995325669376012",
+      "type": "Default",
+      "timestamp": "2024-01-08T19:11:09.000+00:00",
+      "content": "thinking of making rajma at home in the evening",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1193995732516864013",
+      "type": "Reply",
+      "timestamp": "2024-01-08T19:12:46.000+00:00",
+      "content": "I can bring the missing things for rajma after passing the corner tea stall",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1193995325669376012",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1193996139364352014",
+      "type": "Reply",
+      "timestamp": "2024-01-08T19:14:23.000+00:00",
+      "content": "I will check the cupboard before you buy anything for rajma",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1193995732516864013",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1193996546211840015",
+      "type": "Reply",
+      "timestamp": "2024-01-08T19:16:00.000+00:00",
+      "content": "yep, rajma",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1193996139364352014",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1202875560624128041",
+      "type": "Default",
+      "timestamp": "2024-02-02T07:18:02.000+00:00",
+      "content": "the corner with the pink paper bag is finally tidy ✅",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1202875967471616042",
+      "type": "Reply",
+      "timestamp": "2024-02-02T07:19:39.000+00:00",
+      "content": "take a photo of the pink paper bag before the desk returns to normal chaos",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1202875560624128041",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1202876374319104043",
+      "type": "Reply",
+      "timestamp": "2024-02-02T07:21:16.000+00:00",
+      "content": "photo taken, evidence of the organised pink paper bag now exists",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1202875967471616042",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1202876781166592044",
+      "type": "Reply",
+      "timestamp": "2024-02-02T07:22:53.000+00:00",
+      "content": "save it next to the marked-up copy, both are rare completed tasks",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1202876374319104043",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1205160428699648053",
+      "type": "Default",
+      "timestamp": "2024-02-08T14:37:17.000+00:00",
+      "content": "Would you have a minute for box list in the Sunday check, where the kitchen items have vague labels?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1205160835547136054",
+      "type": "Reply",
+      "timestamp": "2024-02-08T14:38:54.000+00:00",
+      "content": "Can we write what is inside on two visible sides for box list in the Sunday check and see what actually changes?",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1205160428699648053",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1205161242394624055",
+      "type": "Reply",
+      "timestamp": "2024-02-08T14:40:31.000+00:00",
+      "content": "The revised box list for the Sunday check makes more sense — the right box is easy to spot.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1205160835547136054",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1205161649242112056",
+      "type": "Reply",
+      "timestamp": "2024-02-08T14:42:08.000+00:00",
+      "content": "The box inventory from the Sunday check sounds worth keeping with box list.",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1205161242394624055",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1206459551449088061",
+      "type": "Default",
+      "timestamp": "2024-02-12T04:39:32.000+00:00",
+      "content": "🫠🙌",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1218978617753600122",
+      "type": "Default",
+      "timestamp": "2024-03-17T17:45:50.000+00:00",
+      "content": "Back at the weekend tidy-up, trying to understand why, in spare-key plan, the labelled envelope is in the wrong drawer.",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1218979024601088123",
+      "type": "Reply",
+      "timestamp": "2024-03-17T17:47:27.000+00:00",
+      "content": "For the spare-key plan question from the weekend tidy-up, agree on one accessible place together and compare the two versions.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1218978617753600122",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1218979431448576124",
+      "type": "Reply",
+      "timestamp": "2024-03-17T17:49:04.000+00:00",
+      "content": "The revised spare-key plan for the weekend tidy-up makes more sense — everyone knows where the envelope is.",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1218979024601088123",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1218979838296064125",
+      "type": "Reply",
+      "timestamp": "2024-03-17T17:50:41.000+00:00",
+      "content": "location note makes sense now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1218979431448576124",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1221317575573504130",
+      "type": "Default",
+      "timestamp": "2024-03-24T04:40:01.000+00:00",
+      "content": "the corner with the navy pencil case is finally tidy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1221317982420992131",
+      "type": "Reply",
+      "timestamp": "2024-03-24T04:41:38.000+00:00",
+      "content": "take a photo of the navy pencil case before the desk returns to normal chaos",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1221317575573504130",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1221318389268480132",
+      "type": "Reply",
+      "timestamp": "2024-03-24T04:43:15.000+00:00",
+      "content": "photo taken, evidence of the organised navy pencil case now exists",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1221317982420992131",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1221318796115968133",
+      "type": "Reply",
+      "timestamp": "2024-03-24T04:44:52.000+00:00",
+      "content": "navy, noted 👍",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1221318389268480132",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1222213499879424134",
+      "type": "Default",
+      "timestamp": "2024-03-26T16:00:06.000+00:00",
+      "content": "thinking of making thepla at home before lunch",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1222213906726912135",
+      "type": "Reply",
+      "timestamp": "2024-03-26T16:01:43.000+00:00",
+      "content": "I can bring the missing things for thepla after passing the little park gate",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1222213499879424134",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1222214313574400136",
+      "type": "Reply",
+      "timestamp": "2024-03-26T16:03:20.000+00:00",
+      "content": "I will check the cupboard before you buy anything for thepla",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1222213906726912135",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1222214720421888137",
+      "type": "Reply",
+      "timestamp": "2024-03-26T16:04:57.000+00:00",
+      "content": "send the list before I reach the little park gate, my memory is not a shopping app",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1222214313574400136",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1231286639263744170",
+      "type": "Default",
+      "timestamp": "2024-04-20T16:53:31.000+00:00",
+      "content": "thinking of making uttapam at home after class",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1231287046111232171",
+      "type": "Reply",
+      "timestamp": "2024-04-20T16:55:08.000+00:00",
+      "content": "I can bring the missing things for uttapam after passing the canteen entrance",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1231286639263744170",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1231287452958720172",
+      "type": "Reply",
+      "timestamp": "2024-04-20T16:56:45.000+00:00",
+      "content": "I will check the cupboard before you buy anything for uttapam",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1231287046111232171",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1231287859806208173",
+      "type": "Reply",
+      "timestamp": "2024-04-20T16:58:22.000+00:00",
+      "content": "send the list before I reach the canteen entrance, my memory is not a shopping app",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1231287452958720172",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1248313273745408194",
+      "type": "Default",
+      "timestamp": "2024-06-06T16:31:17.000+00:00",
+      "content": "the corner with the purple lanyard is finally tidy",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1248313680592896195",
+      "type": "Reply",
+      "timestamp": "2024-06-06T16:32:54.000+00:00",
+      "content": "take a photo of the purple lanyard before the desk returns to normal chaos",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1248313273745408194",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1248314087440384196",
+      "type": "Reply",
+      "timestamp": "2024-06-06T16:34:31.000+00:00",
+      "content": "photo taken, evidence of the organised purple lanyard now exists",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1248313680592896195",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1248314494287872197",
+      "type": "Reply",
+      "timestamp": "2024-06-06T16:36:08.000+00:00",
+      "content": "yep, lanyard 😂",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1248314087440384196",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1251576341594112210",
+      "type": "Default",
+      "timestamp": "2024-06-15T16:37:33.000+00:00",
+      "content": "the corner with the navy cap is finally tidy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1251576748441600211",
+      "type": "Reply",
+      "timestamp": "2024-06-15T16:39:10.000+00:00",
+      "content": "take a photo of the navy cap before the desk returns to normal chaos",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1251576341594112210",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1251577155289088212",
+      "type": "Reply",
+      "timestamp": "2024-06-15T16:40:47.000+00:00",
+      "content": "photo taken, evidence of the organised navy cap now exists",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1251576748441600211",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1251577562136576213",
+      "type": "Reply",
+      "timestamp": "2024-06-15T16:42:24.000+00:00",
+      "content": "save it next to the final shortlist, both are rare completed tasks",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1251577155289088212",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1259194091044864230",
+      "type": "Default",
+      "timestamp": "2024-07-06T17:07:46.000+00:00",
+      "content": "the corner with the teal book is finally tidy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1259194497892352231",
+      "type": "Reply",
+      "timestamp": "2024-07-06T17:09:23.000+00:00",
+      "content": "take a photo of the teal book before the desk returns to normal chaos",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1259194091044864230",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1259194904739840232",
+      "type": "Reply",
+      "timestamp": "2024-07-06T17:11:00.000+00:00",
+      "content": "photo taken, evidence of the organised teal book now exists",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1259194497892352231",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1259195311587328233",
+      "type": "Reply",
+      "timestamp": "2024-07-06T17:12:37.000+00:00",
+      "content": "teal, noted 👍",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1259194904739840232",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1261701752160256242",
+      "type": "Default",
+      "timestamp": "2024-07-13T15:12:19.000+00:00",
+      "content": "who left the pink charging cable beside the kitchen list?",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1261702159007744243",
+      "type": "Reply",
+      "timestamp": "2024-07-13T15:13:56.000+00:00",
+      "content": "mine, I will move the pink charging cable after class",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1261701752160256242",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1261702565855232244",
+      "type": "Reply",
+      "timestamp": "2024-07-13T15:15:33.000+00:00",
+      "content": "thanks, I almost put the pink charging cable in the wrong cupboard",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1261702159007744243",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1261702972702720245",
+      "type": "Reply",
+      "timestamp": "2024-07-13T15:17:10.000+00:00",
+      "content": "got it — after class",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1261702565855232244",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1297253729828864392",
+      "type": "Default",
+      "timestamp": "2024-10-19T17:43:11.000+00:00",
+      "content": "yaar, who left the navy sketchbook beside the kitchen list?",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1297254136676352393",
+      "type": "Reply",
+      "timestamp": "2024-10-19T17:44:48.000+00:00",
+      "content": "haan, mine, I will move the navy sketchbook during the long break",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1297253729828864392",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1297254543523840394",
+      "type": "Reply",
+      "timestamp": "2024-10-19T17:46:25.000+00:00",
+      "content": "achha, thanks, I almost put the navy sketchbook in the wrong cupboard",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1297254136676352393",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1297254950371328395",
+      "type": "Reply",
+      "timestamp": "2024-10-19T17:48:02.000+00:00",
+      "content": "theek h, please leave the navy sketchbook by the door so I remember it",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1297254543523840394",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1314325004288000445",
+      "type": "Default",
+      "timestamp": "2024-12-05T20:18:20.000+00:00",
+      "content": "the cupboard list wala box list samajh nahi aa raha: the kitchen items have vague labels",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1314325411135488446",
+      "type": "Reply",
+      "timestamp": "2024-12-05T20:19:57.000+00:00",
+      "content": "haan the cupboard list wala box list dekha; write what is inside on two visible sides, shayad clear ho ✅",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1314325004288000445",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1314325817982976447",
+      "type": "Reply",
+      "timestamp": "2024-12-05T20:21:34.000+00:00",
+      "content": "sahi bola tha, the cupboard list mein box list ke baad the right box is easy to spot",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1314325411135488446",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1314326224830464448",
+      "type": "Reply",
+      "timestamp": "2024-12-05T20:23:11.000+00:00",
+      "content": "box inventory saved?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1314325817982976447",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1324734331486208517",
+      "type": "Default",
+      "timestamp": "2025-01-03T13:41:17.000+00:00",
+      "content": "Revisited spare-key plan for the desk area, and the labelled envelope is in the wrong drawer.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1324734738333696518",
+      "type": "Reply",
+      "timestamp": "2025-01-03T13:42:54.000+00:00",
+      "content": "Small experiment for the desk area: agree on one accessible place together when revisiting spare-key plan.",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1324734331486208517",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1324735145181184519",
+      "type": "Reply",
+      "timestamp": "2025-01-03T13:44:31.000+00:00",
+      "content": "The difference in the desk area is visible now; for spare-key plan, everyone knows where the envelope is.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1324734738333696518",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1324735552028672520",
+      "type": "Reply",
+      "timestamp": "2025-01-03T13:46:08.000+00:00",
+      "content": "location note makes sense now",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1324735145181184519",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1327888062218240521",
+      "type": "Default",
+      "timestamp": "2025-01-12T06:33:05.000+00:00",
+      "content": "thinking of making samosa at home at the weekend",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1327888469065728522",
+      "type": "Reply",
+      "timestamp": "2025-01-12T06:34:42.000+00:00",
+      "content": "I can bring the missing things for samosa after passing the library steps",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1327888062218240521",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1327888875913216523",
+      "type": "Reply",
+      "timestamp": "2025-01-12T06:36:19.000+00:00",
+      "content": "I will check the cupboard before you buy anything for samosa",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1327888469065728522",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1327889282760704524",
+      "type": "Reply",
+      "timestamp": "2025-01-12T06:37:56.000+00:00",
+      "content": "send the list before I reach the library steps, my memory is not a shopping app",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1327888875913216523",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1350808742395904619",
+      "type": "Default",
+      "timestamp": "2025-03-16T12:31:41.000+00:00",
+      "content": "suno, who left the navy folder beside the kitchen list?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1350809149243392620",
+      "type": "Reply",
+      "timestamp": "2025-03-16T12:33:18.000+00:00",
+      "content": "haan dekha, mine, I will move the navy folder after the lab",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1350808742395904619",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1350809556090880621",
+      "type": "Reply",
+      "timestamp": "2025-03-16T12:34:55.000+00:00",
+      "content": "samajh gaya, thanks, I almost put the navy folder in the wrong cupboard",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1350809149243392620",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1350809962938368622",
+      "type": "Reply",
+      "timestamp": "2025-03-16T12:36:32.000+00:00",
+      "content": "done hai, yep, navy",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1350809556090880621",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1370355474104320733",
+      "type": "Default",
+      "timestamp": "2025-05-09T11:03:25.000+00:00",
+      "content": "who left the white lanyard beside the kitchen list?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1370355880951808734",
+      "type": "Reply",
+      "timestamp": "2025-05-09T11:05:02.000+00:00",
+      "content": "mine, I will move the white lanyard before lunch",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1370355474104320733",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1370356287799296735",
+      "type": "Reply",
+      "timestamp": "2025-05-09T11:06:39.000+00:00",
+      "content": "thanks, I almost put the white lanyard in the wrong cupboard",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1370355880951808734",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1370356694646784736",
+      "type": "Reply",
+      "timestamp": "2025-05-09T11:08:16.000+00:00",
+      "content": "right, before lunch 😅",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1370356287799296735",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1381129621864448775",
+      "type": "Default",
+      "timestamp": "2025-06-08T04:36:02.000+00:00",
+      "content": "thinking of making bhel at home during the long break",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1381130028711936776",
+      "type": "Reply",
+      "timestamp": "2025-06-08T04:37:39.000+00:00",
+      "content": "I can bring the missing things for bhel after passing the noticeboard",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1381129621864448775",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1381130435559424777",
+      "type": "Reply",
+      "timestamp": "2025-06-08T04:39:16.000+00:00",
+      "content": "I will check the cupboard before you buy anything for bhel",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1381130028711936776",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1381130842406912778",
+      "type": "Reply",
+      "timestamp": "2025-06-08T04:40:53.000+00:00",
+      "content": "bhel, noted 👍",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1381130435559424777",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1418665727623168972",
+      "type": "Default",
+      "timestamp": "2025-09-19T18:31:07.000+00:00",
+      "content": "who left the grey scarf beside the kitchen list?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1418666134470656973",
+      "type": "Reply",
+      "timestamp": "2025-09-19T18:32:44.000+00:00",
+      "content": "mine, I will move the grey scarf in the evening",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1418665727623168972",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1418666541318144974",
+      "type": "Reply",
+      "timestamp": "2025-09-19T18:34:21.000+00:00",
+      "content": "thanks, I almost put the grey scarf in the wrong cupboard",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1418666134470656973",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1418666948165632975",
+      "type": "Reply",
+      "timestamp": "2025-09-19T18:35:58.000+00:00",
+      "content": "please leave the grey scarf by the door so I remember it",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1418666541318144974",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1419184055517184976",
+      "type": "Default",
+      "timestamp": "2025-09-21T04:50:46.000+00:00",
+      "content": "I got stuck on balcony plant list while looking at the shared cupboard; two pots have the same label.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1419184462364672977",
+      "type": "Reply",
+      "timestamp": "2025-09-21T04:52:23.000+00:00",
+      "content": "Looking at the shared cupboard, could you add the pot colour beside each name for balcony plant list?",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1419184055517184976",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1419184869212160978",
+      "type": "Reply",
+      "timestamp": "2025-09-21T04:54:00.000+00:00",
+      "content": "The revised balcony plant list for the shared cupboard makes more sense — the two pots are distinguishable. 📌",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1419184462364672977",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1419185276059648979",
+      "type": "Reply",
+      "timestamp": "2025-09-21T04:55:37.000+00:00",
+      "content": "Nice, put that pot photograph beside the balcony plant list notes for the shared cupboard.",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1419184869212160978",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1423259216117760984",
+      "type": "Default",
+      "timestamp": "2025-10-02T10:44:00.000+00:00",
+      "content": "thinking of making rajma at home at the weekend",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1423259622965248985",
+      "type": "Reply",
+      "timestamp": "2025-10-02T10:45:37.000+00:00",
+      "content": "I can bring the missing things for rajma after passing the back courtyard",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1423259216117760984",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1423260029812736986",
+      "type": "Reply",
+      "timestamp": "2025-10-02T10:47:14.000+00:00",
+      "content": "I will check the cupboard before you buy anything for rajma",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1423259622965248985",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1423260436660224987",
+      "type": "Reply",
+      "timestamp": "2025-10-02T10:48:51.000+00:00",
+      "content": "rajma, noted 👍",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1423260029812736986",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1445796104896513060",
+      "type": "Default",
+      "timestamp": "2025-12-03T15:17:33.000+00:00",
+      "content": "Back at the cupboard list, trying to understand why, in box list, the kitchen items have vague labels.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1445796511744001061",
+      "type": "Reply",
+      "timestamp": "2025-12-03T15:19:10.000+00:00",
+      "content": "Can we write what is inside on two visible sides for box list in the cupboard list and see what actually changes? 🙂",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1445796104896513060",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1445796918591489062",
+      "type": "Reply",
+      "timestamp": "2025-12-03T15:20:47.000+00:00",
+      "content": "Okay, with the change to box list in the cupboard list, the right box is easy to spot. 👀",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1445796511744001061",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1445797325438977063",
+      "type": "Reply",
+      "timestamp": "2025-12-03T15:22:24.000+00:00",
+      "content": "box inventory saved?",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1445796918591489062",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1459515778138113104",
+      "type": "Default",
+      "timestamp": "2026-01-10T11:54:38.000+00:00",
+      "content": "suno, thinking of making idli at home once the rain stops",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1459516184985601105",
+      "type": "Reply",
+      "timestamp": "2026-01-10T11:56:15.000+00:00",
+      "content": "haan dekha, I can bring the missing things for idli after passing the market arch",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1459515778138113104",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1459516591833089106",
+      "type": "Reply",
+      "timestamp": "2026-01-10T11:57:52.000+00:00",
+      "content": "samajh gaya, I will check the cupboard before you buy anything for idli",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1459516184985601105",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1459516998680577107",
+      "type": "Reply",
+      "timestamp": "2026-01-10T11:59:29.000+00:00",
+      "content": "done hai, send the list before I reach the market arch, my memory is not a shopping app",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1459516591833089106",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1464209351114753133",
+      "type": "Default",
+      "timestamp": "2026-01-23T10:45:13.000+00:00",
+      "content": "thinking of making lemon rice at home after class",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1464209757962241134",
+      "type": "Reply",
+      "timestamp": "2026-01-23T10:46:50.000+00:00",
+      "content": "I can bring the missing things for lemon rice after passing the common-room door",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1464209351114753133",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1464210164809729135",
+      "type": "Reply",
+      "timestamp": "2026-01-23T10:48:27.000+00:00",
+      "content": "I will check the cupboard before you buy anything for lemon rice 📌",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1464209757962241134",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1464210571657217136",
+      "type": "Reply",
+      "timestamp": "2026-01-23T10:50:04.000+00:00",
+      "content": "right, lemon rice 😅",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1464210164809729135",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1499408873029633358",
+      "type": "Default",
+      "timestamp": "2026-04-30T13:55:33.000+00:00",
+      "content": "thinking of making rava dosa at home once the rain stops",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1499409279877121359",
+      "type": "Reply",
+      "timestamp": "2026-04-30T13:57:10.000+00:00",
+      "content": "I can bring the missing things for rava dosa after passing the campus gate",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1499408873029633358",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1499409686724609360",
+      "type": "Reply",
+      "timestamp": "2026-04-30T13:58:47.000+00:00",
+      "content": "I will check the cupboard before you buy anything for rava dosa ✨",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1499409279877121359",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1499410093572097361",
+      "type": "Reply",
+      "timestamp": "2026-04-30T14:00:24.000+00:00",
+      "content": "send the list before I reach the campus gate, my memory is not a shopping app",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1499409686724609360",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1518514418483201527",
+      "type": "Default",
+      "timestamp": "2026-06-22T07:14:10.000+00:00",
+      "content": "thinking of making aloo paratha at home after the lab",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1518514825330689528",
+      "type": "Reply",
+      "timestamp": "2026-06-22T07:15:47.000+00:00",
+      "content": "I can bring the missing things for aloo paratha after passing the back courtyard",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1518514418483201527",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1518515232178177529",
+      "type": "Reply",
+      "timestamp": "2026-06-22T07:17:24.000+00:00",
+      "content": "I will check the cupboard before you buy anything for aloo paratha",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1518514825330689528",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1518515639025665530",
+      "type": "Reply",
+      "timestamp": "2026-06-22T07:19:01.000+00:00",
+      "content": "send the list before I reach the back courtyard, my memory is not a shopping app",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1518515232178177529",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1533931316838401660",
+      "type": "Default",
+      "timestamp": "2026-08-03T20:15:25.000+00:00",
+      "content": "the corner with the red pencil case is finally tidy",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1533931723685889661",
+      "type": "Reply",
+      "timestamp": "2026-08-03T20:17:02.000+00:00",
+      "content": "take a photo of the red pencil case before the desk returns to normal chaos",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1533931316838401660",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1533932130533377662",
+      "type": "Reply",
+      "timestamp": "2026-08-03T20:18:39.000+00:00",
+      "content": "photo taken, evidence of the organised red pencil case now exists",
+      "author": {
+        "id": "401234567890123404",
+        "name": "nishav",
+        "username": "nishav",
+        "nickname": "Nisha",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1533931723685889661",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1533932537380865663",
+      "type": "Reply",
+      "timestamp": "2026-08-03T20:20:16.000+00:00",
+      "content": "right, red 😅",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1533932130533377662",
+        "channelId": "901234567890123464",
+        "guildId": "0"
+      }
+    }
+  ],
+  "messageCount": 113
+}

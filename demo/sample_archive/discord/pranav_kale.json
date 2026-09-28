@@ -1,0 +1,1459 @@
+{
+  "guild": {
+    "id": "0",
+    "name": "Direct Messages"
+  },
+  "channel": {
+    "id": "901234567890123467",
+    "type": "DirectTextChat",
+    "name": "pranav-kale",
+    "topic": "Pranav Kale"
+  },
+  "messages": [
+    {
+      "id": "1215251450167296094",
+      "type": "Default",
+      "timestamp": "2024-03-07T10:55:24.000+00:00",
+      "content": "ek chhota doubt, the screen-share example ke file picker mein a cancelled selection clears the old path",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1215251857014784095",
+      "type": "Reply",
+      "timestamp": "2024-03-07T10:57:01.000+00:00",
+      "content": "haan the screen-share example wala file picker dekha; handle cancellation before replacing state, shayad clear ho",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1215251450167296094",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1215252263862272096",
+      "type": "Reply",
+      "timestamp": "2024-03-07T10:58:38.000+00:00",
+      "content": "achha, the screen-share example ke file picker ka scene clear hai: the previous selection survives cancellation",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1215251857014784095",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1215252670709760097",
+      "type": "Reply",
+      "timestamp": "2024-03-07T11:00:15.000+00:00",
+      "content": "bas the screen-share example wala reproduction notes aur file picker ek jagah rakh do 🫠",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1215252263862272096",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1218465377550336110",
+      "type": "Default",
+      "timestamp": "2024-03-16T07:46:24.000+00:00",
+      "content": "sorry, just noticed the repeated click review was on the quieter version, not the latest copy",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1218465784397824111",
+      "type": "Reply",
+      "timestamp": "2024-03-16T07:48:01.000+00:00",
+      "content": "that explains why the repeated click looked different in the screen share at the weekend",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1218465377550336110",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1218466191245312112",
+      "type": "Reply",
+      "timestamp": "2024-03-16T07:49:38.000+00:00",
+      "content": "moving the comment from the quieter version to the current repeated click example now 😭",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1218465784397824111",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1218466598092800113",
+      "type": "Reply",
+      "timestamp": "2024-03-16T07:51:15.000+00:00",
+      "content": "leave a pointer in the quieter version so the next reviewer can find the current repeated click notes",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1218466191245312112",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1259583943213056234",
+      "type": "Default",
+      "timestamp": "2024-07-07T18:56:54.000+00:00",
+      "content": "yaar, sorry, just noticed the last page review was on the test export, not the latest copy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1259584350060544235",
+      "type": "Reply",
+      "timestamp": "2024-07-07T18:58:31.000+00:00",
+      "content": "haan, that explains why the last page looked different in the screen share after the lab",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1259583943213056234",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1259584756908032236",
+      "type": "Reply",
+      "timestamp": "2024-07-07T19:00:08.000+00:00",
+      "content": "achha, moving the comment from the test export to the current last page example now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1259584350060544235",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1259585163755520237",
+      "type": "Reply",
+      "timestamp": "2024-07-07T19:01:45.000+00:00",
+      "content": "theek h, leave a pointer in the test export so the next reviewer can find the current last page notes",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1259584756908032236",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1267920894164992279",
+      "type": "Default",
+      "timestamp": "2024-07-30T19:04:58.000+00:00",
+      "content": "",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [
+        {
+          "id": "1267920894164992280",
+          "fileName": "shared_frame.png",
+          "url": "https://media.example/shared_frame.png"
+        }
+      ],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1278578754846720308",
+      "type": "Default",
+      "timestamp": "2024-08-29T04:55:30.000+00:00",
+      "content": "bhai, I can explain the stale cache verbally but my notes still look like a maze 😅",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1278579161694208309",
+      "type": "Reply",
+      "timestamp": "2024-08-29T04:57:07.000+00:00",
+      "content": "ek sec, bring the tiny stale cache example to the bus shelter after class",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1278578754846720308",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1278579568541696310",
+      "type": "Reply",
+      "timestamp": "2024-08-29T04:58:44.000+00:00",
+      "content": "sahi h, will do, the teal notebook has the stale cache sketch",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1278579161694208309",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1278579975389184311",
+      "type": "Reply",
+      "timestamp": "2024-08-29T05:00:21.000+00:00",
+      "content": "chalo, yep, after class",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1278579568541696310",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1280134225068032320",
+      "type": "Default",
+      "timestamp": "2024-09-02T11:56:23.000+00:00",
+      "content": "i can explain the duplicate row verbally but my notes still look like a maze",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1280134631915520321",
+      "type": "Reply",
+      "timestamp": "2024-09-02T11:58:00.000+00:00",
+      "content": "bring the tiny duplicate row example to the canteen entrance during the long break",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1280134225068032320",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1280135038763008322",
+      "type": "Reply",
+      "timestamp": "2024-09-02T11:59:37.000+00:00",
+      "content": "will do, the yellow notebook has the duplicate row sketch",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1280134631915520321",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1280135445610496323",
+      "type": "Reply",
+      "timestamp": "2024-09-02T12:01:14.000+00:00",
+      "content": "nice, one the duplicate row diagram and then a break for lemon tea",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1280135038763008322",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1292156731916288364",
+      "type": "Default",
+      "timestamp": "2024-10-05T16:09:32.000+00:00",
+      "content": "Back at the screen-share example, trying to understand why, in settings form, the save button hides the error.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1292157138763776365",
+      "type": "Reply",
+      "timestamp": "2024-10-05T16:11:09.000+00:00",
+      "content": "i checked the screen-share example; for settings form, start by trying to put the validation message beside the field.",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1292156731916288364",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1292157545611264366",
+      "type": "Reply",
+      "timestamp": "2024-10-05T16:12:46.000+00:00",
+      "content": "Just compared settings form again in the screen-share example; the invalid field is easy to find.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1292157138763776365",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1292157952458752367",
+      "type": "Reply",
+      "timestamp": "2024-10-05T16:14:23.000+00:00",
+      "content": "form screenshot makes sense now",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1292157545611264366",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1300144389619712413",
+      "type": "Default",
+      "timestamp": "2024-10-27T17:09:38.000+00:00",
+      "content": "sorry, just noticed the last page review was on the quieter version, not the latest copy",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1300144796467200414",
+      "type": "Reply",
+      "timestamp": "2024-10-27T17:11:15.000+00:00",
+      "content": "that explains why the last page looked different in the screen share after class ✨",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1300144389619712413",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1300145203314688415",
+      "type": "Reply",
+      "timestamp": "2024-10-27T17:12:52.000+00:00",
+      "content": "moving the comment from the quieter version to the current last page example now",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1300144796467200414",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1300145610162176416",
+      "type": "Reply",
+      "timestamp": "2024-10-27T17:14:29.000+00:00",
+      "content": "leave a pointer in the quieter version so the next reviewer can find the current last page notes",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1300145203314688415",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1307307644289024429",
+      "type": "Default",
+      "timestamp": "2024-11-16T11:33:51.000+00:00",
+      "content": "Sending reply preview from the screen-share example over because a missing parent crashes the panel.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1307308051136512430",
+      "type": "Reply",
+      "timestamp": "2024-11-16T11:35:28.000+00:00",
+      "content": "small experiment for the screen-share example: represent a missing parent explicitly when revisiting reply preview.",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1307307644289024429",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1307308457984000431",
+      "type": "Reply",
+      "timestamp": "2024-11-16T11:37:05.000+00:00",
+      "content": "Back with the screen-share example result for reply preview: the panel shows a missing-context label.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1307308051136512430",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1307308864831488432",
+      "type": "Reply",
+      "timestamp": "2024-11-16T11:38:42.000+00:00",
+      "content": "send the orphan-reply sample?",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1307308457984000431",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1315009833467904453",
+      "type": "Default",
+      "timestamp": "2024-12-07T17:39:36.000+00:00",
+      "content": "bhai, sorry, just noticed the repeated click review was on the marked-up copy, not the latest copy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1315010240315392454",
+      "type": "Reply",
+      "timestamp": "2024-12-07T17:41:13.000+00:00",
+      "content": "ek sec, that explains why the repeated click looked different in the screen share at the weekend",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1315009833467904453",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1315010647162880455",
+      "type": "Reply",
+      "timestamp": "2024-12-07T17:42:50.000+00:00",
+      "content": "sahi h, moving the comment from the marked-up copy to the current repeated click example now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1315010240315392454",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1315011054010368456",
+      "type": "Reply",
+      "timestamp": "2024-12-07T17:44:27.000+00:00",
+      "content": "chalo, at the weekend, sounds good 😭",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1315010647162880455",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1337675529322496573",
+      "type": "Default",
+      "timestamp": "2025-02-08T06:44:59.000+00:00",
+      "content": "sorry, just noticed the duplicate row review was on the revised page, not the latest copy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1337675936169984574",
+      "type": "Reply",
+      "timestamp": "2025-02-08T06:46:36.000+00:00",
+      "content": "that explains why the duplicate row looked different in the screen share in the evening",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1337675529322496573",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1337676343017472575",
+      "type": "Reply",
+      "timestamp": "2025-02-08T06:48:13.000+00:00",
+      "content": "moving the comment from the revised page to the current duplicate row example now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1337675936169984574",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1337676749864960576",
+      "type": "Reply",
+      "timestamp": "2025-02-08T06:49:50.000+00:00",
+      "content": "leave a pointer in the revised page so the next reviewer can find the current duplicate row notes",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1337676343017472575",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1423399490420736988",
+      "type": "Default",
+      "timestamp": "2025-10-02T20:01:24.000+00:00",
+      "content": "sorry, just noticed the repeated click review was on the plain version, not the latest copy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1423399897268224989",
+      "type": "Reply",
+      "timestamp": "2025-10-02T20:03:01.000+00:00",
+      "content": "that explains why the repeated click looked different in the screen share in the evening 📌",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1423399490420736988",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1423400304115712990",
+      "type": "Reply",
+      "timestamp": "2025-10-02T20:04:38.000+00:00",
+      "content": "moving the comment from the plain version to the current repeated click example now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1423399897268224989",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1423400710963200991",
+      "type": "Reply",
+      "timestamp": "2025-10-02T20:06:15.000+00:00",
+      "content": "the repeated click, sounds good",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1423400304115712990",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1446157003784193064",
+      "type": "Default",
+      "timestamp": "2025-12-04T15:11:38.000+00:00",
+      "content": "I can explain the slow request verbally but my notes still look like a maze 😭",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1446157410631681065",
+      "type": "Reply",
+      "timestamp": "2025-12-04T15:13:15.000+00:00",
+      "content": "bring the tiny slow request example to the corner tea stall after the lab",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1446157003784193064",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1446157817479169066",
+      "type": "Reply",
+      "timestamp": "2025-12-04T15:14:52.000+00:00",
+      "content": "will do, the orange notebook has the slow request sketch",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1446157410631681065",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1446158224326657067",
+      "type": "Reply",
+      "timestamp": "2025-12-04T15:16:29.000+00:00",
+      "content": "yep, after the lab",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1446157817479169066",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1447540432044033076",
+      "type": "Default",
+      "timestamp": "2025-12-08T10:48:53.000+00:00",
+      "content": "quick check on reply preview in the practice app: a missing parent crashes the panel.",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1447540838891521077",
+      "type": "Reply",
+      "timestamp": "2025-12-08T10:50:30.000+00:00",
+      "content": "Looking at the practice app, could you represent a missing parent explicitly for reply preview?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1447540432044033076",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1447541245739009078",
+      "type": "Reply",
+      "timestamp": "2025-12-08T10:52:07.000+00:00",
+      "content": "reopening reply preview from the practice app confirms it: the panel shows a missing-context label.",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1447540838891521077",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1447541652586497079",
+      "type": "Reply",
+      "timestamp": "2025-12-08T10:53:44.000+00:00",
+      "content": "send the orphan-reply sample?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1447541245739009078",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1455544674025473088",
+      "type": "Default",
+      "timestamp": "2025-12-30T12:54:53.000+00:00",
+      "content": "Back at the morning debug session, trying to understand why, in search box, a trailing space changes the result.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1455545080872961089",
+      "type": "Reply",
+      "timestamp": "2025-12-30T12:56:30.000+00:00",
+      "content": "before redoing search box in the morning debug session, trim the query at the input boundary.",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1455544674025473088",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1455545487720449090",
+      "type": "Reply",
+      "timestamp": "2025-12-30T12:58:07.000+00:00",
+      "content": "That helped with search box from the morning debug session: the same query gives the same matches.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1455545080872961089",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1455545894567937091",
+      "type": "Reply",
+      "timestamp": "2025-12-30T12:59:44.000+00:00",
+      "content": "query example saved?",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1455545487720449090",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1476417942454273204",
+      "type": "Default",
+      "timestamp": "2026-02-26T03:17:48.000+00:00",
+      "content": "sorry, just noticed the last page review was on the second sketch, not the latest copy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1476418349301761205",
+      "type": "Reply",
+      "timestamp": "2026-02-26T03:19:25.000+00:00",
+      "content": "that explains why the last page looked different in the screen share after class",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1476417942454273204",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1476418756149249206",
+      "type": "Reply",
+      "timestamp": "2026-02-26T03:21:02.000+00:00",
+      "content": "moving the comment from the second sketch to the current last page example now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1476418349301761205",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1476419162996737207",
+      "type": "Reply",
+      "timestamp": "2026-02-26T03:22:39.000+00:00",
+      "content": "leave a pointer in the second sketch so the next reviewer can find the current last page notes",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1476418756149249206",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1482446612725761261",
+      "type": "Default",
+      "timestamp": "2026-03-14T18:33:35.000+00:00",
+      "content": "i got stuck on accessibility pass while looking at the shared fixture; the focus disappears behind the drawer.",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1482447019573249262",
+      "type": "Reply",
+      "timestamp": "2026-03-14T18:35:12.000+00:00",
+      "content": "Looking at the shared fixture, could you restore focus to the opening control for accessibility pass?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1482446612725761261",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1482447426420737263",
+      "type": "Reply",
+      "timestamp": "2026-03-14T18:36:49.000+00:00",
+      "content": "saving the revised accessibility pass from the shared fixture, since the keyboard path returns to the right button.",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1482447019573249262",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1482447833268225264",
+      "type": "Reply",
+      "timestamp": "2026-03-14T18:38:26.000+00:00",
+      "content": "No need to reopen accessibility pass in the shared fixture tonight; just save the focus-order checklist. ✨",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1482447426420737263",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1524453682970625597",
+      "type": "Default",
+      "timestamp": "2026-07-08T16:34:41.000+00:00",
+      "content": "sorry, just noticed the last page review was on the second sketch, not the latest copy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1524454089818113598",
+      "type": "Reply",
+      "timestamp": "2026-07-08T16:36:18.000+00:00",
+      "content": "that explains why the last page looked different in the screen share once the rain stops",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1524453682970625597",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1524454496665601599",
+      "type": "Reply",
+      "timestamp": "2026-07-08T16:37:55.000+00:00",
+      "content": "moving the comment from the second sketch to the current last page example now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1524454089818113598",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1524454903513089600",
+      "type": "Reply",
+      "timestamp": "2026-07-08T16:39:32.000+00:00",
+      "content": "once the rain stops, sounds good",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1524454496665601599",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1529320690417665632",
+      "type": "Default",
+      "timestamp": "2026-07-22T02:54:26.000+00:00",
+      "content": "Nearly done with reply preview for the second attempt, except a missing parent crashes the panel.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1529321097265153633",
+      "type": "Reply",
+      "timestamp": "2026-07-22T02:56:03.000+00:00",
+      "content": "about reply preview from the second attempt — represent a missing parent explicitly, then send the result.",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1529320690417665632",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1529321504112641634",
+      "type": "Reply",
+      "timestamp": "2026-07-22T02:57:40.000+00:00",
+      "content": "Update on reply preview in the second attempt: the panel shows a missing-context label.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1529321097265153633",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    },
+    {
+      "id": "1529321910960129635",
+      "type": "Reply",
+      "timestamp": "2026-07-22T02:59:17.000+00:00",
+      "content": "keep the orphan-reply sample for reply preview from the second attempt; it will explain the change later.",
+      "author": {
+        "id": "401234567890123425",
+        "name": "pixeltea",
+        "username": "pixeltea",
+        "nickname": "Pranav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1529321504112641634",
+        "channelId": "901234567890123467",
+        "guildId": "0"
+      }
+    }
+  ],
+  "messageCount": 73
+}

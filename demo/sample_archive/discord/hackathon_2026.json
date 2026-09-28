@@ -1,0 +1,4260 @@
+{
+  "guild": {
+    "id": "801234567890123456",
+    "name": "Bengaluru Build Club"
+  },
+  "channel": {
+    "id": "901234567890123458",
+    "type": "GuildTextChat",
+    "name": "hackathon-2026",
+    "topic": "Hackathon 2026"
+  },
+  "messages": [
+    {
+      "id": "1474752518553601194",
+      "type": "Default",
+      "timestamp": "2026-02-21T13:00:00.000+00:00",
+      "content": "Idea for Sarthink: a local-first second brain from exports. We need a real question with source citations, not just a pretty graph.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1474752866680833195",
+      "type": "Reply",
+      "timestamp": "2026-02-21T13:01:23.000+00:00",
+      "content": "Start with an answer we can verify. Otherwise a confident summary could be completely wrong.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1474752518553601194",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1474753214808065196",
+      "type": "Reply",
+      "timestamp": "2026-02-21T13:02:46.000+00:00",
+      "content": "What changed in my photography? That would need messages from different months and apps.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1474752866680833195",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1474753562935297197",
+      "type": "Reply",
+      "timestamp": "2026-02-21T13:04:09.000+00:00",
+      "content": "Scope: import exports, show a 3D people/conversation graph, retrieve evidence, cite exact messages.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1474753214808065196",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1474753911062529198",
+      "type": "Reply",
+      "timestamp": "2026-02-21T13:05:32.000+00:00",
+      "content": "No automatic linking of other people's accounts yet. Only the archive owner's aliases are unified through identity_map.json.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1474753562935297197",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1474754259189761199",
+      "type": "Reply",
+      "timestamp": "2026-02-21T13:06:55.000+00:00",
+      "content": "Good. The contacts map is ground truth for a future feature, not a claim that the graph already merges Rohan.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1474753911062529198",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1476627355664385212",
+      "type": "Default",
+      "timestamp": "2026-02-26T17:09:56.000+00:00",
+      "content": "Check: can you look at export archive for the small demo? the ZIP entries inherit the current time.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1476627762511873213",
+      "type": "Reply",
+      "timestamp": "2026-02-26T17:11:33.000+00:00",
+      "content": "Before redoing export archive in the small demo, assign a fixed timestamp to each ZIP entry.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1476627355664385212",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1476628169359361214",
+      "type": "Reply",
+      "timestamp": "2026-02-26T17:13:10.000+00:00",
+      "content": "Check: the revised export archive for the small demo makes more sense — a repeat run produces the same ZIP bytes.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1476627762511873213",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1476628576206849215",
+      "type": "Reply",
+      "timestamp": "2026-02-26T17:14:47.000+00:00",
+      "content": "send the archive checksum?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1476628169359361214",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1479013960777729225",
+      "type": "Default",
+      "timestamp": "2026-03-05T07:13:27.000+00:00",
+      "content": "Back at the workshop example, trying to understand why, in JSON reader, one empty object aborts the whole batch.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1479014367625217226",
+      "type": "Reply",
+      "timestamp": "2026-03-05T07:15:04.000+00:00",
+      "content": "Repro note: i checked the workshop example; for JSON reader, start by trying to validate each entry and report its position.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1479013960777729225",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1479014774472705227",
+      "type": "Reply",
+      "timestamp": "2026-03-05T07:16:41.000+00:00",
+      "content": "Tried that for JSON reader in the workshop example, and the valid entries survive the malformed one.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1479014367625217226",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1479015181320193228",
+      "type": "Reply",
+      "timestamp": "2026-03-05T07:18:18.000+00:00",
+      "content": "Repro note: keep the minimal JSON sample for JSON reader from the workshop example; it will explain the change later. ✨",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1479014774472705227",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1482437116821505257",
+      "type": "Default",
+      "timestamp": "2026-03-14T17:55:51.000+00:00",
+      "content": "Back at the practice app, trying to understand why, in search box, a trailing space changes the result.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1482437523668993258",
+      "type": "Reply",
+      "timestamp": "2026-03-14T17:57:28.000+00:00",
+      "content": "Check: i checked the practice app; for search box, start by trying to trim the query at the input boundary.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1482437116821505257",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1482437930516481259",
+      "type": "Reply",
+      "timestamp": "2026-03-14T17:59:05.000+00:00",
+      "content": "Tried that for search box in the practice app, and the same query gives the same matches.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1482437523668993258",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1482438337363969260",
+      "type": "Reply",
+      "timestamp": "2026-03-14T18:00:42.000+00:00",
+      "content": "Check: please save the query example alongside search box in the practice app. 😅",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1482437930516481259",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1485318482034689273",
+      "type": "Default",
+      "timestamp": "2026-03-22T16:45:22.000+00:00",
+      "content": "sorry, just noticed the blank search review was on the quieter version, not the latest copy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1485318888882177274",
+      "type": "Reply",
+      "timestamp": "2026-03-22T16:46:59.000+00:00",
+      "content": "Check: that explains why the blank search looked different in the screen share once the rain stops",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1485318482034689273",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1485319295729665275",
+      "type": "Reply",
+      "timestamp": "2026-03-22T16:48:36.000+00:00",
+      "content": "moving the comment from the quieter version to the current blank search example now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1485318888882177274",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1485319702577153276",
+      "type": "Reply",
+      "timestamp": "2026-03-22T16:50:13.000+00:00",
+      "content": "Check: leave a pointer in the quieter version so the next reviewer can find the current blank search notes",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1485319295729665275",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1489705673687041294",
+      "type": "Default",
+      "timestamp": "2026-04-03T19:18:30.000+00:00",
+      "content": "Repro note: i can explain the offline start verbally but my notes still look like a maze 👍",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1489706080534529295",
+      "type": "Reply",
+      "timestamp": "2026-04-03T19:20:07.000+00:00",
+      "content": "bring the tiny offline start example to the little park gate before lunch",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1489705673687041294",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1489706487382017296",
+      "type": "Reply",
+      "timestamp": "2026-04-03T19:21:44.000+00:00",
+      "content": "Repro note: will do, the white notebook has the offline start sketch",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1489706080534529295",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1489706894229505297",
+      "type": "Reply",
+      "timestamp": "2026-04-03T19:23:21.000+00:00",
+      "content": "nice, one the offline start diagram and then a break for ginger tea 😂",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1489706487382017296",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1489967285010433298",
+      "type": "Default",
+      "timestamp": "2026-04-04T12:38:03.000+00:00",
+      "content": "the funniest part of the cancelled dialog was my comment saying this could never happen",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1489967691857921299",
+      "type": "Reply",
+      "timestamp": "2026-04-04T12:39:40.000+00:00",
+      "content": "Check: please keep that comment beside the cancelled dialog fixture as a historical artefact",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1489967285010433298",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1489968098705409300",
+      "type": "Reply",
+      "timestamp": "2026-04-04T12:41:17.000+00:00",
+      "content": "renamed the test to say what the cancelled dialog actually does instead of claiming magic",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1489967691857921299",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1489968505552897301",
+      "type": "Reply",
+      "timestamp": "2026-04-04T12:42:54.000+00:00",
+      "content": "Check: good, future us can understand the cancelled dialog without reading our minds",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1489968098705409300",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1492359174946817306",
+      "type": "Default",
+      "timestamp": "2026-04-11T03:02:34.000+00:00",
+      "content": "bhai, sorry, just noticed the cancelled dialog review was on the marked-up copy, not the latest copy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1492359581794305307",
+      "type": "Reply",
+      "timestamp": "2026-04-11T03:04:11.000+00:00",
+      "content": "Repro note: ek sec, that explains why the cancelled dialog looked different in the screen share during the long break 👀",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1492359174946817306",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1492359988641793308",
+      "type": "Reply",
+      "timestamp": "2026-04-11T03:05:48.000+00:00",
+      "content": "sahi h, moving the comment from the marked-up copy to the current cancelled dialog example now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1492359581794305307",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1492360395489281309",
+      "type": "Reply",
+      "timestamp": "2026-04-11T03:07:25.000+00:00",
+      "content": "Repro note: chalo, got it — the cancelled dialog",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1492359988641793308",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1495455603097601314",
+      "type": "Default",
+      "timestamp": "2026-04-19T16:06:40.000+00:00",
+      "content": "pushed a small patch for the missing parent, leaving the bigger change for later 🤔",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1495456009945089315",
+      "type": "Reply",
+      "timestamp": "2026-04-19T16:08:17.000+00:00",
+      "content": "Check: can you put the missing parent in the reproduction notes before the screen share during the long break?",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1495455603097601314",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1495456416792577316",
+      "type": "Reply",
+      "timestamp": "2026-04-19T16:09:54.000+00:00",
+      "content": "done, the missing parent notes include the input and the actual output",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1495456009945089315",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1495456823640065317",
+      "type": "Reply",
+      "timestamp": "2026-04-19T16:11:31.000+00:00",
+      "content": "Check: thanks, I will check the missing parent against that input during the long break",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1495456416792577316",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1496167158382593330",
+      "type": "Default",
+      "timestamp": "2026-04-21T15:14:08.000+00:00",
+      "content": "I got stuck on export archive while looking at the import exercise; the ZIP entries inherit the current time.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1496167565230081331",
+      "type": "Reply",
+      "timestamp": "2026-04-21T15:15:45.000+00:00",
+      "content": "Repro note: about export archive from the import exercise — assign a fixed timestamp to each ZIP entry, then send the result.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1496167158382593330",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1496167972077569332",
+      "type": "Reply",
+      "timestamp": "2026-04-21T15:17:22.000+00:00",
+      "content": "The difference in the import exercise is visible now; for export archive, a repeat run produces the same ZIP bytes.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1496167565230081331",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1496168378925057333",
+      "type": "Reply",
+      "timestamp": "2026-04-21T15:18:59.000+00:00",
+      "content": "Repro note: keep the archive checksum for export archive from the import exercise; it will explain the change later.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1496167972077569332",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1496779174445057334",
+      "type": "Default",
+      "timestamp": "2026-04-23T07:46:04.000+00:00",
+      "content": "Check: pushed a small patch for the missing parent, leaving the bigger change for later",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1496779581292545335",
+      "type": "Reply",
+      "timestamp": "2026-04-23T07:47:41.000+00:00",
+      "content": "can you put the missing parent in the reproduction notes before the screen share at the weekend?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1496779174445057334",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1496779988140033336",
+      "type": "Reply",
+      "timestamp": "2026-04-23T07:49:18.000+00:00",
+      "content": "Check: done, the missing parent notes include the input and the actual output",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1496779581292545335",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1496780394987521337",
+      "type": "Reply",
+      "timestamp": "2026-04-23T07:50:55.000+00:00",
+      "content": "yep, at the weekend",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1496779988140033336",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1497629439557633342",
+      "type": "Default",
+      "timestamp": "2026-04-25T16:04:43.000+00:00",
+      "content": "Repro note: i got stuck on CSV writer while looking at the minimal reproduction; a comma splits one message into two columns. ✨",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1497629846405121343",
+      "type": "Reply",
+      "timestamp": "2026-04-25T16:06:20.000+00:00",
+      "content": "For CSV writer in the minimal reproduction, I would let the CSV writer quote complete field values.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1497629439557633342",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1497630253252609344",
+      "type": "Reply",
+      "timestamp": "2026-04-25T16:07:57.000+00:00",
+      "content": "Repro note: the difference in the minimal reproduction is visible now; for CSV writer, the comma remains inside one cell.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1497629846405121343",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1497630660100097345",
+      "type": "Reply",
+      "timestamp": "2026-04-25T16:09:34.000+00:00",
+      "content": "Glad CSV writer in the minimal reproduction is clearer; tuck the round-trip row into the same folder. 👍",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1497630253252609344",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1499737312198657362",
+      "type": "Default",
+      "timestamp": "2026-05-01T11:40:39.000+00:00",
+      "content": "yaar, pushed a small patch for the offline start, leaving the bigger change for later 😅",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1499737719046145363",
+      "type": "Reply",
+      "timestamp": "2026-05-01T11:42:16.000+00:00",
+      "content": "Repro note: haan, can you put the offline start in the reproduction notes before the screen share tomorrow morning?",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1499737312198657362",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1499738125893633364",
+      "type": "Reply",
+      "timestamp": "2026-05-01T11:43:53.000+00:00",
+      "content": "achha, done, the offline start notes include the input and the actual output",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1499737719046145363",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1499738532741121365",
+      "type": "Reply",
+      "timestamp": "2026-05-01T11:45:30.000+00:00",
+      "content": "Repro note: theek h, thanks, I will check the offline start against that input tomorrow morning",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1499738125893633364",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1503001982271489395",
+      "type": "Default",
+      "timestamp": "2026-05-10T11:53:17.000+00:00",
+      "content": "Repro note: something odd in the offline sample: message sorter has a snag — two equal timestamps exchange places.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1503002389118977396",
+      "type": "Reply",
+      "timestamp": "2026-05-10T11:54:54.000+00:00",
+      "content": "Small experiment for the offline sample: use the source ID as a stable tie-breaker when revisiting message sorter. 👀",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1503001982271489395",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1503002795966465397",
+      "type": "Reply",
+      "timestamp": "2026-05-10T11:56:31.000+00:00",
+      "content": "Repro note: that helped with message sorter from the offline sample: the equal-time rows keep their order. 🫠",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1503002389118977396",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1503003202813953398",
+      "type": "Reply",
+      "timestamp": "2026-05-10T11:58:08.000+00:00",
+      "content": "Nice, put that before-and-after output beside the message sorter notes for the offline sample.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1503002795966465397",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1504437558312961403",
+      "type": "Default",
+      "timestamp": "2026-05-14T10:57:45.000+00:00",
+      "content": "sorry, just noticed the missing parent review was on the test export, not the latest copy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1504437965160449404",
+      "type": "Reply",
+      "timestamp": "2026-05-14T10:59:22.000+00:00",
+      "content": "Check: that explains why the missing parent looked different in the screen share after the lab",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1504437558312961403",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1504438372007937405",
+      "type": "Reply",
+      "timestamp": "2026-05-14T11:00:59.000+00:00",
+      "content": "moving the comment from the test export to the current missing parent example now 📌",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1504437965160449404",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1504438778855425406",
+      "type": "Reply",
+      "timestamp": "2026-05-14T11:02:36.000+00:00",
+      "content": "Check: got it — the missing parent",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1504438372007937405",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1505604652761089411",
+      "type": "Default",
+      "timestamp": "2026-05-17T16:15:22.000+00:00",
+      "content": "Repro note: sorry, just noticed the repeated click review was on the small preview, not the latest copy",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1505605059608577412",
+      "type": "Reply",
+      "timestamp": "2026-05-17T16:16:59.000+00:00",
+      "content": "that explains why the repeated click looked different in the screen share before lunch",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1505604652761089411",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1505605466456065413",
+      "type": "Reply",
+      "timestamp": "2026-05-17T16:18:36.000+00:00",
+      "content": "Repro note: moving the comment from the small preview to the current repeated click example now",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1505605059608577412",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1505605873303553414",
+      "type": "Reply",
+      "timestamp": "2026-05-17T16:20:13.000+00:00",
+      "content": "yep, the small preview",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1505605466456065413",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1508559686729729423",
+      "type": "Default",
+      "timestamp": "2026-05-25T19:57:37.000+00:00",
+      "content": "ek chhota doubt, the lab exercise ke loading indicator mein an empty result looks like a running request",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1508560093577217424",
+      "type": "Reply",
+      "timestamp": "2026-05-25T19:59:14.000+00:00",
+      "content": "Check: haan the lab exercise wala loading indicator dekha; separate loading from successful emptiness, shayad clear ho",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1508559686729729423",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1508560500424705425",
+      "type": "Reply",
+      "timestamp": "2026-05-25T20:00:51.000+00:00",
+      "content": "haan ab the lab exercise ke loading indicator mein the empty state has its own message, better lag raha",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1508560093577217424",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1508560907272193426",
+      "type": "Reply",
+      "timestamp": "2026-05-25T20:02:28.000+00:00",
+      "content": "state transition notes saved?",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1508560500424705425",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1511395740876801439",
+      "type": "Default",
+      "timestamp": "2026-06-02T15:47:05.000+00:00",
+      "content": "Repro note: yaar, sorry, just noticed the stale cache review was on the plain version, not the latest copy",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1511396147724289440",
+      "type": "Reply",
+      "timestamp": "2026-06-02T15:48:42.000+00:00",
+      "content": "haan, that explains why the stale cache looked different in the screen share after the lab",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1511395740876801439",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1511396554571777441",
+      "type": "Reply",
+      "timestamp": "2026-06-02T15:50:19.000+00:00",
+      "content": "Repro note: achha, moving the comment from the plain version to the current stale cache example now",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1511396147724289440",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1511396961419265442",
+      "type": "Reply",
+      "timestamp": "2026-06-02T15:51:56.000+00:00",
+      "content": "theek h, yep, the stale cache",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1511396554571777441",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1511983480307713447",
+      "type": "Default",
+      "timestamp": "2026-06-04T06:42:33.000+00:00",
+      "content": "Repro note: tiny question about the import exercise — with notes index, a deleted file remains searchable.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1511983887155201448",
+      "type": "Reply",
+      "timestamp": "2026-06-04T06:44:10.000+00:00",
+      "content": "Before redoing notes index in the import exercise, include deletions in the scan comparison.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1511983480307713447",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1511984294002689449",
+      "type": "Reply",
+      "timestamp": "2026-06-04T06:45:47.000+00:00",
+      "content": "Repro note: back with the import exercise result for notes index: removed files disappear from the result. 🫠",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1511983887155201448",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1511984700850177450",
+      "type": "Reply",
+      "timestamp": "2026-06-04T06:47:24.000+00:00",
+      "content": "For the next pass at the import exercise, leave the three-file fixture with notes index.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1511984294002689449",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1513916387557377467",
+      "type": "Default",
+      "timestamp": "2026-06-09T14:43:14.000+00:00",
+      "content": "sorry, just noticed the offline start review was on the marked-up copy, not the latest copy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1513916794404865468",
+      "type": "Reply",
+      "timestamp": "2026-06-09T14:44:51.000+00:00",
+      "content": "Repro note: that explains why the offline start looked different in the screen share tomorrow morning",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1513916387557377467",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1513917201252353469",
+      "type": "Reply",
+      "timestamp": "2026-06-09T14:46:28.000+00:00",
+      "content": "moving the comment from the marked-up copy to the current offline start example now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1513916794404865468",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1513917608099841470",
+      "type": "Reply",
+      "timestamp": "2026-06-09T14:48:05.000+00:00",
+      "content": "Repro note: yep, tomorrow morning ✅",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1513917201252353469",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1515387267055617487",
+      "type": "Default",
+      "timestamp": "2026-06-13T16:07:59.000+00:00",
+      "content": "Check: would you have a minute for test runner in the keyboard-only pass, where the failure vanishes when cases run alone?",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1515387673903105488",
+      "type": "Reply",
+      "timestamp": "2026-06-13T16:09:36.000+00:00",
+      "content": "I checked the keyboard-only pass; for test runner, start by trying to reset shared state between cases.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515387267055617487",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1515388080750593489",
+      "type": "Reply",
+      "timestamp": "2026-06-13T16:11:13.000+00:00",
+      "content": "Check: tried that for test runner in the keyboard-only pass, and the case order no longer changes the result.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515387673903105488",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1515388487598081490",
+      "type": "Reply",
+      "timestamp": "2026-06-13T16:12:50.000+00:00",
+      "content": "Nice, put that isolated reproduction beside the test runner notes for the keyboard-only pass.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515388080750593489",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1515665005477889495",
+      "type": "Default",
+      "timestamp": "2026-06-14T10:31:37.000+00:00",
+      "content": "yaar the archived example ke date filter pe atka hu — midnight records land on the wrong day 🤔",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1515665412325377496",
+      "type": "Reply",
+      "timestamp": "2026-06-14T10:33:14.000+00:00",
+      "content": "Check: mere hisaab se the archived example ke date filter ke liye make the timezone conversion explicit",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515665005477889495",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1515665819172865497",
+      "type": "Reply",
+      "timestamp": "2026-06-14T10:34:51.000+00:00",
+      "content": "the archived example wala date filter phir check kiya, ab the midnight row stays in the intended day",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515665412325377496",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1515666226020353498",
+      "type": "Reply",
+      "timestamp": "2026-06-14T10:36:28.000+00:00",
+      "content": "Check: the archived example ke date filter ke saath boundary-date fixture bhi rakhna yaar",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515665819172865497",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1515751211008001499",
+      "type": "Default",
+      "timestamp": "2026-06-14T16:14:10.000+00:00",
+      "content": "Repro note: sending reply preview from the morning debug session over because a missing parent crashes the panel.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1515751617855489500",
+      "type": "Reply",
+      "timestamp": "2026-06-14T16:15:47.000+00:00",
+      "content": "Before redoing reply preview in the morning debug session, represent a missing parent explicitly. 📌",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515751211008001499",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1515752024702977501",
+      "type": "Reply",
+      "timestamp": "2026-06-14T16:17:24.000+00:00",
+      "content": "Repro note: i see what you meant about reply preview in the morning debug session — the panel shows a missing-context label.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515751617855489500",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1515752431550465502",
+      "type": "Reply",
+      "timestamp": "2026-06-14T16:19:01.000+00:00",
+      "content": "keep the orphan-reply sample 👍",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515752024702977501",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1515770727104513503",
+      "type": "Default",
+      "timestamp": "2026-06-14T17:31:43.000+00:00",
+      "content": "the funniest part of the empty folder was my comment saying this could never happen",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1515771133952001504",
+      "type": "Reply",
+      "timestamp": "2026-06-14T17:33:20.000+00:00",
+      "content": "Check: please keep that comment beside the empty folder fixture as a historical artefact",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515770727104513503",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1515771540799489505",
+      "type": "Reply",
+      "timestamp": "2026-06-14T17:34:57.000+00:00",
+      "content": "renamed the test to say what the empty folder actually does instead of claiming magic",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515771133952001504",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1515771947646977506",
+      "type": "Reply",
+      "timestamp": "2026-06-14T17:36:34.000+00:00",
+      "content": "Check: good, future us can understand the empty folder without reading our minds",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1515771540799489505",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1518326530441217523",
+      "type": "Default",
+      "timestamp": "2026-06-21T18:47:34.000+00:00",
+      "content": "sorry, just noticed the blank search review was on the darker version, not the latest copy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1518326937288705524",
+      "type": "Reply",
+      "timestamp": "2026-06-21T18:49:11.000+00:00",
+      "content": "Check: that explains why the blank search looked different in the screen share in the evening",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1518326530441217523",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1518327344136193525",
+      "type": "Reply",
+      "timestamp": "2026-06-21T18:50:48.000+00:00",
+      "content": "moving the comment from the darker version to the current blank search example now 😭",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1518326937288705524",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1518327750983681526",
+      "type": "Reply",
+      "timestamp": "2026-06-21T18:52:25.000+00:00",
+      "content": "Check: leave a pointer in the darker version so the next reviewer can find the current blank search notes",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1518327344136193525",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1518634572709889531",
+      "type": "Default",
+      "timestamp": "2026-06-22T15:11:37.000+00:00",
+      "content": "Back at the morning debug session, trying to understand why, in pagination control, the last page repeats a row.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1518634979557377532",
+      "type": "Reply",
+      "timestamp": "2026-06-22T15:13:14.000+00:00",
+      "content": "Repro note: looking at the morning debug session, could you check the cursor boundary against a fixed dataset for pagination control?",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1518634572709889531",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1518635386404865533",
+      "type": "Reply",
+      "timestamp": "2026-06-22T15:14:51.000+00:00",
+      "content": "That helped with pagination control from the morning debug session: each row appears on one page. ✅",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1518634979557377532",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1518635793252353534",
+      "type": "Reply",
+      "timestamp": "2026-06-22T15:16:28.000+00:00",
+      "content": "Repro note: could you attach the page-boundary case to pagination control in the notes for the morning debug session?",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1518635386404865533",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1519616216006657540",
+      "type": "Default",
+      "timestamp": "2026-06-25T08:12:19.000+00:00",
+      "content": "😭🙌",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1520383962382337541",
+      "type": "Default",
+      "timestamp": "2026-06-27T11:03:04.000+00:00",
+      "content": "yaar, the funniest part of the blank search was my comment saying this could never happen",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1520384369229825542",
+      "type": "Reply",
+      "timestamp": "2026-06-27T11:04:41.000+00:00",
+      "content": "Repro note: haan, please keep that comment beside the blank search fixture as a historical artefact",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1520383962382337541",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1520384776077313543",
+      "type": "Reply",
+      "timestamp": "2026-06-27T11:06:18.000+00:00",
+      "content": "achha, renamed the test to say what the blank search actually does instead of claiming magic",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1520384369229825542",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1520385182924801544",
+      "type": "Reply",
+      "timestamp": "2026-06-27T11:07:55.000+00:00",
+      "content": "Repro note: theek h, good, future us can understand the blank search without reading our minds",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1520384776077313543",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1520762657701889553",
+      "type": "Default",
+      "timestamp": "2026-06-28T12:07:52.000+00:00",
+      "content": "Check: sorry, just noticed the last page review was on the plain version, not the latest copy",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1520763064549377554",
+      "type": "Reply",
+      "timestamp": "2026-06-28T12:09:29.000+00:00",
+      "content": "that explains why the last page looked different in the screen share tomorrow morning",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1520762657701889553",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1520763471396865555",
+      "type": "Reply",
+      "timestamp": "2026-06-28T12:11:06.000+00:00",
+      "content": "Check: moving the comment from the plain version to the current last page example now",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1520763064549377554",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1520763878244353556",
+      "type": "Reply",
+      "timestamp": "2026-06-28T12:12:43.000+00:00",
+      "content": "okay, tomorrow morning then",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1520763471396865555",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1524437966913537589",
+      "type": "Default",
+      "timestamp": "2026-07-08T15:32:14.000+00:00",
+      "content": "Repro note: the bit I cannot settle in the archived example is JSON reader: one empty object aborts the whole batch.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1524438373761025590",
+      "type": "Reply",
+      "timestamp": "2026-07-08T15:33:51.000+00:00",
+      "content": "On the archived example, my suggestion for JSON reader is simple: validate each entry and report its position.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1524437966913537589",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1524438780608513591",
+      "type": "Reply",
+      "timestamp": "2026-07-08T15:35:28.000+00:00",
+      "content": "Repro note: finished checking JSON reader in the archived example and, yes, the valid entries survive the malformed one.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1524438373761025590",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1524439187456001592",
+      "type": "Reply",
+      "timestamp": "2026-07-08T15:37:05.000+00:00",
+      "content": "No need to reopen JSON reader in the archived example tonight; just save the minimal JSON sample.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1524438780608513591",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1524444413558785593",
+      "type": "Default",
+      "timestamp": "2026-07-08T15:57:51.000+00:00",
+      "content": "yaar, the funniest part of the repeated click was my comment saying this could never happen",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1524444820406273594",
+      "type": "Reply",
+      "timestamp": "2026-07-08T15:59:28.000+00:00",
+      "content": "Check: haan, please keep that comment beside the repeated click fixture as a historical artefact",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1524444413558785593",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1524445227253761595",
+      "type": "Reply",
+      "timestamp": "2026-07-08T16:01:05.000+00:00",
+      "content": "achha, renamed the test to say what the repeated click actually does instead of claiming magic",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1524444820406273594",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1524445634101249596",
+      "type": "Reply",
+      "timestamp": "2026-07-08T16:02:42.000+00:00",
+      "content": "Check: theek h, good, future us can understand the repeated click without reading our minds",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1524445227253761595",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1526189470515201616",
+      "type": "Default",
+      "timestamp": "2026-07-13T11:32:05.000+00:00",
+      "content": "I can explain the Unicode filename verbally but my notes still look like a maze",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1526189877362689617",
+      "type": "Reply",
+      "timestamp": "2026-07-13T11:33:42.000+00:00",
+      "content": "Check: bring the tiny Unicode filename example to the covered walkway at the weekend",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1526189470515201616",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1526190284210177618",
+      "type": "Reply",
+      "timestamp": "2026-07-13T11:35:19.000+00:00",
+      "content": "will do, the yellow notebook has the Unicode filename sketch",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1526189877362689617",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1526190691057665619",
+      "type": "Reply",
+      "timestamp": "2026-07-13T11:36:56.000+00:00",
+      "content": "Check: right, the Unicode filename 😅 🤔",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1526190284210177618",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1526287764029441624",
+      "type": "Default",
+      "timestamp": "2026-07-13T18:02:40.000+00:00",
+      "content": "I can explain the repeated click verbally but my notes still look like a maze",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1526288170876929625",
+      "type": "Reply",
+      "timestamp": "2026-07-13T18:04:17.000+00:00",
+      "content": "Repro note: bring the tiny repeated click example to the college lawn once the rain stops",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1526287764029441624",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1526288577724417626",
+      "type": "Reply",
+      "timestamp": "2026-07-13T18:05:54.000+00:00",
+      "content": "will do, the red notebook has the repeated click sketch",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1526288170876929625",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1526288984571905627",
+      "type": "Reply",
+      "timestamp": "2026-07-13T18:07:31.000+00:00",
+      "content": "Repro note: got it — the repeated click",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1526288577724417626",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1529169821302785628",
+      "type": "Default",
+      "timestamp": "2026-07-21T16:54:56.000+00:00",
+      "content": "the funniest part of the stale cache was my comment saying this could never happen",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1529170228150273629",
+      "type": "Reply",
+      "timestamp": "2026-07-21T16:56:33.000+00:00",
+      "content": "Repro note: please keep that comment beside the stale cache fixture as a historical artefact",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1529169821302785628",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1529170634997761630",
+      "type": "Reply",
+      "timestamp": "2026-07-21T16:58:10.000+00:00",
+      "content": "renamed the test to say what the stale cache actually does instead of claiming magic",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1529170228150273629",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1529171041845249631",
+      "type": "Reply",
+      "timestamp": "2026-07-21T16:59:47.000+00:00",
+      "content": "Repro note: yep, the stale cache",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1529170634997761630",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1529912263442433636",
+      "type": "Default",
+      "timestamp": "2026-07-23T18:05:08.000+00:00",
+      "content": "I can explain the repeated click verbally but my notes still look like a maze",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1529912670289921637",
+      "type": "Reply",
+      "timestamp": "2026-07-23T18:06:45.000+00:00",
+      "content": "Check: bring the tiny repeated click example to the covered walkway at the weekend ✅",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1529912263442433636",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1529913077137409638",
+      "type": "Reply",
+      "timestamp": "2026-07-23T18:08:22.000+00:00",
+      "content": "will do, the teal notebook has the repeated click sketch",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1529912670289921637",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1529913483984897639",
+      "type": "Reply",
+      "timestamp": "2026-07-23T18:09:59.000+00:00",
+      "content": "Check: nice, one the repeated click diagram and then a break for filter coffee",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1529913077137409638",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1533421813760001652",
+      "type": "Default",
+      "timestamp": "2026-08-02T10:30:50.000+00:00",
+      "content": "Check: i got stuck on loading indicator while looking at the shared fixture; an empty result looks like a running request.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1533422220607489653",
+      "type": "Reply",
+      "timestamp": "2026-08-02T10:32:27.000+00:00",
+      "content": "Can we separate loading from successful emptiness for loading indicator in the shared fixture and see what actually changes?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1533421813760001652",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1533422627454977654",
+      "type": "Reply",
+      "timestamp": "2026-08-02T10:34:04.000+00:00",
+      "content": "Check: reopening loading indicator from the shared fixture confirms it: the empty state has its own message. 🤔",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1533422220607489653",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1533423034302465655",
+      "type": "Reply",
+      "timestamp": "2026-08-02T10:35:41.000+00:00",
+      "content": "For the next pass at the shared fixture, leave the state transition notes with loading indicator.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1533422627454977654",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1534458687651841668",
+      "type": "Default",
+      "timestamp": "2026-08-05T07:11:00.000+00:00",
+      "content": "Check: can you look at pagination control for the morning debug session? the last page repeats a row.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1534459094499329669",
+      "type": "Reply",
+      "timestamp": "2026-08-05T07:12:37.000+00:00",
+      "content": "Small experiment for the morning debug session: check the cursor boundary against a fixed dataset when revisiting pagination control.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1534458687651841668",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1534459501346817670",
+      "type": "Reply",
+      "timestamp": "2026-08-05T07:14:14.000+00:00",
+      "content": "Check: the revised pagination control for the morning debug session makes more sense — each row appears on one page.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1534459094499329669",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1534459908194305671",
+      "type": "Reply",
+      "timestamp": "2026-08-05T07:15:51.000+00:00",
+      "content": "send the page-boundary case?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1534459501346817670",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1535190417539073676",
+      "type": "Default",
+      "timestamp": "2026-08-07T07:38:38.000+00:00",
+      "content": "yaar the screen-share example ke export archive pe atka hu — the ZIP entries inherit the current time 🙂",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1535190824386561677",
+      "type": "Reply",
+      "timestamp": "2026-08-07T07:40:15.000+00:00",
+      "content": "Check: the screen-share example mein export archive par ek baar assign a fixed timestamp to each ZIP entry, dekhte h kya hota 🙂",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1535190417539073676",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1535191231234049678",
+      "type": "Reply",
+      "timestamp": "2026-08-07T07:41:52.000+00:00",
+      "content": "the screen-share example wala export archive phir check kiya, ab a repeat run produces the same ZIP bytes",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1535190824386561677",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1535191638081537679",
+      "type": "Reply",
+      "timestamp": "2026-08-07T07:43:29.000+00:00",
+      "content": "Check: theek h, the screen-share example ke export archive ka archive checksum save kar lena",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1535191231234049678",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1535346512756737684",
+      "type": "Default",
+      "timestamp": "2026-08-07T17:58:54.000+00:00",
+      "content": "Can you look at loading indicator for the review branch? an empty result looks like a running request.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1535346919604225685",
+      "type": "Reply",
+      "timestamp": "2026-08-07T18:00:31.000+00:00",
+      "content": "Check: looking at the review branch, could you separate loading from successful emptiness for loading indicator?",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1535346512756737684",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1535347326451713686",
+      "type": "Reply",
+      "timestamp": "2026-08-07T18:02:08.000+00:00",
+      "content": "Back with the review branch result for loading indicator: the empty state has its own message. 🙂",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1535346919604225685",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1535347733299201687",
+      "type": "Reply",
+      "timestamp": "2026-08-07T18:03:45.000+00:00",
+      "content": "Check: glad loading indicator in the review branch is clearer; tuck the state transition notes into the same folder.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1535347326451713686",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1538941719150593725",
+      "type": "Default",
+      "timestamp": "2026-08-17T16:04:58.000+00:00",
+      "content": "pushed a small patch for the blank search, leaving the bigger change for later",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1538942125998081726",
+      "type": "Reply",
+      "timestamp": "2026-08-17T16:06:35.000+00:00",
+      "content": "Check: can you put the blank search in the reproduction notes before the screen share at the weekend?",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1538941719150593725",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1538942532845569727",
+      "type": "Reply",
+      "timestamp": "2026-08-17T16:08:12.000+00:00",
+      "content": "done, the blank search notes include the input and the actual output",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1538942125998081726",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1538942939693057728",
+      "type": "Reply",
+      "timestamp": "2026-08-17T16:09:49.000+00:00",
+      "content": "Check: thanks, I will check the blank search against that input at the weekend",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1538942532845569727",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1540785988173825745",
+      "type": "Default",
+      "timestamp": "2026-08-22T18:13:26.000+00:00",
+      "content": "I can explain the slow request verbally but my notes still look like a maze 👍",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1540786395021313746",
+      "type": "Reply",
+      "timestamp": "2026-08-22T18:15:03.000+00:00",
+      "content": "Repro note: bring the tiny slow request example to the noticeboard tomorrow morning",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1540785988173825745",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1540786801868801747",
+      "type": "Reply",
+      "timestamp": "2026-08-22T18:16:40.000+00:00",
+      "content": "will do, the white notebook has the slow request sketch",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1540786395021313746",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1540787208716289748",
+      "type": "Reply",
+      "timestamp": "2026-08-22T18:18:17.000+00:00",
+      "content": "Repro note: nice, one the slow request diagram and then a break for plain water 🙂",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1540786801868801747",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1542941680074753789",
+      "type": "Default",
+      "timestamp": "2026-08-28T16:59:23.000+00:00",
+      "content": "pushed a small patch for the offline start, leaving the bigger change for later",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1542942086922241790",
+      "type": "Reply",
+      "timestamp": "2026-08-28T17:01:00.000+00:00",
+      "content": "Check: can you put the offline start in the reproduction notes before the screen share during the long break? 🙂",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1542941680074753789",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1542942493769729791",
+      "type": "Reply",
+      "timestamp": "2026-08-28T17:02:37.000+00:00",
+      "content": "done, the offline start notes include the input and the actual output",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1542942086922241790",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1542942900617217792",
+      "type": "Reply",
+      "timestamp": "2026-08-28T17:04:14.000+00:00",
+      "content": "Check: thanks, I will check the offline start against that input during the long break",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1542942493769729791",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1542950202900481793",
+      "type": "Default",
+      "timestamp": "2026-08-28T17:33:15.000+00:00",
+      "content": "suno, sorry, just noticed the offline start review was on the second sketch, not the latest copy ✨",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1542950609747969794",
+      "type": "Reply",
+      "timestamp": "2026-08-28T17:34:52.000+00:00",
+      "content": "Repro note: haan dekha, that explains why the offline start looked different in the screen share once the rain stops",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1542950202900481793",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1542951016595457795",
+      "type": "Reply",
+      "timestamp": "2026-08-28T17:36:29.000+00:00",
+      "content": "samajh gaya, moving the comment from the second sketch to the current offline start example now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1542950609747969794",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1542951423442945796",
+      "type": "Reply",
+      "timestamp": "2026-08-28T17:38:06.000+00:00",
+      "content": "Repro note: done hai, right, the second sketch 😅",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1542951016595457795",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1543289123635201797",
+      "type": "Default",
+      "timestamp": "2026-08-29T16:00:00.000+00:00",
+      "content": "First Sarthink demo failed. The question found the Goa cost, but the citation opened the previous message after we sorted the merged results.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1543289471762433798",
+      "type": "Reply",
+      "timestamp": "2026-08-29T16:01:23.000+00:00",
+      "content": "Reproduced it: citation numbers were tied to list positions, then the UI sorted the messages differently.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543289123635201797",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1543289819889665799",
+      "type": "Reply",
+      "timestamp": "2026-08-29T16:02:46.000+00:00",
+      "content": "Freeze extra graph effects until this is fixed. A nice graph can't compensate for a wrong source.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543289471762433798",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1543290168016897800",
+      "type": "Reply",
+      "timestamp": "2026-08-29T16:04:09.000+00:00",
+      "content": "I'll attach citations to stable message IDs and resolve them after the display sort.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543289819889665799",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1543678011113473805",
+      "type": "Default",
+      "timestamp": "2026-08-30T17:45:18.000+00:00",
+      "content": "Check: pushed a small patch for the repeated click, leaving the bigger change for later",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1543678417960961806",
+      "type": "Reply",
+      "timestamp": "2026-08-30T17:46:55.000+00:00",
+      "content": "can you put the repeated click in the reproduction notes before the screen share once the rain stops?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543678011113473805",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1543678824808449807",
+      "type": "Reply",
+      "timestamp": "2026-08-30T17:48:32.000+00:00",
+      "content": "Check: done, the repeated click notes include the input and the actual output",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543678417960961806",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1543679231655937808",
+      "type": "Reply",
+      "timestamp": "2026-08-30T17:50:09.000+00:00",
+      "content": "the repeated click, sounds good",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543678824808449807",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1543949349027841809",
+      "type": "Default",
+      "timestamp": "2026-08-31T11:43:30.000+00:00",
+      "content": "Would you have a minute for error banner in my local prototype, where the raw exception is hard to understand?",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1543949755875329810",
+      "type": "Reply",
+      "timestamp": "2026-08-31T11:45:07.000+00:00",
+      "content": "Check: about error banner from my local prototype — show a useful action beside the error summary, then send the result.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543949349027841809",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1543950162722817811",
+      "type": "Reply",
+      "timestamp": "2026-08-31T11:46:44.000+00:00",
+      "content": "Back with the my local prototype result for error banner: the banner explains what the user can try.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543949755875329810",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1543950569570305812",
+      "type": "Reply",
+      "timestamp": "2026-08-31T11:48:21.000+00:00",
+      "content": "send the error-state screenshot?",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1543950162722817811",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1544010837524481817",
+      "type": "Default",
+      "timestamp": "2026-08-31T15:47:50.000+00:00",
+      "content": "I can explain the duplicate row verbally but my notes still look like a maze",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1544011244371969818",
+      "type": "Reply",
+      "timestamp": "2026-08-31T15:49:27.000+00:00",
+      "content": "Repro note: bring the tiny duplicate row example to the bookshop window during the long break",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1544010837524481817",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1544011651219457819",
+      "type": "Reply",
+      "timestamp": "2026-08-31T15:51:04.000+00:00",
+      "content": "will do, the white notebook has the duplicate row sketch",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1544011244371969818",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1544012058066945820",
+      "type": "Reply",
+      "timestamp": "2026-08-31T15:52:41.000+00:00",
+      "content": "Repro note: nice, one the duplicate row diagram and then a break for nimbu paani",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1544011651219457819",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1546214172524545840",
+      "type": "Default",
+      "timestamp": "2026-09-06T17:43:06.000+00:00",
+      "content": "Can you look at message sorter for the import exercise? two equal timestamps exchange places.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1546214579372033841",
+      "type": "Reply",
+      "timestamp": "2026-09-06T17:44:43.000+00:00",
+      "content": "Check: on the import exercise, my suggestion for message sorter is simple: use the source ID as a stable tie-breaker. 🙂",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1546214172524545840",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1546214986219521842",
+      "type": "Reply",
+      "timestamp": "2026-09-06T17:46:20.000+00:00",
+      "content": "Back with the import exercise result for message sorter: the equal-time rows keep their order.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1546214579372033841",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1546215393067009843",
+      "type": "Reply",
+      "timestamp": "2026-09-06T17:47:57.000+00:00",
+      "content": "before-and-after output makes sense now",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1546214986219521842",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1547470412709889848",
+      "type": "Default",
+      "timestamp": "2026-09-10T04:54:57.000+00:00",
+      "content": "Something odd in the draft patch: CSV writer has a snag — a comma splits one message into two columns.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1547470819557377849",
+      "type": "Reply",
+      "timestamp": "2026-09-10T04:56:34.000+00:00",
+      "content": "Check: with CSV writer in the draft patch, maybe let the CSV writer quote complete field values before changing anything else.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1547470412709889848",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1547471226404865850",
+      "type": "Reply",
+      "timestamp": "2026-09-10T04:58:11.000+00:00",
+      "content": "That helped with CSV writer from the draft patch: the comma remains inside one cell.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1547470819557377849",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1547471633252353851",
+      "type": "Reply",
+      "timestamp": "2026-09-10T04:59:48.000+00:00",
+      "content": "Check: please save the round-trip row alongside CSV writer in the draft patch.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1547471226404865850",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1548027730853889864",
+      "type": "Default",
+      "timestamp": "2026-09-11T17:49:32.000+00:00",
+      "content": "sorry, just noticed the cancelled dialog review was on the quieter version, not the latest copy",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1548028137701377865",
+      "type": "Reply",
+      "timestamp": "2026-09-11T17:51:09.000+00:00",
+      "content": "Repro note: that explains why the cancelled dialog looked different in the screen share during the long break",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1548027730853889864",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1548028544548865866",
+      "type": "Reply",
+      "timestamp": "2026-09-11T17:52:46.000+00:00",
+      "content": "moving the comment from the quieter version to the current cancelled dialog example now",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1548028137701377865",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1548028951396353867",
+      "type": "Reply",
+      "timestamp": "2026-09-11T17:54:23.000+00:00",
+      "content": "Repro note: leave a pointer in the quieter version so the next reviewer can find the current cancelled dialog notes",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1548028544548865866",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1548317255270401868",
+      "type": "Default",
+      "timestamp": "2026-09-12T13:00:00.000+00:00",
+      "content": "Official results for CampusForge 2026: Sarthink placed third out of 42 teams.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1548317603397633869",
+      "type": "Reply",
+      "timestamp": "2026-09-12T13:01:23.000+00:00",
+      "content": "Third! The judges asked the Goa total and the photography change question, and both citations opened the right messages.",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1548317255270401868",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1548317951524865870",
+      "type": "Reply",
+      "timestamp": "2026-09-12T13:02:46.000+00:00",
+      "content": "Team was Aarav, Kabir Rao and Sana Ali. Write that before someone credits audio-plugin Kabir again.",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1548317603397633869",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1548318299652097871",
+      "type": "Reply",
+      "timestamp": "2026-09-12T13:04:09.000+00:00",
+      "content": "The unanswered-fact example also worked: we said there was no recorded information.",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1548317951524865870",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1549776495575041884",
+      "type": "Default",
+      "timestamp": "2026-09-16T13:38:30.000+00:00",
+      "content": "Check: sorry, just noticed the offline start review was on the uncropped frame, not the latest copy",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1549776902422529885",
+      "type": "Reply",
+      "timestamp": "2026-09-16T13:40:07.000+00:00",
+      "content": "that explains why the offline start looked different in the screen share at the weekend 😂",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1549776495575041884",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1549777309270017886",
+      "type": "Reply",
+      "timestamp": "2026-09-16T13:41:44.000+00:00",
+      "content": "Check: moving the comment from the uncropped frame to the current offline start example now",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1549776902422529885",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1549777716117505887",
+      "type": "Reply",
+      "timestamp": "2026-09-16T13:43:21.000+00:00",
+      "content": "leave a pointer in the uncropped frame so the next reviewer can find the current offline start notes",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1549777309270017886",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1551187551715329892",
+      "type": "Default",
+      "timestamp": "2026-09-20T11:05:32.000+00:00",
+      "content": "Check: i can explain the renamed file verbally but my notes still look like a maze",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1551187958562817893",
+      "type": "Reply",
+      "timestamp": "2026-09-20T11:07:09.000+00:00",
+      "content": "bring the tiny renamed file example to the library steps after the lab",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1551187551715329892",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1551188365410305894",
+      "type": "Reply",
+      "timestamp": "2026-09-20T11:08:46.000+00:00",
+      "content": "Check: will do, the red notebook has the renamed file sketch",
+      "author": {
+        "id": "401234567890123403",
+        "name": "kabirbuilds",
+        "username": "kabirbuilds",
+        "nickname": "Kabir",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1551187958562817893",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1551188772257793895",
+      "type": "Reply",
+      "timestamp": "2026-09-20T11:10:23.000+00:00",
+      "content": "nice, one the renamed file diagram and then a break for filter coffee",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1551188365410305894",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1551285102837761896",
+      "type": "Default",
+      "timestamp": "2026-09-20T17:33:10.000+00:00",
+      "content": "pushed a small patch for the duplicate row, leaving the bigger change for later",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": []
+    },
+    {
+      "id": "1551285509685249897",
+      "type": "Reply",
+      "timestamp": "2026-09-20T17:34:47.000+00:00",
+      "content": "Repro note: can you put the duplicate row in the reproduction notes before the screen share during the long break? 👍",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1551285102837761896",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1551285916532737898",
+      "type": "Reply",
+      "timestamp": "2026-09-20T17:36:24.000+00:00",
+      "content": "done, the duplicate row notes include the input and the actual output",
+      "author": {
+        "id": "301234567890123456",
+        "name": "aaravdev",
+        "username": "aaravdev",
+        "nickname": "Aarav",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1551285509685249897",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    },
+    {
+      "id": "1551286323380225899",
+      "type": "Reply",
+      "timestamp": "2026-09-20T17:38:01.000+00:00",
+      "content": "Repro note: yep, the duplicate row",
+      "author": {
+        "id": "401234567890123407",
+        "name": "sana_tests",
+        "username": "sana_tests",
+        "nickname": "Sana",
+        "isBot": false
+      },
+      "attachments": [],
+      "embeds": [],
+      "reactions": [],
+      "reference": {
+        "messageId": "1551285916532737898",
+        "channelId": "901234567890123458",
+        "guildId": "801234567890123456"
+      }
+    }
+  ],
+  "messageCount": 215
+}

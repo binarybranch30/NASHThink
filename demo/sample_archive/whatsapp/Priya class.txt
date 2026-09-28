@@ -1,0 +1,65 @@
+1/21/24, 4:41 PM - Priya class: the printer ate the first draft right before I left for the corner tea stall
+1/21/24, 4:43 PM - Aarav: is the file safe, or did the first draft only exist on that printout?
+1/21/24, 4:44 PM - Priya class: file is safe, the orange folder has the first draft and the backup
+1/21/24, 4:46 PM - Aarav: okay, orange then
+3/11/24, 10:44 AM - Priya class: done with the example in the wide crop, going for buttermilk now
+3/11/24, 10:45 AM - Aarav: did the confusing step in the wide crop finally make sense?
+3/11/24, 10:47 AM - Priya class: yes, drawing it in the brown notebook helped more than rereading the wide crop
+3/11/24, 10:48 AM - Aarav: yep, the wide crop
+3/12/24, 12:42 AM - Aarav: done with the example in the darker version, going for lemon tea now 😭
+3/12/24, 12:44 AM - Priya class: did the confusing step in the darker version finally make sense?
+3/12/24, 12:46 AM - Aarav: yes, drawing it in the grey notebook helped more than rereading the darker version
+3/12/24, 12:47 AM - Priya class: save that drawing beside the darker version, enjoy the lemon tea break
+4/12/24, 5:46 PM - Aarav: Sorry, saw this late; on OS scheduling table from the DBMS session, the waiting times do not match the timeline.
+4/12/24, 5:47 PM - Priya class: Small experiment for the DBMS session: mark arrivals on a separate line first when revisiting OS scheduling table. 🫠
+4/12/24, 5:49 PM - Aarav: Finished checking OS scheduling table in the DBMS session and, yes, the table agrees with the timeline.
+4/12/24, 5:50 PM - Priya class: No need to reopen OS scheduling table in the DBMS session tonight; just save the worked timeline.
+4/13/24, 8:13 PM - Priya class: I got stuck on OS scheduling table while looking at the worked-example page; the waiting times do not match the timeline.
+4/13/24, 8:15 PM - Aarav: For the OS scheduling table question from the worked-example page, mark arrivals on a separate line first and compare the two versions.
+4/13/24, 8:16 PM - Priya class: Update on OS scheduling table in the worked-example page: the table agrees with the timeline.
+4/13/24, 8:18 PM - Aarav: worked timeline saved?
+4/21/24, 11:24 PM - Aarav: 🤔😭
+7/9/24, 7:03 PM - Aarav: Quick check on DBMS example in the evening notes: the dependency arrows are hard to follow. 🫠
+7/9/24, 7:05 PM - Priya class: About DBMS example from the evening notes — name the attributes before drawing the arrows, then send the result.
+7/9/24, 7:06 PM - Aarav: Saving the revised DBMS example from the evening notes, since the decomposition is easier to explain.
+7/9/24, 7:08 PM - Priya class: For the next pass at the evening notes, leave the labelled table with DBMS example.
+8/29/24, 12:20 AM - Priya class: suno, at the covered walkway with the blue notebook, starting the revision bit now
+8/29/24, 12:22 AM - Aarav: haan dekha, which part is first in that blue notebook today?
+8/29/24, 12:24 AM - Priya class: samajh gaya, one worked example first, then checking the mistakes beside the blue margin
+8/29/24, 12:25 AM - Aarav: done hai, the covered walkway, noted 👍
+11/7/24, 8:40 PM - Aarav: done with the example in the first draft, going for plain water now
+11/7/24, 8:42 PM - Priya class: did the confusing step in the first draft finally make sense?
+11/7/24, 8:43 PM - Aarav: yes, drawing it in the red notebook helped more than rereading the first draft
+11/7/24, 8:45 PM - Priya class: got it — the first draft
+12/17/24, 8:21 PM - Aarav: yaar, at the bus shelter with the purple notebook, starting the revision bit now
+12/17/24, 8:22 PM - Priya class: haan, which part is first in that purple notebook today?
+12/17/24, 8:24 PM - Aarav: achha, one worked example first, then checking the mistakes beside the purple margin
+12/17/24, 8:26 PM - Priya class: theek h, okay, the bus shelter then
+12/25/24, 10:48 AM - Priya class: the printer ate the first draft right before I left for the stair landing
+12/25/24, 10:50 AM - Aarav: is the file safe, or did the first draft only exist on that printout?
+12/25/24, 10:51 AM - Priya class: file is safe, the white folder has the first draft and the backup
+12/25/24, 10:53 AM - Aarav: the stair landing, noted 👍
+1/12/25, 9:46 PM - Aarav: at the covered walkway with the yellow notebook, starting the revision bit now
+1/12/25, 9:47 PM - Priya class: which part is first in that yellow notebook today?
+1/12/25, 9:49 PM - Aarav: one worked example first, then checking the mistakes beside the yellow margin 😅
+1/12/25, 9:51 PM - Priya class: sounds manageable, I will be near the covered walkway during the long break if you need the notes
+12/9/25, 9:16 PM - Priya class: done with the example in the test export, going for ginger tea now
+12/9/25, 9:18 PM - Aarav: did the confusing step in the test export finally make sense?
+12/9/25, 9:20 PM - Priya class: yes, drawing it in the teal notebook helped more than rereading the test export
+12/9/25, 9:21 PM - Aarav: save that drawing beside the test export, enjoy the ginger tea break
+4/28/26, 12:25 AM - Aarav: Nearly done with DBMS example for the second attempt, except the dependency arrows are hard to follow.
+4/28/26, 12:26 AM - Priya class: I checked the second attempt; for DBMS example, start by trying to name the attributes before drawing the arrows.
+4/28/26, 12:28 AM - Aarav: The difference in the second attempt is visible now; for DBMS example, the decomposition is easier to explain.
+4/28/26, 12:30 AM - Priya class: send the labelled table?
+5/1/26, 1:46 AM - Aarav: the printer ate the wide crop right before I left for the campus gate
+5/1/26, 1:47 AM - Priya class: is the file safe, or did the wide crop only exist on that printout?
+5/1/26, 1:49 AM - Aarav: file is safe, the pink folder has the wide crop and the backup
+5/1/26, 1:51 AM - Priya class: yep, the campus gate
+5/8/26, 4:42 PM - Aarav: done with the example in the plain version, going for chai now 📌
+5/8/26, 4:43 PM - Priya class: did the confusing step in the plain version finally make sense?
+5/8/26, 4:45 PM - Aarav: yes, drawing it in the teal notebook helped more than rereading the plain version
+5/8/26, 4:47 PM - Priya class: save that drawing beside the plain version, enjoy the chai break
+6/7/26, 4:01 PM - Priya class: yaar, done with the example in the uncropped frame, going for lemon tea now
+6/7/26, 4:02 PM - Aarav: haan, did the confusing step in the uncropped frame finally make sense?
+6/7/26, 4:04 PM - Priya class: achha, yes, drawing it in the green notebook helped more than rereading the uncropped frame 🙂
+6/7/26, 4:05 PM - Aarav: theek h, right, the uncropped frame 😅
