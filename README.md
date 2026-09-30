@@ -3,7 +3,7 @@
 <h1 align="center">NASH Think</h1>
 
 <p align="center"><b>A sovereign second brain for the life hidden in your conversations.</b><br>
-Team NASH (SAI034) · ASYNC'26 · Track 1: Sovereign AI</p>
+Team NASH (ASYNC007) · ASYNC'26 · Track 1: Sovereign AI</p>
 
 <p align="center">
   <a href="https://github.com/binarybranch30/nashthink/actions/workflows/tests.yml"><img src="https://github.com/binarybranch30/nashthink/actions/workflows/tests.yml/badge.svg" alt="tests"></a>
@@ -396,7 +396,7 @@ sarthink_graph.html the web app (single file, Three.js)
 
 ## Team NASH
 
-Built for **ASYNC'26**, Track 1: Sovereign AI (team ID SAI034).
+Built for **ASYNC'26**, Track 1: Sovereign AI (team ID ASYNC007).
 
 | Name | Role |
 |---|---|
