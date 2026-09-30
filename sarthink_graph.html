@@ -1869,6 +1869,13 @@
       #gp-src-pop .sfoot { border-top: 1px solid rgba(255, 255, 255, .07); margin-top: 8px; padding-top: 8px; font-size: .72rem; color: #8b93a7; line-height: 1.6; }
       body[data-view="home"] #labels { display: none; }
       body[data-view="home"] #ws { z-index: 260; left: 6px; bottom: 10px; }
+      /* Insights opens in the chat column; Reminders slides over the Graph View. Both sit above the panel's cover. */
+      body[data-view="home"] #insights { left: calc(var(--railw) + 16px); right: calc(var(--gpw) + 48px); width: auto;
+        top: calc(var(--tb) + 16px); bottom: 16px; transform: none; z-index: 245; }
+      body[data-view="home"] #insights[hidden] { transform: translateY(10px); }
+      body[data-view="home"] #reminders { top: calc(var(--tb) + 16px); right: 16px; bottom: 16px; width: var(--gpw); z-index: 245; }
+      body[data-view="home"][data-reminders="open"] #home { opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
+      body[data-view="home"][data-reminders="open"] #btn-explore { display: none; }
       body[data-view="home"] #ws-pop { position: fixed; top: calc(var(--tb) + 8px); right: 16px; left: auto; bottom: auto; z-index: 400; }
     }
     #btn-avatar[hidden] { display: none !important; }
