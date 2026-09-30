@@ -56,3 +56,7 @@ logs/
 
 # The fictional sample archive (Aarav Mehta) is safe to publish: keep its exports despite the rules above
 !demo/sample_archive/**
+
+# Reminders: local settings (config/reminders.json.example is the template); stores and Google tokens
+# live under processed_data/reminders/, already ignored above
+config/reminders.json

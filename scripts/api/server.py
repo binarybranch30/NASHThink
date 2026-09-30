@@ -26,6 +26,8 @@ Endpoints:
 """
 import argparse
 import asyncio
+import hmac
+import json
 import os
 import re
 import sys
@@ -37,7 +39,7 @@ from typing import List, Optional
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.concurrency import run_in_threadpool
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
+from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, Response, StreamingResponse
 from pydantic import BaseModel, Field, field_validator
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -45,9 +47,11 @@ REPO_ROOT = Path(os.path.dirname(os.path.dirname(SCRIPT_DIR)))
 sys.path.append(str(REPO_ROOT / "scripts" / "semantic"))
 
 import answer_writer  # noqa: E402
+import calendar_google  # noqa: E402
 import insights  # noqa: E402
 import llm_config  # noqa: E402
 import people  # noqa: E402
+import reminders  # noqa: E402
 import memory_brief  # noqa: E402
 import search  # noqa: E402
 import workspaces  # noqa: E402
@@ -377,19 +381,38 @@ def parse_date_param(name, value, end=False):
         raise ApiError(422, "invalid_request", f"{name}: must be an ISO date (YYYY-MM-DD) or datetime")
 
 
+class ReminderAdd(BaseModel):
+    title: str = Field(..., min_length=1, max_length=200)
+    due: str = Field(..., max_length=40, description="ISO date or datetime (a plain date means midnight UTC unless all_day)")
+    all_day: bool = False
+    kind: Optional[str] = Field(None, max_length=20)
+
+
+class ReminderChange(BaseModel):
+    action: str = Field(..., max_length=10, description="done | open | dismiss | snooze | edit")
+    until: Optional[str] = Field(None, max_length=40, description="snooze: ISO datetime")
+    title: Optional[str] = Field(None, max_length=200)
+    due: Optional[str] = Field(None, max_length=40)
+    all_day: Optional[bool] = None
+
+
 class UnlockRequest(BaseModel):
     workspace: str = Field(..., min_length=1, max_length=40)
     password: str = Field("", max_length=200)
 
 
 def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insights_service=None, people_service=None,
-               llm_profiles=None, llm_transport=None, spaces=None):
+               llm_profiles=None, llm_transport=None, spaces=None, reminders_service=None):
     """`spaces`: a workspaces.WorkspaceSet. Without it the server has one workspace built from the other arguments."""
     if spaces is None:
         service = service or SearchService()
         insights_service = insights_service or insights.InsightsService()
         people_service = people_service or people.PeopleService(insights_service.db_path, insights_service.identity_map)
-        only = workspaces.Workspace("default", None, service, insights_service, people_service, Path(graph_dir))
+        rem = reminders_service or reminders.RemindersService(insights_service.db_path, insights_service.identity_map,
+                                                              reminders.STORE_DIR / "default.db")
+        only = workspaces.Workspace("default", None, service, insights_service, people_service, Path(graph_dir),
+                                    reminders=rem, calendar=calendar_google.GoogleCalendarSync(
+                                        rem, rem.store_path.with_suffix(".google.json")))
         spaces = workspaces.WorkspaceSet({"default": only}, "default")
 
     def ws_of(request):
@@ -606,6 +629,160 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
         plats, start, end = person_filters(platforms, date_from, date_to)
         return person_call(ws_of(request).people.messages, node_id, thread, plats, start, end, cursor, limit)
 
+    # ── Reminders found in the chats (see reminders.py) ──
+    def reminders_of(request):
+        ws = ws_of(request)
+        if ws.reminders is None:
+            raise ApiError(503, "reminders_unavailable", "Reminders are not set up for this workspace.")
+        return ws
+
+    def reminders_writable(ws):
+        """The public default workspace of a multi-workspace server is read-only: visitors keep their own
+        done/snooze state in the browser instead of changing everyone's."""
+        if spaces.switchable and ws.id == spaces.default:
+            raise ApiError(403, "read_only", "Sample data is read-only here; your changes are kept in this browser.")
+
+    def reminders_call(fn, *args, **kwargs):
+        try:
+            return fn(*args, **kwargs)
+        except reminders.BadRequest as e:
+            raise ApiError(422, "invalid_request", str(e))
+        except reminders.ReminderNotFound as e:
+            raise ApiError(404, "not_found", str(e))
+        except reminders.RemindersUnavailable as e:
+            raise ApiError(503, "database_unavailable", str(e))
+
+    def kick_sync():
+        """Something changed: let the background worker update Google Calendar soon."""
+        worker = getattr(app.state, "reminder_worker", None)
+        if worker:
+            worker.kick()
+
+    @app.get("/api/reminders")
+    def list_reminders(request: Request, platforms: Optional[List[str]] = Query(None)):
+        """Reminders grouped for the panel (overdue, today, week, later, history, done) and the badge count."""
+        ws = reminders_of(request)
+        out = reminders_call(ws.reminders.list, parse_platforms(platforms))
+        out["writable"] = not (spaces.switchable and ws.id == spaces.default)
+        return out
+
+    @app.post("/api/reminders")
+    def add_reminder(req: ReminderAdd, request: Request):
+        ws = reminders_of(request)
+        reminders_writable(ws)
+        due = parse_date_param("due", req.due)
+        if due is None:
+            raise ApiError(422, "invalid_request", "due: required")
+        out = reminders_call(ws.reminders.add, req.title, int(due.timestamp()), req.all_day, req.kind or "reminder")
+        kick_sync()
+        return out
+
+    @app.post("/api/reminders/scan")
+    async def scan_reminders(request: Request, full: bool = False):
+        """Read new messages for reminders now (the server also does this on its own)."""
+        ws = reminders_of(request)
+        if full:
+            reminders_writable(ws)
+        return await run_in_threadpool(reminders_call, ws.reminders.scan, full)
+
+    @app.get("/api/reminders.ics", include_in_schema=False)
+    def reminders_ics(request: Request, feed: Optional[str] = Query(None, max_length=100)):
+        """The upcoming reminders as a calendar file. With ?feed=<token> (from /api/reminders/feed) calendar apps
+        can subscribe to it without the workspace cookie."""
+        ws = None
+        if feed:
+            for w in spaces.spaces.values():
+                token = w.reminders.feed_token(create=False) if w.reminders else None
+                if token and hmac.compare_digest(token, feed):
+                    ws = w
+                    break
+            if ws is None:
+                raise ApiError(404, "not_found", "Unknown calendar link.")
+        else:
+            ws = reminders_of(request)
+        body = reminders_call(ws.reminders.to_ics, f"NASH Think · {ws.label or 'reminders'}")
+        headers = {"Cache-Control": "no-store"}
+        if not feed:
+            headers["Content-Disposition"] = 'attachment; filename="nashthink-reminders.ics"'
+        return Response(body, media_type="text/calendar; charset=utf-8", headers=headers)
+
+    @app.get("/api/reminders/feed")
+    def reminders_feed(request: Request):
+        """The secret subscribe link for this workspace's calendar."""
+        ws = reminders_of(request)
+        reminders_writable(ws)
+        return {"path": f"/api/reminders.ics?feed={ws.reminders.feed_token()}"}
+
+    @app.post("/api/reminders/{rid}")
+    def change_reminder(rid: int, req: ReminderChange, request: Request):
+        """done / open / dismiss / snooze (until) / edit (title, due, all_day)."""
+        ws = reminders_of(request)
+        reminders_writable(ws)
+        until = parse_date_param("until", req.until) if req.until else None
+        due = parse_date_param("due", req.due) if req.due else None
+        out = reminders_call(ws.reminders.update, rid, req.action, int(until.timestamp()) if until else None,
+                              req.title, int(due.timestamp()) if due else None, req.all_day)
+        kick_sync()
+        return out
+
+    # ── Google Calendar: automatic sync of the reminders (see calendar_google.py) ──
+    def calendar_of(request):
+        ws = reminders_of(request)
+        if ws.calendar is None:
+            raise ApiError(503, "calendar_unavailable", "Calendar sync is not set up for this workspace.")
+        return ws
+
+    def calendar_call(fn, *args):
+        try:
+            return fn(*args)
+        except calendar_google.CalendarError as e:
+            status = {"not_configured": 503, "not_connected": 409, "bad_state": 400, "reconnect": 409}.get(e.code, 502)
+            raise ApiError(status, e.code, e.message)
+
+    @app.get("/api/calendar/status")
+    def calendar_status(request: Request):
+        ws = calendar_of(request)
+        return {**ws.calendar.status(), "allowed": not (spaces.switchable and ws.id == spaces.default)}
+
+    @app.get("/api/calendar/google/connect", include_in_schema=False)
+    def calendar_connect(request: Request):
+        """Sends the browser to Google to allow access; Google sends it back to /api/calendar/google/callback."""
+        ws = calendar_of(request)
+        reminders_writable(ws)
+        host = request.url.hostname or ""
+        if host not in ("127.0.0.1", "localhost", "::1"):
+            raise ApiError(400, "not_loopback", "Open NASH Think at http://127.0.0.1:<port>/ (through an SSH tunnel if it runs on a server) to connect Google.")
+        redirect_uri = f"{request.url.scheme}://{request.url.netloc}{calendar_google.CALLBACK_PATH}"
+        return RedirectResponse(calendar_call(ws.calendar.auth_url, redirect_uri), status_code=303)
+
+    @app.get(calendar_google.CALLBACK_PATH, include_in_schema=False)
+    def calendar_callback(state: str = Query("", max_length=200), code: str = Query("", max_length=2000),
+                          error: str = Query("", max_length=200)):
+        # Google's redirect carries no cookie (SameSite=Strict), so the one-time state names the workspace.
+        ws = next((w for w in spaces.spaces.values() if w.calendar and w.calendar.owns_state(state)), None) if state else None
+        if error or ws is None or not code:
+            reason = "cancelled" if error == "access_denied" else "failed"
+            return RedirectResponse(f"/?calendar={reason}", status_code=303)
+        try:
+            ws.calendar.finish(state, code)
+        except calendar_google.CalendarError:
+            return RedirectResponse("/?calendar=failed", status_code=303)
+        kick_sync()
+        return RedirectResponse("/?calendar=connected", status_code=303)
+
+    @app.post("/api/calendar/google/sync")
+    async def calendar_sync(request: Request):
+        ws = calendar_of(request)
+        reminders_writable(ws)
+        return await run_in_threadpool(calendar_call, ws.calendar.sync)
+
+    @app.post("/api/calendar/google/disconnect")
+    def calendar_disconnect(request: Request):
+        ws = calendar_of(request)
+        reminders_writable(ws)
+        ws.calendar.disconnect()
+        return ws.calendar.status()
+
     @app.get("/", include_in_schema=False)
     @app.get("/sarthink_graph.html", include_in_schema=False)
     def graph_page():
@@ -647,6 +824,72 @@ def clean_examples(value):
     return {k: v for k, v in out.items() if v} or None
 
 
+def reminders_for(wid, ins, cfg=None):
+    """A workspace's RemindersService. cfg (workspaces.json "reminders"): tz, now ("clock" | "latest_message"),
+    lookback_days (null = the whole archive on the first scan)."""
+    cfg = cfg if isinstance(cfg, dict) else {}
+    safe = re.sub(r"[^A-Za-z0-9_-]", "_", wid)[:40] or "default"
+    rem = reminders.RemindersService(
+        ins.db_path, ins.identity_map, reminders.STORE_DIR / f"{safe}.db", tz=cfg.get("tz") or reminders.reminder_rules.DEFAULT_TZ,
+        now=cfg.get("now") if cfg.get("now") in ("clock", "latest_message") else "clock",
+        lookback_days=cfg.get("lookback_days", reminders.DEFAULT_LOOKBACK_DAYS))
+    return rem, calendar_google.GoogleCalendarSync(rem, rem.store_path.with_suffix(".google.json"))
+
+
+class ReminderWorker:
+    """Background job: every `interval_s`, read new messages for reminders in each workspace, then bring each
+    connected Google Calendar up to date. kick() runs it soon after a change (done, snooze, add...)."""
+
+    def __init__(self, spaces, interval_s=900, first_delay_s=60):
+        self.spaces, self.interval_s, self.first_delay_s = spaces, interval_s, first_delay_s
+        self._wake = threading.Event()
+        self._kicked_at = 0.0
+
+    def kick(self):
+        self._kicked_at = time.time()
+        self._wake.set()
+
+    def run_once(self):
+        for ws in self.spaces.spaces.values():
+            if ws.reminders is None:
+                continue
+            try:
+                ws.reminders.scan()
+            except Exception as e:      # a missing database must not stop the others
+                print(f"Sarthink: reminders scan ({ws.id}) failed: {e}", file=sys.stderr)
+                continue
+            if ws.calendar is not None and ws.calendar.connected():
+                try:
+                    ws.calendar.sync()
+                except Exception as e:
+                    print(f"Sarthink: Google Calendar sync ({ws.id}) failed: {e}", file=sys.stderr)
+
+    def _loop(self):
+        self._wake.wait(self.first_delay_s)
+        while True:
+            self._wake.clear()
+            if self._kicked_at:
+                time.sleep(5)               # let a burst of clicks settle into one sync
+                self._kicked_at = 0.0
+            self.run_once()
+            self._wake.wait(self.interval_s)
+
+    def start(self):
+        threading.Thread(target=self._loop, name="reminders", daemon=True).start()
+        return self
+
+
+def reminders_settings(path=REPO_ROOT / "config" / "reminders.json"):
+    """config/reminders.json: {"enabled": true, "interval_min": 15}. Missing file: those defaults."""
+    try:
+        cfg = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        cfg = {}
+    interval = cfg.get("interval_min", 15)
+    return {"enabled": cfg.get("enabled", True) is not False,
+            "interval_s": max(60, int(interval * 60)) if isinstance(interval, (int, float)) else 900}
+
+
 def build_spaces(config, table=search.DEFAULT_TABLE):
     """A WorkspaceSet from config/workspaces.json: one set of services per data folder, one shared embedding model."""
     loader, lock = workspaces.shared_model_loader(search.load_model), threading.Lock()
@@ -657,7 +900,7 @@ def build_spaces(config, table=search.DEFAULT_TABLE):
         spaces[wid] = workspaces.Workspace(
             wid, cfg.get("label") or wid, SearchService(paths["lancedb"], table, model_loader=loader, lock=lock),
             ins, people.PeopleService(ins.db_path, ins.identity_map), paths["graph_dir"], cfg.get("password"),
-            clean_examples(cfg.get("examples")))
+            clean_examples(cfg.get("examples")), *reminders_for(wid, ins, cfg.get("reminders")))
     return workspaces.WorkspaceSet(spaces, config["default"])
 
 
@@ -686,6 +929,9 @@ def main(argv=None):
     else:
         ins = insights.InsightsService(args.memory_db)
         app = create_app(SearchService(args.db, args.table), insights_service=ins)
+    settings = reminders_settings()
+    if settings["enabled"]:
+        app.state.reminder_worker = ReminderWorker(app.state.spaces, settings["interval_s"]).start()
     # Warm the unfiltered insights in the background so the first Insights view opens instantly.
     threading.Thread(target=lambda: _quietly(ins.insights), daemon=True).start()
     print(f"Sarthink: http://{args.host}:{args.port}/  (searching table '{args.table}')", file=sys.stderr)
