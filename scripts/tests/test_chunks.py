@@ -1,3 +1,5 @@
+"""Manual look at one chunk per platform from a chunk_builder.py dry run (prints chat text; not an automated test).
+Skips when processed_data/semantic/dry_run_chunks.json hasn't been made (e.g. in CI or a fresh clone)."""
 import json
 import os
 from pathlib import Path
@@ -9,8 +11,8 @@ REPO_ROOT = Path(os.path.dirname(os.path.dirname(SCRIPT_DIR)))
 INPUT_FILE = REPO_ROOT / "processed_data" / "semantic" / "dry_run_chunks.json"
 
 if not INPUT_FILE.exists():
-    print(f"Error: {INPUT_FILE} not found!")
-    exit(1)
+    print(f"skipped: {INPUT_FILE.name} not found (run chunk_builder.py with --dry-run first)")
+    exit(0)
 
 with open(INPUT_FILE, "r") as f:
     chunks = json.load(f)
