@@ -134,7 +134,10 @@ def compute_galaxy_layout(nodes: list[dict], seed: int = LAYOUT_SEED) -> dict[st
     rng = random.Random(seed)
     CLUSTER_K = 5.5
     GROUP_GAP_K = 0.35      # gap between subgroup spheres, relative to their radii
-    PLATFORM_GAP_K = 0.45   # gap between platform spheres, relative to their radii
+    PLATFORM_GAP_K = 0.25   # gap between platform spheres, relative to their radii
+    RADIAL_EXP = 0.4        # 1/3 = even through the volume; higher packs nodes toward each cluster's centre
+    MIN_PLATFORM_FRAC = 0.75  # small apps are spread to at least this share of the biggest app's radius,
+                              # so e.g. Instagram is visible without zooming in next to a huge Reddit
     MIN_GAP = 40
 
     def group_gap(r1, r2):
@@ -168,6 +171,15 @@ def compute_galaxy_layout(nodes: list[dict], seed: int = LAYOUT_SEED) -> dict[st
     p_data.sort(key=lambda x: x[3], reverse=True)
     if not p_data:
         return positions
+
+    # Spread small platforms: scale every group radius (and so the gaps between groups) of a platform whose
+    # sphere is much smaller than the biggest one. Node counts are unchanged; only spacing grows.
+    max_r = max(x[1] for x in p_data)
+    spread = []
+    for p_name, p_r, g_data, total in p_data:
+        k = max(1.0, MIN_PLATFORM_FRAC * max_r / max(p_r, 1e-9))
+        spread.append((p_name, p_r * k, [(g, r * k, gn) for g, r, gn in g_data], total))
+    p_data = spread
     
     # Place platforms
     p_positions = {}
@@ -178,7 +190,9 @@ def compute_galaxy_layout(nodes: list[dict], seed: int = LAYOUT_SEED) -> dict[st
         sats = p_data[1:]
         dirs = fibonacci_3d(len(sats), 1.0)
         for i, (p_name, p_r, _, _) in enumerate(sats):
-            dist = p0_r + p_r + max(MIN_GAP, PLATFORM_GAP_K * (p0_r + p_r))
+            # p_r counts every satellite group, so it overstates how far a cluster really reaches;
+            # 0.7 of it still keeps apps clearly apart while not scattering them across the sky.
+            dist = 0.7 * (p0_r + p_r) + max(MIN_GAP, PLATFORM_GAP_K * (p0_r + p_r))
             p_positions[p_name] = (dirs[i][0]*dist, dirs[i][1]*dist, dirs[i][2]*dist)
             
     # Place groups within platforms
@@ -205,7 +219,7 @@ def compute_galaxy_layout(nodes: list[dict], seed: int = LAYOUT_SEED) -> dict[st
             
             for i, n in enumerate(gnodes_sorted):
                 fraction = i / max(count - 1, 1)
-                r = g_r * (fraction ** 0.55)
+                r = g_r * (fraction ** RADIAL_EXP)
                 
                 cos_phi  = rng.uniform(-1.0, 1.0)
                 sin_phi  = math.sqrt(max(0.0, 1.0 - cos_phi ** 2))
@@ -257,7 +271,7 @@ def _bucket_by_platform(nodes):
             jitter_z  = ring_r * 0.02
 
             pts = fibonacci_sphere_positions(
-                len(gnodes_sorted), ring_r, cx, cy, cz, z_scale=0.9
+                len(gnodes_sorted), ring_r, cx, cy, cz, z_scale=0.45
             )
             for i, n in enumerate(gnodes_sorted):
                 x, y, z = pts[i]

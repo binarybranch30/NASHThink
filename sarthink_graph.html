@@ -188,6 +188,10 @@
 
     .nlabel.sel { color: #fff; font-weight: 600; font-size: .74rem; background: rgba(14, 40, 44, .88); border: 1px solid rgba(127, 195, 196, .6); }
     .nlabel.dimmed { color: rgba(255, 255, 255, .55); }
+    .applabel { position: absolute; left: 0; top: 0; pointer-events: auto; cursor: pointer; border: 0; background: none;
+      font: 600 .66rem/1 inherit; font-family: inherit; letter-spacing: .16em; text-transform: uppercase; padding: 4px 6px;
+      color: var(--c, #c9d0ea); opacity: .72; text-shadow: 0 1px 3px #000, 0 0 10px #000; white-space: nowrap; transition: opacity .2s; }
+    .applabel:hover, .applabel:focus-visible { opacity: 1; text-decoration: underline; text-underline-offset: 4px; outline: none; }
     .nlabel.rest { color: rgba(226, 232, 245, .62); background: none; text-shadow: 0 1px 3px #000, 0 0 8px #000; font-size: .66rem; }
     .nlabel.reading { color: #fff; font-weight: 600; background: rgba(234, 148, 136, .18); border: 1px solid rgba(234, 148, 136, .65); }
     .nlabel.reading::before { content: 'Reading · '; color: var(--coral); font-weight: 500; }
@@ -2587,10 +2591,62 @@
       S.edgesObj.frustumCulled = false;
       S.scene.add(S.edgesObj);
 
+      buildAppLabels();
       frameHome();
       S.camera.position.copy(S.home.position);
       S.controls.target.copy(S.home.target);
       S.controls.update();
+    }
+
+    // One clickable name per app, floating above its cluster: a click flies the camera to that app,
+    // so small clusters (e.g. Instagram next to a huge Reddit) are one click away instead of a long zoom.
+    function buildAppLabels() {
+      const box = $('labels');
+      S.appLabels = [];
+      const byP = new Map();
+      S.nodes.forEach(n => { if (!byP.has(n.platform)) byP.set(n.platform, []); byP.get(n.platform).push(n.i); });
+      for (const [p, idxs] of byP) {
+        if (idxs.length < 3) continue;
+        // Anchor on the app's biggest sub-group (people, threads, DMs...): the median of the whole app can
+        // fall in the empty space between its sub-groups.
+        const groups = new Map();
+        idxs.forEach(i => { const g = S.nodes[i].group; groups.set(g, (groups.get(g) || []).concat(i)); });
+        const core = [...groups.values()].sort((x, y) => y.length - x.length)[0];
+        const med = k => { const v = core.map(i => S.nodes[i][k]).sort((a, b) => a - b); return v[v.length >> 1]; };
+        const c = new THREE.Vector3(med('x'), med('y'), med('z'));
+        const d = core.map(i => Math.hypot(S.nodes[i].x - c.x, S.nodes[i].y - c.y, S.nodes[i].z - c.z)).sort((a, b) => a - b);
+        const el = document.createElement('button');
+        el.type = 'button'; el.className = 'applabel';
+        el.textContent = platformName(p);
+        el.title = `Show ${platformName(p)} (${fmtN(idxs.length)} people and conversations)`;
+        el.style.setProperty('--c', PLATFORM_COLORS[p] || '#c9d0ea');
+        el.addEventListener('click', () => focusPlatform(p));
+        box.appendChild(el);
+        S.appLabels.push({ el, p, idxs, c, r: d[Math.floor(d.length * 0.8)] || 0 });
+      }
+    }
+
+    function focusPlatform(p) {
+      const lab = (S.appLabels || []).find(a => a.p === p);
+      if (!lab) return;
+      const vis = lab.idxs.filter(i => S.nodeVis[i]);
+      flyToNodes(vis.length ? vis : lab.idxs, 0.02);
+    }
+
+    function placeAppLabels() {
+      if (!S.appLabels) return;
+      const quiet = S.selected >= 0 || !!S.sem.set || document.body.dataset.view !== 'graph';
+      const W = window.innerWidth, H = window.innerHeight, up = new THREE.Vector3(0, 1, 0).applyQuaternion(S.camera.quaternion);
+      const v = new THREE.Vector3();
+      S.appTaken = [];
+      for (const a of S.appLabels) {
+        const shown = !quiet && S.filter.platforms.has(a.p);
+        v.copy(a.c).addScaledVector(up, a.r * 1.05 + S.bounds.unit * 4).project(S.camera);
+        const x = (v.x + 1) / 2 * W, y = (1 - v.y) / 2 * H;
+        const ok = shown && v.z < 1 && x > 40 && x < W - 40 && y > 80 && y < H - 40;
+        a.el.style.display = ok ? '' : 'none';
+        if (ok) { a.el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -100%)`; S.appTaken.push([x, y - 8]); }
+      }
     }
 
     // Home camera: the whole layout from a slightly elevated 3/4 angle, fitted to the space the current
@@ -3494,8 +3550,10 @@
 
     function soloPlatform(p) {
       const f = S.filter.platforms;
-      S.filter.platforms = (f.size === 1 && f.has(p)) ? new Set(S.platforms.map(x => x.key)) : new Set([p]);
+      const solo = !(f.size === 1 && f.has(p));
+      S.filter.platforms = solo ? new Set([p]) : new Set(S.platforms.map(x => x.key));
       syncLegend(); refreshVisuals();
+      if (solo) focusPlatform(p); else flyHome();
     }
 
     function toggleKind(k) {
@@ -3661,7 +3719,7 @@
         }
         add(S.hover, S.hover === S.selected ? 'sel' : '');
         const box = $('labels');
-        box.innerHTML = '';
+        box.querySelectorAll('.nlabel').forEach(el => el.remove());
         S.labelEls = want.map(w => {
           const el = document.createElement('div');
           const n = S.nodes[w.i];
@@ -3672,7 +3730,7 @@
         });
       }
       if (!S.labelEls.length) return;
-      const W = window.innerWidth, H = window.innerHeight, v = new THREE.Vector3(), taken = [];
+      const W = window.innerWidth, H = window.innerHeight, v = new THREE.Vector3(), taken = [...(S.appTaken || [])];   // app names first
       const scale = S.uniforms.uScale.value;
       for (const { el, i } of S.labelEls) {
         const n = S.nodes[i];
@@ -3705,6 +3763,7 @@
       if (!(moved || tweening || S.dirty || S.controls.autoRotate || now - (S.lastDraw || 0) > 1000)) return;
       S.dirty = false; S.lastDraw = now;
       S.renderer.render(S.scene, S.camera);
+      placeAppLabels();
       updateLabels(false);
     }
 
