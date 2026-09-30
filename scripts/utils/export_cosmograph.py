@@ -82,7 +82,8 @@ PLATFORM_COLORS = {
 # Thread hubs of a group with no explicit colour are drawn in a darker shade of the platform colour.
 THREAD_SHADE = 0.62
 
-NODE_FIELDS = ['id', 'label', 'group', 'size', 'color', 'platform', 'kind', 'messages', 'first_ts', 'last_ts', 'title']
+# `me` is 1 for the archive owner's own accounts (resolved through config/identity_map.json).
+NODE_FIELDS = ['id', 'label', 'group', 'size', 'color', 'platform', 'kind', 'messages', 'first_ts', 'last_ts', 'title', 'me']
 EDGE_FIELDS = ['source', 'target', 'weight', 'first_ts', 'last_ts']
 TITLE_CHARS = 200
 LABEL_CHARS = 45
@@ -211,13 +212,13 @@ def export_to_cosmograph(db_path=None, out_dir=None, identity_map=None):
                           'first_ts': '' if first is None else first, 'last_ts': '' if last is None else last})
             touch(u_node, 0, first, last)
 
-    def node_row(node_id, label, group, platform, kind, title):
+    def node_row(node_id, label, group, platform, kind, title, me=0):
         return {
             'id': node_id, 'label': label, 'group': group,
             'size': max(1, node_weights.get(node_id, 1)), 'color': group_color(group),
             'platform': platform, 'kind': kind, 'messages': node_weights.get(node_id, 0),
             'first_ts': node_first.get(node_id, ''), 'last_ts': node_last.get(node_id, ''),
-            'title': title,
+            'title': title, 'me': me,
         }
 
     # 2. EXTRACT LOGICAL USERS
@@ -234,6 +235,7 @@ def export_to_cosmograph(db_path=None, out_dir=None, identity_map=None):
             primary_name = str(display_name)
 
         # UNIVERSAL IDENTITY RESOLUTION OVERRIDE
+        is_me = any(k in identity_aliases for k in (primary_name, display_name, str(raw_id)) if k)
         if primary_name in identity_aliases:
             primary_name = identity_aliases[primary_name]
         elif display_name in identity_aliases:
@@ -243,7 +245,7 @@ def export_to_cosmograph(db_path=None, out_dir=None, identity_map=None):
 
         # Clean rogue formatting chars
         label = clean_text(primary_name)
-        nodes.append(node_row(node_id, label, f"{platform}_user", platform, 'user', label))
+        nodes.append(node_row(node_id, label, f"{platform}_user", platform, 'user', label, 1 if is_me else 0))
 
     # 3. EXTRACT LOGICAL THREADS
     logging.info("Formatting Hub Nodes...")

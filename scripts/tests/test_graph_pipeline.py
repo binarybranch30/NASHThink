@@ -18,6 +18,12 @@ REPO_ROOT = os.path.dirname(os.path.dirname(SCRIPT_DIR))
 sys.path.append(os.path.join(REPO_ROOT, "scripts", "utils"))
 
 import compute_layout  # noqa: E402
+
+try:
+    import networkx  # noqa: F401
+    HAVE_NX = True
+except ImportError:
+    HAVE_NX = False
 import export_cosmograph  # noqa: E402
 
 
@@ -254,12 +260,80 @@ class ExportTests(unittest.TestCase):
         self.assertEqual(set(pos), {n["id"] for n in nodes})
         self.assertTrue(all(math.isfinite(v) for p in pos.values() for v in p))
 
+    def test_owner_accounts_are_flagged(self):
+        _, nodes, _ = self.export()
+        self.assertEqual(nodes["U_1"]["me"], "1", "the owner's account (via the identity map) is flagged")
+        self.assertEqual(nodes["U_2"]["me"], "0")
+        self.assertTrue(all(n["me"] == "0" for k, n in nodes.items() if k.startswith("T_")))
+
+    @unittest.skipUnless(HAVE_NX, "networkx not installed for this Python")
+    def test_community_layout_after_export(self):
+        self.export()
+        nodes = compute_layout.read_csv(str(self.out / "cosmograph_nodes.csv"))
+        edges = compute_layout.read_csv(str(self.out / "cosmograph_edges.csv"))
+        pos = compute_layout.compute_community_layout(nodes, edges)
+        self.assertEqual(set(pos), {n["id"] for n in nodes})
+        self.assertTrue(all(math.isfinite(v) for p in pos.values() for v in p))
+
     def test_to_epoch(self):
         self.assertEqual(export_cosmograph.to_epoch(1700000000), 1700000000)
         self.assertEqual(export_cosmograph.to_epoch(1700000000123), 1700000000)
         self.assertEqual(export_cosmograph.to_epoch("1700000000"), 1700000000)
         self.assertIsNone(export_cosmograph.to_epoch(None))
         self.assertIsNone(export_cosmograph.to_epoch("garbage"))
+
+
+def community_graph():
+    """Two friend circles that only share the owner, plus a conversation only the owner is in."""
+    nodes = [{"id": "U_me", "kind": "user", "label": "Me (me)", "me": "1", "platform": "whatsapp"}]
+    edges = []
+    for c in "ab":
+        for k in range(4):
+            nodes.append({"id": f"U_{c}{k}", "kind": "user", "label": f"{c}{k}", "me": "0", "platform": "whatsapp"})
+        for t in range(3):
+            tid = f"T_{c}{t}"
+            nodes.append({"id": tid, "kind": "thread", "label": tid, "me": "0", "platform": "whatsapp"})
+            edges.append({"source": "U_me", "target": tid, "weight": "5"})
+            for k in range(4):
+                edges.append({"source": f"U_{c}{k}", "target": tid, "weight": str(1 + k)})
+    nodes.append({"id": "T_note", "kind": "thread", "label": "notes", "me": "0", "platform": "chatgpt"})
+    edges.append({"source": "U_me", "target": "T_note", "weight": "3"})
+    return nodes, edges
+
+
+@unittest.skipUnless(HAVE_NX, "networkx not installed for this Python")
+class CommunityLayoutTests(unittest.TestCase):
+    def test_covers_every_node_and_is_deterministic(self):
+        nodes, edges = community_graph()
+        a = compute_layout.compute_community_layout(nodes, edges)
+        compute_layout.random.random()   # global RNG state must not matter
+        b = compute_layout.compute_community_layout(nodes, edges)
+        self.assertEqual(set(a), {n["id"] for n in nodes})
+        self.assertEqual(a, b)
+        self.assertTrue(all(math.isfinite(v) for p in a.values() for v in p))
+
+    def test_owner_edges_do_not_shape_the_layout(self):
+        nodes, edges = community_graph()
+        with_owner = compute_layout.compute_community_layout(nodes, edges)
+        without = compute_layout.compute_community_layout(nodes, [e for e in edges if e["source"] != "U_me"])
+        for n in nodes:
+            if n["id"] not in ("U_me", "T_note"):   # the loose ring and the owner's own spot aside
+                self.assertEqual(with_owner[n["id"]], without[n["id"]], n["id"])
+
+    def test_friend_circles_stay_apart_and_owner_sits_among_them(self):
+        nodes, edges = community_graph()
+        pos = compute_layout.compute_community_layout(nodes, edges)
+        ca = centroid([pos[f"U_a{k}"] for k in range(4)])
+        cb = centroid([pos[f"U_b{k}"] for k in range(4)])
+        spread = max(norm(sub(pos[f"U_a{k}"], ca)) for k in range(4))
+        self.assertGreater(norm(sub(ca, cb)), spread, "the two circles are separate groups")
+        linked = [pos[e["target"]] for e in edges if e["source"] == "U_me"]
+        self.assertLess(norm(sub(pos["U_me"], centroid(linked))), 1e-6, "owner sits at the centre of its links")
+
+    def test_flag_or_label_marks_the_owner(self):
+        self.assertTrue(compute_layout.is_owner({"me": "1"}))
+        self.assertTrue(compute_layout.is_owner({"kind": "user", "label": "Aarav Mehta (me)"}))
+        self.assertFalse(compute_layout.is_owner({"kind": "thread", "label": "notes (me)"}))
 
 
 class GraphPageTests(unittest.TestCase):

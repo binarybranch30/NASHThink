@@ -188,6 +188,7 @@
 
     .nlabel.sel { color: #fff; font-weight: 600; font-size: .74rem; background: rgba(14, 40, 44, .88); border: 1px solid rgba(127, 195, 196, .6); }
     .nlabel.dimmed { color: rgba(255, 255, 255, .55); }
+    .nlabel.rest { color: rgba(226, 232, 245, .62); background: none; text-shadow: 0 1px 3px #000, 0 0 8px #000; font-size: .66rem; }
     .nlabel.reading { color: #fff; font-weight: 600; background: rgba(234, 148, 136, .18); border: 1px solid rgba(234, 148, 136, .65); }
     .nlabel.reading::before { content: 'Reading · '; color: var(--coral); font-weight: 500; }
 
@@ -2079,7 +2080,13 @@
     };
 
     const ALPHA_DIM = 0.13;          // unrelated nodes while something is selected / searched
-    const EDGE_ALPHA = 0.16;         // resting edge opacity
+    const EDGE_ALPHA = 0;            // resting edge opacity: lines only appear on hover, selection and search
+    const THREAD_ALPHA = 0.5;       // conversations at rest: small faint dots, people carry the map
+    const MUTE = 0.3;               // resting colours are mixed this far toward the background
+    const MUTE_BG = [0.05, 0.06, 0.11];
+    const LINE_RGB = [0.56, 0.64, 0.78];   // hover lines: one soft slate, not two-endpoint gradients
+    const ACC_RGB = [0.50, 0.76, 0.77];    // NASH teal: the selection's lines
+    const REST_LABELS = 8;           // names shown with nothing selected: the most active people
     const EDGE_ALPHA_DIM = 0.035;
     const EDGE_ALPHA_HIT = 0.5;      // edges between two highlighted (search) nodes
     const MAX_RESTING_EDGES = 60000; // above this, edges are only drawn for the selection
@@ -2228,16 +2235,18 @@
         const msgs = Math.max(0, parseInt(r.messages || r.size, 10) || 0);
         const hex = hexToRgb(r.color) ? r.color : (PLATFORM_COLORS[platform] || '#9aa0b4');
         const label = String(r.label || '').trim() || id;
+        const me = kind === 'user' && (String(r.me || '').trim() === '1' || / \(me\)$/.test(label));
         const n = {
           i: nodes.length, id, label, title: String(r.title || '').trim() || label,
           group, platform, kind, subtype, msgs,
           size: Math.max(1, parseInt(r.size, 10) || msgs || 1),
           first: parseTs(r.first_ts), last: parseTs(r.last_ts),
-          hex, rgb: hexToRgb(hex),
+          hex, rgb: hexToRgb(hex), me,
           x: parseCoord(r.layout_x), y: parseCoord(r.layout_y), z: parseCoord(r.layout_z),
           links: [],   // edge indices
         };
         if (!Number.isFinite(n.last)) n.last = n.first;
+        n.rest = me ? [0.86, 0.89, 0.95] : n.rgb.map((v, k) => v * (1 - MUTE) + MUTE_BG[k] * MUTE);
         nodes.push(n);
         byId.set(id, n);
       }
@@ -2336,7 +2345,7 @@
       } catch (e) {
         throw new GraphError('webgl', 'WebGL is not available in this browser, so the 3D graph cannot be drawn. Try another browser or enable hardware acceleration.');
       }
-      S.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      S.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
       S.renderer.setSize(W, H);
       S.renderer.setClearColor(BG_COLOR, 0);   // transparent: #stage paints the night sky behind the graph
       $('stage').appendChild(S.renderer.domElement);
@@ -2400,6 +2409,7 @@
 
     function onResize() {
       const W = window.innerWidth, H = window.innerHeight;
+      S.dirty = true;
       S.renderer.setSize(W, H);
       S.camera.aspect = W / H;
       applyViewOffset();
@@ -2483,7 +2493,9 @@
 
     // Node size in world units (log of message activity), relative to the scene's size.
     function worldSize(n) {
-      return S.bounds.unit * (0.9 + 0.5 * Math.log2(1 + n.size));
+      if (n.me) return S.bounds.unit * 2.2;
+      if (n.kind === 'thread') return S.bounds.unit * (0.8 + 0.3 * Math.log2(1 + n.size));
+      return S.bounds.unit * (1.5 + 0.55 * Math.log2(1 + n.size));
     }
 
     // A quiet sky behind the graph: tiny stars on a far shell (beyond the farthest zoom), mostly pale with a few in
@@ -2531,7 +2543,7 @@
       applyViewOffset();
       S.controls.minDistance = S.bounds.unit * 3;
       S.controls.maxDistance = rad * 30;
-      addStarfield(c, rad);
+      // No starfield: the map sits on the stage's plain dark gradient (see #stage CSS).
 
       // Nodes
       const pos = new Float32Array(N * 3), col = new Float32Array(N * 3);
@@ -2539,10 +2551,10 @@
       const shape = new Float32Array(N);
       S.nodes.forEach((n, i) => {
         pos[i * 3] = n.x; pos[i * 3 + 1] = n.y; pos[i * 3 + 2] = n.z;
-        col.set(n.rgb, i * 3);
+        col.set(n.rest, i * 3);
         n.ws = worldSize(n);
         S.pSize[i] = n.ws;
-        shape[i] = n.kind === 'thread' ? 1 : 0;
+        shape[i] = 0;
       });
       S.pGeo = new THREE.BufferGeometry();
       S.pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
@@ -2550,6 +2562,7 @@
       S.pGeo.setAttribute('aSize', new THREE.BufferAttribute(S.pSize, 1));
       S.pGeo.setAttribute('aAlpha', new THREE.BufferAttribute(S.pAlpha, 1));
       S.pGeo.setAttribute('aShape', new THREE.BufferAttribute(shape, 1));
+      S.pCol = col; S.pShape = shape;
       S.points = new THREE.Points(S.pGeo, pointMaterial(false));
       S.points.renderOrder = 1;
       S.points.frustumCulled = false;
@@ -2561,7 +2574,7 @@
       S.edges.forEach((e, k) => {
         const a = S.nodes[e.s], b = S.nodes[e.t];
         epos.set([a.x, a.y, a.z, b.x, b.y, b.z], k * 6);
-        ecol.set(a.rgb, k * 6); ecol.set(b.rgb, k * 6 + 3);
+        ecol.set(LINE_RGB, k * 6); ecol.set(LINE_RGB, k * 6 + 3);
       });
       S.eGeo = new THREE.BufferGeometry();
       S.eGeo.setAttribute('position', new THREE.BufferAttribute(epos, 3));
@@ -2695,14 +2708,17 @@
 
       for (let i = 0; i < N; i++) {
         const n = S.nodes[i];
-        let a, s = n.ws;
+        let a, s = n.ws, bright = false;
+        const restA = n.kind === 'thread' ? THREAD_ALPHA : 1;
         if (focus.has(i)) a = 0;                       // drawn by the focus layer
         else if (!S.nodeVis[i]) a = 0;
-        else if (!emphasis) a = 1;
-        else if (hit(i)) { a = sel >= 0 ? 0.8 : 1; s = n.ws * (S.sem.focus.has(i) ? 1.9 : 1.35); }
-        else a = ALPHA_DIM;
+        else if (!emphasis) a = restA;
+        else if (hit(i)) { a = sel >= 0 ? 0.8 : 1; s = n.ws * (S.sem.focus.has(i) ? 1.9 : 1.35); bright = true; }
+        else a = ALPHA_DIM * (n.kind === 'thread' ? 0.7 : 1);
         S.pAlpha[i] = a;
         S.pSize[i] = s;
+        S.pCol.set(bright ? n.rgb : n.rest, i * 3);
+        S.pShape[i] = bright && n.kind === 'thread' ? 1 : 0;
       }
       const resting = E <= MAX_RESTING_EDGES ? EDGE_ALPHA : 0;
       for (let k = 0; k < E; k++) {
@@ -2710,6 +2726,7 @@
         let a;
         if (sel >= 0 && (e.s === sel || e.t === sel)) a = 0;   // focus layer
         else if (!S.edgeVis[k]) a = 0;
+        else if (S.nodes[e.s].me || S.nodes[e.t].me) a = 0;    // your own spokes: only when you are selected
         else if (!emphasis) a = resting;
         else if (hit(e.s) && hit(e.t)) a = EDGE_ALPHA_HIT;
         else a = resting ? EDGE_ALPHA_DIM : 0;
@@ -2717,6 +2734,9 @@
       }
       S.pGeo.attributes.aAlpha.needsUpdate = true;
       S.pGeo.attributes.aSize.needsUpdate = true;
+      S.pGeo.attributes.aColor.needsUpdate = true;
+      S.pGeo.attributes.aShape.needsUpdate = true;
+      S.dirty = true;
       S.eGeo.attributes.aAlpha.needsUpdate = true;
 
       buildFocusLayer(focus, focusEdges);
@@ -2739,8 +2759,7 @@
         edges.forEach((e, k) => {
           const a = S.nodes[e.s], b = S.nodes[e.t];
           pos.set([a.x, a.y, a.z, b.x, b.y, b.z], k * 6);
-          const lift = c => c.map(v => Math.min(1, v * 0.6 + 0.45));
-          col.set(lift(a.rgb), k * 6); col.set(lift(b.rgb), k * 6 + 3);
+          col.set(ACC_RGB, k * 6); col.set(ACC_RGB, k * 6 + 3);
           const inFilter = S.edgeVis[e.i] ? 0.95 : 0.4;
           al[k * 2] = inFilter; al[k * 2 + 1] = inFilter;
         });
@@ -2857,9 +2876,33 @@
       if (idx >= 0) selectNode(idx, { fly: true });
     }
 
+    // The hovered node's own lines, faint, so the map answers "who is this linked to" without clutter.
+    function buildHoverEdges(idx) {
+      if (S.hoverEdges) { S.scene.remove(S.hoverEdges); S.hoverEdges.geometry.dispose(); S.hoverEdges.material.dispose(); S.hoverEdges = null; }
+      S.dirty = true;
+      if (idx < 0 || idx === S.selected || !S.nodes[idx]) return;
+      const ks = S.nodes[idx].links.filter(k => S.edgeVis[k] && (!S.nodes[S.edges[k].s].me && !S.nodes[S.edges[k].t].me || S.nodes[idx].me));
+      if (!ks.length) return;
+      const pos = new Float32Array(ks.length * 6), col = new Float32Array(ks.length * 6), al = new Float32Array(ks.length * 2).fill(0.45);
+      ks.forEach((k, j) => {
+        const a = S.nodes[S.edges[k].s], b = S.nodes[S.edges[k].t];
+        pos.set([a.x, a.y, a.z, b.x, b.y, b.z], j * 6);
+        col.set(LINE_RGB, j * 6); col.set(LINE_RGB, j * 6 + 3);
+      });
+      const g = new THREE.BufferGeometry();
+      g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      g.setAttribute('aColor', new THREE.BufferAttribute(col, 3));
+      g.setAttribute('aAlpha', new THREE.BufferAttribute(al, 1));
+      S.hoverEdges = new THREE.LineSegments(g, lineMaterial(false));
+      S.hoverEdges.renderOrder = 1;
+      S.hoverEdges.frustumCulled = false;
+      S.scene.add(S.hoverEdges);
+    }
+
     function setHover(idx) {
       if (idx === S.hover) { if (idx >= 0) placeTooltip(); return; }
       S.hover = idx;
+      buildHoverEdges(idx);
       $('stage').classList.toggle('hovering', idx >= 0);
       const tip = $('tooltip');
       if (idx < 0) { tip.classList.remove('show'); updateLabels(true); return; }
@@ -3608,6 +3651,9 @@
           neighbours(S.selected).sort((a, b) => b.e.w - a.e.w).slice(0, MAX_LABELS - 1).forEach(o => add(o.j, ''));
         } else if (S.sem.set) {
           [...S.sem.set].filter(i => S.nodes[i].kind === 'thread').slice(0, 12).forEach(i => add(i, ''));
+        } else if (S.nodeVis) {
+          S.nodes.filter(n => n.kind === 'user' && !n.me && S.nodeVis[n.i])
+            .sort((a, b) => b.msgs - a.msgs).slice(0, REST_LABELS).forEach(n => add(n.i, 'rest'));
         }
         add(S.hover, S.hover === S.selected ? 'sel' : '');
         const box = $('labels');
@@ -3645,10 +3691,15 @@
     }
 
     // ─── Render loop ──────────────────────────────────────────────────────────────
+    // Draws only when something changed (camera, tween, highlight, hover, resize), plus a slow
+    // keep-alive, so a still map costs nothing and interaction gets the whole frame budget.
     function renderLoop(now) {
       requestAnimationFrame(renderLoop);
+      const tweening = !!S.tween;
       stepTween(now);
-      S.controls.update();
+      const moved = S.controls.update();
+      if (!(moved || tweening || S.dirty || S.controls.autoRotate || now - (S.lastDraw || 0) > 1000)) return;
+      S.dirty = false; S.lastDraw = now;
       S.renderer.render(S.scene, S.camera);
       updateLabels(false);
     }

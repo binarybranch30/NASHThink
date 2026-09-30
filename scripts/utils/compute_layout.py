@@ -2,13 +2,18 @@
 """
 compute_layout.py
 =================
-Pre-computes a force-aware galaxy layout for 80k+ node Sarthink graph.
-Arranges platform families in a pentagon, then places nodes within each
-platform cluster using a Fibonacci sphere distribution with group-type
-concentric rings.  Optionally refines with igraph DrL (fast C layout).
+Pre-computes the 3D positions of the memory map and writes layout_x, layout_y, layout_z into
+cosmograph_nodes.csv. Run once; the HTML renders the baked positions.
 
-Outputs layout_x, layout_y, layout_z columns into cosmograph_nodes.csv.
-Run once — the HTML will just render the baked positions at 60fps.
+Default: community layout. People are grouped by who talks together (Louvain communities on the
+people-conversation graph, the owner's own accounts left out), groups are packed on a flat disc and
+each is laid out with a small force simulation (networkx). Deterministic (seed 42).
+
+    python3 scripts/utils/compute_layout.py                    # community layout
+    python3 scripts/utils/compute_layout.py --layout galaxy    # old platform clusters (Fibonacci spheres)
+    python3 scripts/utils/compute_layout.py --igraph           # galaxy + igraph DrL refinement
+
+Graphs over COMMUNITY_MAX_NODES nodes use the galaxy layout automatically.
 """
 
 import csv
@@ -321,10 +326,92 @@ def refine_with_igraph(nodes: list[dict], edges: list[dict],
         refined[n['id']] = (x, y, z)
     return refined
 
+# ─── Community layout (default) ──────────────────────────────────────────────
+# Groups people by who actually talks together instead of by platform. The owner's own accounts are
+# left out of the calculation: they are in almost every conversation, so they would pull everything
+# into one hub and draw spokes across the whole map.
+
+COMMUNITY_MAX_NODES = 20000   # bigger graphs fall back to the fast galaxy layout
+FLATTEN_Z = 0.35              # the map reads as a gently tilted disc, not a cloud
+
+
+def is_owner(n: dict) -> bool:
+    if str(n.get('me', '')).strip() in ('1', 'true', 'True'):
+        return True
+    return n.get('kind') == 'user' and str(n.get('label', '')).endswith('(me)')
+
+
+def compute_community_layout(nodes: list[dict], edges: list[dict], seed: int = LAYOUT_SEED) -> dict[str, tuple]:
+    import networkx as nx
+
+    by_id = {n['id']: n for n in nodes}
+    owners = {n['id'] for n in nodes if is_owner(n)}
+    G = nx.Graph()
+    G.add_nodes_from(sorted(by_id))
+    for e in edges:
+        s, t = e['source'], e['target']
+        if s in owners or t in owners or s not in by_id or t not in by_id:
+            continue
+        try:
+            w = float(e.get('weight') or 0)
+        except ValueError:
+            w = 0.0
+        G.add_edge(s, t, weight=0.5 + math.log1p(w))
+
+    loose = sorted(v for v in G.nodes if G.degree(v) == 0 and v not in owners)
+    core = G.subgraph([v for v in G.nodes if G.degree(v) > 0]).copy()
+    comms = nx.community.louvain_communities(core, weight='weight', seed=seed) if core.number_of_nodes() else []
+    comms = sorted((sorted(c) for c in comms), key=lambda c: (-len(c), c[0]))
+
+    positions: dict[str, tuple] = {}
+    unit = 60.0                                   # world units per sqrt(node) of community radius
+    golden = math.pi * (3 - math.sqrt(5))
+    placed_area = 0.0
+    for i, members in enumerate(comms):
+        r = unit * 0.75 * math.sqrt(len(members)) + unit * 0.6
+        # Sunflower packing: biggest communities in the middle, the rest spiral outwards.
+        d = 0.0 if i == 0 else 1.45 * math.sqrt(placed_area / math.pi) + r * 0.9
+        placed_area += math.pi * r * r * 1.1
+        cx, cy = d * math.cos(i * golden), d * math.sin(i * golden)
+        cz = (random.Random(seed + i).random() - 0.5) * r * 0.6
+        if len(members) == 1:
+            local = {members[0]: (0.0, 0.0, 0.0)}
+        else:
+            sub = core.subgraph(members)
+            local = nx.spring_layout(sub, dim=3, seed=seed, weight='weight', k=1.1 / math.sqrt(len(members)),
+                                     iterations=80)
+        for v, p in local.items():
+            positions[v] = (cx + p[0] * r, cy + p[1] * r, cz + p[2] * r * FLATTEN_Z)
+
+    # Outer ring: conversations nobody else took part in (notes, AI chats), grouped by platform.
+    if positions:
+        extent = max(math.hypot(p[0], p[1]) for p in positions.values())
+    else:
+        extent = unit * 4
+    ring_r = extent * 1.08 + unit
+    loose.sort(key=lambda v: (by_id[v].get('platform', ''), v))
+    for k, v in enumerate(loose):
+        a = 2 * math.pi * k / max(len(loose), 1)
+        jitter = random.Random(hash(v) & 0xffff).random()
+        rr = ring_r * (1 + 0.06 * (jitter - 0.5))
+        positions[v] = (rr * math.cos(a), rr * math.sin(a), (jitter - 0.5) * unit * 2 * FLATTEN_Z)
+
+    # The owner's own accounts sit at the centre of everything they link to.
+    for o in sorted(owners):
+        linked = [positions[e['target'] if e['source'] == o else e['source']] for e in edges
+                  if o in (e['source'], e['target']) and (e['target'] if e['source'] == o else e['source']) in positions]
+        if linked:
+            positions[o] = tuple(sum(p[j] for p in linked) / len(linked) for j in range(3))
+        else:
+            positions[o] = (0.0, 0.0, 0.0)
+    return positions
+
+
 # ─── Main ─────────────────────────────────────────────────────────────────────
 
 def main():
     use_igraph = '--force' in sys.argv or '--igraph' in sys.argv
+    galaxy = '--layout' in sys.argv and sys.argv[sys.argv.index('--layout') + 1:][:1] == ['galaxy']
 
     print(f"Loading {NODES_CSV} …")
     nodes = read_csv(NODES_CSV)
@@ -336,13 +423,24 @@ def main():
     edges = read_csv(EDGES_CSV)
     print(f"  {len(edges)} edges")
 
-    # ── Step 1: fast galaxy seed ──────────────────────────────────────────────
-    print("Computing galaxy layout (fast seed)…")
+    # ── Step 1: layout ────────────────────────────────────────────────────────
     t0 = time.time()
-    positions = compute_galaxy_layout(nodes)
+    try:
+        import networkx  # noqa: F401  (the community layout needs it)
+        have_nx = True
+    except ImportError:
+        have_nx = False
+        print("  networkx is not installed for this Python; using the galaxy layout "
+              "(run with .venv/bin/python for the community layout)")
+    if have_nx and not galaxy and not use_igraph and len(nodes) <= COMMUNITY_MAX_NODES:
+        print("Computing community layout (people grouped by who talks together)…")
+        positions = compute_community_layout(nodes, edges)
+    else:
+        print("Computing galaxy layout (platform clusters)…")
+        positions = compute_galaxy_layout(nodes)
     print(f"  Done in {time.time() - t0:.2f}s  ({len(positions)} nodes positioned)")
 
-    # ── Step 2: optional igraph refinement ───────────────────────────────────
+    # ── Step 2: optional igraph refinement (galaxy layout only) ─────────────
     if use_igraph:
         print("Refining with igraph DrL (physics-based)…")
         positions = refine_with_igraph(nodes, edges, positions)
