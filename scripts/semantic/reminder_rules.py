@@ -216,11 +216,15 @@ def find_time(text):
 
 def classify(text):
     """(kind, weight, position) of the strongest reason in `text` to remember it, or (None, 0, None)."""
-    for kind, weight, rx in KIND_RES:
-        m = rx.search(text)
-        if m:
-            return kind, weight, m.start()
-    return None, 0.0, None
+    hits = [(kind, weight, m.start()) for kind, weight, rx in KIND_RES for m in [rx.search(text)] if m]
+    if not hits:
+        return None, 0.0, None
+    kind, weight, pos = hits[0]
+    if kind == "reminder":    # "bhool mat" says remember it; a deadline/meeting/... in the line says what it is
+        specific = [h for h in hits[1:] if h[0] not in ("task", "plan")]
+        if specific:
+            return specific[0][0], weight, specific[0][2]
+    return kind, weight, pos
 
 
 def make_title(sentence):
