@@ -23,6 +23,9 @@ Endpoints:
                               optional ?platforms=a,b&date_from=...&date_to=...&top=10
     GET  /processed_data/graph/cosmograph_{nodes,edges}.csv   graph data for the UI
     GET  /assets/nashthink-{mark,icon}.png                    the NASH Think logo
+    GET  /api/actions         agent proposals (pending first) + counts; POST /api/actions proposes one
+    POST /api/actions/{id}/approve | /reject   a person decides (agents can't); approving runs it (see actions.py)
+    GET  /api/audit           what agents read and did, newest first
 """
 import argparse
 import asyncio
@@ -46,6 +49,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 REPO_ROOT = Path(os.path.dirname(os.path.dirname(SCRIPT_DIR)))
 sys.path.append(str(REPO_ROOT / "scripts" / "semantic"))
 
+import actions  # noqa: E402
 import answer_writer  # noqa: E402
 import calendar_google  # noqa: E402
 import insights  # noqa: E402
@@ -149,6 +153,12 @@ class AskStreamRequest(AskRequest):
         if v not in llm_config.DEFAULT_PROFILES:
             raise ValueError(f"must be one of: {', '.join(llm_config.DEFAULT_PROFILES)}")
         return v
+
+
+class ActionProposal(BaseModel):
+    tool: str = Field(..., max_length=40)
+    args: dict = Field(default_factory=dict)
+    reason: Optional[str] = Field(None, max_length=1000)
 
 
 class AskSource(BaseModel):
@@ -413,7 +423,8 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
                                                               reminders.STORE_DIR / "default.db")
         only = workspaces.Workspace("default", None, service, insights_service, people_service, Path(graph_dir),
                                     reminders=rem, calendar=calendar_google.GoogleCalendarSync(
-                                        rem, rem.store_path.with_suffix(".google.json")), root=REPO_ROOT)
+                                        rem, rem.store_path.with_suffix(".google.json")), root=REPO_ROOT,
+                                    actions=actions.ActionQueue(actions.STORE_DIR / "default.db"))
         spaces = workspaces.WorkspaceSet({"default": only}, "default")
 
     def ws_of(request):
@@ -786,6 +797,107 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
         ws.calendar.disconnect()
         return ws.calendar.status()
 
+    # ── Agent actions: proposals wait for a person; everything an agent does is audited (see actions.py) ──
+    def actions_of(request):
+        ws = ws_of(request)
+        if ws.actions is None:
+            raise ApiError(503, "actions_unavailable", "Agent actions are not set up for this workspace.")
+        return ws
+
+    def actions_call(fn, *args, **kwargs):
+        try:
+            return fn(*args, **kwargs)
+        except actions.BadAction as e:
+            raise ApiError(422, "invalid_request", str(e))
+        except actions.ActionNotFound as e:
+            raise ApiError(404, "not_found", str(e))
+        except actions.AlreadyDecided as e:
+            raise ApiError(409, "already_decided", str(e))
+
+    def run_action(ws, tool, args):
+        """Carry out an approved proposal with the same services the app's own buttons use."""
+        if tool == "add_reminder":
+            due = parse_date_param("due", args["due"])
+            out = reminders_call(ws.reminders.add, args["title"], int(due.timestamp()), args.get("all_day", False),
+                                 args.get("kind") or "reminder")
+        elif tool == "update_reminder":
+            until = parse_date_param("until", args["until"]) if args.get("until") else None
+            out = reminders_call(ws.reminders.update, args["reminder_id"], args["action"],
+                                 int(until.timestamp()) if until else None)
+        elif tool == "calendar_sync":
+            if ws.calendar is None:
+                raise ApiError(503, "calendar_unavailable", "Calendar sync is not set up for this workspace.")
+            return calendar_call(ws.calendar.sync)
+        else:
+            raise ApiError(422, "invalid_request", f"unknown action {tool!r}")
+        kick_sync()
+        return {"reminder": {k: out.get(k) for k in ("id", "title", "due", "all_day", "status")}} if isinstance(out, dict) else out
+
+    @app.middleware("http")
+    async def audit_agents(request: Request, call_next):
+        """Requests from an agent (X-NashThink-Agent) land in the workspace's audit log: what it read, and whether
+        it worked. Proposals log themselves."""
+        agent = request.headers.get(actions.AGENT_HEADER)
+        if not agent or not request.url.path.startswith("/api/"):
+            return await call_next(request)
+        body = await request.body() if request.method == "POST" else b""
+        response = await call_next(request)
+        if not (request.method == "POST" and request.url.path == "/api/actions"):
+            ws = ws_of(request)
+            if ws.actions is not None:
+                detail = f"{request.method} {request.url.path}" + (f"?{request.url.query}" if request.url.query else "")
+                if body:
+                    detail += " " + body.decode("utf-8", "replace")
+                await run_in_threadpool(_quietly, lambda: ws.actions.log(
+                    agent, "read" if response.status_code < 400 else "error",
+                    request.headers.get(actions.TOOL_HEADER), detail, status=response.status_code))
+        return response
+
+    @app.get("/api/actions")
+    def list_actions(request: Request, status: Optional[str] = Query(None, max_length=20),
+                     limit: int = Query(50, ge=1, le=actions.PAGE_MAX)):
+        """Agent proposals, pending first, with counts per status (the Actions panel and its badge)."""
+        ws = actions_of(request)
+        out = actions_call(ws.actions.list, status, limit)
+        out["can_approve"] = ws.agent_actions or not (spaces.switchable and ws.id == spaces.default)
+        out["tools"] = {k: v["label"] for k, v in actions.TOOLS.items()}
+        return out
+
+    @app.get("/api/actions/{action_id}")
+    def get_action(action_id: int, request: Request):
+        return actions_call(actions_of(request).actions.get, action_id)
+
+    @app.post("/api/actions")
+    def propose_action(req: ActionProposal, request: Request):
+        """An agent (or the app) proposes a change. Nothing happens until a person approves it."""
+        ws = actions_of(request)
+        source = request.headers.get(actions.AGENT_HEADER) or "app"
+        return actions_call(ws.actions.propose, req.tool, req.args, req.reason, source)
+
+    @app.post("/api/actions/{action_id}/{decision}")
+    async def decide_action(action_id: int, decision: str, request: Request):
+        """A person approves (runs it now) or rejects a pending action. Agents can't decide their own proposals."""
+        if decision not in ("approve", "reject"):
+            raise ApiError(404, "not_found", "Use /approve or /reject.")
+        ws = actions_of(request)
+        if request.headers.get(actions.AGENT_HEADER):
+            await run_in_threadpool(ws.actions.log, request.headers[actions.AGENT_HEADER], "refused", None,
+                                    f"tried to {decision} action #{action_id}", action_id, 403)
+            raise ApiError(403, "agents_cannot_decide", "Only a person can approve or reject an action, in the app.")
+        if request.headers.get(actions.CONFIRM_HEADER) != "1":
+            # A custom header needs a CORS preflight, which pages from other origins fail: only the app can decide.
+            raise ApiError(403, "confirm_required", f"Send {actions.CONFIRM_HEADER}: 1 (the app does).")
+        approve = decision == "approve"
+        if approve and spaces.switchable and ws.id == spaces.default and not ws.agent_actions:
+            raise ApiError(403, "read_only", "Sample data is read-only here; unlock your data to approve actions.")
+        return await run_in_threadpool(actions_call, ws.actions.decide, action_id, approve,
+                                       lambda tool, args: run_action(ws, tool, args))
+
+    @app.get("/api/audit")
+    def audit_log(request: Request, limit: int = Query(100, ge=1, le=actions.PAGE_MAX), before: Optional[int] = None):
+        """What agents read, proposed and did, and who approved what: newest first."""
+        return {"entries": actions_of(request).actions.audit(limit, before)}
+
     @app.get("/", include_in_schema=False)
     @app.get("/sarthink_graph.html", include_in_schema=False)
     def graph_page():
@@ -827,11 +939,16 @@ def clean_examples(value):
     return {k: v for k, v in out.items() if v} or None
 
 
+def safe_name(wid):
+    """A workspace id as a file name."""
+    return re.sub(r"[^A-Za-z0-9_-]", "_", wid)[:40] or "default"
+
+
 def reminders_for(wid, ins, cfg=None):
     """A workspace's RemindersService. cfg (workspaces.json "reminders"): tz, now ("clock" | "latest_message"),
     lookback_days (null = the whole archive on the first scan)."""
     cfg = cfg if isinstance(cfg, dict) else {}
-    safe = re.sub(r"[^A-Za-z0-9_-]", "_", wid)[:40] or "default"
+    safe = safe_name(wid)
     rem = reminders.RemindersService(
         ins.db_path, ins.identity_map, reminders.STORE_DIR / f"{safe}.db", tz=cfg.get("tz") or reminders.reminder_rules.DEFAULT_TZ,
         now=cfg.get("now") if cfg.get("now") in ("clock", "latest_message") else "clock",
@@ -903,7 +1020,8 @@ def build_spaces(config, table=search.DEFAULT_TABLE):
         spaces[wid] = workspaces.Workspace(
             wid, cfg.get("label") or wid, SearchService(paths["lancedb"], table, model_loader=loader, lock=lock),
             ins, people.PeopleService(ins.db_path, ins.identity_map), paths["graph_dir"], cfg.get("password"),
-            clean_examples(cfg.get("examples")), *reminders_for(wid, ins, cfg.get("reminders")), root=Path(cfg["root"]))
+            clean_examples(cfg.get("examples")), *reminders_for(wid, ins, cfg.get("reminders")), root=Path(cfg["root"]),
+            actions=actions.ActionQueue(actions.STORE_DIR / f"{safe_name(wid)}.db"), agent_actions=cfg.get("agent_actions") is True)
     return workspaces.WorkspaceSet(spaces, config["default"])
 
 

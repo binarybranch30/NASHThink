@@ -6,7 +6,9 @@ config/workspaces.json (gitignored) lists them; without it the server has one wo
      "workspaces": {"demo":     {"label": "Sample data", "root": "/home/me/sarthink-demo"},
                     "personal": {"label": "My data", "root": "/home/me/sarthink", "password": "pbkdf2_sha256$..."}}}
 
-A workspace may also carry "examples": {"ask": [...], "search": [...]}, the sample questions its home page offers.
+A workspace may also carry "examples": {"ask": [...], "search": [...]}, the sample questions its home page offers,
+and "agent_actions": true, which lets actions an agent proposed and a person approved change it even when it is the
+public default (the sample data), so the approval flow can be shown on the demo.
 
 Each root is a Sarthink folder with its own processed_data/ (LanceDB index, memory DB, graph CSVs) and
 config/identity_map.json. A browser sees the default workspace until it unlocks another one with that
@@ -102,6 +104,8 @@ class Workspace:
     reminders: Any = None               # reminders.RemindersService
     calendar: Any = None                # calendar_google.GoogleCalendarSync
     root: Optional[Path] = None
+    actions: Any = None                 # actions.ActionQueue: agent proposals awaiting approval + the audit log
+    agent_actions: bool = False         # approved agent actions may change it even as the public default
 
 
 @dataclass
