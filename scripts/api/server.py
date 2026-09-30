@@ -417,9 +417,7 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
         spaces = workspaces.WorkspaceSet({"default": only}, "default")
 
     def ws_of(request):
-        ws_override = request.query_params.get("ws")
-        if ws_override and ws_override in spaces.spaces:
-            return spaces.spaces[ws_override]
+        # Only the signed cookie picks a workspace: a query parameter would skip the password.
         return spaces.for_token(request.cookies.get(workspaces.COOKIE))
     llm_profiles = llm_profiles if llm_profiles is not None else llm_config.load_profiles()
     llm_status = answer_writer.LlmStatus(llm_profiles, transport=llm_transport)

@@ -166,6 +166,12 @@ class RouteTests(unittest.TestCase):
         self.c.cookies.set(wsp.COOKIE, "personal.99999999999.deadbeef")
         self.assertEqual(set(self.which().values()), {"demo"})
 
+    def test_query_parameter_cannot_pick_a_workspace(self):
+        for path in ("/api/health", "/api/upload/status", "/api/reminders"):
+            r = self.c.get(path + "?ws=personal")
+            self.assertNotIn('"personal"', r.text, path)
+        self.assertEqual(self.c.get("/api/health?ws=personal").json()["workspace"]["id"], "demo")
+
     def test_lockout_and_unknown_workspace(self):
         self.assertEqual(self.c.post("/api/workspace/unlock", json={"workspace": "nope", "password": "x"}).status_code, 404)
         for _ in range(wsp.MAX_FAILURES):
