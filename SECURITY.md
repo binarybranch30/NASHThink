@@ -17,9 +17,9 @@ before disclosing them. We'll credit you unless you'd rather we didn't.
 ## Scope and trust model
 
 - The server is meant to listen on `127.0.0.1` only. Exposing it on a network is out of scope unless the report
-  shows a weakness in workspace passwords, sessions or the approval flow.
-- In scope: bypassing the workspace password, reading another workspace's data, an agent (MCP) approving its
-  own actions or acting without an audit entry, path traversal in uploads or file serving, leaking `.env` or tokens.
+  shows a weakness in workspace passwords or sessions.
+- In scope: bypassing the workspace password, reading another workspace's data, path traversal in uploads or
+  file serving, leaking `.env` or tokens.
 - Out of scope: attacks that need code execution as the same OS user (such a process can read the data files directly).
 
 ## Supported versions

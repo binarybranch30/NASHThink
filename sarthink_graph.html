@@ -1594,25 +1594,6 @@
     .rbadge { display: inline-block; min-width: 16px; padding: 0 4px; margin-left: 5px; border-radius: 8px; background: var(--coral); color: #1a0b08; font-size: .6rem; font-weight: 700; line-height: 16px; text-align: center; vertical-align: 1px; }
     .rbadge[hidden] { display: none; }
     #reminders.busy #rem-body > :not(.ins-state) { opacity: .55; transition: opacity .2s; }
-    /* Actions: what an AI agent (MCP) proposed, waiting for you, and the audit log */
-    #actions {
-      position: fixed; top: var(--top-h); bottom: var(--gap); right: var(--gap);
-      width: min(480px, calc(100vw - 2 * var(--gap))); z-index: 250;
-      display: flex; flex-direction: column; background: rgba(6, 6, 24, .92); box-shadow: 0 30px 80px rgba(0, 0, 0, .45);
-      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-    }
-    #actions[hidden] { display: none; }
-    #actions .phead { align-items: center; padding: 14px 18px 12px; }
-    #act-h { font-size: 1.05rem; font-weight: 600; color: #fff; }
-    #act-body { padding: 12px 18px 20px; display: flex; flex-direction: column; gap: 16px; }
-    .acard { border: 1px solid var(--bdr); border-radius: 10px; padding: 10px 12px; background: rgba(255,255,255,.025); display: flex; flex-direction: column; gap: 5px; }
-    .acard.pending { border-color: rgba(245, 194, 107, .5); }
-    .acard .rt { font-size: .84rem; }
-    .astat { font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; padding: 1px 6px; border-radius: 9px; border: 1px solid var(--bdr2); color: var(--mid); }
-    .astat.s-pending { color: var(--warn); } .astat.s-executed { color: var(--acc); } .astat.s-failed, .astat.s-rejected { color: var(--coral); }
-    .alog { font-size: .66rem; color: var(--dim); line-height: 1.5; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
-    .alog b { color: var(--mid); font-weight: 500; }
-    body[data-view="home"] #actions { top: calc(var(--tb) + 16px); right: 16px; bottom: 16px; width: var(--gpw); }
     @media (max-width: 720px) {
       #reminders { left: var(--gap); width: auto; }
       #rem-add { grid-template-columns: 1fr 1fr; }
@@ -1928,7 +1909,6 @@
       <button id="btn-home" class="btn fade-layer" type="button" title="Back to Home (G)">Home</button>
       <button id="btn-insights" class="btn" type="button" title="Activity insights (I)" aria-controls="insights" aria-expanded="false">Insights</button>
       <button id="btn-reminders" class="btn" type="button" title="Reminders found in your chats (R)" aria-controls="reminders" aria-expanded="false"><svg class="ico bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15L6 17Z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>Reminders<span id="rem-badge" class="rbadge" hidden></span></button>
-      <button id="btn-actions" class="btn" type="button" title="Actions an AI agent proposed, waiting for you, and the audit log (A)" aria-controls="actions" aria-expanded="false">Actions<span id="act-badge" class="rbadge" hidden></span></button>
       <button id="btn-upload" class="btn" type="button" title="Upload & import chat data (U)" aria-controls="upload-modal" aria-expanded="false">Upload</button>
       <button id="btn-reset" class="btn fade-layer icon" type="button" title="Reset the view and filters (Esc)" aria-label="Reset view">↺</button>
       <button id="btn-help" class="btn icon" type="button" title="Help and keyboard shortcuts (?)" aria-haspopup="dialog" aria-label="Help">?</button>
@@ -2062,21 +2042,6 @@
       <div id="rem-cal" hidden></div>
       <div id="rem-list"></div>
     </div>
-  </section>
-
-  <!-- Actions: changes an AI agent proposed over MCP wait here for approval; everything is audited (GET /api/actions) -->
-  <section id="actions" class="panel" hidden aria-labelledby="act-h" role="dialog" aria-modal="false">
-    <div class="phead">
-      <div class="ttl">
-        <h2 id="act-h">Actions</h2>
-        <div id="act-scope" class="rem-note">Nothing an agent proposes happens until you approve it</div>
-      </div>
-      <div class="rem-acts">
-        <button class="btn sm" type="button" id="act-refresh">Refresh</button>
-        <button class="xbtn" type="button" id="act-close" title="Close actions (Esc)" aria-label="Close actions">×</button>
-      </div>
-    </div>
-    <div id="act-body" class="scroll"></div>
   </section>
 
   <!-- Sidebar -->
@@ -4330,7 +4295,6 @@
         if (helpOpen()) { closeHelp(); return; }
         if (insightsOpen()) { closeInsights(); return; }
         if (remindersOpen()) { closeReminders(); return; }
-        if (actionsOpen()) { closeActions(); return; }
         if (isTyping(document.activeElement)) document.activeElement.blur();
         resetAll();
         return;
@@ -4354,7 +4318,6 @@
       else if (e.key === 'g' || e.key === 'G') { e.preventDefault(); toggleView(); }
       else if (e.key === 'i' || e.key === 'I') { e.preventDefault(); insightsOpen() ? closeInsights() : openInsights(); }
       else if (e.key === 'r' || e.key === 'R') { e.preventDefault(); remindersOpen() ? closeReminders() : openReminders(); }
-      else if (e.key === 'a' || e.key === 'A') { e.preventDefault(); actionsOpen() ? closeActions() : openActions(); }
       else if ((e.key === 'f' || e.key === 'F') && S.selected >= 0) { e.preventDefault(); flyToNodes([S.selected, ...neighbours(S.selected).map(o => o.j)]); }
       else if (ARROWS[e.key] && arrowsMoveGraph()) { e.preventDefault(); nudgeCamera(ARROWS[e.key], e.shiftKey); }
     });
@@ -5758,78 +5721,9 @@
       return S.rem.local;
     }
 
-    // ─── Actions: agent proposals (MCP) you approve or reject, and the audit log ─────
-    const actionsOpen = () => !$('actions').hidden;
-    function openActions() {
-      if (remindersOpen()) closeReminders(false);
-      $('actions').hidden = false;
-      $('btn-actions').setAttribute('aria-expanded', 'true');
-      $('act-close').focus();
-      loadActions();
-    }
-    function closeActions() {
-      $('actions').hidden = true;
-      $('btn-actions').setAttribute('aria-expanded', 'false');
-    }
-    const actTime = ts => new Date(ts * 1000).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-    function actBadge(n) {
-      $('act-badge').hidden = !n;
-      $('act-badge').textContent = n > 99 ? '99+' : String(n || '');
-    }
-    async function loadActions() {
-      const box = $('act-body');
-      let data, log;
-      try {
-        [data, log] = await Promise.all([apiFetch('/api/actions'), apiFetch('/api/audit?limit=40')]);
-      } catch (e) {
-        if (actionsOpen()) box.innerHTML = `<div class="rem-note">${e.code === 'offline' ? offlineHint() : esc(e.message)}</div>`;
-        return;
-      }
-      actBadge(data.counts.pending);
-      if (!actionsOpen()) return;
-      const card = a => `<div class="acard ${esc(a.status)}">
-          <div class="rmeta"><span class="astat s-${esc(a.status)}">${esc(a.status)}</span><span>#${a.id} · from ${esc(a.source)} · ${actTime(a.created_at)}</span></div>
-          <div class="rt">${esc(a.summary)}</div>
-          ${a.reason ? `<div class="rex">Why: ${esc(a.reason)}</div>` : ''}
-          ${a.result && a.result.error ? `<div class="rex">Error: ${esc(a.result.error)}</div>` : ''}
-          ${a.status === 'pending' ? `<div class="rbtns">${data.can_approve
-            ? `<button type="button" class="btn sm primary" data-act="approve" data-id="${a.id}">Approve</button>`
-            : '<span class="rem-note">Unlock your data to approve.</span>'}
-            <button type="button" class="btn sm" data-act="reject" data-id="${a.id}">Reject</button></div>` : ''}
-        </div>`;
-      const pending = data.actions.filter(a => a.status === 'pending');
-      const done = data.actions.filter(a => a.status !== 'pending');
-      box.innerHTML = `
-        <div class="rem-sec"><h3>Waiting for you <span class="n">${pending.length}</span></h3>
-          <div class="rem-list">${pending.map(card).join('') || `<div class="rem-note">No proposals. Connect an agent with the
-            MCP server (<code>scripts/mcp/nashthink_mcp.py</code>) and ask it to set a reminder from your chats.</div>`}</div></div>
-        ${done.length ? `<div class="rem-sec"><h3>Decided <span class="n">${done.length}</span></h3><div class="rem-list">${done.slice(0, 20).map(card).join('')}</div></div>` : ''}
-        <div class="rem-sec"><h3>Audit log <span class="n">${log.entries.length}</span></h3>
-          ${log.entries.map(e => `<div class="alog">${actTime(e.at)} · <b>${esc(e.actor)}</b> ${esc(e.event)}${e.tool ? ` <b>${esc(e.tool)}</b>` : ''}${e.detail ? ` — ${esc(e.detail.slice(0, 160))}` : ''}</div>`).join('') || '<div class="rem-note">Nothing yet.</div>'}
-        </div>`;
-    }
-    $('act-body').addEventListener('click', async e => {
-      const b = e.target.closest('button[data-act]');
-      if (!b) return;
-      b.disabled = true;
-      try {
-        await apiFetch(`/api/actions/${b.dataset.id}/${b.dataset.act}`, { method: 'POST', headers: { 'X-NashThink-Confirm': '1' }, timeout: 60000 });
-        if (b.dataset.act === 'approve' && remindersOpen()) loadReminders(true);
-      } catch (err) {
-        alert(err.message);
-      }
-      loadActions();
-    });
-    $('btn-actions').addEventListener('click', () => (actionsOpen() ? closeActions() : openActions()));
-    $('act-close').addEventListener('click', closeActions);
-    $('act-refresh').addEventListener('click', loadActions);
-    loadActions();
-    setInterval(loadActions, 15000);
-
     function openReminders() {
       if (remindersOpen()) return;
       if (insightsOpen()) closeInsights();
-      if (actionsOpen()) closeActions();
       S.rem.ret = document.activeElement;
       $('reminders').hidden = false;
       document.body.dataset.reminders = 'open';

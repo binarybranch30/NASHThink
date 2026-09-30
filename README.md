@@ -7,11 +7,10 @@ Team NASH (SAI034) · ASYNC'26 · Track 1: Sovereign AI</p>
 
 <p align="center">
   <a href="https://github.com/binarybranch30/nashthink/actions/workflows/tests.yml"><img src="https://github.com/binarybranch30/nashthink/actions/workflows/tests.yml/badge.svg" alt="tests"></a>
-  <img src="https://img.shields.io/badge/tests-18%20suites%20passing-brightgreen" alt="18 test suites">
+  <img src="https://img.shields.io/badge/tests-17%20suites%20passing-brightgreen" alt="17 test suites">
   <img src="https://img.shields.io/badge/lint-ruff-261230" alt="ruff">
   <img src="https://img.shields.io/badge/python-3.11%2B-3776AB" alt="Python 3.11+">
   <img src="https://img.shields.io/badge/runs-100%25%20local-6c5ce7" alt="100% local">
-  <img src="https://img.shields.io/badge/MCP-server-000" alt="MCP server">
   <img src="https://img.shields.io/badge/status-beta-orange" alt="beta">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT"></a>
 </p>
@@ -23,7 +22,7 @@ Team NASH (SAI034) · ASYNC'26 · Track 1: Sovereign AI</p>
 ## Contents
 
 [Overview](#overview) · [Screenshots](#screenshots) · [How it fits Track 1](#how-it-fits-track-1) · [Architecture](#architecture) ·
-[Installation](#installation) · [Configuration](#configuration) · [Usage](#usage) · [MCP server](#mcp-server-agentic-actions-you-approve) ·
+[Installation](#installation) · [Configuration](#configuration) · [Usage](#usage) ·
 [Testing](#testing--quality) · [Benchmarks](#benchmarks--maturity) · [Troubleshooting](#troubleshooting--known-limitations) ·
 [Prior work](#prior-work-and-what-we-built-at-async26) · [Security](#security) · [Contributing & license](#contributing--license) · [Team](#team-nash)
 
@@ -34,8 +33,7 @@ about them today means handing your most private data to a third-party cloud.
 
 **NASH Think** imports your chat history from **9 platforms** into one memory that runs entirely on your own
 machine. Ask in English or Hinglish and get an answer that cites the exact messages. See who you talk to on a 3D
-memory map, get reminders for the plans hidden in your chats, and let an AI agent use your memory over **MCP**,
-where every change it proposes waits for your approval and every access is audited.
+memory map, and get reminders for the plans hidden in your chats, synced to your calendar if you want.
 
 **Who it's for:** anyone whose life happens in chats (students, founders, families), and small teams who want
 an assistant over their own knowledge without a cloud provider.
@@ -45,7 +43,6 @@ an assistant over their own knowledge without a cloud provider.
 - 🗺️ **One memory across 9 apps:** WhatsApp, Instagram, Facebook, Discord, Reddit, X, Google (Gmail, Chat, YouTube), ChatGPT, Claude.
 - 🇮🇳 **Hinglish-aware:** understands chat shorthand and romanised Hindi ("kal 6 baje call karenge").
 - ⏰ **Reminders from chats:** plans, deadlines, birthdays and promises, with optional Google Calendar sync.
-- 🤖 **Agentic, but controlled:** an MCP server lets Claude or any MCP client search your memory; changes are proposals you approve, and all of it lands in an audit log.
 
 | Feature | What it does |
 |---|---|
@@ -55,7 +52,6 @@ an assistant over their own knowledge without a cloud provider.
 | **Memory map** | 3D graph of people and conversations, clustered by app; cited sources light up |
 | **Person profiles** | Your history with someone: counts, dates, recurring words, notable chats, full message history |
 | **Reminders** | Rule-based extraction (English + Hinglish) of plans, deadlines, promises; `.ics`, Google Calendar sync |
-| **Actions + audit** | Agent proposals wait for Approve / Reject; every agent read, proposal and decision is logged |
 | **Upload** | Drag-and-drop chat exports in the browser; platform auto-detection; background ingestion |
 | **Insights** | Activity over time, platforms and top contacts |
 | **Workspaces** | Demos run on a fictional archive; your real data is behind a password |
@@ -82,7 +78,7 @@ The track asks for a working system that goes **Data → Knowledge → Memory �
 | **2. Knowledge** | SQLite knowledge base of people, conversations and messages; graph of who talks to whom; identity map merges your own accounts |
 | **3. Memory** | Conversations split into sessions and embedded (multilingual MiniLM, 384-d) into LanceDB: persistent long-term semantic memory |
 | **4. Reasoning** | Hybrid retrieval (semantic + keyword + Hinglish expansion), deterministic evidence grading, then an open-weight Llama on llama.cpp writes a cited answer; citations are verified |
-| **5. Action** | Reminders and Google Calendar sync; an **MCP server** for agents with **controlled execution**: proposals → human approval → execution → **audit log** |
+| **5. Action** | Reminders found in your chats (plans, deadlines, birthdays, promises) that you mark done, snooze or edit; `.ics` export and automatic Google Calendar sync into a calendar of its own |
 
 Everything runs local-first on a CPU-only machine (tested on 6 vCPU / 11 GB RAM, shared).
 
@@ -108,7 +104,6 @@ flowchart LR
     AW[Answer writer<br/>citation check]
     PR[People · Insights]
     RM[Reminders<br/>rules, no LLM]
-    ACT[Action queue + audit log]
   end
   subgraph Local["Local models"]
     LL[llama.cpp<br/>Llama 3.1 8B / 3.2 3B]
@@ -118,15 +113,13 @@ flowchart LR
   DB --> PR
   DB --> RM
   CSV --> UI
-  UI[Web app · Three.js<br/>Ask · Map · Profiles · Reminders · Actions] <--> Server
-  MCP[MCP server<br/>stdio] <-->|HTTP + agent header| Server
-  AG[Claude Desktop / Claude Code<br/>any MCP client] <--> MCP
+  UI[Web app · Three.js<br/>Ask · Map · Profiles · Reminders] <--> Server
   RM -. optional, approved .-> GC[Google Calendar]
   AW -. optional, labelled online .-> DS[DeepSeek API]
 ```
 
-**Service boundaries.** One FastAPI process owns the data and the embedding model; the UI and the MCP server are
-both clients of its HTTP API. llama.cpp runs as a separate local process (`scripts/llm.sh`). Only two optional
+**Service boundaries.** One FastAPI process owns the data and the embedding model; the web app is a client of
+its HTTP API. llama.cpp runs as a separate local process (`scripts/llm.sh`). Only two optional
 paths leave the machine, both off by default: DeepSeek answers (labelled "online") and Google Calendar sync.
 
 ### End-to-end: asking a question
@@ -150,34 +143,13 @@ sequenceDiagram
   API-->>UI: event: answer (or "No relevant info found")
 ```
 
-### End-to-end: an agent action
-
-```mermaid
-sequenceDiagram
-  actor U as You
-  participant A as Agent (MCP client)
-  participant X as nashthink_mcp.py
-  participant API as FastAPI
-  participant Q as Action queue + audit
-  A->>X: ask_memory("When is Rohan's exam?")
-  X->>API: POST /api/ask (X-NashThink-Agent: mcp)
-  API->>Q: audit: mcp read ask_memory
-  A->>X: propose_reminder("Wish Rohan luck", 2026-09-27 09:00)
-  X->>API: POST /api/actions
-  API->>Q: pending #1 + audit: proposed
-  Note over A,Q: nothing has changed yet
-  U->>API: Approve #1 in the Actions panel (A)
-  API->>Q: audit: you approved → reminder added → executed
-  A->>X: check_action(1) → executed
-```
-
 **Pipeline in short.**
 1. **Parse:** one parser per platform writes people, conversations and messages to SQLite (UTC timestamps, idempotent).
 2. **Chunk:** conversations split into sessions at long silences (30 min to 12 h), up to 4,000 tokens each.
 3. **Embed:** each chunk becomes a 384-dimension vector with `paraphrase-multilingual-MiniLM-L12-v2` on the CPU, stored in LanceDB.
 4. **Find evidence:** the 60 nearest chunks are checked without AI (similar enough, mentions the question's key words, not filler), merged and graded high / medium / low.
 5. **Write:** the local model sees only that evidence and must cite it; unsupported answers become "No relevant info found".
-6. **Act:** reminders are extracted by rules; agents propose changes over MCP; you approve; everything is audited.
+6. **Act:** reminders are extracted by rules; you act on them in the app, in a calendar file or in Google Calendar.
 
 **Design docs:** [`docs/project_overview.md`](docs/project_overview.md) · [`docs/local_llm.md`](docs/local_llm.md) ·
 [`docs/hinglish.md`](docs/hinglish.md) · [`docs/reminders.md`](docs/reminders.md) · OpenAPI at `/api/docs`.
@@ -196,7 +168,7 @@ sequenceDiagram
 | Optional | [llama.cpp](https://github.com/ggml-org/llama.cpp) `llama-server` for written answers; Node ≥ 20 + Playwright only for the browser e2e test |
 
 **Stack:** Python · SQLite · sentence-transformers · LanceDB · llama.cpp · Llama 3.1 8B / 3.2 3B (Q4_K_M GGUF) ·
-FastAPI · Uvicorn · MCP Python SDK · Three.js
+FastAPI · Uvicorn · Three.js
 
 ### Step by step
 
@@ -251,9 +223,6 @@ without any of them NASH Think runs fully offline.
 | `SARTHINK_LLAMA_PORTS` | status script | list | `8082 8083` | no | Local Llama ports to report |
 | `SARTHINK_WORKSPACES` | server | path | `config/workspaces.json` | no | Workspaces config (sample data + password-protected own data) |
 | `HF_HUB_OFFLINE` | server, embedder | `0`/`1` | unset | no | `1` = never contact Hugging Face (after the model is cached) |
-| `NASHTHINK_URL` | MCP server | URL | `http://127.0.0.1:8000` | no | Where the NASH Think API runs |
-| `NASHTHINK_WORKSPACE` | MCP server | string | default workspace | no | Workspace the agent uses (e.g. `personal`) |
-| `NASHTHINK_PASSWORD` | MCP server | secret | unset | with `NASHTHINK_WORKSPACE` | That workspace's password |
 | `DEEPSEEK_API_KEY` | answer writer | secret | unset | no | Enables the optional online DeepSeek answer styles (labelled "online") |
 | `GOOGLE_CLIENT_ID` | calendar sync | string | unset | for Google sync | OAuth client (Desktop app) for reminders → Google Calendar |
 | `GOOGLE_CLIENT_SECRET` | calendar sync | secret | unset | for Google sync | Its secret |
@@ -266,14 +235,14 @@ without any of them NASH Think runs fully offline.
 | File | Purpose |
 |---|---|
 | `identity_map.json` | Your handles on each platform, so they merge into "you" |
-| `workspaces.json` | `{"default": "demo", "workspaces": {...}}`: sample data for everyone, your data behind a PBKDF2 password (`scripts/utils/set_workspace_password.py`). `"agent_actions": true` lets approved agent actions change the sample workspace (for demos) |
+| `workspaces.json` | `{"default": "demo", "workspaces": {...}}`: sample data for everyone, your data behind a PBKDF2 password (`scripts/utils/set_workspace_password.py`). |
 | `llm_profiles.json` | Override model paths, threads, context, GPU layers |
 | `reminders.json` | Background reminder scan: `{"enabled": true, "interval_min": 15}` |
 
 ## Usage
 
 **Web app:** open `http://127.0.0.1:8000/`. Shortcuts: `/` ask · `G` memory map · `I` insights · `R` reminders ·
-`A` actions · `U` upload · `?` help.
+`U` upload · `?` help.
 
 **API** (interactive docs at `/api/docs`):
 
@@ -292,9 +261,6 @@ curl -N localhost:8000/api/ask/stream -H 'Content-Type: application/json' -d '{"
 curl -s localhost:8000/api/reminders | jq '.counts'
 curl -s localhost:8000/api/reminders.ics -o nashthink.ics
 
-# What agents proposed, and the audit log
-curl -s localhost:8000/api/actions | jq '.counts'
-curl -s localhost:8000/api/audit | jq '.entries[:5]'
 ```
 
 | Endpoint | Purpose |
@@ -306,55 +272,18 @@ curl -s localhost:8000/api/audit | jq '.entries[:5]'
 | `GET /api/insights` | Activity totals, platforms, top contacts |
 | `GET/POST /api/reminders`, `POST /api/reminders/{id}`, `GET /api/reminders.ics` | Reminders: list, add, done/snooze/dismiss/edit, calendar file |
 | `GET /api/calendar/status`, `POST /api/calendar/google/sync` | Google Calendar sync |
-| `GET/POST /api/actions`, `POST /api/actions/{id}/approve\|reject`, `GET /api/audit` | Agent proposals, human decisions, audit log |
 | `POST /api/upload`, `POST /api/ingest/run`, `GET /api/ingest/status` | Upload exports and build the memory in the background |
 | `GET /api/workspace`, `POST /api/workspace/unlock\|lock` | Sample data vs your data |
 | `GET /api/llm`, `GET /api/health` | Model and server status |
 
-## MCP server: agentic actions you approve
-
-`scripts/mcp/nashthink_mcp.py` exposes your memory to any MCP client (Claude Desktop, Claude Code, Cursor...).
-
-| Tool | Kind | What it does |
-|---|---|---|
-| `search_memories` | read | Semantic search over your chats |
-| `ask_memory` | read | Evidence-backed answer with sources |
-| `get_conversation`, `get_person` | read | One conversation's excerpts; your history with a person |
-| `list_reminders` | read | Plans and deadlines found in chats |
-| `propose_reminder`, `propose_reminder_change`, `propose_calendar_sync` | **propose** | Queue a change; nothing happens until you approve it |
-| `check_action` | read | Pending, executed (with result), failed or rejected |
-
-**Controls.** Read tools are marked read-only. Agents get **no approve tool**; the server refuses decisions sent
-with the agent header, and a decision needs a confirm header that only the app sends (other web pages fail the
-CORS preflight). Every agent request, proposal, refusal and decision is written to a per-workspace audit log
-(owner-only SQLite, `processed_data/actions/`), shown in the **Actions** panel (`A`). On the password-protected
-workspace, the MCP server unlocks it with the same password flow as the browser.
-
-**Claude Code:**
-
-```bash
-claude mcp add nashthink -- /path/to/nashthink/.venv/bin/python /path/to/nashthink/scripts/mcp/nashthink_mcp.py
-```
-
-**Claude Desktop** (`claude_desktop_config.json`):
-
-```json
-{"mcpServers": {"nashthink": {
-  "command": "/path/to/nashthink/.venv/bin/python",
-  "args": ["/path/to/nashthink/scripts/mcp/nashthink_mcp.py"],
-  "env": {"NASHTHINK_URL": "http://127.0.0.1:8000"}}}}
-```
-
-Then ask: *"Check my chats for anything I promised Rohan this week and propose reminders."* Approve them in the app.
-
 ## Testing & quality
 
 ```bash
-# All unit, API and MCP tests (fake models and throwaway data; no archive, index or network needed)
+# All unit and API tests (fake models and throwaway data; no archive, index or network needed)
 for t in scripts/tests/test_*.py; do .venv/bin/python "$t" || echo "FAILED: $t"; done
 
 # One suite
-.venv/bin/python scripts/tests/test_actions.py
+.venv/bin/python scripts/tests/test_reminders.py
 
 # Lint (what CI runs): syntax errors and undefined names
 .venv/bin/pip install ruff && .venv/bin/ruff check scripts --select E9,F63,F7,F82
@@ -366,10 +295,9 @@ NODE_PATH=/tmp/pw/node_modules node scripts/tests/graph_ui_e2e.mjs http://127.0.
 .venv/bin/python scripts/semantic/eval_hinglish.py
 ```
 
-CI ([`.github/workflows/tests.yml`](.github/workflows/tests.yml)) runs the lint and all 18 test suites on every push.
+CI ([`.github/workflows/tests.yml`](.github/workflows/tests.yml)) runs the lint and all 17 test suites on every push.
 Suites cover the parsers, chunking, embedding metadata, search, Hinglish, Ask and the answer writer (citation checks),
-people, insights, workspaces (passwords, cookies, lockout), uploads, reminders, Google Calendar (fake transport),
-agent actions and the MCP server.
+people, insights, workspaces (passwords, cookies, lockout), uploads, reminders and Google Calendar (fake transport).
 
 ## Benchmarks & maturity
 
@@ -400,8 +328,6 @@ workspace, no multi-tenant hardening, and parsers follow each platform's export 
 | Llama very slow or killed | Not enough RAM / too many threads on a shared CPU | Use Quick, keep `-t 2`, run one model at a time |
 | My messages show as someone else | Handle missing from the identity map | Add it to `config/identity_map.json`, re-run the parsers |
 | Google Calendar: 403 `access_denied` | OAuth app in testing mode | Add your Google account as a test user, or publish the app |
-| "Sample data is read-only" on Approve | Public default workspace | Unlock your data, or set `"agent_actions": true` for the demo workspace |
-| MCP tool says it can't reach NASH Think | Server not on `NASHTHINK_URL` | Start the server; check the URL and port |
 
 **Known limitations and trade-offs**
 - AI answers can still be wrong; citations are there so you can check. Evidence grading favours "No relevant info found" over guessing.
@@ -409,7 +335,6 @@ workspace, no multi-tenant hardening, and parsers follow each platform's export 
 - Some exports only contain your side of a conversation (e.g. Discord data packages).
 - The same person on different apps is not yet linked automatically (only your own accounts are, via the identity map).
 - Reminders are rule-based: fast and private, but they miss unusual phrasings.
-- The audit log trusts the local machine: a process running as your user can read your data files anyway.
 
 ## Prior work and what we built at ASYNC'26
 
@@ -433,19 +358,18 @@ That project visualised your social graph. It had no search, no AI answers, no w
 - Upload chat exports in the browser, with platform detection and background ingestion
 - Reminders: rule-based English + Hinglish extraction of plans, deadlines, birthdays and promises; incremental scans; Reminders panel; `.ics` export and subscribe link; automatic Google Calendar sync; browser alerts
 - A calmer 3D memory map (one cluster per app, small apps visible, clickable app names) and a three-column Memory Home (rail, chat, Graph View)
-- **Agentic actions:** an MCP server, an approval queue (Actions panel) and an audit log, covering Track 1's "agentic tool execution" and "controlled execution that can be reviewed and audited"
 - Security fix: a query parameter could skip the workspace password; only the signed cookie picks a workspace now
 - CI (GitHub Actions), `requirements.txt`, this README, `SECURITY.md` and `CONTRIBUTING.md`, and an MIT license
 
 **Third-party work we use** (under their own licenses): Llama 3.1 8B and Llama 3.2 3B (Llama Community Licenses),
 `paraphrase-multilingual-MiniLM-L12-v2` (Apache 2.0), llama.cpp (MIT), sentence-transformers, LanceDB, FastAPI,
-the MCP Python SDK, Three.js (MIT). The sample archive in `demo/` is fictional and was written for this project.
+Three.js (MIT). The sample archive in `demo/` is fictional and was written for this project.
 
 ## Security
 
 - The server binds to `127.0.0.1`; your archive, database, index, models and `.env` are gitignored and never leave your machine.
 - Workspace passwords are stored only as salted PBKDF2 hashes; sessions are signed, HttpOnly, SameSite=Strict cookies with lockout after repeated failures.
-- Stores that hold chat lines (reminders, audit log) are created owner-only (`0600`).
+- Stores that hold chat lines (reminders) are created owner-only (`0600`).
 - The local model only ever sees the evidence for one question.
 
 **Found a vulnerability?** Please don't open a public issue. Follow [`SECURITY.md`](SECURITY.md) to report it privately.
@@ -460,8 +384,7 @@ Released under the [MIT License](LICENSE).
 ```text
 scripts/parsers/    one parser per platform
 scripts/semantic/   chunking, embeddings, search, Hinglish layer, reminder rules
-scripts/api/        FastAPI server, Ask, answer writer, profiles, insights, workspaces, reminders, actions, upload
-scripts/mcp/        MCP server for AI agents
+scripts/api/        FastAPI server, Ask, answer writer, profiles, insights, workspaces, reminders, upload
 scripts/utils/      database layer, graph export, 3D layout, helpers
 scripts/context/    optional: fetch missing reply context for X and Reddit
 scripts/tests/      tests with fake models and throwaway data; browser e2e

@@ -24,7 +24,6 @@ for t in scripts/tests/test_*.py; do .venv/bin/python "$t" || echo "FAILED: $t";
 - Match the surrounding code: small functions, a docstring that says *why*, plain names, 120-column lines.
 - The memory database is read-only for the server; new state goes in its own store under `processed_data/`, created owner-only (`0600`) if it can hold chat text.
 - Nothing leaves the machine by default. Online features must be opt-in and labelled in the UI.
-- Anything an AI agent can change must go through the action queue (`scripts/api/actions.py`), never straight to a service.
 - Tests and logs never print archive text: counts, ids and booleans only.
 
 ## Commit messages
