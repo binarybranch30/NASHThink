@@ -2087,7 +2087,8 @@
     const LINE_RGB = [0.56, 0.64, 0.78];   // hover lines: one soft slate, not two-endpoint gradients
     const ACC_RGB = [0.50, 0.76, 0.77];    // NASH teal: the selection's lines
     const REST_LABELS = 8;           // names shown with nothing selected: the most active people
-    const HUB_LINKS = 25;            // accounts in this many conversations (you, ChatGPT...) show their lines on hover only
+    const HUB_LINKS = 25;            // accounts in this many conversations (you, ChatGPT...): their lines stay very faint at rest
+    const HUB_EDGE_ALPHA = 0.025;
     const EDGE_ALPHA_DIM = 0.035;
     const EDGE_ALPHA_HIT = 0.5;      // edges between two highlighted (search) nodes
     const MAX_RESTING_EDGES = 60000; // above this, edges are only drawn for the selection
@@ -2729,7 +2730,7 @@
         let a;
         if (sel >= 0 && (e.s === sel || e.t === sel)) a = 0;   // focus layer
         else if (!S.edgeVis[k]) a = 0;
-        else if (isHub(S.nodes[e.s]) || isHub(S.nodes[e.t])) a = 0;   // hub spokes (you, AI assistants): hover or select
+        else if (!emphasis && (isHub(S.nodes[e.s]) || isHub(S.nodes[e.t]))) a = resting ? HUB_EDGE_ALPHA : 0;   // hub spokes: a whisper
         else if (!emphasis) a = resting;
         else if (hit(e.s) && hit(e.t)) a = EDGE_ALPHA_HIT;
         else a = resting ? EDGE_ALPHA_DIM : 0;
@@ -2884,7 +2885,7 @@
       if (S.hoverEdges) { S.scene.remove(S.hoverEdges); S.hoverEdges.geometry.dispose(); S.hoverEdges.material.dispose(); S.hoverEdges = null; }
       S.dirty = true;
       if (idx < 0 || idx === S.selected || !S.nodes[idx]) return;
-      const ks = S.nodes[idx].links.filter(k => S.edgeVis[k] && (!S.nodes[S.edges[k].s].me && !S.nodes[S.edges[k].t].me || S.nodes[idx].me));
+      const ks = S.nodes[idx].links.filter(k => S.edgeVis[k]);
       if (!ks.length) return;
       const pos = new Float32Array(ks.length * 6), col = new Float32Array(ks.length * 6), al = new Float32Array(ks.length * 2).fill(0.45);
       ks.forEach((k, j) => {
