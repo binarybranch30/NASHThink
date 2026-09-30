@@ -4831,7 +4831,7 @@
           <div class="rmeta"><span class="rkind k-${esc(it.kind || 'reminder')}">${esc(REM_KIND[it.kind] || 'Reminder')}</span>
             <span class="rel${late ? ' late' : ''}">${esc(rel)}${it.repeat === 'yearly' ? ' · every year' : ''}${it.snoozed_until ? ' · snoozed' : ''}</span>
             ${it.platform ? `<span><i style="background:${color}"></i>${esc(platformName(it.platform))}</span>` : ''}
-            <span>${who}</span>${it.mentions > 1 ? `<span title="Mentioned in ${it.mentions} messages">×${it.mentions}</span>` : ''}</div>
+            <span>${who}</span>${it.synced ? '<span title="In your NASH Think Google calendar" style="color:var(--ok)">✓ Google Calendar</span>' : ''}${it.mentions > 1 ? `<span title="Mentioned in ${it.mentions} messages">×${it.mentions}</span>` : ''}</div>
           ${it.excerpt && !remSame(it.title, it.excerpt) ? `<div class="rex">${esc(it.excerpt)}</div>` : ''}
           <div class="rbtns">
             ${it.status === 'done' ? '<button type="button" class="btn sm" data-act="open">Undo</button>'
@@ -4922,17 +4922,56 @@
       selectNode(t.i, { fly: true });
     }
 
-    async function remShowCalendar() {
+    // Automatic sync to a "NASH Think" calendar in the user's Google account (GET/POST /api/calendar/…).
+    async function remShowGoogle(msg = '') {
+      const el = $('rem-google');
+      if (!el) return;
+      let st;
+      try { st = await apiFetch('/api/calendar/status'); } catch (err) { el.textContent = `Google Calendar: ${err.message}`; return; }
+      const note = msg ? `<div style="color:var(--${msg.startsWith('Connected') ? 'ok' : 'warn'});margin-bottom:4px">${esc(msg)}</div>` : '';
+      if (!st.allowed) {
+        el.innerHTML = `${note}<b>Automatic Google Calendar sync</b> is available for your own data (not the sample).`;
+      } else if (!st.configured) {
+        el.innerHTML = `${note}<b>Automatic Google Calendar sync</b> needs a Google OAuth client: add <code>GOOGLE_CLIENT_ID</code> and <code>GOOGLE_CLIENT_SECRET</code> to <code>.env</code> and restart the server (see docs/reminders.md).`;
+      } else if (!st.connected) {
+        el.innerHTML = `${note}<b>Automatic Google Calendar sync.</b> New reminders appear in a separate “NASH Think” calendar in your Google account and your phone alerts you. Only each reminder’s title, time and one line from its message are sent; your other calendars are never read.
+          <div class="rbtns"><a class="btn sm primary" href="${esc(API_BASE)}/api/calendar/google/connect">Connect Google Calendar</a></div>`;
+      } else {
+        const r = st.last_result;
+        const when = st.last_sync ? new Date(st.last_sync).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' }) : 'not yet';
+        el.innerHTML = `${note}<b style="color:var(--ok)">● Syncing to Google Calendar</b> (“NASH Think” calendar) automatically every few minutes.<br>
+          Last sync: ${esc(when)}${r ? ` · ${r.in_calendar} reminder${r.in_calendar === 1 ? '' : 's'} in the calendar` : ''}${st.last_error ? `<br><span style="color:var(--warn)">${esc(st.last_error)}</span>` : ''}
+          <div class="rbtns"><button type="button" class="btn sm" id="rem-gsync">Sync now</button>
+            <button type="button" class="linkbtn" id="rem-gdisc" title="Stop syncing and forget the Google sign-in (the NASH Think calendar stays in your account)">Disconnect</button></div>`;
+        $('rem-gsync').onclick = async () => {
+          $('rem-gsync').disabled = true; $('rem-gsync').textContent = 'Syncing…';
+          try {
+            const res = await apiFetch('/api/calendar/google/sync', { method: 'POST', timeout: 120000 });
+            remShowGoogle(`Synced: ${res.added} added, ${res.updated} updated, ${res.removed} removed.`);
+            loadReminders(true);
+          } catch (err) { remShowGoogle(err.message); }
+        };
+        $('rem-gdisc').onclick = async () => {
+          if (!confirm('Stop syncing to Google Calendar? The “NASH Think” calendar stays in your Google account; you can delete it there.')) return;
+          try { await apiFetch('/api/calendar/google/disconnect', { method: 'POST' }); remShowGoogle('Disconnected.'); loadReminders(true); }
+          catch (err) { remShowGoogle(err.message); }
+        };
+      }
+    }
+
+    async function remShowCalendar(msg = '') {
       const box = $('rem-cal'), d = S.rem.data;
       const ics = API_BASE + '/api/reminders.ics';
       const notify = remStore(REM_NOTIFY_KEY) === 1 && 'Notification' in window && Notification.permission === 'granted';
-      box.innerHTML = `<div class="rem-note"><b>Put these in your calendar.</b> Upcoming reminders only; each one alerts you 30 minutes before (all-day ones at 9:00).</div>
+      box.innerHTML = `<div id="rem-google" class="rem-note">Checking Google Calendar…</div>
+        <div class="rem-note" style="margin-top:4px"><b>Or add them yourself.</b> Upcoming reminders only; each alerts you 30 minutes before (all-day ones at 9:00).</div>
         <div class="rbtns"><a class="btn sm primary" href="${esc(ics)}" download="nashthink-reminders.ics">Download .ics</a>
           <span class="rem-note">Import it into Google Calendar, Apple Calendar or Outlook.</span></div>
         <div id="rem-feed" class="rem-note"></div>
         <div class="rbtns"><button type="button" class="btn sm" id="rem-notify">${notify ? 'Browser alerts: on' : 'Alert me in this browser'}</button>
           <span class="rem-note">While NASH Think is open in a tab.</span></div>`;
       $('rem-notify').onclick = remToggleNotify;
+      remShowGoogle(msg);
       if (!d || !d.writable) {
         $('rem-feed').innerHTML = 'A calendar subscription link is available for your own data (not the sample).';
         return;
@@ -5057,6 +5096,17 @@
         if (pop) { e.stopPropagation(); pop.hidden = true; pop.previousElementSibling.setAttribute('aria-expanded', 'false'); pop.previousElementSibling.focus(); }
       });
       // The badge stays current without opening the panel (the server re-scans when its last scan is old).
+      const cal = new URLSearchParams(location.search).get('calendar');
+      if (cal) {
+        history.replaceState(null, '', location.pathname + location.hash);
+        const msg = { connected: 'Connected. Your reminders are being added to the “NASH Think” calendar.',
+          cancelled: 'Google Calendar was not connected (you cancelled).', failed: 'Connecting Google Calendar failed. Try again.' }[cal];
+        if (msg) setTimeout(() => {
+          openReminders();
+          $('rem-cal').hidden = false; $('rem-cal-btn').setAttribute('aria-expanded', 'true');
+          remShowCalendar(msg);
+        }, 300);
+      }
       const tick = () => { if (!remindersOpen()) loadReminders(true); };
       setTimeout(tick, 1500);
       setInterval(tick, 10 * 60 * 1000);

@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS reminders (
     status TEXT NOT NULL DEFAULT 'open',          -- open | done | dismissed
     snoozed_until INTEGER, source TEXT NOT NULL DEFAULT 'auto',   -- auto | manual | ai
     edited INTEGER DEFAULT 0, mentions INTEGER DEFAULT 1,
-    google_event_id TEXT, synced_at INTEGER,
+    google_event_id TEXT, google_hash TEXT, synced_at INTEGER,
     created_at INTEGER, updated_at INTEGER
 );
 CREATE INDEX IF NOT EXISTS idx_rem_due ON reminders(due_at);
@@ -141,6 +141,9 @@ class RemindersService:
         conn = sqlite3.connect(self.store_path, timeout=10)
         conn.row_factory = sqlite3.Row
         conn.executescript(SCHEMA)
+        cols = {r[1] for r in conn.execute("PRAGMA table_info(reminders)")}
+        if "google_hash" not in cols:    # stores made before calendar sync
+            conn.execute("ALTER TABLE reminders ADD COLUMN google_hash TEXT")
         return conn
 
     def _meta(self, conn, key, default=None):
@@ -437,6 +440,23 @@ class RemindersService:
         return self.get(rid)
 
     # ── calendar ──
+    def google_state(self):
+        """reminder id -> (Google event id, fingerprint of what was sent) for reminders in Google Calendar."""
+        with closing(self._store()) as store:
+            rows = store.execute("SELECT id, google_event_id, google_hash FROM reminders WHERE google_event_id IS NOT NULL").fetchall()
+        return {r["id"]: (r["google_event_id"], r["google_hash"]) for r in rows}
+
+    def set_google(self, rid, event_id, fingerprint):
+        with self._lock, closing(self._store()) as store:
+            store.execute("UPDATE reminders SET google_event_id = ?, google_hash = ?, synced_at = ? WHERE id = ?",
+                          (event_id, fingerprint, int(time.time()) if event_id else None, rid))
+            store.commit()
+
+    def clear_google(self):
+        with self._lock, closing(self._store()) as store:
+            store.execute("UPDATE reminders SET google_event_id = NULL, google_hash = NULL, synced_at = NULL")
+            store.commit()
+
     def feed_token(self, create=True):
         """The secret in this workspace's subscribable calendar link."""
         with self._lock, closing(self._store()) as store:
