@@ -1,0 +1,18 @@
+{
+  "default": "demo",
+  "workspaces": {
+    "demo": {
+      "label": "Sample data",
+      "root": "/home/you/nashthink-demo",
+      "agent_actions": true,
+      "reminders": {"now": "latest_message", "lookback_days": null},
+      "examples": {"ask": ["When is Rohan's exam?", "Flat deposit kisne diya tha?"]}
+    },
+    "personal": {
+      "label": "My data",
+      "root": "/home/you/nashthink",
+      "password": "run scripts/utils/set_workspace_password.py personal to fill this in",
+      "reminders": {"tz": "Asia/Kolkata", "lookback_days": 60}
+    }
+  }
+}
