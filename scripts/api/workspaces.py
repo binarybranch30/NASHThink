@@ -101,6 +101,7 @@ class Workspace:
     examples: Optional[dict] = None     # {"ask": [...], "search": [...]}: the home page's sample questions
     reminders: Any = None               # reminders.RemindersService
     calendar: Any = None                # calendar_google.GoogleCalendarSync
+    root: Optional[Path] = None
 
 
 @dataclass

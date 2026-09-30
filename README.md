@@ -65,13 +65,13 @@ Chat exports → Parsers → SQLite memory → Session chunks → Embeddings (La
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install torch --index-url https://download.pytorch.org/whl/cpu
-.venv/bin/pip install sentence-transformers lancedb pyarrow numpy fastapi uvicorn
+.venv/bin/pip install sentence-transformers lancedb pyarrow numpy fastapi uvicorn python-multipart
 cp config/identity_map.json.example config/identity_map.json   # add your own handles so your messages map to "you"
 ```
 
 ### 2. Add your chat exports
 
-Download your data from each app and place it under `archive/` (gitignored):
+You can upload your chat exports directly in the web UI by clicking **Upload** (or pressing <kbd>U</kbd>) with drag-and-drop and auto-detection, or place files under `archive/` (gitignored):
 
 ```text
 archive/
@@ -143,6 +143,8 @@ Interactive docs at `http://127.0.0.1:8000/api/docs`.
 | `GET /api/person/{id}` (+ `/conversations`, `/messages`) | Person profile and history |
 | `GET /api/insights` | Activity totals, platforms, top contacts |
 | `GET /api/llm`, `GET /api/health` | Model and server status |
+| `POST /api/upload`, `GET /api/upload/platforms`, `GET /api/upload/status` | Chat exports upload, platform metadata and archive inspection |
+| `POST /api/ingest/run`, `GET /api/ingest/status` | Trigger and track background ingestion and memory building |
 
 ## Project layout
 

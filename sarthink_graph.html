@@ -931,6 +931,361 @@
     #help .kbd { margin-left: 0; color: #fff; }
     #help .foot { display: flex; justify-content: flex-end; margin-top: 16px; }
 
+    /* ─── Upload Modal ───────────────────────────────────────────────────────────── */
+    #upload-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 16, .72);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 400;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    #upload-backdrop[hidden] { display: none; }
+
+    #upload-modal {
+      width: 680px;
+      max-width: 100%;
+      max-height: calc(100vh - 32px);
+      display: flex;
+      flex-direction: column;
+      background: var(--gb2);
+      border: 1px solid var(--bdr2);
+      border-radius: 14px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, .65), 0 0 0 1px rgba(127, 195, 196, .18);
+      overflow: hidden;
+    }
+    #upload-modal .phead {
+      padding: 16px 20px 14px;
+      border-bottom: 1px solid var(--bdr);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    #upload-modal .ttl h2 {
+      font-family: 'Quicksand', 'Outfit', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #upload-modal .ttl .sub {
+      font-size: .74rem;
+      color: var(--dim);
+      margin-top: 3px;
+    }
+    .upload-tabs {
+      display: flex;
+      gap: 4px;
+      padding: 8px 20px 0;
+      background: rgba(255, 255, 255, .02);
+      border-bottom: 1px solid var(--bdr);
+    }
+    .upload-tab {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 8px 14px 10px;
+      font-family: 'Outfit', sans-serif;
+      font-size: .76rem;
+      font-weight: 500;
+      color: var(--dim);
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .upload-tab:hover { color: #fff; }
+    .upload-tab.active {
+      color: var(--acc);
+      border-bottom-color: var(--acc);
+      font-weight: 600;
+    }
+    .upload-content {
+      padding: 18px 20px;
+      overflow-y: auto;
+      max-height: calc(85vh - 130px);
+      display: none;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .upload-content.active { display: flex; }
+    .plat-selector-label {
+      font-size: .70rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--dim);
+    }
+    .upload-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .upload-chip {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid var(--bdr);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: .72rem;
+      font-family: inherit;
+      color: var(--mid);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all .15s;
+    }
+    .upload-chip:hover {
+      background: rgba(255, 255, 255, .08);
+      color: #fff;
+      border-color: var(--bdr2);
+    }
+    .upload-chip.active {
+      background: rgba(127, 195, 196, .14);
+      border-color: var(--acc);
+      color: #fff;
+      font-weight: 600;
+    }
+    .drop-zone {
+      border: 2px dashed rgba(127, 195, 196, .35);
+      border-radius: 12px;
+      padding: 26px 20px;
+      text-align: center;
+      background: rgba(127, 195, 196, .02);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .drop-zone:hover, .drop-zone.dragover {
+      border-color: var(--acc);
+      background: rgba(127, 195, 196, .08);
+      box-shadow: 0 0 24px rgba(127, 195, 196, .14);
+    }
+    .drop-icon {
+      color: var(--acc);
+      margin-bottom: 8px;
+    }
+    .drop-main {
+      font-size: .86rem;
+      color: #fff;
+    }
+    .drop-browse {
+      color: var(--acc);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    .drop-hint {
+      font-size: .70rem;
+      color: var(--dim);
+      margin-top: 6px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.4;
+    }
+    .upload-queue {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .upload-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid var(--bdr);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: .76rem;
+    }
+    .upload-item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+    .upload-item-name {
+      font-weight: 600;
+      color: #fff;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .upload-item-sub {
+      font-size: .68rem;
+      color: var(--dim);
+    }
+    .upload-item-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .upload-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: .66rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, .08);
+      color: var(--mid);
+    }
+    .upload-badge.ok { background: rgba(62, 207, 142, .2); color: #3ecf8e; }
+    .upload-badge.busy { background: rgba(127, 195, 196, .2); color: #7fc3c4; }
+    .upload-badge.err { background: rgba(255, 128, 128, .2); color: #ff8080; }
+    .ingest-card {
+      background: rgba(255, 255, 255, .02);
+      border: 1px solid var(--bdr);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .ingest-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .ingest-title {
+      font-weight: 600;
+      font-size: .84rem;
+      color: #fff;
+    }
+    .ingest-desc {
+      font-size: .72rem;
+      color: var(--dim);
+      margin-top: 2px;
+    }
+    .ingest-pbar-track {
+      height: 6px;
+      background: rgba(255, 255, 255, .06);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .ingest-pbar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--acc), #3ecf8e);
+      transition: width .25s ease;
+    }
+    .ingest-step-label {
+      font-size: .72rem;
+      color: var(--acc);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+    .ingest-logs-detail {
+      font-size: .70rem;
+      color: var(--dim);
+      margin-top: 6px;
+    }
+    .ingest-logs-detail summary {
+      cursor: pointer;
+      user-select: none;
+    }
+    .ingest-logs {
+      background: #02020a;
+      border: 1px solid var(--bdr);
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-family: monospace;
+      font-size: .66rem;
+      color: #b0c4de;
+      max-height: 140px;
+      overflow-y: auto;
+      margin-top: 6px;
+      white-space: pre-wrap;
+    }
+    .manage-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .manage-plat-card {
+      background: rgba(255, 255, 255, .02);
+      border: 1px solid var(--bdr);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .manage-plat-h {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .manage-plat-ttl {
+      font-weight: 600;
+      font-size: .82rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .manage-plat-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--c, #aaa);
+    }
+    .manage-plat-stats {
+      font-size: .70rem;
+      color: var(--dim);
+    }
+    .manage-file-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: .72rem;
+      padding: 5px 0;
+      border-top: 1px solid rgba(255, 255, 255, .04);
+      color: var(--mid);
+    }
+    .manage-file-del {
+      background: none;
+      border: none;
+      color: var(--dim);
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: .68rem;
+    }
+    .manage-file-del:hover {
+      color: #ff8080;
+      background: rgba(255, 128, 128, .1);
+    }
+    .guide-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .guide-item {
+      background: rgba(255, 255, 255, .02);
+      border: 1px solid var(--bdr);
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+    .guide-item summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: .80rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+    }
+    .guide-item ol {
+      margin: 10px 0 4px 20px;
+      font-size: .74rem;
+      color: var(--mid);
+      line-height: 1.6;
+    }
+
     #tooltip {
       position: fixed;
       left: 0;
@@ -1405,6 +1760,7 @@
       <button id="btn-home" class="btn fade-layer" type="button" title="Back to Home (G)">Home</button>
       <button id="btn-insights" class="btn" type="button" title="Activity insights (I)" aria-controls="insights" aria-expanded="false">Insights</button>
       <button id="btn-reminders" class="btn" type="button" title="Reminders found in your chats (R)" aria-controls="reminders" aria-expanded="false">Reminders<span id="rem-badge" class="rbadge" hidden></span></button>
+      <button id="btn-upload" class="btn" type="button" title="Upload & import chat data (U)" aria-controls="upload-modal" aria-expanded="false">Upload</button>
       <button id="btn-reset" class="btn fade-layer icon" type="button" title="Reset the view and filters (Esc)" aria-label="Reset view">↺</button>
       <button id="btn-help" class="btn icon" type="button" title="Help and keyboard shortcuts (?)" aria-haspopup="dialog" aria-label="Help">?</button>
     </div>
@@ -1437,6 +1793,7 @@
       <button id="home-explore" class="linkbtn big" type="button">Explore the memory map →</button>
       <button id="home-insights" class="linkbtn big" type="button">See insights</button>
       <button id="home-reminders" class="linkbtn big" type="button">Reminders</button>
+      <button id="home-upload" class="linkbtn big" type="button">Upload data</button>
     </div>
     <div id="graph-note" hidden role="status"></div>
     <div id="home-status" aria-live="polite">
@@ -1561,6 +1918,87 @@
     <button class="btn primary" type="button" id="empty-reset">Reset filters</button>
   </div>
 
+  <!-- Upload Modal -->
+  <div id="upload-backdrop" hidden>
+    <div id="upload-modal" class="panel" role="dialog" aria-modal="true" aria-labelledby="upload-h" tabindex="-1">
+      <div class="phead">
+        <div class="ttl">
+          <h2 id="upload-h"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Import Chat Data</h2>
+          <div class="sub">Add exports from 9 platforms into your private NASH Think memory. Stays 100% on your device.</div>
+        </div>
+        <button class="xbtn" type="button" id="upload-close" title="Close upload (Esc)" aria-label="Close upload">×</button>
+      </div>
+
+      <div class="upload-tabs" role="tablist">
+        <button class="upload-tab active" role="tab" id="tab-btn-upload" data-tab="upload" aria-selected="true">Upload Files</button>
+        <button class="upload-tab" role="tab" id="tab-btn-manage" data-tab="manage" aria-selected="false">Archive Status</button>
+        <button class="upload-tab" role="tab" id="tab-btn-guide" data-tab="guide" aria-selected="false">Export Guide</button>
+      </div>
+
+      <!-- Tab 1: Upload -->
+      <div id="tab-content-upload" class="upload-content active">
+        <div>
+          <div class="plat-selector-label" style="margin-bottom:6px">Target Platform:</div>
+          <div id="upload-plat-chips" class="upload-chips">
+            <button type="button" class="upload-chip active" data-plat="auto">✨ Auto-detect</button>
+            <button type="button" class="upload-chip" data-plat="whatsapp">WhatsApp</button>
+            <button type="button" class="upload-chip" data-plat="instagram">Instagram</button>
+            <button type="button" class="upload-chip" data-plat="chatgpt">ChatGPT</button>
+            <button type="button" class="upload-chip" data-plat="claude">Claude</button>
+            <button type="button" class="upload-chip" data-plat="discord">Discord</button>
+            <button type="button" class="upload-chip" data-plat="reddit">Reddit</button>
+            <button type="button" class="upload-chip" data-plat="twitter">Twitter / X</button>
+            <button type="button" class="upload-chip" data-plat="google">Google Takeout</button>
+            <button type="button" class="upload-chip" data-plat="facebook">Facebook</button>
+          </div>
+        </div>
+
+        <div id="drop-zone" class="drop-zone">
+          <input type="file" id="file-input" multiple accept=".zip,.txt,.json,.csv,.mbox,.gz" style="display:none">
+          <div class="drop-icon">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <div class="drop-main"><b>Drop chat exports here</b> or <span class="drop-browse">browse files</span></div>
+          <div class="drop-hint">Accepts WhatsApp (.txt / .zip), Meta/Instagram (.zip), Discord package (.zip), ChatGPT/Claude (conversations.json / .zip), Reddit (.csv / .zip), Twitter (.zip), and Google Takeout (.zip)</div>
+        </div>
+
+        <div id="upload-queue" class="upload-queue" hidden></div>
+
+        <div class="ingest-card">
+          <div class="ingest-header">
+            <div>
+              <div class="ingest-title">Process & Build Memory</div>
+              <div class="ingest-desc">Parse uploaded chats into your SQLite memory and regenerate the 3D memory map.</div>
+            </div>
+            <button id="btn-run-ingest" class="btn primary" type="button">Process Data</button>
+          </div>
+          <div id="ingest-progress-box" hidden>
+            <div class="ingest-pbar-track"><div id="ingest-pbar-fill" class="ingest-pbar-fill" style="width:0%"></div></div>
+            <div id="ingest-step-label" class="ingest-step-label">Starting...</div>
+            <details id="ingest-logs-detail" class="ingest-logs-detail">
+              <summary>View live logs</summary>
+              <pre id="ingest-logs" class="ingest-logs"></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Archive Status -->
+      <div id="tab-content-manage" class="upload-content">
+        <div id="manage-status-list" class="manage-list">Loading archive status...</div>
+      </div>
+
+      <!-- Tab 3: Guide -->
+      <div id="tab-content-guide" class="upload-content">
+        <div id="guide-accordion" class="guide-accordion">Loading guides...</div>
+      </div>
+    </div>
+  </div>
+
   <div id="help-backdrop" hidden>
     <div id="help" class="panel" role="dialog" aria-modal="true" aria-labelledby="help-h" tabindex="-1">
       <h2 id="help-h">HOW IT WORKS</h2>
@@ -1585,6 +2023,7 @@
         <tr><td><span class="kbd">G</span></td><td>Switch between Home and the memory map</td></tr>
         <tr><td><span class="kbd">I</span></td><td>Open / close Insights</td></tr>
         <tr><td><span class="kbd">R</span></td><td>Open / close Reminders</td></tr>
+        <tr><td><span class="kbd">U</span></td><td>Open / close Upload Data dialog</td></tr>
         <tr><td><span class="kbd">/</span></td><td>Jump to the search box</td></tr>
         <tr><td><span class="kbd">↑</span> <span class="kbd">↓</span> <span class="kbd">Enter</span></td><td>Pick a search match</td></tr>
         <tr><td><span class="kbd">←</span> <span class="kbd">→</span> <span class="kbd">↑</span> <span class="kbd">↓</span></td><td>Move the map (Shift: rotate)</td></tr>
@@ -3255,6 +3694,258 @@
     }
     const helpOpen = () => !$('help-backdrop').hidden;
 
+    // ─── Upload & Import ─────────────────────────────────────────────────────────
+    let _uploadReturn = null;
+    let _uploadPollTimer = null;
+    let _selectedUploadPlatform = 'auto';
+
+    function openUpload() {
+      _uploadReturn = document.activeElement;
+      $('upload-backdrop').hidden = false;
+      $('upload-close').focus();
+      refreshArchiveStatus();
+      loadExportGuides();
+      checkIngestStatus();
+    }
+    function closeUpload() {
+      $('upload-backdrop').hidden = true;
+      if (_uploadPollTimer) { clearTimeout(_uploadPollTimer); _uploadPollTimer = null; }
+      if (_uploadReturn && _uploadReturn.focus) _uploadReturn.focus();
+    }
+    const uploadOpen = () => !$('upload-backdrop').hidden;
+
+    const fmtBytes = b => {
+      if (!b || b <= 0) return '0 B';
+      const k = 1024, sizes = ['B', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(b) / Math.log(k));
+      return (b / Math.pow(k, i)).toFixed(1) + ' ' + sizes[i];
+    };
+
+    function setUploadTab(tabName) {
+      document.querySelectorAll('.upload-tab').forEach(b => {
+        const active = b.dataset.tab === tabName;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-selected', String(active));
+      });
+      document.querySelectorAll('.upload-content').forEach(c => {
+        c.classList.toggle('active', c.id === `tab-content-${tabName}`);
+      });
+      if (tabName === 'manage') refreshArchiveStatus();
+      if (tabName === 'guide') loadExportGuides();
+    }
+
+    function selectUploadPlatform(plat) {
+      _selectedUploadPlatform = plat;
+      document.querySelectorAll('#upload-plat-chips .upload-chip').forEach(b => {
+        b.classList.toggle('active', b.dataset.plat === plat);
+      });
+    }
+
+    async function handleFilesUpload(files) {
+      if (!files || !files.length) return;
+      const q = $('upload-queue');
+      q.hidden = false;
+
+      for (const file of files) {
+        const item = document.createElement('div');
+        item.className = 'upload-item';
+        item.innerHTML = `
+          <div class="upload-item-info">
+            <span class="upload-item-name">${esc(file.name)}</span>
+            <span class="upload-item-sub">${fmtBytes(file.size)} · Target: ${esc(_selectedUploadPlatform)}</span>
+          </div>
+          <div class="upload-item-status">
+            <span class="upload-badge busy">Uploading…</span>
+          </div>
+        `;
+        q.prepend(item);
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('platform', _selectedUploadPlatform);
+
+        try {
+          const resp = await fetch('/api/upload', { method: 'POST', body: formData });
+          if (!resp.ok) {
+            const err = await resp.json().catch(() => ({}));
+            throw new Error(err.detail || err.message || `HTTP ${resp.status}`);
+          }
+          const res = await resp.json();
+          item.querySelector('.upload-item-status').innerHTML = `
+            <span class="upload-badge ok">✓ ${esc(res.platform_name || res.platform)}</span>
+          `;
+          item.querySelector('.upload-item-sub').textContent = `${fmtBytes(res.size_bytes)} · Saved to archive/${res.saved_to}`;
+        } catch (e) {
+          item.querySelector('.upload-item-status').innerHTML = `
+            <span class="upload-badge err" title="${esc(e.message)}">Upload failed</span>
+          `;
+          item.querySelector('.upload-item-sub').textContent = `${fmtBytes(file.size)} · ${esc(e.message)}`;
+        }
+      }
+      refreshArchiveStatus();
+    }
+
+    async function refreshArchiveStatus() {
+      const container = $('manage-status-list');
+      try {
+        const resp = await fetch('/api/upload/status');
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+        const plats = data.platforms || {};
+
+        let html = '';
+        for (const [pid, p] of Object.entries(plats)) {
+          const hasFiles = p.file_count > 0;
+          const hasMsgs = p.messages_in_db > 0;
+          html += `
+            <div class="manage-plat-card">
+              <div class="manage-plat-h">
+                <div class="manage-plat-ttl">
+                  <span class="manage-plat-dot" style="--c:${esc(p.color)}"></span>
+                  <span>${esc(p.name)}</span>
+                  ${hasMsgs ? `<span class="upload-badge ok">${fmtN(p.messages_in_db)} indexed</span>` : ''}
+                </div>
+                <div class="manage-plat-stats">
+                  ${p.file_count ? `${p.file_count} file${p.file_count === 1 ? '' : 's'} (${fmtBytes(p.total_bytes)})` : '<span style="color:var(--dim)">No files uploaded</span>'}
+                </div>
+              </div>
+              ${hasFiles ? `
+                <div class="manage-files">
+                  ${p.files.map(f => `
+                    <div class="manage-file-row">
+                      <span title="${esc(f.rel_path)}">${esc(f.filename)} (${fmtBytes(f.size_bytes)})</span>
+                      <button type="button" class="manage-file-del" data-path="${esc(f.rel_path)}">✕ Delete</button>
+                    </div>
+                  `).join('')}
+                </div>
+              ` : ''}
+            </div>
+          `;
+        }
+        container.innerHTML = html || '<div class="note">No platform data found.</div>';
+
+        container.querySelectorAll('.manage-file-del').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const relPath = btn.dataset.path;
+            if (!confirm(`Delete ${relPath} from archive?`)) return;
+            try {
+              btn.disabled = true;
+              btn.textContent = '…';
+              const r = await fetch(`/api/upload/delete?rel_path=${encodeURIComponent(relPath)}`, { method: 'POST' });
+              if (!r.ok) throw new Error(`HTTP ${r.status}`);
+              refreshArchiveStatus();
+            } catch (err) {
+              alert(`Failed to delete: ${err.message}`);
+              btn.disabled = false;
+              btn.textContent = '✕ Delete';
+            }
+          });
+        });
+      } catch (e) {
+        container.innerHTML = `<div class="note" style="color:var(--err)">Failed to load archive status: ${esc(e.message)}</div>`;
+      }
+    }
+
+    let _guidesLoaded = false;
+    async function loadExportGuides() {
+      if (_guidesLoaded) return;
+      const acc = $('guide-accordion');
+      try {
+        const resp = await fetch('/api/upload/platforms');
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const list = data.platforms || [];
+        acc.innerHTML = list.map(p => `
+          <details class="guide-item">
+            <summary><span style="color:${esc(p.color)}">●</span> ${esc(p.name)} <span style="font-size:.68rem;color:var(--dim);margin-left:auto;font-weight:normal">${(p.extensions || []).join(', ')}</span></summary>
+            <div style="font-size:.72rem;color:var(--dim);margin-top:6px">${esc(p.description)}</div>
+            <ol>
+              ${(p.instructions || []).map(step => `<li>${esc(step)}</li>`).join('')}
+            </ol>
+          </details>
+        `).join('');
+        _guidesLoaded = true;
+      } catch (_) {}
+    }
+
+    async function checkIngestStatus() {
+      try {
+        const resp = await fetch('/api/ingest/status');
+        if (!resp.ok) return;
+        const s = await resp.json();
+        if (s.status === 'running') {
+          showIngestRunning(s);
+          pollIngest();
+        }
+      } catch (_) {}
+    }
+
+    function showIngestRunning(s) {
+      $('ingest-progress-box').hidden = false;
+      $('btn-run-ingest').disabled = true;
+      $('ingest-pbar-fill').style.width = `${s.progress || 10}%`;
+      $('ingest-step-label').textContent = s.step || 'Processing...';
+      if (s.logs && s.logs.length) {
+        const el = $('ingest-logs');
+        el.textContent = s.logs.join('\n');
+        el.scrollTop = el.scrollHeight;
+      }
+    }
+
+    async function startIngestion() {
+      const plat = _selectedUploadPlatform === 'auto' ? 'all' : _selectedUploadPlatform;
+      $('btn-run-ingest').disabled = true;
+      $('ingest-progress-box').hidden = false;
+      $('ingest-pbar-fill').style.width = '10%';
+      $('ingest-step-label').textContent = `Starting parser for ${plat}...`;
+      $('ingest-logs').textContent = `[${new Date().toLocaleTimeString()}] Triggering ingestion job...`;
+
+      try {
+        const resp = await fetch('/api/ingest/run', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ platform: plat })
+        });
+        if (!resp.ok) {
+          const err = await resp.json().catch(() => ({}));
+          throw new Error(err.detail || `HTTP ${resp.status}`);
+        }
+        pollIngest();
+      } catch (e) {
+        $('btn-run-ingest').disabled = false;
+        $('ingest-step-label').textContent = `Error: ${e.message}`;
+        $('ingest-step-label').style.color = 'var(--err)';
+      }
+    }
+
+    async function pollIngest() {
+      if (_uploadPollTimer) clearTimeout(_uploadPollTimer);
+      try {
+        const resp = await fetch('/api/ingest/status');
+        if (!resp.ok) return;
+        const s = await resp.json();
+        showIngestRunning(s);
+
+        if (s.status === 'running') {
+          _uploadPollTimer = setTimeout(pollIngest, 1200);
+        } else if (s.status === 'completed') {
+          $('btn-run-ingest').disabled = false;
+          $('ingest-pbar-fill').style.width = '100%';
+          $('ingest-step-label').textContent = '✓ Memory updated! Click here to reload memory graph';
+          $('ingest-step-label').style.color = '#3ecf8e';
+          $('ingest-step-label').style.cursor = 'pointer';
+          $('ingest-step-label').onclick = () => window.location.reload();
+          refreshArchiveStatus();
+        } else if (s.status === 'error') {
+          $('btn-run-ingest').disabled = false;
+          $('ingest-step-label').textContent = `Failed: ${s.error || 'Unknown error'}`;
+          $('ingest-step-label').style.color = 'var(--err)';
+        }
+      } catch (_) {
+        _uploadPollTimer = setTimeout(pollIngest, 2000);
+      }
+    }
+
     // ─── Keyboard ─────────────────────────────────────────────────────────────────
     function isTyping(el) {
       return el && (el.tagName === 'INPUT' && !['range', 'button', 'checkbox'].includes(el.type) || el.tagName === 'TEXTAREA' || el.isContentEditable);
@@ -3263,11 +3954,16 @@
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') {
         e.preventDefault();
+        if (uploadOpen()) { closeUpload(); return; }
         if (helpOpen()) { closeHelp(); return; }
         if (insightsOpen()) { closeInsights(); return; }
         if (remindersOpen()) { closeReminders(); return; }
         if (isTyping(document.activeElement)) document.activeElement.blur();
         resetAll();
+        return;
+      }
+      if (uploadOpen()) {
+        if (e.key === 'Tab') { e.preventDefault(); $('upload-close').focus(); }
         return;
       }
       if (helpOpen()) {
@@ -3281,6 +3977,7 @@
         box.focus(); box.select();
       }
       else if (e.key === '?') { e.preventDefault(); openHelp(); }
+      else if (e.key === 'u' || e.key === 'U') { e.preventDefault(); uploadOpen() ? closeUpload() : openUpload(); }
       else if (e.key === 'g' || e.key === 'G') { e.preventDefault(); toggleView(); }
       else if (e.key === 'i' || e.key === 'I') { e.preventDefault(); insightsOpen() ? closeInsights() : openInsights(); }
       else if (e.key === 'r' || e.key === 'R') { e.preventDefault(); remindersOpen() ? closeReminders() : openReminders(); }
@@ -3296,10 +3993,10 @@
     // Only in the graph workspace, and never while the arrows already mean something else:
     // typing, tab strips, lists, sliders, scrollable panels or an open dialog.
     function arrowsMoveGraph() {
-      if (S.view !== 'graph' || !S.camera || insightsOpen() || remindersOpen() || helpOpen()) return false;
+      if (S.view !== 'graph' || !S.camera || insightsOpen() || remindersOpen() || helpOpen() || uploadOpen()) return false;
       const el = document.activeElement;
       if (!el || el === document.body || el === S.renderer.domElement) return true;
-      return !el.closest('[role="tablist"], [role="listbox"], [role="option"], input, select, textarea, .scroll, #insights, #reminders, .sr');
+      return !el.closest('[role="tablist"], [role="listbox"], [role="option"], input, select, textarea, .scroll, #insights, #reminders, #upload-modal, .sr');
     }
 
     function nudgeCamera([dx, dy], orbit) {
@@ -5420,6 +6117,33 @@
     $('btn-help').addEventListener('click', openHelp);
     $('help-close').addEventListener('click', closeHelp);
     $('help-backdrop').addEventListener('click', e => { if (e.target === $('help-backdrop')) closeHelp(); });
+
+    // Wire Upload modal
+    $('btn-upload').addEventListener('click', () => (uploadOpen() ? closeUpload() : openUpload()));
+    $('home-upload').addEventListener('click', openUpload);
+    $('upload-close').addEventListener('click', closeUpload);
+    $('upload-backdrop').addEventListener('click', e => { if (e.target === $('upload-backdrop')) closeUpload(); });
+    document.querySelectorAll('.upload-tab').forEach(b => b.addEventListener('click', () => setUploadTab(b.dataset.tab)));
+    document.querySelectorAll('#upload-plat-chips .upload-chip').forEach(b => b.addEventListener('click', () => selectUploadPlatform(b.dataset.plat)));
+    const dropZone = $('drop-zone');
+    const fileInp = $('file-input');
+    dropZone.addEventListener('click', () => fileInp.click());
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files && e.dataTransfer.files.length) {
+        handleFilesUpload(Array.from(e.dataTransfer.files));
+      }
+    });
+    fileInp.addEventListener('change', e => {
+      if (e.target.files && e.target.files.length) {
+        handleFilesUpload(Array.from(e.target.files));
+        fileInp.value = '';
+      }
+    });
+    $('btn-run-ingest').addEventListener('click', startIngestion);
     $('d-close').addEventListener('click', clearSelection);
     $('empty-reset').addEventListener('click', () => { resetFilters(); refreshVisuals(); });
     $('find-q').addEventListener('input', e => runFind(e.target.value));

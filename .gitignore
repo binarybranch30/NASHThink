@@ -53,6 +53,7 @@ context/reddit/test.py
 models/
 *.gguf
 logs/
+output/
 
 # The fictional sample archive (Aarav Mehta) is safe to publish: keep its exports despite the rules above
 !demo/sample_archive/**
