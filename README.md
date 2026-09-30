@@ -58,13 +58,14 @@ an assistant over their own knowledge without a cloud provider.
 
 ## Screenshots
 
-<p align="center"><img src="docs/screenshots/ask-answer.jpg" alt="An answer written by Llama 3.1 8B on this device, with numbered citations" width="900"><br>
-<sub>Ask: Llama 3.1 8B answers on this device, citing the exact messages</sub></p>
+<p align="center"><img src="docs/screenshots/ask-answer.jpg" alt="An answer written by Llama 3.2 3B on this device, with numbered citations and a flagged quote" width="900"><br>
+<sub>Ask: Llama 3.2 3B answers on this device and cites the exact messages; a quote it could not verify is underlined</sub></p>
 
 | | |
 |---|---|
-| <img src="docs/screenshots/home.jpg" alt="NASH Think home with the question box above the memory map"><br><sub>Home: one question box above your memory map</sub> | <img src="docs/screenshots/sources.jpg" alt="Source cards and timeline behind an answer"><br><sub>The sources behind every answer, with a timeline</sub> |
-| <img src="docs/screenshots/memory-map.jpg" alt="Memory map with the cited email and its people highlighted"><br><sub>Memory map: the cited conversation and its people light up</sub> | <img src="docs/screenshots/person-profile.jpg" alt="Your history with Rohan: cited brief, activity by month and notable conversations"><br><sub>Your history with a person</sub> |
+| <img src="docs/screenshots/home.jpg" alt="Memory Home: tools on the left, the question box in the middle, a live Graph View on the right"><br><sub>Memory Home: ask in the middle, your memory map live on the right</sub> | <img src="docs/screenshots/sources.jpg" alt="Evidence summary, key points, timeline and source cards behind an answer"><br><sub>The evidence behind every answer: confidence, key points, timeline, sources</sub> |
+| <img src="docs/screenshots/memory-map.jpg" alt="Memory map with the cited email and its people highlighted"><br><sub>Memory map: the cited conversation and its people light up</sub> | <img src="docs/screenshots/person-profile.jpg" alt="Your history with Rohan: brief, counts, activity by month, recurring words and notable conversations"><br><sub>Your history with a person</sub> |
+| <img src="docs/screenshots/reminders.jpg" alt="Reminders found in the chats, with calendar options: .ics download, browser alerts, Google Calendar"><br><sub>Reminders found in your chats, one click to Google Calendar or a calendar file</sub> | |
 
 <sub>All screenshots use the fictional sample archive; no real chats are shown.</sub>
 
