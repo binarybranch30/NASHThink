@@ -99,6 +99,7 @@ class Workspace:
     graph_dir: Path
     password_hash: Optional[str] = None
     examples: Optional[dict] = None     # {"ask": [...], "search": [...]}: the home page's sample questions
+    reminders: Any = None               # reminders.RemindersService
 
 
 @dataclass

@@ -448,6 +448,7 @@ class RemindersService:
 
     def upcoming(self, since_days=1):
         """Open reminders due from `since_days` ago onwards (what belongs in a calendar)."""
+        self.ensure_scanned()
         now = self.now()
         with closing(self._store()) as store:
             rows = store.execute("SELECT * FROM reminders WHERE status = 'open'").fetchall()
