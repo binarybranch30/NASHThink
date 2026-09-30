@@ -98,6 +98,10 @@ class ServiceTests(unittest.TestCase):
         self.assertEqual((bday["repeat"], bday["date"], bday["said_by"]), ("yearly", "2027-04-07", "Maa"))
         self.assertNotIn("25/09", str(data))         # ChatGPT's own words are not your plans
 
+    def test_store_is_private(self):
+        self.svc.scan()
+        self.assertEqual(oct(os.stat(self.svc.store_path).st_mode & 0o777), "0o600")
+
     def test_incremental_scan_reads_only_new_messages(self):
         self.svc.scan()
         self.assertEqual(self.svc.scan()["messages_read"], 0)

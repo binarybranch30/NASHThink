@@ -10,6 +10,7 @@ added by hand; a re-scan never undoes those.
 """
 import datetime as dt
 import json
+import os
 import re
 import secrets
 import sqlite3
@@ -138,6 +139,8 @@ class RemindersService:
 
     def _store(self):
         self.store_path.parent.mkdir(parents=True, exist_ok=True)
+        if not self.store_path.exists():     # it holds lines from private chats: owner-only, like the chats' DB
+            os.close(os.open(self.store_path, os.O_WRONLY | os.O_CREAT, 0o600))
         conn = sqlite3.connect(self.store_path, timeout=10)
         conn.row_factory = sqlite3.Row
         conn.executescript(SCHEMA)
