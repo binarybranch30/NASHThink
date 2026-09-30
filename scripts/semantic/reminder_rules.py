@@ -68,6 +68,7 @@ KINDS = [
                    r"bhej\w*|le aana|le aaunga|lana|can you|could you|please"),
 ]
 KIND_RES = [(kind, weight, re.compile(rf"(?<![\w-])(?:{pat})(?![\w])", re.I)) for kind, weight, pat in KINDS]
+REMIND_RE = next(rx for kind, _, rx in KIND_RES if kind == "reminder")
 
 NEGATION_RE = re.compile(r"\b(not|no need|don't|dont|won't|wont|can't|cant|cancel\w*|postpone\w*|skip\w*|nahi|nhi|"
                          r"mat|never|called off)\b", re.I)
@@ -271,7 +272,7 @@ def extract(text, sent_at_utc, tz=DEFAULT_TZ, birthday_of=None):
         date = find_date(s, base, future, kind_pos)
         time_ = find_time(s)
         clock = time_ is not None and not DAYPART_RE.fullmatch(time_[2])
-        if not date and not (clock and kind and kind != "task" and (future or kind == "reminder")):
+        if not date and not (clock and kind and kind != "task" and (future or REMIND_RE.search(s))):
             continue
         cleaned = POSITIVE_NEGATIONS_RE.sub("", s)
         if NEGATION_RE.search(cleaned):
