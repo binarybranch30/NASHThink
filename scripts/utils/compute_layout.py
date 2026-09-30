@@ -5,15 +5,13 @@ compute_layout.py
 Pre-computes the 3D positions of the memory map and writes layout_x, layout_y, layout_z into
 cosmograph_nodes.csv. Run once; the HTML renders the baked positions.
 
-Default: community layout. People are grouped by who talks together (Louvain communities on the
-people-conversation graph, the owner's own accounts left out), groups are packed on a flat disc and
-each is laid out with a small force simulation (networkx). Deterministic (seed 42).
+Default: galaxy layout. One cluster per app, arranged around a master sphere; inside each cluster the
+nodes sit on Fibonacci spheres, with group types on concentric shells. Deterministic (seed 42).
 
-    python3 scripts/utils/compute_layout.py                    # community layout
-    python3 scripts/utils/compute_layout.py --layout galaxy    # old platform clusters (Fibonacci spheres)
-    python3 scripts/utils/compute_layout.py --igraph           # galaxy + igraph DrL refinement
-
-Graphs over COMMUNITY_MAX_NODES nodes use the galaxy layout automatically.
+    python3 scripts/utils/compute_layout.py                        # galaxy layout (one cluster per app)
+    python3 scripts/utils/compute_layout.py --layout community     # optional: people grouped by who talks
+                                                                   # together (needs networkx: .venv/bin/python)
+    python3 scripts/utils/compute_layout.py --igraph               # galaxy + igraph DrL refinement
 """
 
 import csv
@@ -259,7 +257,7 @@ def _bucket_by_platform(nodes):
             jitter_z  = ring_r * 0.02
 
             pts = fibonacci_sphere_positions(
-                len(gnodes_sorted), ring_r, cx, cy, cz, z_scale=0.45
+                len(gnodes_sorted), ring_r, cx, cy, cz, z_scale=0.9
             )
             for i, n in enumerate(gnodes_sorted):
                 x, y, z = pts[i]
@@ -411,7 +409,7 @@ def compute_community_layout(nodes: list[dict], edges: list[dict], seed: int = L
 
 def main():
     use_igraph = '--force' in sys.argv or '--igraph' in sys.argv
-    galaxy = '--layout' in sys.argv and sys.argv[sys.argv.index('--layout') + 1:][:1] == ['galaxy']
+    community = '--layout' in sys.argv and sys.argv[sys.argv.index('--layout') + 1:][:1] == ['community']
 
     print(f"Loading {NODES_CSV} …")
     nodes = read_csv(NODES_CSV)
@@ -430,9 +428,10 @@ def main():
         have_nx = True
     except ImportError:
         have_nx = False
-        print("  networkx is not installed for this Python; using the galaxy layout "
-              "(run with .venv/bin/python for the community layout)")
-    if have_nx and not galaxy and not use_igraph and len(nodes) <= COMMUNITY_MAX_NODES:
+        if community:
+            print("  networkx is not installed for this Python; using the galaxy layout "
+                  "(run with .venv/bin/python for the community layout)")
+    if community and have_nx and not use_igraph and len(nodes) <= COMMUNITY_MAX_NODES:
         print("Computing community layout (people grouped by who talks together)…")
         positions = compute_community_layout(nodes, edges)
     else:
