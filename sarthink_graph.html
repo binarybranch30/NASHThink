@@ -1876,7 +1876,8 @@
       body[data-view="home"] #reminders { top: calc(var(--tb) + 16px); right: 16px; bottom: 16px; width: var(--gpw); z-index: 245; }
       body[data-view="home"][data-reminders="open"] #home { opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
       body[data-view="home"][data-reminders="open"] #btn-explore { display: none; }
-      body[data-view="home"] #ws-pop { position: fixed; top: calc(var(--tb) + 8px); right: 16px; left: auto; bottom: auto; z-index: 400; }
+      /* opened from the avatar: next to it, top right; opened from the corner button: above that button, as before */
+      body[data-view="home"] #ws.from-avatar #ws-pop { position: fixed; top: calc(var(--tb) + 8px); right: 16px; left: auto; bottom: auto; z-index: 400; }
     }
     #btn-avatar[hidden] { display: none !important; }
 </style>
@@ -6518,7 +6519,9 @@
          data: () => $('ws').hidden ? null : $('ws-btn').click(), help: () => $('btn-help').click() })[b.dataset.act]?.();
     });
     $('btn-avatar').hidden = true;   // shown once the server offers a data switch (initWorkspace)
-    $('btn-avatar').addEventListener('click', e => { e.stopPropagation(); $('ws-btn').click(); });
+    // The data switch opens next to whichever button opened it (avatar: top right; corner button: bottom left).
+    $('ws-btn').addEventListener('click', () => { $('ws').classList.toggle('from-avatar', !!S.wsFromAvatar); S.wsFromAvatar = false; }, true);
+    $('btn-avatar').addEventListener('click', e => { e.stopPropagation(); S.wsFromAvatar = true; $('ws-btn').click(); });
     $('omni-plus').addEventListener('click', () => $('btn-upload').click());
     $('omni-writer').addEventListener('change', updateModelName);
 
