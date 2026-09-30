@@ -85,6 +85,18 @@ class WhatIsNotAReminder(unittest.TestCase):
                      "Searched for Bengaluru Jaipur flight dates tomorrow"]:
             self.assertIsNone(one(text), text)
 
+    def test_hinglish_stories_about_the_past(self):
+        for text in ["maine kal 5 baje chai piya tha", "kal raat 3 baje soyi thi", "aaj maine movie dekhi",
+                     "aaj dinner mein sabzi bana rha", "parso uski 6 baje tak class thi", "Then 2 baje lunch hua",
+                     "Date: Sat Sep 5 13:53:01 2026 +0530"]:
+            self.assertIsNone(one(text), text)
+
+    def test_hinglish_plans(self):
+        self.assertEqual(one("parso 2 exam hai").date_local, "2026-09-22")
+        self.assertEqual(one("kal 7:30 library jana hai").date_local, "2026-09-21")
+        self.assertEqual(one("kal subah gym jaunga").date_local, "2026-09-21")
+        self.assertEqual(one("parso hackathon ka deadline h").kind, "deadline")
+
     def test_bhool_mat_is_not_a_negation(self):
         self.assertEqual(one("assignment submit karna hai friday tak, bhool mat").kind, "deadline")
 

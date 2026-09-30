@@ -76,10 +76,15 @@ POSITIVE_NEGATIONS_RE = re.compile(r"\b(don'?t forget|do not forget|bhool(?:na)?
 PAST_RE = re.compile(r"\b(was|were|missed|did|had|went|happened|yesterday|last (?:week|night|time)|ago|kiya|kiye|"
                      r"helped|settles|settled|tried|confirms|confirmed|finished|sent|moved|looked|explains why|"
                      r"back with|reopening|revisited|reviewed|received|completed|"
-                     r"gaya|gaye|gayi|tha|thi|hua|hui|huye|diya|liya|dekha)\b", re.I)
-FUTURE_RE = re.compile(r"\b(will|shall|going to|gonna|let's|lets|can we|could we|are we|should we|karenge|"
-                       r"karunga|karungi|milte|milenge|chalenge|chalte|aaunga|aaungi|aayenge|dunga|dungi|denge|"
-                       r"hoga|hogi|honge|jaana|jana|jaenge|jayenge|jaunga|at \d|\d\s*baje)\b", re.I)
+                     r"gaya|gaye|gayi|gya|gyi|gye|tha|thi|hua|hui|huye|diya|liya|dekha|dekhi|dheki|maine|mene|piya|"
+                     r"kara|kari|karaya|aaya|aya|aayi|ayi|aaye|chuka|chuki|chuke|nikla|nikli|nikle|soya|soyi|soye|"
+                     r"bheja|bheji|bheje|mila|mili|banaya|banayi|khaya|khayi|utha|uthi)\b", re.I)
+# Looking ahead. A time ("6 baje") alone is not: "kal 5 baje chai piya tha" is a story about yesterday.
+FUTURE_RE = re.compile(r"\b(will|shall|going to|gonna|let's|lets|can we|could we|are we|should we|milte|chalte|"
+                       r"(?:karna|jaana|jana|nikalna|milna|aana|dena|lena|bhejna|lana)\s+(?:hai|h|ha|he)|"
+                       r"(?!challenge|revenge|scavenge)[^\W\d_]+(?:ega|egi|enge|unga|ungi|oge))\b", re.I)
+STRONG_KINDS = {"birthday", "exam", "interview", "deadline", "appointment", "travel", "payment"}
+STAMP_RE = re.compile(r"\b\d{1,2}:\d{2}:\d{2}\b")
 HEDGE_RE = re.compile(r"\b(might|maybe|may be|shayad|probably|perhaps)\b", re.I)
 WISH_RE = re.compile(r"\b(happy|many happy returns of the day|hbd)\b.*\b(birthday|b'?day|bday|returns)\b|\bhbd\b", re.I)
 LEAD_RE = re.compile(r"^(?:(?:hi|hello|hey|dear)\s+[\w.]+,?\s*|(?:bhai|suno|yaar|arre|achha|acha|haan|ok|okay|"
@@ -156,8 +161,8 @@ def find_date(text, base, has_future, near=None):
                 found.append((m.start(), d, m[0], 0.45))
     for m in REL_DAY_RE.finditer(text):
         w = m[1].lower()
-        if w in ("kal",) and not has_future:
-            continue
+        if w in ("kal", "parso", "parson") and not has_future:
+            continue    # also "yesterday" / "the day before yesterday"
         offset = {"day after tomorrow": 2, "parso": 2, "parson": 2, "tomorrow": 1, "tmrw": 1, "tmr": 1, "kal": 1}.get(w, 0)
         found.append((m.start(), base + dt.timedelta(days=offset), m[0], 0.4))
     for m in WEEKDAY_RE.finditer(text):
@@ -267,21 +272,28 @@ def extract(text, sent_at_utc, tz=DEFAULT_TZ, birthday_of=None):
 
     seen = set()
     for s in sentences(text):
+        if STAMP_RE.search(s):
+            continue    # a pasted log or header line ("Date: Sat Sep 5 13:53:01 2026"), not a plan
         future = bool(FUTURE_RE.search(s))
+        past_marker = bool(PAST_RE.search(s))
         kind, weight, kind_pos = classify(s)
-        date = find_date(s, base, future, kind_pos)
         time_ = find_time(s)
         clock = time_ is not None and not DAYPART_RE.fullmatch(time_[2])
+        # "kal"/"parso" point ahead when the line does, or give a clock time without any past tense.
+        # A strong reason ("parso exam hai", "kal deadline h") without past tense does too.
+        date = find_date(s, base, future or ((clock or kind in STRONG_KINDS) and not past_marker), kind_pos)
         if not date and not (clock and kind and kind != "task" and (future or REMIND_RE.search(s))):
             continue
         cleaned = POSITIVE_NEGATIONS_RE.sub("", s)
         if NEGATION_RE.search(cleaned):
             continue
-        past = PAST_RE.search(s) and not future
+        past = past_marker and not future
         if date:
             d, span, strength = date
             if past and d <= base:
                 continue
+            if span.lower() in ("aaj", "today") and kind in (None, "task", "plan") and not future:
+                continue    # "aaj maine…", "aaj dinner m…": telling what happens today, not planning it
         else:
             # A bare time ("call at 6pm"): today, or tomorrow when that time has already gone.
             d, span, strength = base, time_[2], 0.3
