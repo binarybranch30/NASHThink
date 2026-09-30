@@ -6,7 +6,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-HOST=127.0.0.1                                   # deliberately not configurable: never bind publicly
+HOST="${SARTHINK_HOST:-127.0.0.1}"
 PORT="${SARTHINK_PORT:-8000}"
 LOG="${SARTHINK_LOG:-$ROOT/processed_data/api.log}"
 PIDFILE="${SARTHINK_PIDFILE:-$ROOT/processed_data/api.pid}"
