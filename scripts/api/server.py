@@ -50,6 +50,7 @@ import llm_config  # noqa: E402
 import people  # noqa: E402
 import memory_brief  # noqa: E402
 import search  # noqa: E402
+import uploader  # noqa: E402
 import workspaces  # noqa: E402
 from embedding_config import LANCEDB_PATH  # noqa: E402
 
@@ -389,10 +390,13 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
         service = service or SearchService()
         insights_service = insights_service or insights.InsightsService()
         people_service = people_service or people.PeopleService(insights_service.db_path, insights_service.identity_map)
-        only = workspaces.Workspace("default", None, service, insights_service, people_service, Path(graph_dir))
+        only = workspaces.Workspace("default", None, service, insights_service, people_service, Path(graph_dir), root=REPO_ROOT)
         spaces = workspaces.WorkspaceSet({"default": only}, "default")
 
     def ws_of(request):
+        ws_override = request.query_params.get("ws")
+        if ws_override and ws_override in spaces.spaces:
+            return spaces.spaces[ws_override]
         return spaces.for_token(request.cookies.get(workspaces.COOKIE))
     llm_profiles = llm_profiles if llm_profiles is not None else llm_config.load_profiles()
     llm_status = answer_writer.LlmStatus(llm_profiles, transport=llm_transport)
@@ -400,6 +404,7 @@ def create_app(service=None, graph_html=GRAPH_HTML, graph_dir=GRAPH_DIR, insight
     app = FastAPI(title="Sarthink local search", version="1.0", docs_url="/api/docs", openapi_url="/api/openapi.json")
     app.state.spaces = spaces
     app.state.search_service = spaces.spaces[spaces.default].search
+    app.include_router(uploader.create_upload_router(ws_of))
 
     # Lets the graph be opened from another local server (e.g. python3 -m http.server 8080).
     app.add_middleware(
@@ -657,7 +662,7 @@ def build_spaces(config, table=search.DEFAULT_TABLE):
         spaces[wid] = workspaces.Workspace(
             wid, cfg.get("label") or wid, SearchService(paths["lancedb"], table, model_loader=loader, lock=lock),
             ins, people.PeopleService(ins.db_path, ins.identity_map), paths["graph_dir"], cfg.get("password"),
-            clean_examples(cfg.get("examples")))
+            clean_examples(cfg.get("examples")), root=Path(cfg["root"]))
     return workspaces.WorkspaceSet(spaces, config["default"])
 
 
