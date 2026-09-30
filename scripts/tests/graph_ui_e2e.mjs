@@ -962,27 +962,34 @@ async function homeFlow(browser) {
   const drawn = await page.waitForFunction(() => getComputedStyle(document.getElementById('stage')).opacity === '1', null, { timeout: 3000 }).then(() => true, () => false);
   check('graph is drawn behind Memory Home', drawn && await page.evaluate(() => window.__sarthink.visibleNodes > 0));
 
-  // The graph stays interactive outside the card.
+  // The graph stays interactive: inside the Graph View panel on wide screens, outside the card otherwise.
   const outside = await page.evaluate(() => {
     const h = document.getElementById('home').getBoundingClientRect(), canvas = document.querySelector('#stage canvas');
-    const pts = [[40, innerHeight - 40], [innerWidth - 40, innerHeight / 2], [h.left + 20, h.bottom + 30]];
-    return { canvas: pts.every(([x, y]) => document.elementFromPoint(x, y) === canvas), card: document.getElementById('home').contains(document.elementFromPoint(h.left + 30, h.top + 30)) };
+    const gv = document.getElementById('gp-view').getBoundingClientRect(), wide = gv.width > 60 && gv.height > 60;
+    const pts = wide ? [[gv.left + gv.width / 2, gv.top + gv.height / 2], [gv.left + 30, gv.top + 30], [gv.right - 30, gv.bottom - 30]]
+                     : [[40, innerHeight - 40], [innerWidth - 40, innerHeight / 2], [h.left + 20, h.bottom + 30]];
+    return { wide, gv: [gv.left, gv.top, gv.width, gv.height],
+      canvas: pts.every(([x, y]) => document.elementFromPoint(x, y) === canvas),
+      card: document.getElementById('home').contains(document.elementFromPoint(h.left + 30, h.top + 30)) };
   });
-  check('pointer: canvas outside the Home card, card inside it', outside.canvas && outside.card);
+  check(outside.wide ? 'pointer: canvas inside the Graph View panel, chat column outside it' : 'pointer: canvas outside the Home card, card inside it',
+    outside.canvas && outside.card);
+  const [gx, gy, gw, gh] = outside.gv;
+  const at = outside.wide ? { x: gx + gw * 0.3, y: gy + gh * 0.7 } : { x: 80, y: 820 };
   let b = await state(page);
-  await page.mouse.move(80, 820);
+  await page.mouse.move(at.x, at.y);
   await page.mouse.down();
-  for (let k = 1; k <= 8; k++) await page.mouse.move(80 + k * 20, 820 - k * 4);
+  for (let k = 1; k <= 8; k++) await page.mouse.move(at.x + k * 20, at.y - k * 4);
   await page.mouse.up();
   await page.waitForTimeout(400);
   let a = await state(page);
-  check('orbit works on Memory Home (outside the card)', dist(b.cam, a.cam) > 1);
+  check(outside.wide ? 'orbit works in the Graph View panel' : 'orbit works on Memory Home (outside the card)', dist(b.cam, a.cam) > 1);
   b = a;
-  await page.mouse.move(120, 800);
+  await page.mouse.move(at.x + 40, at.y - 20);
   for (let k = 0; k < 4; k++) { await page.mouse.wheel(0, -200); await page.waitForTimeout(40); }
   await page.waitForTimeout(500);
   a = await state(page);
-  check('wheel zoom works on Memory Home', dist(a.cam, a.target) < dist(b.cam, b.target) * 0.97);
+  check(outside.wide ? 'wheel zoom works in the Graph View panel' : 'wheel zoom works on Memory Home', dist(a.cam, a.target) < dist(b.cam, b.target) * 0.97);
 
   // Ask from a sample chip: the brief renders inside Memory Home, escaped.
   await page.click('#home-chips .ask-chip >> nth=0');

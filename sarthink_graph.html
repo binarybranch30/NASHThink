@@ -1737,7 +1737,142 @@
     @media (max-height: 640px) {
       #hint { display: none; }
     }
-  </style>
+  
+    /* ── Wide Memory Home: top bar · icon rail · chat · Graph View ───────────────────────────────
+       Only for Memory Home on wide screens. Phones and the full-screen map keep the layout above. */
+    #rail, #gpanel, #settings-pop, .btag, #btn-avatar, #omni-plus, #model-name, #brainbg { display: none; }
+    .ico { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+    .pop { position: fixed; z-index: 400; min-width: 230px; padding: 6px; border-radius: 12px; background: #141922;
+      border: 1px solid rgba(255, 255, 255, .09); box-shadow: 0 18px 50px rgba(0, 0, 0, .55); }
+    .pop[hidden] { display: none !important; }
+    @keyframes gpulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, .55); } 60% { box-shadow: 0 0 0 7px rgba(52, 211, 153, 0); } }
+
+    @media (min-width: 1101px) {
+      body[data-view="home"] { --tb: 60px; --railw: 76px; --gpw: 480px; --wbg: #0B0E14; --wbg2: #0F131A; --wacc: #6366f1; }
+      body[data-view="home"] #veil { opacity: 0; }
+
+      /* top bar */
+      body[data-view="home"] #topbar { top: 0; left: 0; right: 0; height: var(--tb); padding: 0 18px; background: var(--wbg);
+        border-bottom: 1px solid rgba(255, 255, 255, .06); pointer-events: auto; z-index: 300; gap: 12px; }
+      body[data-view="home"] .brand { text-shadow: none; gap: 11px; padding: 4px 8px 4px 4px; }
+      body[data-view="home"] .brand img { width: 34px; height: 34px; padding: 5px; border-radius: 10px; filter: none;
+        background: linear-gradient(135deg, #6366f1, #a855f7); box-shadow: 0 4px 16px rgba(139, 92, 246, .35); }
+      body[data-view="home"] .btag { display: inline; font-size: .74rem; color: #8b93a7; margin-left: -4px; }
+      body[data-view="home"] #btn-insights, body[data-view="home"] #btn-upload { display: none; }
+      body[data-view="home"] #tbtns { align-items: center; gap: 10px; }
+      body[data-view="home"] #btn-reminders { display: inline-flex; align-items: center; gap: 7px; background: transparent; border-color: transparent;
+        color: #c9cfdc; font-size: .78rem; padding: 6px 10px; border-radius: 9px; backdrop-filter: none; }
+      body[data-view="home"] #btn-reminders::after { content: '▾'; font-size: .7rem; opacity: .6; margin-left: 2px; }
+      body[data-view="home"] #btn-reminders:hover { background: rgba(255, 255, 255, .06); }
+      body[data-view="home"] #btn-reminders .ico { width: 17px; height: 17px; }
+      body[data-view="home"] #btn-help { width: 34px; height: 34px; padding: 0; border-radius: 50%; display: inline-grid; place-items: center;
+        background: rgba(255, 255, 255, .04); font-size: .9rem; }
+      body[data-view="home"] #btn-avatar { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+        border: 1px solid rgba(52, 211, 153, .45); background: radial-gradient(circle at 50% 40%, #13352c, #0c1a17); padding: 0; }
+      body[data-view="home"] #btn-avatar:hover { border-color: #34d399; }
+      /* the map opens from the Graph View header */
+      body[data-view="home"] #btn-explore { position: fixed; top: calc(var(--tb) + 26px); right: 34px; z-index: 260; font-size: .7rem;
+        padding: 4px 10px; border-radius: 8px; background: rgba(255, 255, 255, .05); backdrop-filter: none; }
+      body[data-view="home"] #btn-explore::after { content: ' ⤢'; }
+
+      /* icon rail */
+      body[data-view="home"] #rail { display: flex; flex-direction: column; align-items: center; gap: 10px; position: fixed; z-index: 250;
+        top: var(--tb); left: 0; bottom: 0; width: var(--railw); padding-top: 18px; background: var(--wbg2); border-right: 1px solid rgba(255, 255, 255, .05); }
+      .rbtn { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 13px; border: 1px solid transparent; background: none;
+        color: #6b7385; cursor: pointer; transition: background .15s, color .15s, box-shadow .15s; }
+      .rbtn:hover, .rbtn:focus-visible { color: #d6dbe6; background: rgba(255, 255, 255, .06); outline: none; }
+      .rbtn.active { color: #93c5fd; background: rgba(59, 130, 246, .16); border-color: rgba(96, 165, 250, .35);
+        box-shadow: 0 0 18px rgba(59, 130, 246, .35), inset 0 0 12px rgba(59, 130, 246, .12); }
+      .rbtn .ico { width: 22px; height: 22px; }
+      body[data-view="home"] #settings-pop { display: block; left: calc(var(--railw) + 8px); }
+      body[data-view="home"] #settings-pop[hidden] { display: none !important; }
+      #settings-pop button, #gp-src-pop button { display: block; width: 100%; text-align: left; padding: 9px 12px; border: 0; border-radius: 8px;
+        background: none; color: #d6dbe6; font: inherit; font-size: .8rem; cursor: pointer; }
+      #settings-pop button:hover, #settings-pop button:focus-visible { background: rgba(99, 102, 241, .16); outline: none; }
+
+      /* chat column */
+      body[data-view="home"] #home { left: var(--railw); right: calc(var(--gpw) + 32px); top: var(--tb); bottom: 0; width: auto; max-height: none;
+        transform: none; border: 0; border-radius: 0; box-shadow: none; background: var(--wbg); backdrop-filter: none; -webkit-backdrop-filter: none;
+        padding: 26px clamp(24px, 4vw, 56px) 18px; overflow: hidden; z-index: 240; }
+      body.has-results[data-view="home"] #home { top: var(--tb); max-height: none; }
+      body[data-view="home"] #brainbg { display: block; position: absolute; z-index: -1; left: 50%; top: 44%; width: min(620px, 92%);
+        transform: translate(-50%, -50%); pointer-events: none; opacity: .95; transition: opacity .4s; }
+      body.has-results[data-view="home"] #brainbg { opacity: .28; }
+      body[data-view="home"] #home > :not(#brainbg) { position: relative; }
+      body[data-view="home"] #home::after { content: '✦'; position: absolute; right: 22px; bottom: 16px; font-size: 1.1rem; color: #818cf8;
+        text-shadow: 0 0 12px rgba(129, 140, 248, .9), 0 0 24px rgba(129, 140, 248, .5); pointer-events: none; }
+      body[data-view="home"] .h-kicker { order: 1; margin-top: auto; text-align: center; }
+      body[data-view="home"] #home h1 { order: 2; text-align: center; }
+      body[data-view="home"] .h-sub { order: 3; text-align: center; margin: 8px auto 0; }
+      body[data-view="home"] #home-foot { order: 4; justify-content: center; margin: 12px 0 0; }
+      body[data-view="home"] #home-foot #home-reminders, body[data-view="home"] #home-foot #home-upload { display: none; }
+      body[data-view="home"] #home-results { order: 5; flex: 1; min-height: 0; overflow: auto; margin-top: 10px; }
+      body[data-view="home"] #graph-note { order: 6; }
+      body[data-view="home"] #home-chips { order: 8; margin-top: auto; justify-content: center; }
+      body.has-results[data-view="home"] #home-chips { display: none; }
+      body[data-view="home"] #home-slot { order: 9; margin-top: 14px; }
+      body[data-view="home"] #home-status { order: 10; justify-content: center; margin-top: 10px; }
+      body.has-results[data-view="home"] .h-kicker { margin-top: 0; text-align: left; }
+      body.has-results[data-view="home"] #home-foot { justify-content: flex-start; margin-top: 6px; }
+
+      /* message bar */
+      body[data-view="home"] #omni { position: relative; gap: 8px; }
+      body[data-view="home"] .omodes { align-self: flex-start; }
+      body[data-view="home"] .orow { align-items: center; gap: 8px; padding: 6px; border-radius: 999px; background: #151A23;
+        border: 1px solid rgba(255, 255, 255, .08); box-shadow: 0 10px 30px rgba(0, 0, 0, .35); }
+      body[data-view="home"] .orow:focus-within { border-color: rgba(99, 102, 241, .6); box-shadow: 0 0 0 3px rgba(99, 102, 241, .15), 0 10px 30px rgba(0, 0, 0, .35); }
+      body[data-view="home"] #omni-plus { display: grid; place-items: center; flex: none; width: 38px; height: 38px; border-radius: 50%; border: 0;
+        background: rgba(255, 255, 255, .07); color: #aab2c4; font-size: 1.25rem; line-height: 1; cursor: pointer; }
+      body[data-view="home"] #omni-plus:hover { background: rgba(255, 255, 255, .13); color: #fff; }
+      body[data-view="home"] #omni-q { background: transparent; border: 0; box-shadow: none; padding: 8px 4px; }
+      body[data-view="home"] #omni-go { flex: none; width: 40px; height: 40px; padding: 0; border-radius: 50%; font-size: 0; border: 0;
+        background: linear-gradient(135deg, #3b82f6, #6366f1); box-shadow: 0 6px 18px rgba(59, 130, 246, .4); display: grid; place-items: center; }
+      body[data-view="home"] #omni-go::after { content: '↑'; font-size: 1.1rem; font-weight: 700; color: #fff; }
+      body[data-view="home"] #omni-go:disabled::after { content: '…'; }
+      /* model chooser: the real <select>, drawn as a round swap button above the bar's right end */
+      body[data-view="home"] #omni-writer { position: absolute; right: 6px; top: -2px; width: 34px; height: 34px; max-width: none; border-radius: 50%;
+        appearance: none; -webkit-appearance: none; color: transparent; font-size: 0; cursor: pointer; border: 1px solid rgba(255, 255, 255, .1);
+        background: #151A23 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2393c5fd' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 7h11l-3-3M17 17H6l3 3'/%3E%3C/svg%3E") center / 18px no-repeat; }
+      body[data-view="home"] #omni-writer:hover, body[data-view="home"] #omni-writer:focus-visible { border-color: #60a5fa; outline: none; }
+      body[data-view="home"] #omni-writer option { color: #fff; font-size: .8rem; }
+      body[data-view="home"] #model-name { display: block; position: absolute; right: 48px; top: 6px; font-size: .68rem; color: #93c5fd; opacity: .85; }
+      body[data-view="home"] #omni[data-mode="search"] #model-name { display: none; }
+
+      /* Graph View panel: its outer shadow paints everything around it, so only #gp-view shows the canvas */
+      body[data-view="home"] #gpanel { display: flex; flex-direction: column; position: fixed; z-index: 230; top: calc(var(--tb) + 16px); right: 16px;
+        bottom: 16px; width: var(--gpw); border-radius: 16px; border: 1px solid rgba(255, 255, 255, .08); pointer-events: none;
+        box-shadow: 0 0 0 100vmax var(--wbg); }
+      #gpanel .gp-head, #gpanel .gp-foot { pointer-events: auto; display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+        background: rgba(15, 19, 26, .92); }
+      #gpanel .gp-head { border-radius: 16px 16px 0 0; border-bottom: 1px solid rgba(255, 255, 255, .06); }
+      #gpanel .gp-foot { border-radius: 0 0 16px 16px; border-top: 1px solid rgba(255, 255, 255, .06); position: relative; }
+      .gp-title { font-weight: 600; color: #e6e9f0; font-size: .9rem; }
+      .gp-live { display: inline-flex; align-items: center; gap: 6px; font-size: .62rem; letter-spacing: .14em; color: #34d399;
+        padding: 3px 8px; border-radius: 999px; background: rgba(52, 211, 153, .1); border: 1px solid rgba(52, 211, 153, .3); }
+      .gp-live i { width: 7px; height: 7px; border-radius: 50%; background: #34d399; animation: gpulse 1.8s infinite; }
+      .gp-live.wait { color: #fbbf24; background: rgba(251, 191, 36, .1); border-color: rgba(251, 191, 36, .3); }
+      .gp-live.wait i { background: #fbbf24; }
+      #gp-view { flex: 1; pointer-events: none;
+        background-image: linear-gradient(rgba(255, 255, 255, .025) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .025) 1px, transparent 1px);
+        background-size: 28px 28px; }
+      #gp-sources { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 9px; cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, .1); background: rgba(255, 255, 255, .04); color: #c9cfdc; font: inherit; font-size: .76rem; }
+      #gp-sources:hover, #gp-sources[aria-expanded="true"] { border-color: rgba(99, 102, 241, .6); color: #fff; }
+      #gp-sources .ico { width: 16px; height: 16px; }
+      #gp-sources .chev { opacity: .6; font-size: .7rem; }
+      body[data-view="home"] #gp-src-pop { display: block; position: absolute; left: 12px; bottom: calc(100% + 8px); width: 320px; padding: 12px; }
+      body[data-view="home"] #gp-src-pop[hidden] { display: none !important; }
+      #gp-src-pop h4 { font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: #8b93a7; margin: 0 0 8px; }
+      #gp-src-pop .srow { display: flex; align-items: center; gap: 9px; padding: 6px 4px; font-size: .8rem; color: #d6dbe6; }
+      #gp-src-pop .srow i { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+      #gp-src-pop .srow span { margin-left: auto; color: #8b93a7; font-size: .72rem; font-variant-numeric: tabular-nums; }
+      #gp-src-pop .sfoot { border-top: 1px solid rgba(255, 255, 255, .07); margin-top: 8px; padding-top: 8px; font-size: .72rem; color: #8b93a7; line-height: 1.6; }
+      body[data-view="home"] #labels { display: none; }
+      body[data-view="home"] #ws { z-index: 260; left: 6px; bottom: 10px; }
+      body[data-view="home"] #ws-pop { position: fixed; top: calc(var(--tb) + 8px); right: 16px; left: auto; bottom: auto; z-index: 400; }
+    }
+    #btn-avatar[hidden] { display: none !important; }
+</style>
 </head>
 
 <body data-view="home" data-graph="loading">
@@ -1759,20 +1894,72 @@
   <!-- Top bar -->
   <header id="topbar">
     <a class="brand" id="brand" href="./" title="NASH Think home" aria-label="NASH Think home"><img src="./assets/nashthink-icon.png" alt="" width="30" height="30"><span>NASH <em>Think</em></span></a>
+    <span class="btag">Your private memory copilot</span>
     <div id="stats" class="panel fade-layer" aria-live="polite"></div>
     <div id="tbtns">
       <button id="btn-explore" class="btn" type="button" title="Open the memory map (G)">Memory map</button>
       <button id="btn-home" class="btn fade-layer" type="button" title="Back to Home (G)">Home</button>
       <button id="btn-insights" class="btn" type="button" title="Activity insights (I)" aria-controls="insights" aria-expanded="false">Insights</button>
-      <button id="btn-reminders" class="btn" type="button" title="Reminders found in your chats (R)" aria-controls="reminders" aria-expanded="false">Reminders<span id="rem-badge" class="rbadge" hidden></span></button>
+      <button id="btn-reminders" class="btn" type="button" title="Reminders found in your chats (R)" aria-controls="reminders" aria-expanded="false"><svg class="ico bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 17V11a6 6 0 1 1 12 0v6l1.5 2h-15L6 17Z"/><path d="M10 21a2 2 0 0 0 4 0"/></svg>Reminders<span id="rem-badge" class="rbadge" hidden></span></button>
       <button id="btn-upload" class="btn" type="button" title="Upload & import chat data (U)" aria-controls="upload-modal" aria-expanded="false">Upload</button>
       <button id="btn-reset" class="btn fade-layer icon" type="button" title="Reset the view and filters (Esc)" aria-label="Reset view">↺</button>
       <button id="btn-help" class="btn icon" type="button" title="Help and keyboard shortcuts (?)" aria-haspopup="dialog" aria-label="Help">?</button>
+      <button id="btn-avatar" type="button" title="Your data: sample or your own" aria-label="Switch between sample data and your data"><img src="./assets/nashthink-mark.png" alt="" width="20" height="25"></button>
     </div>
   </header>
 
+  <!-- Icon rail (wide Memory Home): Chat, Activity (insights), Settings -->
+  <nav id="rail" aria-label="Sections">
+    <button type="button" class="rbtn active" id="rail-chat" title="Chat: ask your memories" aria-label="Chat" aria-current="page">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3h11A2.5 2.5 0 0 1 20 5.5v8a2.5 2.5 0 0 1-2.5 2.5H10l-4.5 4v-4h-.5A1 1 0 0 1 4 15V5.5Z"/></svg></button>
+    <button type="button" class="rbtn" id="rail-activity" title="Activity: insights over time (I)" aria-label="Activity">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></button>
+    <button type="button" class="rbtn" id="rail-settings" title="Settings" aria-label="Settings" aria-haspopup="menu" aria-expanded="false">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M4.2 7.5l2 1.2M17.8 15.3l2 1.2M4.2 16.5l2-1.2M17.8 8.7l2-1.2"/><circle cx="12" cy="12" r="6.6"/></svg></button>
+  </nav>
+  <div id="settings-pop" class="pop" role="menu" hidden>
+    <button type="button" role="menuitem" data-act="upload">Upload &amp; import chats</button>
+    <button type="button" role="menuitem" data-act="map">Open the full memory map</button>
+    <button type="button" role="menuitem" data-act="data">Switch sample / my data</button>
+    <button type="button" role="menuitem" data-act="help">Help &amp; shortcuts</button>
+  </div>
+
+  <!-- Graph View (wide Memory Home): a window onto the live 3D map. The canvas stays full-screen underneath;
+       the camera frames the map inside #gp-view, and the panel's outer shadow covers everything else. -->
+  <section id="gpanel" aria-label="Graph View">
+    <div class="gp-head">
+      <span class="gp-title">Graph View</span>
+      <span class="gp-live" id="gp-live"><i></i><b>LIVE</b></span>
+    </div>
+    <div id="gp-view" aria-hidden="true"></div>
+    <div class="gp-foot">
+      <button type="button" id="gp-sources" aria-haspopup="dialog" aria-expanded="false">
+        <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v6.5c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8V5.5M4.5 12v6.5c0 1.5 3.4 2.8 7.5 2.8s7.5-1.3 7.5-2.8V12"/></svg>
+        Sources <span class="chev">▾</span></button>
+      <div id="gp-src-pop" class="pop" hidden role="dialog" aria-label="Sources referred"></div>
+    </div>
+  </section>
+
   <!-- Memory Home: the opening surface, above the (ambient, still interactive) graph -->
   <main id="home" class="panel" aria-labelledby="home-h">
+    <svg id="brainbg" viewBox="0 0 600 600" aria-hidden="true">
+      <defs>
+        <radialGradient id="bg-glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#8b5cf6" stop-opacity=".34"/><stop offset=".45" stop-color="#ec4899" stop-opacity=".12"/><stop offset="1" stop-color="#0b0e14" stop-opacity="0"/></radialGradient>
+        <linearGradient id="bg-fibre" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#818cf8"/><stop offset="1" stop-color="#f472b6"/></linearGradient>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#bg-glow)"/>
+      <g fill="none" stroke="#6366f1" stroke-opacity=".22" stroke-dasharray="3 7">
+        <circle cx="300" cy="300" r="110"/><circle cx="300" cy="300" r="170"/><circle cx="300" cy="300" r="235"/>
+      </g>
+      <g fill="none" stroke="url(#bg-fibre)" stroke-opacity=".28" stroke-width="1.4" stroke-linecap="round">
+        <path d="M300 250 C 240 170, 170 170, 120 210"/><path d="M300 250 C 250 150, 300 90, 360 90"/><path d="M300 250 C 360 170, 440 180, 480 230"/>
+        <path d="M300 350 C 230 420, 160 420, 118 380"/><path d="M300 350 C 350 430, 430 440, 482 380"/><path d="M300 350 C 290 440, 250 490, 200 505"/>
+        <path d="M250 300 C 170 300, 120 330, 88 300"/><path d="M350 300 C 430 290, 480 320, 512 296"/><path d="M300 250 C 230 230, 190 260, 170 300"/>
+        <path d="M300 350 C 380 360, 420 330, 440 300"/>
+      </g>
+      <circle cx="300" cy="300" r="46" fill="#1b1f3b" stroke="#6366f1" stroke-opacity=".6" stroke-width="1.5"/>
+      <image href="./assets/nashthink-mark.png" x="278" y="273" width="44" height="55" opacity=".9"/>
+    </svg>
     <div class="h-kicker">NASH THINK <em>·</em> MEMORY HOME</div>
     <h1 id="home-h">Ask your <span class="grad">second brain</span></h1>
     <p class="h-sub">Ask a question about your conversations. Every answer shows the messages it comes from.</p>
@@ -1783,6 +1970,7 @@
           <button type="button" class="omode" role="tab" id="omode-search" data-omode="search" aria-selected="false" tabindex="-1">Find<span class="long"> memories</span></button>
         </div>
         <div class="orow">
+          <button type="button" id="omni-plus" title="Upload & import chat data" aria-label="Upload chat data">+</button>
           <textarea id="omni-q" rows="1" maxlength="500" autocomplete="off" spellcheck="false" aria-label="Question for Ask NASH Think"
             placeholder="Ask anything about your memories…"></textarea>
           <select id="omni-writer" aria-label="How to answer" title="How Ask answers: a model writes it, or quotes only (Evidence)">
@@ -1790,6 +1978,7 @@
           </select>
           <button id="omni-go" class="btn primary" type="submit">Ask</button>
         </div>
+        <div id="model-name" aria-hidden="true"></div>
       </form>
     </div>
     <div id="home-chips" class="hchips" aria-label="Sample prompts"></div>
@@ -2401,9 +2590,23 @@
       return window.innerWidth > 720 && side.width ? side.right : 0;
     }
 
+    // Wide Memory Home shows the map inside the Graph View panel (see #gpanel CSS).
+    const wideHome = () => document.body.dataset.view === 'home' && window.matchMedia('(min-width: 1101px)').matches;
+
+    // The screen rectangle the map is framed in.
+    function viewRect() {
+      const W = window.innerWidth, H = window.innerHeight;
+      if (wideHome()) {
+        const r = $('gp-view').getBoundingClientRect();
+        if (r.width > 60 && r.height > 60) return { left: r.left, right: r.right, top: r.top, bottom: r.bottom };
+      }
+      return { left: sideInset(), right: W, top: 0, bottom: H };
+    }
+
     function applyViewOffset() {
-      const W = window.innerWidth, H = window.innerHeight, inset = sideInset();
-      if (inset) S.camera.setViewOffset(W, H, -inset / 2, 0, W, H);
+      const W = window.innerWidth, H = window.innerHeight, r = viewRect();
+      const dx = (r.left + r.right) / 2 - W / 2, dy = (r.top + r.bottom) / 2 - H / 2;
+      if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) S.camera.setViewOffset(W, H, -dx, -dy, W, H);
       else S.camera.clearViewOffset();
       S.camera.updateProjectionMatrix();
     }
@@ -2416,6 +2619,7 @@
     function onResize() {
       const W = window.innerWidth, H = window.innerHeight;
       S.dirty = true;
+      if (S.home) requestAnimationFrame(() => { frameHome(); if (!S.tween && S.view === 'home') { S.camera.position.copy(S.home.position); S.controls.target.copy(S.home.target); } });
       S.renderer.setSize(W, H);
       S.camera.aspect = W / H;
       applyViewOffset();
@@ -2666,7 +2870,9 @@
     // nodes and pull the camera in until they span ~85% of the viewport (never cropping any).
     function tightenFit(c, dir, dist) {
       const v = new THREE.Vector3();
-      const free = 1 - sideInset() / window.innerWidth, cx = 1 - free;   // NDC centre of the free area
+      const W = window.innerWidth, H = window.innerHeight, r = viewRect();
+      const free = (r.right - r.left) / W, cx = (r.left + r.right) / W - 1;    // width share and NDC centre of the view area
+      const freeY = (r.bottom - r.top) / H, cy = 1 - (r.top + r.bottom) / H;
       for (let it = 0; it < 4; it++) {
         S.camera.position.copy(c).addScaledVector(dir, dist);
         S.camera.lookAt(c);
@@ -2675,7 +2881,7 @@
         for (const n of S.nodes) {
           v.set(n.x, n.y, n.z).project(S.camera);
           if (v.z > 1) { m = Infinity; break; }
-          m = Math.max(m, Math.abs(v.x - cx) / (0.85 * free), Math.abs(v.y) / 0.82);
+          m = Math.max(m, Math.abs(v.x - cx) / (0.85 * free), Math.abs(v.y - cy) / (0.82 * freeY));
         }
         if (!Number.isFinite(m) || m <= 0) break;
         const next = dist * (m > 1 ? Math.min(m, 2) : Math.max(m, 0.5));
@@ -2903,13 +3109,21 @@
     const ptr = { down: false, x: 0, y: 0, t: 0, moved: false, raf: 0, lastX: 0, lastY: 0 };
 
     function onPointerDown(e) {
+      if (outsideView(e)) { ptr.down = false; return; }
       ptr.down = true; ptr.moved = false;
       ptr.x = e.clientX; ptr.y = e.clientY; ptr.t = performance.now(); ptr.button = e.button;
       S.renderer.domElement.focus({ preventScroll: true });
     }
 
+    function outsideView(e) {
+      if (!wideHome()) return false;
+      const r = viewRect();
+      return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+    }
+
     function onPointerMove(e) {
       ptr.lastX = e.clientX; ptr.lastY = e.clientY;
+      if (!ptr.down && outsideView(e)) { setHover(-1); return; }
       if (ptr.down) {
         if (!ptr.moved && Math.hypot(e.clientX - ptr.x, e.clientY - ptr.y) > 4) {
           ptr.moved = true;
@@ -2997,6 +3211,7 @@
     // Screen columns not covered by the sidebar or an open right-hand panel.
     function freeArea() {
       const W = window.innerWidth;
+      if (wideHome()) { const r = viewRect(); return { left: r.left, right: r.right }; }
       let right = W;
       if (W > 720 && [...$('rightcol').children].some(p => !p.hidden)) right = $('rightcol').getBoundingClientRect().left - 10;
       const left = sideInset();
@@ -4986,6 +5201,13 @@
       sel.title = tips.join('\n');
       sel.value = writerChoice();
       syncPrivacyLine();
+      updateModelName();
+    }
+
+    // Caption next to the round model button (wide Memory Home): the answer style that is selected.
+    function updateModelName() {
+      const sel = $('omni-writer'), o = sel.options[sel.selectedIndex];
+      $('model-name').textContent = o ? o.textContent.replace(/\s*\(.*\)$/, '') : '';
     }
 
     // The home status line says where answers are written: on this device, or by an online model.
@@ -6234,6 +6456,83 @@
 
     // Wire Upload modal
     $('btn-upload').addEventListener('click', () => (uploadOpen() ? closeUpload() : openUpload()));
+
+    // ─── Wide Memory Home: rail, settings, avatar, Graph View (live badge, sources) ───────────
+    function setLive(ready) {
+      const el = $('gp-live');
+      el.classList.toggle('wait', !ready);
+      el.querySelector('b').textContent = ready ? 'LIVE' : 'LOADING';
+    }
+    setLive(false);
+
+    function closePops(except) {
+      for (const [pop, btn] of [['settings-pop', 'rail-settings'], ['gp-src-pop', 'gp-sources']]) {
+        if (pop === except) continue;
+        $(pop).hidden = true;
+        $(btn).setAttribute('aria-expanded', 'false');
+      }
+    }
+    function togglePop(pop, btn, place) {
+      const open = $(pop).hidden;
+      closePops(pop);
+      $(pop).hidden = !open;
+      $(btn).setAttribute('aria-expanded', String(open));
+      if (open && place) place();
+      if (open) $(pop).querySelector('button, [tabindex]')?.focus({ preventScroll: true });
+    }
+    document.addEventListener('pointerdown', e => {
+      if (!e.target.closest('#settings-pop, #rail-settings, #gp-src-pop, #gp-sources')) closePops();
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && (!$('settings-pop').hidden || !$('gp-src-pop').hidden)) closePops(); });
+
+    function syncRail() {
+      const act = insightsOpen() ? 'rail-activity' : 'rail-chat';
+      for (const id of ['rail-chat', 'rail-activity']) {
+        $(id).classList.toggle('active', id === act);
+        if (id === act) $(id).setAttribute('aria-current', 'page'); else $(id).removeAttribute('aria-current');
+      }
+    }
+    new MutationObserver(syncRail).observe($('insights'), { attributes: true, attributeFilter: ['hidden'] });
+    $('rail-chat').addEventListener('click', () => {
+      if (insightsOpen()) closeInsights();
+      if (S.view !== 'home') setView('home');
+      $('omni-q').focus();
+    });
+    $('rail-activity').addEventListener('click', () => (insightsOpen() ? closeInsights() : openInsights()));
+    $('rail-settings').addEventListener('click', () => togglePop('settings-pop', 'rail-settings', () => {
+      const r = $('rail-settings').getBoundingClientRect();
+      $('settings-pop').style.top = `${r.top}px`;
+    }));
+    $('settings-pop').addEventListener('click', e => {
+      const b = e.target.closest('button[data-act]');
+      if (!b) return;
+      closePops();
+      ({ upload: () => $('btn-upload').click(), map: () => $('btn-explore').click(),
+         data: () => $('ws').hidden ? null : $('ws-btn').click(), help: () => $('btn-help').click() })[b.dataset.act]?.();
+    });
+    $('btn-avatar').hidden = true;   // shown once the server offers a data switch (initWorkspace)
+    $('btn-avatar').addEventListener('click', e => { e.stopPropagation(); $('ws-btn').click(); });
+    $('omni-plus').addEventListener('click', () => $('btn-upload').click());
+    $('omni-writer').addEventListener('change', updateModelName);
+
+    // Sources referred: the apps actually in the loaded map, with their counts.
+    function buildSources() {
+      const pop = $('gp-src-pop');
+      if (!S.nodes.length) { pop.innerHTML = '<h4>Sources referred</h4><div class="sfoot">The map is still loading.</div>'; return; }
+      const agg = new Map();
+      for (const n of S.nodes) {
+        const a = agg.get(n.platform) || { people: 0, convs: 0, msgs: 0 };
+        if (n.kind === 'user') a.people++; else { a.convs++; a.msgs += n.msgs; }
+        agg.set(n.platform, a);
+      }
+      const rows = [...agg].sort((x, y) => y[1].msgs - x[1].msgs);
+      const tot = rows.reduce((t, [, a]) => ({ msgs: t.msgs + a.msgs, people: t.people + a.people, convs: t.convs + a.convs }), { msgs: 0, people: 0, convs: 0 });
+      const ws = $('ws').hidden ? '' : $('ws-btn').textContent.replace('▾', '').trim();
+      pop.innerHTML = `<h4>Sources referred</h4>` + rows.map(([p, a]) =>
+        `<div class="srow"><i style="background:${esc(PLATFORM_COLORS[p] || '#9aa0b4')}"></i>${esc(platformName(p))}<span>${fmtN(a.msgs)} messages</span></div>`).join('') +
+        `<div class="sfoot">${fmtN(tot.msgs)} messages · ${fmtN(tot.people)} people · ${fmtN(tot.convs)} conversations${ws ? `<br>Data: ${esc(ws)} · stored on this device` : ''}</div>`;
+    }
+    $('gp-sources').addEventListener('click', () => togglePop('gp-src-pop', 'gp-sources', buildSources));
     $('home-upload').addEventListener('click', openUpload);
     $('upload-close').addEventListener('click', closeUpload);
     $('upload-backdrop').addEventListener('click', e => { if (e.target === $('upload-backdrop')) closeUpload(); });
@@ -6324,6 +6623,8 @@
       $('ws-go').textContent = onDefault ? 'Unlock' : `Back to ${(w.workspaces.find(x => x.id === w.default) || {}).label || 'default'}`;
       pw.hidden = !onDefault;
       $('ws').hidden = false;
+      $('btn-avatar').hidden = false;
+      $('btn-avatar').title = `${w.label || w.active}: switch between sample data and your data`;
       const close = () => { pop.hidden = true; btn.setAttribute('aria-expanded', 'false'); msg.textContent = ''; pw.value = ''; };
       btn.addEventListener('click', () => {
         const open = pop.hidden;
@@ -6391,6 +6692,7 @@
 
       S.graphState = 'ready';
       document.body.dataset.graph = 'ready';
+      setLive(true);
       homeStatus('hs-graph', 'ok', 'Memory map ready');
       syncViewButtons();
       // A shared #node= link (or ?view=graph) opens straight into the workspace.
