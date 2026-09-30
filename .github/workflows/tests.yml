@@ -1,0 +1,33 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: |
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements.txt ruff
+      - name: Lint (syntax errors and undefined names)
+        run: ruff check scripts --select E9,F63,F7,F82
+      - name: Unit and API tests (fake model, throwaway data)
+        env:
+          HF_HUB_OFFLINE: "1"
+        run: |
+          status=0
+          for t in scripts/tests/test_*.py; do
+            echo "::group::$t"
+            python "$t" || { echo "::error::$t failed"; status=1; }
+            echo "::endgroup::"
+          done
+          exit $status
