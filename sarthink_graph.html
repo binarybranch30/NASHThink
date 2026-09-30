@@ -1170,6 +1170,76 @@
     @keyframes shimmer { to { background-position: -200% 0; } }
     #insights.busy #ins-body > :not(.ins-state) { opacity: .55; transition: opacity .2s; }
 
+    /* ── Reminders ─────────────────────────────────────────────────────── */
+    body[data-reminders="open"] #home {
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transform: translateX(-50%) translateY(-10px) scale(.985);
+      transition: opacity .3s ease, transform .3s ease, visibility 0s linear .3s;
+    }
+    #reminders {
+      position: fixed; top: var(--top-h); bottom: var(--gap); left: 50%;
+      width: min(860px, calc(100vw - 2 * var(--gap))); transform: translateX(-50%); z-index: 150;
+      display: flex; flex-direction: column; background: rgba(6, 6, 24, .92); box-shadow: 0 30px 80px rgba(0, 0, 0, .55);
+      transition: opacity .3s ease, transform .3s ease, visibility 0s linear 0s;
+    }
+    #reminders[hidden] { display: flex; opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(-50%) translateY(10px); transition: opacity .25s ease, transform .25s ease, visibility 0s linear .25s; }
+    body[data-view="graph"] #reminders { left: auto; right: var(--gap); width: min(560px, calc(100vw - var(--side-w) - 3 * var(--gap))); transform: none; }
+    body[data-view="graph"] #reminders[hidden] { transform: translateY(10px); }
+    #reminders .phead { align-items: center; padding: 14px 18px 12px; flex-wrap: wrap; }
+    #rem-h { font-size: 1.05rem; font-weight: 600; color: #fff; }
+    #rem-scope { font-size: .7rem; color: var(--mid); margin-top: 2px; }
+    .rem-acts { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+    #rem-body { padding: 12px 18px 20px; display: flex; flex-direction: column; gap: 16px; position: relative; }
+    .rem-note { font-size: .68rem; color: var(--dim); line-height: 1.5; }
+    .rem-note b { color: var(--mid); font-weight: 500; }
+    .rem-sec h3 { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); font-weight: 600; margin-bottom: 8px; display: flex; align-items: baseline; gap: 8px; }
+    .rem-sec h3 .n { letter-spacing: 0; color: var(--mid); font-weight: 500; }
+    .rem-sec h3 .act { margin-left: auto; letter-spacing: .02em; text-transform: none; font-weight: 400; }
+    .rem-sec.overdue h3 { color: var(--coral); }
+    #rem-list { display: flex; flex-direction: column; gap: 18px; }
+    .rem-list { display: flex; flex-direction: column; gap: 8px; }
+    .rcard { border: 1px solid var(--bdr); border-radius: 10px; padding: 10px 12px; background: rgba(255, 255, 255, .025); display: grid; grid-template-columns: 58px 1fr; gap: 12px; }
+    .rcard.done { opacity: .55; }
+    .rcard.done .rt { text-decoration: line-through; text-decoration-color: rgba(255,255,255,.35); }
+    .rwhen { text-align: center; border-right: 1px solid var(--bdr); padding-right: 10px; font-variant-numeric: tabular-nums; }
+    .rwhen .d { font-size: 1.15rem; font-weight: 600; color: #fff; line-height: 1.1; }
+    .rwhen .m { font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); }
+    .rwhen .t { font-size: .66rem; color: var(--acc); margin-top: 3px; }
+    .rmain { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+    .rt { font-size: .84rem; color: #fff; line-height: 1.35; overflow-wrap: anywhere; }
+    .rmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: .64rem; color: var(--dim); }
+    .rmeta i { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 4px; vertical-align: 0; }
+    .rmeta .rel { color: var(--mid); }
+    .rmeta .rel.late { color: var(--coral); }
+    .rkind { font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; padding: 1px 6px; border-radius: 9px; border: 1px solid var(--bdr2); color: var(--mid); }
+    .rkind.k-deadline, .rkind.k-exam, .rkind.k-payment { color: var(--coral); border-color: rgba(234, 148, 136, .45); }
+    .rkind.k-meeting, .rkind.k-interview, .rkind.k-appointment { color: var(--acc); border-color: rgba(127, 195, 196, .45); }
+    .rkind.k-birthday { color: var(--warn); border-color: rgba(245, 194, 107, .45); }
+    .rex { font-size: .7rem; color: var(--mid); line-height: 1.45; border-left: 2px solid var(--bdr2); padding-left: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .rbtns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; align-items: center; }
+    .rbtns a.btn { text-decoration: none; }
+    .rbtns .linkbtn { font-size: .66rem; }
+    .snz { position: relative; display: inline-block; }
+    .snz-pop { position: absolute; top: calc(100% + 4px); left: 0; z-index: 5; display: flex; flex-direction: column; min-width: 150px; background: var(--gb2); border: 1px solid var(--bdr2); border-radius: 8px; padding: 4px; }
+    .snz-pop[hidden] { display: none; }
+    .snz-pop button { background: none; border: 0; color: var(--mid); text-align: left; padding: 6px 8px; border-radius: 5px; font-size: .72rem; cursor: pointer; }
+    .snz-pop button:hover, .snz-pop button:focus-visible { background: rgba(255,255,255,.07); color: #fff; }
+    #rem-add { display: grid; grid-template-columns: 1fr auto auto auto; gap: 6px; align-items: center; border: 1px solid var(--bdr); border-radius: 10px; padding: 10px; background: rgba(255,255,255,.02); }
+    #rem-add[hidden] { display: none; }
+    #rem-add input { background: rgba(255,255,255,.05); border: 1px solid var(--bdr); border-radius: 6px; color: #fff; font-size: .74rem; padding: 5px 8px; min-width: 0; color-scheme: dark; }
+    #rem-add .msg { grid-column: 1 / -1; font-size: .66rem; color: var(--warn); min-height: 0; }
+    #rem-cal { border: 1px solid var(--bdr); border-radius: 10px; padding: 10px 12px; background: rgba(255,255,255,.02); display: flex; flex-direction: column; gap: 6px; }
+    #rem-cal[hidden] { display: none; }
+    #rem-cal code { font-size: .64rem; color: #d4eeee; background: rgba(255,255,255,.06); padding: 3px 6px; border-radius: 4px; word-break: break-all; }
+    .rbadge { display: inline-block; min-width: 16px; padding: 0 4px; margin-left: 5px; border-radius: 8px; background: var(--coral); color: #1a0b08; font-size: .6rem; font-weight: 700; line-height: 16px; text-align: center; vertical-align: 1px; }
+    .rbadge[hidden] { display: none; }
+    #reminders.busy #rem-body > :not(.ins-state) { opacity: .55; transition: opacity .2s; }
+    @media (max-width: 720px) {
+      body[data-view="graph"] #reminders { left: var(--gap); right: var(--gap); width: auto; }
+      #rem-add { grid-template-columns: 1fr 1fr; }
+      #rem-add input[type="text"] { grid-column: 1 / -1; }
+    }
+
     /* ── Calmer chrome ─────────────────────────────────────────────────── */
     .btn.icon { width: 30px; padding: 5px 0; text-align: center; font-size: .8rem; }
     .linkbtn.big { font-size: .78rem; padding: 4px 0; }
@@ -1334,6 +1404,7 @@
       <button id="btn-explore" class="btn" type="button" title="Open the memory map (G)">Memory map</button>
       <button id="btn-home" class="btn fade-layer" type="button" title="Back to Home (G)">Home</button>
       <button id="btn-insights" class="btn" type="button" title="Activity insights (I)" aria-controls="insights" aria-expanded="false">Insights</button>
+      <button id="btn-reminders" class="btn" type="button" title="Reminders found in your chats (R)" aria-controls="reminders" aria-expanded="false">Reminders<span id="rem-badge" class="rbadge" hidden></span></button>
       <button id="btn-reset" class="btn fade-layer icon" type="button" title="Reset the view and filters (Esc)" aria-label="Reset view">↺</button>
       <button id="btn-help" class="btn icon" type="button" title="Help and keyboard shortcuts (?)" aria-haspopup="dialog" aria-label="Help">?</button>
     </div>
@@ -1365,6 +1436,7 @@
     <div id="home-foot">
       <button id="home-explore" class="linkbtn big" type="button">Explore the memory map →</button>
       <button id="home-insights" class="linkbtn big" type="button">See insights</button>
+      <button id="home-reminders" class="linkbtn big" type="button">Reminders</button>
     </div>
     <div id="graph-note" hidden role="status"></div>
     <div id="home-status" aria-live="polite">
@@ -1384,6 +1456,33 @@
       <button class="xbtn" type="button" id="ins-close" title="Close insights (Esc)" aria-label="Close insights">×</button>
     </div>
     <div id="ins-body" class="scroll"></div>
+  </section>
+
+  <!-- Reminders: plans, deadlines and promises found in the chats (GET /api/reminders) -->
+  <section id="reminders" class="panel" hidden aria-labelledby="rem-h" role="dialog" aria-modal="false">
+    <div class="phead">
+      <div class="ttl">
+        <h2 id="rem-h">Reminders</h2>
+        <div id="rem-scope">Found in your chats</div>
+      </div>
+      <div class="rem-acts">
+        <button class="btn sm" type="button" id="rem-add-btn" aria-expanded="false" aria-controls="rem-add">+ Add</button>
+        <button class="btn sm" type="button" id="rem-cal-btn" aria-expanded="false" aria-controls="rem-cal">Calendar</button>
+        <button class="btn sm" type="button" id="rem-scan" title="Look for new reminders in your messages now">Scan now</button>
+        <button class="xbtn" type="button" id="rem-close" title="Close reminders (Esc)" aria-label="Close reminders">×</button>
+      </div>
+    </div>
+    <div id="rem-body" class="scroll">
+      <form id="rem-add" hidden>
+        <input type="text" id="rem-add-title" maxlength="200" placeholder="What should I remind you about?" aria-label="Reminder" required>
+        <input type="date" id="rem-add-date" aria-label="Date" required>
+        <input type="time" id="rem-add-time" aria-label="Time (optional)">
+        <button class="btn sm primary" type="submit">Add</button>
+        <div class="msg" id="rem-add-msg" role="status"></div>
+      </form>
+      <div id="rem-cal" hidden></div>
+      <div id="rem-list"></div>
+    </div>
   </section>
 
   <!-- Sidebar -->
@@ -1469,6 +1568,8 @@
       <p>Type a question in the box and press Enter. <b>Ask</b> answers from your own messages and lists the conversations it used, folded under <b>Sources</b>; <b>Find</b> shows the closest memories. Click any source to open it on the memory map. Everything runs on this device.</p>
       <h3>People</h3>
       <p>Click a person (a filled dot) to see <b>Your history with them</b>: a short summary built only from counts, dates and conversation titles, with numbered links to the conversations it is based on. <b>View conversations</b> and <b>Show full history</b> load the messages in pages when you want them; <b>Back</b> returns to the profile.</p>
+      <h3>Reminders</h3>
+      <p><b>Reminders</b> lists plans, deadlines, birthdays and promises found in your messages (“kal 6 baje call”, “submit by Friday”), each linked to the chat it came from. Mark them done, snooze or dismiss them, add your own, and put them in your calendar with <b>Calendar</b>: a file to import, a link your calendar app can subscribe to, or one click per reminder for Google Calendar. They are found by rules on this device; no model reads your chats for them.</p>
       <h3>The memory map</h3>
       <p>Colour is the platform. Filled dots are <b>people</b>; rings are <b>conversations</b>. A line means that person wrote in that conversation. <b>Filters</b> in the left panel limit platforms and the time range; Ask, Insights and profiles follow them.</p>
       <h3>Mouse</h3>
@@ -1483,6 +1584,7 @@
       <table>
         <tr><td><span class="kbd">G</span></td><td>Switch between Home and the memory map</td></tr>
         <tr><td><span class="kbd">I</span></td><td>Open / close Insights</td></tr>
+        <tr><td><span class="kbd">R</span></td><td>Open / close Reminders</td></tr>
         <tr><td><span class="kbd">/</span></td><td>Jump to the search box</td></tr>
         <tr><td><span class="kbd">↑</span> <span class="kbd">↓</span> <span class="kbd">Enter</span></td><td>Pick a search match</td></tr>
         <tr><td><span class="kbd">←</span> <span class="kbd">→</span> <span class="kbd">↑</span> <span class="kbd">↓</span></td><td>Move the map (Shift: rotate)</td></tr>
@@ -3163,6 +3265,7 @@
         e.preventDefault();
         if (helpOpen()) { closeHelp(); return; }
         if (insightsOpen()) { closeInsights(); return; }
+        if (remindersOpen()) { closeReminders(); return; }
         if (isTyping(document.activeElement)) document.activeElement.blur();
         resetAll();
         return;
@@ -3180,6 +3283,7 @@
       else if (e.key === '?') { e.preventDefault(); openHelp(); }
       else if (e.key === 'g' || e.key === 'G') { e.preventDefault(); toggleView(); }
       else if (e.key === 'i' || e.key === 'I') { e.preventDefault(); insightsOpen() ? closeInsights() : openInsights(); }
+      else if (e.key === 'r' || e.key === 'R') { e.preventDefault(); remindersOpen() ? closeReminders() : openReminders(); }
       else if ((e.key === 'f' || e.key === 'F') && S.selected >= 0) { e.preventDefault(); flyToNodes([S.selected, ...neighbours(S.selected).map(o => o.j)]); }
       else if (ARROWS[e.key] && arrowsMoveGraph()) { e.preventDefault(); nudgeCamera(ARROWS[e.key], e.shiftKey); }
     });
@@ -3192,10 +3296,10 @@
     // Only in the graph workspace, and never while the arrows already mean something else:
     // typing, tab strips, lists, sliders, scrollable panels or an open dialog.
     function arrowsMoveGraph() {
-      if (S.view !== 'graph' || !S.camera || insightsOpen() || helpOpen()) return false;
+      if (S.view !== 'graph' || !S.camera || insightsOpen() || remindersOpen() || helpOpen()) return false;
       const el = document.activeElement;
       if (!el || el === document.body || el === S.renderer.domElement) return true;
-      return !el.closest('[role="tablist"], [role="listbox"], [role="option"], input, select, textarea, .scroll, #insights, .sr');
+      return !el.closest('[role="tablist"], [role="listbox"], [role="option"], input, select, textarea, .scroll, #insights, #reminders, .sr');
     }
 
     function nudgeCamera([dx, dy], orbit) {
@@ -4551,11 +4655,419 @@
     }
 
     // ─── Insights (GET /api/insights) ─────────────────────────────────────────────
+    // ─── Reminders (GET/POST /api/reminders…): plans, deadlines and promises found in the chats ─────────
+    // The server finds them (rules, no model) and keeps their state. On the read-only sample workspace the
+    // visitor's done / snooze / dismiss / added ones live in this browser (localStorage) instead.
+    S.rem = { data: null, items: [], seq: 0, ret: null, history: false, done: false, notifyTimers: [], local: null };
+    const remindersOpen = () => !$('reminders').hidden;
+    const REM_LOCAL_KEY = 'nashthink-reminders-local';
+    const REM_NOTIFY_KEY = 'nashthink-reminders-notify';
+    const REM_GROUPS = [
+      ['overdue', 'Overdue'], ['today', 'Today'], ['week', 'Next 7 days'], ['later', 'Later'],
+    ];
+    const REM_KIND = { deadline: 'Deadline', exam: 'Exam', interview: 'Interview', appointment: 'Appointment', travel: 'Travel',
+      payment: 'Payment', meeting: 'Meeting', reminder: 'Reminder', plan: 'Plan', task: 'To do', birthday: 'Birthday' };
+
+    function remStore(key, value) {
+      try {
+        if (value === undefined) return JSON.parse(localStorage.getItem(key) || 'null');
+        localStorage.setItem(key, JSON.stringify(value));
+      } catch (_) { /* private mode or blocked storage: state lasts until reload */ }
+      return null;
+    }
+    function remLocal() {
+      if (!S.rem.local) S.rem.local = remStore(REM_LOCAL_KEY) || { changes: {}, added: [] };
+      return S.rem.local;
+    }
+
+    function openReminders() {
+      if (remindersOpen()) return;
+      if (insightsOpen()) closeInsights();
+      S.rem.ret = document.activeElement;
+      $('reminders').hidden = false;
+      document.body.dataset.reminders = 'open';
+      $('btn-reminders').setAttribute('aria-expanded', 'true');
+      $('rem-close').focus();
+      loadReminders();
+    }
+
+    function closeReminders(restoreFocus = true) {
+      if (!remindersOpen()) return;
+      $('reminders').hidden = true;
+      delete document.body.dataset.reminders;
+      $('btn-reminders').setAttribute('aria-expanded', 'false');
+      const r = S.rem.ret;
+      if (restoreFocus && r && r.isConnected && r.offsetParent !== null && getComputedStyle(r).visibility !== 'hidden') r.focus();
+    }
+
+    // Workspace-local time: the server sends its timezone's UTC offset, so dates and times match the chats'.
+    function remEpoch(dateStr, hh = 0, mm = 0) {
+      const [y, m, d] = dateStr.split('-').map(Number);
+      return Date.UTC(y, m - 1, d, hh, mm) / 1000 - (S.rem.data ? S.rem.data.utc_offset_min : 0) * 60;
+    }
+    function remLocalParts(ts) {
+      const iso = new Date((ts + (S.rem.data ? S.rem.data.utc_offset_min : 0) * 60) * 1000).toISOString();
+      return { date: iso.slice(0, 10), time: iso.slice(11, 16) };
+    }
+    const remDays = (a, b) => Math.round((Date.parse(a) - Date.parse(b)) / 864e5);
+    function remAddDays(dateStr, n) { return new Date(Date.parse(dateStr) + n * 864e5).toISOString().slice(0, 10); }
+
+    function remRelative(it, today) {
+      const n = remDays(it.date, today);
+      if (n === 0) return it.all_day ? 'today' : (it.due_ts < S.rem.data.now_ts ? 'earlier today' : 'today');
+      if (n === 1) return 'tomorrow';
+      if (n === -1) return 'yesterday';
+      if (n > 1 && n < 14) return `in ${n} days`;
+      if (n < 0 && n > -14) return `${-n} days ago`;
+      const months = Math.round(Math.abs(n) / 30.4);
+      const span = months < 12 ? `${Math.max(1, months)} month${months > 1 ? 's' : ''}` : `${Math.round(months / 12)} year${months >= 18 ? 's' : ''}`;
+      return n > 0 ? `in ${span}` : `${span} ago`;
+    }
+
+    function remGoogleLink(it) {
+      const pad = d => d.replace(/-/g, '');
+      let dates;
+      if (it.all_day) dates = `${pad(it.date)}/${pad(remAddDays(it.date, 1))}`;
+      else {
+        const f = t => new Date(t * 1000).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+        dates = `${f(it.due_ts)}/${f(it.due_ts + 1800)}`;
+      }
+      return 'https://calendar.google.com/calendar/render?' + new URLSearchParams({ action: 'TEMPLATE', text: it.title, dates,
+        details: `From your chats (NASH Think): ${it.excerpt || ''}`.slice(0, 900) });
+    }
+
+    // Everything the panel shows, after this browser's own changes (read-only workspace only).
+    function remApplyLocal(items) {
+      if (!S.rem.data || S.rem.data.writable) return items;
+      const L = remLocal();
+      const out = [];
+      for (const src of [...items, ...L.added]) {
+        const ch = L.changes[src.id];
+        const it = { ...src };
+        if (ch) {
+          if (ch.status) it.status = ch.status;
+          if (ch.title) it.title = ch.title;
+          if (ch.snoozed_until && it.status === 'open') {
+            const p = remLocalParts(ch.snoozed_until);
+            Object.assign(it, { due_ts: ch.snoozed_until, date: p.date, time: p.time, all_day: false, snoozed_until: ch.snoozed_until });
+          }
+        }
+        if (it.local && !it.google_link) it.google_link = remGoogleLink(it);
+        if (it.status !== 'dismissed') out.push(it);
+      }
+      return out;
+    }
+
+    function remGroup(items) {
+      const d = S.rem.data, today = d.today, now = d.now_ts;
+      const g = { overdue: [], today: [], week: [], later: [], history: [], done: [] };
+      for (const it of items) {
+        if (it.status === 'done') { g.done.push(it); continue; }
+        const passed = it.all_day ? it.date < today : it.due_ts < now;
+        if (it.date === today && !(passed && !it.all_day)) g.today.push(it);
+        else if (passed && now - it.due_ts <= 7 * 86400) g.overdue.push(it);
+        else if (passed) g.history.push(it);
+        else if (remDays(it.date, today) <= 7) g.week.push(it);
+        else g.later.push(it);
+      }
+      for (const k of ['overdue', 'today', 'week', 'later']) g[k].sort((a, b) => a.due_ts - b.due_ts || a.id - b.id);
+      g.history.sort((a, b) => b.due_ts - a.due_ts);
+      g.done.sort((a, b) => b.due_ts - a.due_ts);
+      g.badge = g.overdue.length + [...g.today, ...g.week].filter(it => it.due_ts - now <= 86400 && it.due_ts >= now - 86400).length;
+      return g;
+    }
+
+    function remSetBadge(n) {
+      const b = $('rem-badge');
+      b.hidden = !n;
+      b.textContent = n > 99 ? '99+' : String(n || '');
+      $('btn-reminders').title = n ? `Reminders: ${n} overdue or due within a day (R)` : 'Reminders found in your chats (R)';
+    }
+
+    async function loadReminders(quiet = false) {
+      const seq = ++S.rem.seq;
+      if (!quiet) $('reminders').classList.add('busy');
+      if (!quiet && !S.rem.data) $('rem-list').innerHTML = '<div class="skel" style="height:64px"></div><div class="skel" style="height:64px;margin-top:8px"></div>';
+      let data;
+      try {
+        data = await apiFetch('/api/reminders', { timeout: 60000 });
+      } catch (err) {
+        if (seq !== S.rem.seq) return;
+        $('reminders').classList.remove('busy');
+        if (!quiet) $('rem-list').innerHTML = `<div class="ins-state">${err.code === 'database_unavailable'
+          ? 'No memory database yet, so there is nothing to find reminders in.<br>Import your chats first (see the README).'
+          : err.code === 'offline' || err.code === 'timeout' ? 'Reminders need the NASH Think server (<code>scripts/start_sarthink.sh</code>).'
+          : esc(err.message)}</div>`;
+        return;
+      }
+      if (seq !== S.rem.seq) return;
+      $('reminders').classList.remove('busy');
+      S.rem.data = data;
+      S.rem.items = Object.values(data.groups).flat();
+      renderReminders();
+      remScheduleNotifications();
+    }
+
+    function remFmtDay(dateStr, opts) {
+      return new Date(dateStr + 'T12:00:00Z').toLocaleDateString('en-GB', { timeZone: 'UTC', ...opts });
+    }
+
+    const remSame = (a, b) => { const n = t => String(t || '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim(); return n(a) === n(b) || n(b).startsWith(n(a).replace(/…$/, '')); };
+
+    function remCard(it, today, past = false) {
+      const color = PLATFORM_COLORS[it.platform] || 'var(--dim)';
+      const rel = remRelative(it, today);
+      const late = it.status === 'open' && (it.all_day ? it.date < today : it.due_ts < S.rem.data.now_ts);
+      const who = it.source === 'manual' || it.local ? 'Added by you'
+        : `${it.from_you ? 'You' : esc(it.said_by || 'Someone')}${it.conversation ? ` in ${esc(it.conversation)}` : ''}`;
+      const onMap = it.node_id && S.byId && S.byId.get(it.node_id);
+      return `<article class="rcard${it.status === 'done' ? ' done' : ''}" data-id="${it.id}">
+        <div class="rwhen"><div class="m">${esc(remFmtDay(it.date, { weekday: 'short' }))}</div>
+          <div class="d">${esc(remFmtDay(it.date, { day: 'numeric' }))}</div>
+          <div class="m">${esc(remFmtDay(it.date, { month: 'short' }))}${it.date.slice(0, 4) !== today.slice(0, 4) ? ` ’${it.date.slice(2, 4)}` : ''}</div>
+          ${it.time ? `<div class="t">${esc(it.time)}</div>` : ''}</div>
+        <div class="rmain">
+          <div class="rt">${esc(it.title)}</div>
+          <div class="rmeta"><span class="rkind k-${esc(it.kind || 'reminder')}">${esc(REM_KIND[it.kind] || 'Reminder')}</span>
+            <span class="rel${late ? ' late' : ''}">${esc(rel)}${it.repeat === 'yearly' ? ' · every year' : ''}${it.snoozed_until ? ' · snoozed' : ''}</span>
+            ${it.platform ? `<span><i style="background:${color}"></i>${esc(platformName(it.platform))}</span>` : ''}
+            <span>${who}</span>${it.mentions > 1 ? `<span title="Mentioned in ${it.mentions} messages">×${it.mentions}</span>` : ''}</div>
+          ${it.excerpt && !remSame(it.title, it.excerpt) ? `<div class="rex">${esc(it.excerpt)}</div>` : ''}
+          <div class="rbtns">
+            ${it.status === 'done' ? '<button type="button" class="btn sm" data-act="open">Undo</button>'
+              : past ? ''
+              : `<button type="button" class="btn sm primary" data-act="done">Done</button>
+                 <span class="snz"><button type="button" class="btn sm" data-act="snooze-menu" aria-expanded="false">Snooze ▾</button>
+                   <span class="snz-pop" hidden role="menu">
+                     <button type="button" role="menuitem" data-snooze="hour">In 1 hour</button>
+                     <button type="button" role="menuitem" data-snooze="tomorrow">Tomorrow, 9:00</button>
+                     <button type="button" role="menuitem" data-snooze="weekend">Saturday, 10:00</button>
+                     <button type="button" role="menuitem" data-snooze="week">Next Monday, 9:00</button></span></span>
+                 <a class="btn sm" href="${esc(it.google_link)}" target="_blank" rel="noopener noreferrer" title="Opens Google Calendar with this reminder filled in; nothing is sent until you save it there">+ Google Calendar</a>`}
+            ${it.node_id ? `<button type="button" class="linkbtn" data-act="view" title="${onMap ? 'Show this conversation on the memory map' : 'Not on the current map'}"${onMap ? '' : ' disabled'}>View chat</button>` : ''}
+            <button type="button" class="linkbtn" data-act="dismiss" title="Not a reminder: hide it">Dismiss</button>
+          </div>
+        </div></article>`;
+    }
+
+    function renderReminders() {
+      const d = S.rem.data;
+      if (!d) return;
+      const items = remApplyLocal(S.rem.items);
+      const g = remGroup(items);
+      remSetBadge(g.badge);
+      const today = d.today;
+      const sample = d.clock === 'latest_message';
+      $('rem-scope').innerHTML = `Found in your chats · today is ${esc(remFmtDay(today, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }))}`
+        + (sample ? ' <span title="The sample chats end on this day, so it stands in for today">(the sample chats’ last day)</span>' : '');
+      const upcoming = g.overdue.length + g.today.length + g.week.length + g.later.length;
+      let html = '';
+      if (!d.writable) html += '<div class="rem-note"><b>Sample data:</b> your changes here are kept in this browser only.</div>';
+      if (!upcoming) html += `<div class="rem-note">Nothing coming up. A reminder appears here when a chat mentions a plan, deadline, birthday or promise with a date${g.history.length ? '; earlier ones are below' : ''}.</div>`;
+      for (const [k, label] of REM_GROUPS) {
+        if (!g[k].length) continue;
+        html += `<section class="rem-sec ${k}"><h3>${label} <span class="n">${g[k].length}</span></h3><div class="rem-list">${g[k].map(it => remCard(it, today)).join('')}</div></section>`;
+      }
+      const fold = (key, label, list, note) => {
+        if (!list.length) return '';
+        const open = S.rem[key];
+        return `<section class="rem-sec"><h3>${label} <span class="n">${list.length}${key === 'history' && d.counts.history > list.length ? '+' : ''}</span>
+          <span class="act"><button type="button" class="linkbtn" data-fold="${key}" aria-expanded="${open}">${open ? 'Hide' : 'Show'}</button></span></h3>
+          ${open ? `${note ? `<div class="rem-note" style="margin-bottom:8px">${note}</div>` : ''}<div class="rem-list">${list.map(it => remCard(it, today, key === 'history')).join('')}</div>` : ''}</section>`;
+      };
+      html += fold('history', 'Earlier, from your chats', g.history, 'Plans and dates your chats mentioned that have passed. Useful for “when did we…?”; dismiss the ones that were never reminders.');
+      html += fold('done', 'Done', g.done);
+      $('rem-list').innerHTML = html;
+    }
+
+    async function remAct(id, body) {
+      const d = S.rem.data;
+      if (!d.writable) {
+        const L = remLocal();
+        if (id < 0 && body.action === 'dismiss') L.added = L.added.filter(a => a.id !== id);
+        const ch = L.changes[id] || (L.changes[id] = {});
+        if (body.action === 'snooze') Object.assign(ch, { status: 'open', snoozed_until: body.until_ts });
+        else if (body.action === 'done' || body.action === 'open') Object.assign(ch, { status: body.action, snoozed_until: null });
+        else if (body.action === 'dismiss') ch.status = 'dismissed';
+        remStore(REM_LOCAL_KEY, L);
+        renderReminders();
+        remScheduleNotifications();
+        return;
+      }
+      const payload = { action: body.action };
+      if (body.until_ts) payload.until = new Date(body.until_ts * 1000).toISOString();
+      try {
+        await apiFetch(`/api/reminders/${id}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      } catch (err) {
+        $('rem-scope').textContent = `Couldn’t save that: ${err.message}`;
+        return;
+      }
+      loadReminders(true);
+    }
+
+    function remSnoozeTime(kind) {
+      const d = S.rem.data, today = d.today;
+      if (kind === 'hour') return d.now_ts + 3600;
+      if (kind === 'tomorrow') return remEpoch(remAddDays(today, 1), 9);
+      const wd = new Date(today + 'T12:00:00Z').getUTCDay();   // 0 Sunday … 6 Saturday
+      if (kind === 'weekend') return remEpoch(remAddDays(today, ((6 - wd + 7) % 7) || 7), 10);
+      return remEpoch(remAddDays(today, ((8 - wd) % 7) || 7), 9);   // next Monday
+    }
+
+    function remViewChat(it) {
+      const t = it.node_id && S.byId && S.byId.get(it.node_id);
+      if (!t) return;
+      closeReminders(false);
+      if (S.view !== 'graph') setView('graph', { camera: false });
+      selectNode(t.i, { fly: true });
+    }
+
+    async function remShowCalendar() {
+      const box = $('rem-cal'), d = S.rem.data;
+      const ics = API_BASE + '/api/reminders.ics';
+      const notify = remStore(REM_NOTIFY_KEY) === 1 && 'Notification' in window && Notification.permission === 'granted';
+      box.innerHTML = `<div class="rem-note"><b>Put these in your calendar.</b> Upcoming reminders only; each one alerts you 30 minutes before (all-day ones at 9:00).</div>
+        <div class="rbtns"><a class="btn sm primary" href="${esc(ics)}" download="nashthink-reminders.ics">Download .ics</a>
+          <span class="rem-note">Import it into Google Calendar, Apple Calendar or Outlook.</span></div>
+        <div id="rem-feed" class="rem-note"></div>
+        <div class="rbtns"><button type="button" class="btn sm" id="rem-notify">${notify ? 'Browser alerts: on' : 'Alert me in this browser'}</button>
+          <span class="rem-note">While NASH Think is open in a tab.</span></div>`;
+      $('rem-notify').onclick = remToggleNotify;
+      if (!d || !d.writable) {
+        $('rem-feed').innerHTML = 'A calendar subscription link is available for your own data (not the sample).';
+        return;
+      }
+      try {
+        const f = await apiFetch('/api/reminders/feed');
+        const url = (API_BASE || location.origin) + f.path;
+        $('rem-feed').innerHTML = `<b>Subscribe</b> (keeps updating): <code id="rem-feed-url">${esc(url)}</code>
+          <button type="button" class="linkbtn" id="rem-feed-copy">Copy</button><br>
+          Apple Calendar: File → New Calendar Subscription. Thunderbird: New Calendar → On the network. Anyone with this link can read these reminders.`;
+        $('rem-feed-copy').onclick = () => navigator.clipboard && navigator.clipboard.writeText(url).then(() => { $('rem-feed-copy').textContent = 'Copied'; });
+      } catch (err) {
+        $('rem-feed').textContent = err.message;
+      }
+    }
+
+    async function remToggleNotify() {
+      if (!('Notification' in window)) { $('rem-notify').textContent = 'This browser can’t show alerts'; return; }
+      if (remStore(REM_NOTIFY_KEY) === 1 && Notification.permission === 'granted') {
+        remStore(REM_NOTIFY_KEY, 0);
+      } else {
+        const p = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission();
+        remStore(REM_NOTIFY_KEY, p === 'granted' ? 1 : 0);
+      }
+      remShowCalendar();
+      remScheduleNotifications();
+    }
+
+    // Alerts while this tab is open: 10 minutes before a timed reminder, 9:00 for an all-day one (real clock).
+    function remScheduleNotifications() {
+      S.rem.notifyTimers.forEach(clearTimeout);
+      S.rem.notifyTimers = [];
+      if (!('Notification' in window) || Notification.permission !== 'granted' || remStore(REM_NOTIFY_KEY) !== 1 || !S.rem.data) return;
+      const now = Date.now() / 1000;
+      for (const it of remApplyLocal(S.rem.items)) {
+        if (it.status !== 'open') continue;
+        const at = it.all_day ? remEpoch(it.date, 9) : it.due_ts - 600;
+        if (at < now || at - now > 86400) continue;
+        S.rem.notifyTimers.push(setTimeout(() => {
+          const n = new Notification(it.title, { body: `${it.time ? it.time + ' · ' : ''}${it.excerpt || 'NASH Think reminder'}`.slice(0, 180), tag: `nt-rem-${it.id}` });
+          n.onclick = () => { window.focus(); openReminders(); };
+        }, (at - now) * 1000));
+      }
+    }
+
+    function wireReminders() {
+      $('rem-close').addEventListener('click', () => closeReminders());
+      $('rem-scan').addEventListener('click', async () => {
+        const b = $('rem-scan');
+        b.disabled = true; b.textContent = 'Scanning…';
+        try {
+          const r = await apiFetch('/api/reminders/scan', { method: 'POST', timeout: 120000 });
+          await loadReminders(true);
+          $('rem-scope').insertAdjacentHTML('beforeend', ` · ${r.messages_read ? `read ${r.messages_read.toLocaleString()} new message${r.messages_read > 1 ? 's' : ''}, ${r.reminders_found} new reminder${r.reminders_found === 1 ? '' : 's'}` : 'no new messages'}`);
+        } catch (err) {
+          $('rem-scope').textContent = err.message;
+        } finally {
+          b.disabled = false; b.textContent = 'Scan now';
+        }
+      });
+      $('rem-add-btn').addEventListener('click', () => {
+        const f = $('rem-add'), open = f.hidden;
+        f.hidden = !open;
+        $('rem-add-btn').setAttribute('aria-expanded', String(open));
+        if (open) {
+          if (S.rem.data && !$('rem-add-date').value) $('rem-add-date').value = remAddDays(S.rem.data.today, 1);
+          $('rem-add-title').focus();
+        }
+      });
+      $('rem-cal-btn').addEventListener('click', () => {
+        const box = $('rem-cal'), open = box.hidden;
+        box.hidden = !open;
+        $('rem-cal-btn').setAttribute('aria-expanded', String(open));
+        if (open) remShowCalendar();
+      });
+      $('rem-add').addEventListener('submit', async e => {
+        e.preventDefault();
+        const title = $('rem-add-title').value.trim(), date = $('rem-add-date').value, time = $('rem-add-time').value;
+        if (!title || !date || !S.rem.data) return;
+        const [hh, mm] = time ? time.split(':').map(Number) : [0, 0];
+        const due_ts = remEpoch(date, hh, mm);
+        $('rem-add-msg').textContent = '';
+        if (!S.rem.data.writable) {
+          const L = remLocal();
+          L.added.push({ id: -Date.now(), local: true, title, date, time: time || null, all_day: !time, due_ts, kind: 'reminder',
+            status: 'open', source: 'manual', from_you: true, mentions: 1 });
+          remStore(REM_LOCAL_KEY, L);
+          renderReminders();
+        } else {
+          try {
+            await apiFetch('/api/reminders', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ title, due: time ? new Date(due_ts * 1000).toISOString() : date, all_day: !time }) });
+          } catch (err) { $('rem-add-msg').textContent = err.message; return; }
+          await loadReminders(true);
+        }
+        $('rem-add-title').value = ''; $('rem-add-time').value = '';
+      });
+      $('rem-list').addEventListener('click', e => {
+        const fold = e.target.closest('[data-fold]');
+        if (fold) { S.rem[fold.dataset.fold] = !S.rem[fold.dataset.fold]; renderReminders(); return; }
+        const card = e.target.closest('.rcard');
+        if (!card) return;
+        const id = Number(card.dataset.id);
+        const it = remApplyLocal(S.rem.items).find(x => x.id === id);
+        const snz = e.target.closest('[data-snooze]');
+        if (snz) { remAct(id, { action: 'snooze', until_ts: remSnoozeTime(snz.dataset.snooze) }); return; }
+        const btn = e.target.closest('[data-act]');
+        if (!btn || !it) return;
+        const act = btn.dataset.act;
+        if (act === 'snooze-menu') {
+          const pop = btn.nextElementSibling, open = pop.hidden;
+          document.querySelectorAll('#rem-list .snz-pop').forEach(p => { p.hidden = true; p.previousElementSibling.setAttribute('aria-expanded', 'false'); });
+          pop.hidden = !open;
+          btn.setAttribute('aria-expanded', String(open));
+          if (open) pop.querySelector('button').focus();
+        } else if (act === 'view') remViewChat(it);
+        else remAct(id, { action: act });
+      });
+      $('rem-list').addEventListener('keydown', e => {
+        if (e.key !== 'Escape') return;
+        const pop = e.target.closest('.snz-pop');
+        if (pop) { e.stopPropagation(); pop.hidden = true; pop.previousElementSibling.setAttribute('aria-expanded', 'false'); pop.previousElementSibling.focus(); }
+      });
+      // The badge stays current without opening the panel (the server re-scans when its last scan is old).
+      const tick = () => { if (!remindersOpen()) loadReminders(true); };
+      setTimeout(tick, 1500);
+      setInterval(tick, 10 * 60 * 1000);
+    }
+
     S.ins = { seq: 0, key: '', data: null, timer: 0, ret: null, localPlats: null };
     const insightsOpen = () => !$('insights').hidden;
 
     function openInsights() {
       if (insightsOpen()) return;
+      closeReminders(false);
       S.ins.ret = document.activeElement;
       $('insights').hidden = false;
       document.body.dataset.insights = 'open';
@@ -4824,6 +5336,9 @@
     });
     $('btn-insights').addEventListener('click', () => (insightsOpen() ? closeInsights() : openInsights()));
     $('home-insights').addEventListener('click', openInsights);
+    $('btn-reminders').addEventListener('click', () => (remindersOpen() ? closeReminders() : openReminders()));
+    $('home-reminders').addEventListener('click', openReminders);
+    wireReminders();
     $('ins-close').addEventListener('click', closeInsights);
     $('omni').addEventListener('submit', e => { e.preventDefault(); submitOmni(); });
     $('omni-q').addEventListener('keydown', e => {

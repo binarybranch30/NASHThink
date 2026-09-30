@@ -363,7 +363,8 @@ class RemindersService:
         groups["done"] = groups["done"][:MAX_HISTORY]
         soon = sum(1 for g in ("today", "week", "later") for i in groups[g] if 0 <= i["due_ts"] - now <= SOON_S)
         return {
-            "now": _iso(now), "today": today.isoformat(), "timezone": self.tz_name,
+            "now": _iso(now), "now_ts": now, "today": today.isoformat(), "timezone": self.tz_name,
+            "utc_offset_min": int(dt.datetime.fromtimestamp(now, self.tz).utcoffset().total_seconds() // 60),
             "clock": self.now_mode, "scanned_at": _iso(int(scanned_at)) if scanned_at else None,
             "counts": {**{k: len(v) for k, v in groups.items()}, "history": history_total,
                        "badge": len(groups["overdue"]) + soon},
