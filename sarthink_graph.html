@@ -1176,15 +1176,15 @@
       transform: translateX(-50%) translateY(-10px) scale(.985);
       transition: opacity .3s ease, transform .3s ease, visibility 0s linear .3s;
     }
+    /* A drawer on the right: the memory map stays visible (and usable) beside it. */
     #reminders {
-      position: fixed; top: var(--top-h); bottom: var(--gap); left: 50%;
-      width: min(860px, calc(100vw - 2 * var(--gap))); transform: translateX(-50%); z-index: 150;
-      display: flex; flex-direction: column; background: rgba(6, 6, 24, .92); box-shadow: 0 30px 80px rgba(0, 0, 0, .55);
+      position: fixed; top: var(--top-h); bottom: var(--gap); right: var(--gap);
+      width: min(480px, calc(100vw - 2 * var(--gap))); z-index: 150;
+      display: flex; flex-direction: column; background: rgba(6, 6, 24, .8); box-shadow: 0 30px 80px rgba(0, 0, 0, .45);
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
       transition: opacity .3s ease, transform .3s ease, visibility 0s linear 0s;
     }
-    #reminders[hidden] { display: flex; opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(-50%) translateY(10px); transition: opacity .25s ease, transform .25s ease, visibility 0s linear .25s; }
-    body[data-view="graph"] #reminders { left: auto; right: var(--gap); width: min(560px, calc(100vw - var(--side-w) - 3 * var(--gap))); transform: none; }
-    body[data-view="graph"] #reminders[hidden] { transform: translateY(10px); }
+    #reminders[hidden] { display: flex; opacity: 0; visibility: hidden; pointer-events: none; transform: translateX(16px); transition: opacity .25s ease, transform .25s ease, visibility 0s linear .25s; }
     #reminders .phead { align-items: center; padding: 14px 18px 12px; flex-wrap: wrap; }
     #rem-h { font-size: 1.05rem; font-weight: 600; color: #fff; }
     #rem-scope { font-size: .7rem; color: var(--mid); margin-top: 2px; }
@@ -1235,7 +1235,7 @@
     .rbadge[hidden] { display: none; }
     #reminders.busy #rem-body > :not(.ins-state) { opacity: .55; transition: opacity .2s; }
     @media (max-width: 720px) {
-      body[data-view="graph"] #reminders { left: var(--gap); right: var(--gap); width: auto; }
+      #reminders { left: var(--gap); width: auto; }
       #rem-add { grid-template-columns: 1fr 1fr; }
       #rem-add input[type="text"] { grid-column: 1 / -1; }
     }
@@ -4858,8 +4858,8 @@
       remSetBadge(g.badge);
       const today = d.today;
       const sample = d.clock === 'latest_message';
-      $('rem-scope').innerHTML = `Found in your chats · today is ${esc(remFmtDay(today, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }))}`
-        + (sample ? ' <span title="The sample chats end on this day, so it stands in for today">(the sample chats’ last day)</span>' : '');
+      $('rem-scope').innerHTML = `Found in your chats · today: ${esc(remFmtDay(today, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }))}`
+        + (sample ? ' <span title="The sample chats end on this day, so it stands in for today">(sample’s last day)</span>' : '');
       const upcoming = g.overdue.length + g.today.length + g.week.length + g.later.length;
       let html = '';
       if (!d.writable) html += '<div class="rem-note"><b>Sample data:</b> your changes here are kept in this browser only.</div>';
@@ -5331,6 +5331,7 @@
       e.preventDefault();
       if (helpOpen()) closeHelp();
       closeInsights();
+      closeReminders(false);
       if (S.view !== 'home') setView('home');
       else { resetSemantic(); $('omni-q').focus(); }
     });
